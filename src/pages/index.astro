@@ -3,15 +3,31 @@
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<head>
+	<meta charset="utf-8" />
+
+	<script is:inline>
+		const identityHash = window.location.hash;
+
+		const hasIdentityToken =
+			identityHash.includes("invite_token") ||
+			identityHash.includes("confirmation_token") ||
+			identityHash.includes("recovery_token") ||
+			identityHash.includes("email_change_token");
+
+		if (hasIdentityToken) {
+			window.location.replace(`/admin/${identityHash}`);
+		}
+	</script>
+
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<link rel="icon" href="/favicon.ico" />
+	<meta name="viewport" content="width=device-width" />
+	<meta name="generator" content={Astro.generator} />
+	<title>ArkSystems</title>
+</head>
+
+<body>
+<h1>ArkSystems</h1>
+</body>
 </html>
