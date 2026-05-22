@@ -5,85 +5,24 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="robots" content="noindex" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ArkSystems Account Setup</title>
+    <title>ArkSystems Login</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 
 <body>
-<p id="status">Loading account setup...</p>
+<h1>ArkSystems Admin Login</h1>
 
-<button id="openIdentity" style="display: none;">
-    Open account setup
-</button>
+<div data-netlify-identity-button></div>
 
 <script is:inline>
-    (function () {
-        const status = document.getElementById("status");
-        const button = document.getElementById("openIdentity");
-
-        const hash = window.location.hash || "";
-
-        const hasIdentityToken =
-            hash.includes("invite_token") ||
-            hash.includes("confirmation_token") ||
-            hash.includes("recovery_token") ||
-            hash.includes("email_change_token");
-
-        if (hash.startsWith("#/") && hasIdentityToken) {
-            window.history.replaceState(
-                null,
-                "",
-                window.location.pathname + hash.replace("#/", "#")
-            );
-        }
-
-        function openIdentity() {
-            if (!window.netlifyIdentity) {
-                status.textContent = "Netlify Identity widget did not load.";
-                return;
-            }
-
-            window.netlifyIdentity.on("login", () => {
-                window.netlifyIdentity.close();
-                window.location.href = "/admin/";
-            });
-
-            window.netlifyIdentity.on("signup", () => {
-                window.netlifyIdentity.close();
-                window.location.href = "/admin/";
-            });
-
-            window.netlifyIdentity.on("error", (err) => {
-                console.error("Netlify Identity error:", err);
-                status.textContent = "Account setup failed. Please resend the invite and try again.";
-            });
-
-            window.netlifyIdentity.init();
-
-            status.textContent = "Opening account setup...";
-            button.style.display = "inline-block";
-
-            setTimeout(() => {
-                window.netlifyIdentity.open(hasIdentityToken ? "signup" : "login");
-            }, 500);
-        }
-
-        const script = document.createElement("script");
-        script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
-        script.onload = openIdentity;
-        script.onerror = () => {
-            status.textContent = "Could not load Netlify Identity widget.";
-        };
-
-        document.head.appendChild(script);
-
-        button.addEventListener("click", () => {
-            if (window.netlifyIdentity) {
-                window.netlifyIdentity.open(hasIdentityToken ? "signup" : "login");
-            }
+    if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("login", () => {
+            window.netlifyIdentity.close();
+            window.location.href = "/admin/";
         });
-    })();
+
+        window.netlifyIdentity.init();
+    }
 </script>
 </body>
 </html>
