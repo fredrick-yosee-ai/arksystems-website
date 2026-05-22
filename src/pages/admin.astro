@@ -9,21 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ArkSystems Admin</title>
 
-    <script is:inline>
-        const hash = window.location.hash;
-
-        const hasIdentityToken =
-            hash.includes("invite_token") ||
-            hash.includes("confirmation_token") ||
-            hash.includes("recovery_token") ||
-            hash.includes("email_change_token");
-
-        if (hasIdentityToken) {
-            const cleanHash = hash.replace("#/", "#");
-            window.location.replace(`/identity/${cleanHash}`);
-        }
-    </script>
-
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 
