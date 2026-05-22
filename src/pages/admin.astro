@@ -12,21 +12,15 @@
     <script is:inline>
         const hash = window.location.hash;
 
-        const identityTokens = [
-            "invite_token",
-            "confirmation_token",
-            "recovery_token",
-            "email_change_token",
-        ];
+        const hasIdentityToken =
+            hash.includes("invite_token") ||
+            hash.includes("confirmation_token") ||
+            hash.includes("recovery_token") ||
+            hash.includes("email_change_token");
 
-        const hasIdentityToken = identityTokens.some((token) =>
-            hash.includes(token)
-        );
-
-        if (hash.startsWith("#/") && hasIdentityToken) {
-            window.location.replace(
-                `${window.location.origin}${window.location.pathname}${hash.replace("#/", "#")}`
-            );
+        if (hasIdentityToken) {
+            const cleanHash = hash.replace("#/", "#");
+            window.location.replace(`/identity/${cleanHash}`);
         }
     </script>
 

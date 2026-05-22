@@ -16,7 +16,8 @@
 			identityHash.includes("email_change_token");
 
 		if (hasIdentityToken) {
-			window.location.replace(`/admin/${identityHash}`);
+			const cleanHash = identityHash.replace("#/", "#");
+			window.location.replace(`/identity/${cleanHash}`);
 		}
 	</script>
 
