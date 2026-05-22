@@ -7,44 +7,83 @@
     <meta charset="utf-8" />
     <meta name="robots" content="noindex" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ArkSystems Identity</title>
-
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <title>ArkSystems Account Setup</title>
 </head>
 
 <body>
-<p>Loading account setup...</p>
+<p id="status">Loading account setup...</p>
+
+<button id="openIdentity" style="display: none;">
+    Open account setup
+</button>
 
 <script is:inline>
-    const hash = window.location.hash;
+    (function () {
+        const status = document.getElementById("status");
+        const button = document.getElementById("openIdentity");
 
-    if (hash.startsWith("#/")) {
-        window.history.replaceState(
-            null,
-            "",
-            window.location.pathname + hash.replace("#/", "#")
-        );
-    }
+        const hash = window.location.hash || "";
 
-    if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", (user) => {
-            if (!user) {
-                window.netlifyIdentity.open();
+        const hasIdentityToken =
+            hash.includes("invite_token") ||
+            hash.includes("confirmation_token") ||
+            hash.includes("recovery_token") ||
+            hash.includes("email_change_token");
+
+        if (hash.startsWith("#/") && hasIdentityToken) {
+            window.history.replaceState(
+                null,
+                "",
+                window.location.pathname + hash.replace("#/", "#")
+            );
+        }
+
+        function openIdentity() {
+            if (!window.netlifyIdentity) {
+                status.textContent = "Netlify Identity widget did not load.";
+                return;
+            }
+
+            window.netlifyIdentity.on("login", () => {
+                window.netlifyIdentity.close();
+                window.location.href = "/admin/";
+            });
+
+            window.netlifyIdentity.on("signup", () => {
+                window.netlifyIdentity.close();
+                window.location.href = "/admin/";
+            });
+
+            window.netlifyIdentity.on("error", (err) => {
+                console.error("Netlify Identity error:", err);
+                status.textContent = "Account setup failed. Please resend the invite and try again.";
+            });
+
+            window.netlifyIdentity.init();
+
+            status.textContent = "Opening account setup...";
+            button.style.display = "inline-block";
+
+            setTimeout(() => {
+                window.netlifyIdentity.open(hasIdentityToken ? "signup" : "login");
+            }, 500);
+        }
+
+        const script = document.createElement("script");
+        script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
+        script.onload = openIdentity;
+        script.onerror = () => {
+            status.textContent = "Could not load Netlify Identity widget.";
+        };
+
+        document.head.appendChild(script);
+
+        button.addEventListener("click", () => {
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.open(hasIdentityToken ? "signup" : "login");
             }
         });
-
-        window.netlifyIdentity.on("login", () => {
-            window.netlifyIdentity.close();
-            window.location.href = "/admin/";
-        });
-
-        window.netlifyIdentity.on("signup", () => {
-            window.netlifyIdentity.close();
-            window.location.href = "/admin/";
-        });
-
-        window.netlifyIdentity.init();
-    }
+    })();
 </script>
 </body>
 </html>
