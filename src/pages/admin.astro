@@ -9,8 +9,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ArkSystems Admin</title>
 
+    <script is:inline>
+        const hash = window.location.hash;
+
+        const identityTokens = [
+            "invite_token",
+            "confirmation_token",
+            "recovery_token",
+            "email_change_token",
+        ];
+
+        const hasIdentityToken = identityTokens.some((token) =>
+            hash.includes(token)
+        );
+
+        if (hash.startsWith("#/") && hasIdentityToken) {
+            window.location.replace(
+                `${window.location.origin}${window.location.pathname}${hash.replace("#/", "#")}`
+            );
+        }
+    </script>
+
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
+
 <body>
 <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
 </body>
