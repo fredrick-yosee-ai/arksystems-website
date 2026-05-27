@@ -1,22 +1,5 @@
-@import "tailwindcss";
-
-:root {
-    --color-bg: #fffdf7;
-    --color-surface: #ffffff;
-    --color-text: #1f2933;
-    --color-muted: #5f6b7a;
-    --color-primary: #f59e0b;
-    --color-primary-dark: #b45309;
-    --color-border: #e8e2d5;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0;
-    background: var(--color-bg);
-    color: var(--color-text);
-    font-family: Inter, system-ui, sans-serif;
-}
+@import "./tokens.css";
+@import "./typography.css";
+@import "./layout.css";
+@import "./components.css";
+@import "./home.css";

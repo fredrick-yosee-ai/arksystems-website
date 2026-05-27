@@ -1,0 +1,26 @@
+---
+import Container from "../common/Container.astro";
+import SectionHeading from "../common/SectionHeading.astro";
+
+const { painPoints } = Astro.props;
+---
+
+<section class="section section--surface intro-section">
+	<Container>
+		<SectionHeading
+			centered
+			title="Your business may not need more tools. It may need better workflows."
+			description="Many growing businesses lose money through small daily workflow gaps. These leaks are easy to miss because the team is busy keeping operations moving."
+		/>
+
+		<div class="pain-grid">
+			{painPoints.map((item) => (
+				<article class="card pain-card">
+					<span>{item.icon}</span>
+					<h3 class="text-title-md">{item.title}</h3>
+					<p class="text-body-sm">{item.text}</p>
+				</article>
+			))}
+		</div>
+	</Container>
+</section>

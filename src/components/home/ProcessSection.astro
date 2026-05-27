@@ -1,0 +1,22 @@
+---
+import Container from "../common/Container.astro";
+import SectionHeading from "../common/SectionHeading.astro";
+
+const { processSteps } = Astro.props;
+---
+
+<section class="section process-section" id="process">
+	<Container>
+		<SectionHeading centered title="A practical process before any implementation." />
+
+		<div class="process-grid">
+			{processSteps.map((step) => (
+				<article class="process-card">
+					<span>{step.number}</span>
+					<h3 class="text-title-md">{step.title}</h3>
+					<p class="text-body-sm">{step.text}</p>
+				</article>
+			))}
+		</div>
+	</Container>
+</section>
