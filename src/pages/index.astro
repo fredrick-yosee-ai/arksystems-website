@@ -1,27 +1,8 @@
 ---
 import "../styles/global.css";
 
-import SiteHeader from "../components/layout/SiteHeader.astro";
-import SiteFooter from "../components/layout/SiteFooter.astro";
-import HeroSection from "../components/home/HeroSection.astro";
-import PainPointsSection from "../components/home/PainPointsSection.astro";
-import AuditSection from "../components/home/AuditSection.astro";
-import ProcessSection from "../components/home/ProcessSection.astro";
-import IndustriesSection from "../components/home/IndustriesSection.astro";
-import PrinciplesSection from "../components/home/PrinciplesSection.astro";
-import FounderSection from "../components/home/FounderSection.astro";
-import FinalCtaSection from "../components/home/FinalCtaSection.astro";
-
-import {
-	painPoints,
-	auditItems,
-	processSteps,
-	industries,
-	principles,
-} from "../data/home";
-
-const title = "Workflow Automation Consulting for Growing Businesses | ArkSystems";
-const description = "ArkSystems helps growing businesses fix manual workflows, missed follow-ups, document chaos, and operational bottlenecks using practical systems, automation, and AI where there is clear ROI.";
+const title = "ArkSystems";
+const description = "ArkSystems website is being rebuilt.";
 ---
 
 <!doctype html>
@@ -32,26 +13,11 @@ const description = "ArkSystems helps growing businesses fix manual workflows, m
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>{title}</title>
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap"
-			rel="stylesheet"
-		/>
 	</head>
 
 	<body>
-		<SiteHeader />
 		<main>
-			<HeroSection />
-			<PainPointsSection painPoints={painPoints} />
-			<AuditSection auditItems={auditItems} />
-			<ProcessSection processSteps={processSteps} />
-			<IndustriesSection industries={industries} />
-			<PrinciplesSection principles={principles} />
-			<FounderSection />
-			<FinalCtaSection />
+			<h1>ArkSystems</h1>
 		</main>
-		<SiteFooter />
 	</body>
 </html>
