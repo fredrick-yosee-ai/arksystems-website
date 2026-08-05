@@ -1,0 +1,161 @@
+<div class="value-strip">
+    <div class="value-strip__item">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="20" cy="20" r="12" />
+            <path d="m29 29 12 12" />
+        </svg>
+
+        <div>
+            <h2>Find the leaks</h2>
+            <p>See what’s really costing you time and money.</p>
+        </div>
+    </div>
+
+    <div class="value-strip__item">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M7 40h34" />
+            <path d="M11 40V30h6v10" />
+            <path d="M21 40V22h6v18" />
+            <path d="M31 40V10h6v30" />
+        </svg>
+
+        <div>
+            <h2>Prove the value</h2>
+            <p>Quantify the impact before you invest.</p>
+        </div>
+    </div>
+
+    <div class="value-strip__item">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 7v34" />
+            <path d="M13 11h22" />
+            <path d="m13 11-7 15h14z" />
+            <path d="m35 11-7 15h14z" />
+            <path d="M16 41h16" />
+        </svg>
+
+        <div>
+            <h2>Compare the investment</h2>
+            <p>Right-size the solution for real outcomes.</p>
+        </div>
+    </div>
+
+    <div class="value-strip__item">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="24" cy="24" r="18" />
+            <path d="m15 24 6 6 13-14" />
+        </svg>
+
+        <div>
+            <h2>Proceed with confidence</h2>
+            <p>Implement only what makes business sense.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .value-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-top: var(--space-12);
+        padding: var(--space-6);
+        border: var(--border-width) solid rgb(79 84 64 / 8%);
+        border-radius: var(--radius-lg);
+        background: rgb(232 232 219 / 58%);
+    }
+
+    .value-strip__item {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: var(--space-5);
+        padding-inline: var(--space-6);
+        border-right: var(--border-width) solid rgb(79 84 64 / 18%);
+    }
+
+    .value-strip__item:first-child {
+        padding-left: 0;
+    }
+
+    .value-strip__item:last-child {
+        padding-right: 0;
+        border-right: 0;
+    }
+
+    .value-strip__item svg {
+        width: 3rem;
+        height: 3rem;
+        fill: none;
+        stroke: var(--color-brand-700);
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .value-strip__item h2 {
+        margin-bottom: var(--space-2);
+        font-family: var(--font-body);
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-brand-900);
+    }
+
+    .value-strip__item p {
+        font-size: var(--font-size-sm);
+        line-height: 1.45;
+        color: var(--color-neutral-700);
+    }
+
+    @media (max-width: 64rem) {
+        .value-strip {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0;
+        }
+
+        .value-strip__item {
+            padding: var(--space-6);
+        }
+
+        .value-strip__item:first-child {
+            padding-left: var(--space-6);
+        }
+
+        .value-strip__item:nth-child(2) {
+            border-right: 0;
+        }
+
+        .value-strip__item:nth-child(-n + 2) {
+            border-bottom: var(--border-width) solid rgb(79 84 64 / 18%);
+        }
+
+        .value-strip__item:last-child {
+            padding-right: var(--space-6);
+        }
+    }
+
+    @media (max-width: 40rem) {
+        .value-strip {
+            grid-template-columns: 1fr;
+            padding: var(--space-4);
+        }
+
+        .value-strip__item {
+            padding: var(--space-5);
+            border-right: 0;
+            border-bottom: var(--border-width) solid rgb(79 84 64 / 18%);
+        }
+
+        .value-strip__item:first-child {
+            padding-left: var(--space-5);
+        }
+
+        .value-strip__item:nth-child(2) {
+            border-bottom: var(--border-width) solid rgb(79 84 64 / 18%);
+        }
+
+        .value-strip__item:last-child {
+            padding-right: var(--space-5);
+            border-bottom: 0;
+        }
+    }
+</style>

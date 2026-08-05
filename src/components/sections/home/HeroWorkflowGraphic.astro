@@ -1,0 +1,481 @@
+<div class="workflow-graphic" aria-label="Example business workflow">
+    <div class="workflow-graphic__flow">
+        <div class="workflow-graphic__sources">
+            <div class="source-card">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 5h18v14H3z" />
+                    <path d="m3 6 9 7 9-7" />
+                </svg>
+                <span>Email</span>
+            </div>
+
+            <div class="source-card">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="16" rx="1" />
+                    <path d="M3 8h18" />
+                    <path d="M7 6h.01M10 6h.01" />
+                </svg>
+                <span>Client Portal</span>
+            </div>
+
+            <div class="source-card">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" />
+                    <path d="M3 9h18M3 15h18M9 3v18M15 3v18" />
+                </svg>
+                <span>Spreadsheets</span>
+            </div>
+        </div>
+
+        <div class="workflow-graphic__connector" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="workflow-graphic__stages">
+            <div class="stage-card">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 2h8l4 4v16H6z" />
+                    <path d="M14 2v5h5" />
+                    <path d="M9 12h6M9 16h4" />
+                </svg>
+                <span>Requested</span>
+                <span class="stage-card__status stage-card__status--complete">✓</span>
+            </div>
+
+            <span class="flow-arrow" aria-hidden="true">→</span>
+
+            <div class="stage-card">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 7h7l2 2h9v11H3z" />
+                </svg>
+                <span>Received</span>
+                <span class="stage-card__status stage-card__status--complete">✓</span>
+            </div>
+
+            <span class="flow-arrow flow-arrow--attention" aria-hidden="true">→</span>
+
+            <div class="stage-card stage-card--attention">
+                <span class="stage-card__notice">Needs attention</span>
+
+                <span class="stage-card__alert" aria-hidden="true">!</span>
+                <span>Missing Items</span>
+            </div>
+
+            <span class="flow-arrow flow-arrow--attention" aria-hidden="true">→</span>
+
+            <div class="stage-card">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="9" cy="8" r="4" />
+                    <circle cx="17" cy="9" r="3" />
+                    <path d="M2 21c0-5 3-8 7-8s7 3 7 8" />
+                    <path d="M15 14c4 0 7 2 7 7" />
+                </svg>
+                <span>Review</span>
+            </div>
+
+            <span class="flow-arrow" aria-hidden="true">→</span>
+
+            <div class="stage-card">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 2h8l4 4v16H6z" />
+                    <path d="M14 2v5h5" />
+                    <path d="M9 12h6M9 16h4" />
+                </svg>
+                <span>Ready</span>
+                <span class="stage-card__status stage-card__status--complete">✓</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="workflow-summary">
+        <div class="workflow-summary__metrics">
+            <p class="workflow-summary__title">Workflow at a glance</p>
+
+            <div class="workflow-summary__metric-grid">
+                <div class="metric">
+                    <span class="metric__icon metric__icon--waiting">◷</span>
+
+                    <div>
+                        <strong>12</strong>
+                        <span>Waiting</span>
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <span class="metric__icon metric__icon--blocked">!</span>
+
+                    <div>
+                        <strong>4</strong>
+                        <span>Blocked</span>
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <span class="metric__icon metric__icon--ready">✓</span>
+
+                    <div>
+                        <strong>3</strong>
+                        <span>Ready</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="workflow-summary__meaning">
+            <p class="workflow-summary__title">What this means</p>
+
+            <p>
+                Work is getting stuck before it is complete.
+            </p>
+
+            <strong>We help you fix that.</strong>
+        </div>
+    </div>
+</div>
+
+<style>
+    .workflow-graphic {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-5);
+        min-width: 0;
+    }
+
+    .workflow-graphic__flow {
+        position: relative;
+        display: grid;
+        grid-template-columns: 6.5rem 2.5rem minmax(0, 1fr);
+        align-items: center;
+        min-height: 20rem;
+        padding: var(--space-6);
+        border-radius: var(--radius-xl);
+        background:
+                radial-gradient(
+                        circle at 55% 45%,
+                        rgb(158 159 126 / 22%),
+                        transparent 17rem
+                ),
+                rgb(255 255 255 / 30%);
+    }
+
+    .workflow-graphic__sources {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+
+    .source-card,
+    .stage-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border: var(--border-width) solid rgb(79 84 64 / 12%);
+        background: rgb(255 253 248 / 88%);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .source-card {
+        gap: var(--space-2);
+        min-height: 5.5rem;
+        padding: var(--space-3);
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-neutral-700);
+    }
+
+    .source-card svg,
+    .stage-card svg {
+        width: 2rem;
+        height: 2rem;
+        fill: none;
+        stroke: var(--color-brand-700);
+        stroke-width: 1.7;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .workflow-graphic__connector {
+        position: relative;
+        height: 12rem;
+    }
+
+    .workflow-graphic__connector::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--color-brand-700);
+    }
+
+    .workflow-graphic__connector span {
+        position: absolute;
+        left: 0;
+        width: 1.25rem;
+        height: 4rem;
+        border-right: 2px solid var(--color-brand-700);
+        border-bottom: 2px solid var(--color-brand-700);
+        border-radius: 0 0 0.75rem 0;
+    }
+
+    .workflow-graphic__connector span:nth-child(1) {
+        top: 0;
+        transform: translateY(50%);
+    }
+
+    .workflow-graphic__connector span:nth-child(2) {
+        top: 4rem;
+        height: 2rem;
+    }
+
+    .workflow-graphic__connector span:nth-child(3) {
+        bottom: 0;
+        transform: rotateX(180deg) translateY(50%);
+    }
+
+    .workflow-graphic__stages {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+    }
+
+    .stage-card {
+        flex: 1 1 0;
+        gap: var(--space-3);
+        min-width: 7rem;
+        min-height: 9.5rem;
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-neutral-700);
+    }
+
+    .stage-card--attention {
+        border: 2px solid #c98b1f;
+    }
+
+    .stage-card__notice {
+        position: absolute;
+        top: -3rem;
+        left: 50%;
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius-md);
+        background: #f1ddb7;
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-semibold);
+        color: #8b5d13;
+        white-space: nowrap;
+        transform: translateX(-50%);
+    }
+
+    .stage-card__notice::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        height: 2.25rem;
+        border-left: 2px dashed #c98b1f;
+        transform: translateX(-50%);
+    }
+
+    .stage-card__alert {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        background: #c98b1f;
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-white);
+    }
+
+    .stage-card__status {
+        position: absolute;
+        top: 2.65rem;
+        right: 1rem;
+        display: grid;
+        place-items: center;
+        width: 1.4rem;
+        height: 1.4rem;
+        border-radius: 50%;
+        font-size: var(--font-size-xs);
+        color: var(--color-white);
+    }
+
+    .stage-card__status--complete {
+        background: var(--color-brand-600);
+    }
+
+    .flow-arrow {
+        flex: 0 0 1.5rem;
+        text-align: center;
+        font-size: var(--font-size-xl);
+        color: var(--color-brand-600);
+    }
+
+    .flow-arrow--attention {
+        color: #c98b1f;
+    }
+
+    .workflow-summary {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 13rem;
+        gap: var(--space-6);
+        padding: var(--space-5) var(--space-6);
+        border: var(--border-width) solid rgb(79 84 64 / 12%);
+        border-radius: var(--radius-lg);
+        background: rgb(255 253 248 / 92%);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .workflow-summary__metrics {
+        min-width: 0;
+    }
+
+    .workflow-summary__title {
+        margin-bottom: var(--space-4);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-neutral-700);
+    }
+
+    .workflow-summary__metric-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .metric {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding-inline: var(--space-4);
+        border-right: var(--border-width) solid var(--color-border);
+    }
+
+    .metric:first-child {
+        padding-left: 0;
+    }
+
+    .metric:last-child {
+        border-right: 0;
+    }
+
+    .metric__icon {
+        display: grid;
+        place-items: center;
+        flex: 0 0 2.25rem;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        font-weight: var(--font-weight-bold);
+    }
+
+    .metric__icon--waiting {
+        background: #efe5bf;
+        color: var(--color-brand-700);
+    }
+
+    .metric__icon--blocked {
+        background: #c98b1f;
+        color: var(--color-white);
+    }
+
+    .metric__icon--ready {
+        background: var(--color-brand-400);
+        color: var(--color-white);
+    }
+
+    .metric div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .metric strong {
+        font-size: var(--font-size-2xl);
+        line-height: 1;
+        color: var(--color-neutral-900);
+    }
+
+    .metric span:last-child {
+        margin-top: var(--space-1);
+        font-size: var(--font-size-xs);
+        color: var(--color-text-muted);
+    }
+
+    .workflow-summary__meaning {
+        padding-left: var(--space-6);
+        border-left: var(--border-width) solid var(--color-border);
+    }
+
+    .workflow-summary__meaning p:not(.workflow-summary__title) {
+        font-size: var(--font-size-sm);
+        color: var(--color-neutral-700);
+    }
+
+    .workflow-summary__meaning strong {
+        display: block;
+        margin-top: var(--space-2);
+        font-size: var(--font-size-sm);
+        color: var(--color-brand-700);
+    }
+
+    @media (max-width: 56rem) {
+        .workflow-graphic__flow {
+            grid-template-columns: 1fr;
+            gap: var(--space-5);
+        }
+
+        .workflow-graphic__sources {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .workflow-graphic__connector {
+            display: none;
+        }
+
+        .workflow-graphic__stages {
+            overflow-x: auto;
+            padding-top: var(--space-12);
+            padding-bottom: var(--space-2);
+        }
+
+        .stage-card {
+            flex: 0 0 8rem;
+        }
+    }
+
+    @media (max-width: 40rem) {
+        .workflow-summary {
+            grid-template-columns: 1fr;
+        }
+
+        .workflow-summary__metric-grid {
+            grid-template-columns: 1fr;
+            gap: var(--space-4);
+        }
+
+        .metric {
+            padding: 0;
+            border-right: 0;
+        }
+
+        .workflow-summary__meaning {
+            padding-top: var(--space-5);
+            padding-left: 0;
+            border-top: var(--border-width) solid var(--color-border);
+            border-left: 0;
+        }
+    }
+</style>

@@ -1,0 +1,160 @@
+---
+import Container from "../common/Container.astro";
+import Button from "../common/Button.astro";
+
+const pathname = Astro.url.pathname;
+
+const navigation = [
+    { label: "How We Help", href: "/how-we-help" },
+    { label: "The Workshop", href: "/workshop" },
+    { label: "For Accounting Firms", href: "/accounting-firms" },
+    { label: "About", href: "/about" },
+];
+---
+
+<header class="site-header">
+    <Container>
+        <div class="site-header__inner">
+            <a href="/" class="site-header__brand" aria-label="ArkSystems home">
+                <img
+                        src="/favicon.svg"
+                        alt=""
+                        width="48"
+                        height="48"
+                        class="site-header__logo"
+                />
+
+                <span class="site-header__brand-name">ArkSystems</span>
+            </a>
+
+            <nav class="site-header__nav" aria-label="Primary navigation">
+                <ul class="site-header__nav-list">
+                    {
+                        navigation.map((item) => (
+                                <li>
+                                    <a
+                                            href={item.href}
+                                            class:list={[
+                                                "site-header__nav-link",
+                                                pathname === item.href &&
+                                                "site-header__nav-link--active",
+                                            ]}
+                                    >
+                                        {item.label}
+                                    </a>
+                                </li>
+                        ))
+                    }
+                </ul>
+            </nav>
+
+            <div class="site-header__actions">
+                <Button href="/contact" class="site-header__cta">
+                    Book a Call
+                </Button>
+            </div>
+        </div>
+    </Container>
+</header>
+
+<style>
+    .site-header {
+        position: relative;
+        z-index: var(--z-header);
+        border-bottom: var(--border-width) solid var(--color-border);
+        background: #fbf5ec;
+    }
+
+    .site-header__inner {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        gap: var(--space-10);
+        min-height: 6rem;
+    }
+
+    .site-header__brand {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-3);
+        color: var(--color-brand-700);
+        white-space: nowrap;
+    }
+
+    .site-header__logo {
+        width: 3rem;
+        height: 3rem;
+        object-fit: contain;
+    }
+
+    .site-header__brand-name {
+        font-family: var(--font-body);
+        font-size: var(--font-size-2xl);
+        font-weight: var(--font-weight-bold);
+        letter-spacing: -0.03em;
+    }
+
+    .site-header__nav {
+        justify-self: center;
+    }
+
+    .site-header__nav-list {
+        display: flex;
+        align-items: center;
+        gap: clamp(var(--space-6), 3vw, var(--space-10));
+        list-style: none;
+    }
+
+    .site-header__nav-link {
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-semibold);
+        letter-spacing: 0.03em;
+        color: var(--color-text-muted);
+        white-space: nowrap;
+        transition: color var(--transition-fast);
+    }
+
+    .site-header__nav-link:hover,
+    .site-header__nav-link--active {
+        color: var(--color-brand-700);
+    }
+
+    .site-header__actions {
+        justify-self: end;
+    }
+
+    .site-header__actions :global(.site-header__cta) {
+        padding-inline: var(--space-8);
+        border-radius: var(--radius-full);
+        white-space: nowrap;
+    }
+
+    @media (max-width: 64rem) {
+        .site-header__inner {
+            grid-template-columns: 1fr auto;
+        }
+
+        .site-header__nav {
+            display: none;
+        }
+    }
+
+    @media (max-width: 35rem) {
+        .site-header__inner {
+            min-height: 5rem;
+        }
+
+        .site-header__brand-name {
+            font-size: var(--font-size-xl);
+        }
+
+        .site-header__logo {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+
+        .site-header__actions {
+            display: none;
+        }
+    }
+</style>

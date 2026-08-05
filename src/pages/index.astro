@@ -1,23 +1,12 @@
 ---
-import "../styles/global.css";
+import Layout from "../layouts/Layout.astro";
+import HeroSection from "../components/sections/home/HeroSection.astro";
 
 const title = "ArkSystems";
-const description = "ArkSystems website is being rebuilt.";
+const description =
+	"ArkSystems helps businesses identify practical AI and workflow opportunities that improve capacity, efficiency, and profit.";
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>{title}</title>
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	</head>
-
-	<body>
-		<main>
-			<h1>ArkSystems</h1>
-		</main>
-	</body>
-</html>
+<Layout title={title} description={description}>
+	<HeroSection />
+</Layout>
