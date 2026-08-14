@@ -100,8 +100,7 @@ import Container from "../../common/Container.astro";
 
 <style>
     .problem-section {
-        padding-block: clamp(5rem, 8vw, 7rem);
-        background: #fbf5ec;
+        padding-block: var(--section-padding-y);
         border-top: 1px solid rgb(79 84 64 / 5%);
     }
 
@@ -220,7 +219,7 @@ import Container from "../../common/Container.astro";
 
     @media (max-width: 44rem) {
         .problem-section {
-            padding-block: 4rem;
+            padding-block: var(--section-padding-y-mobile);
         }
 
         .problem-section__title {

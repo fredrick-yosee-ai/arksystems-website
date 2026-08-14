@@ -73,8 +73,8 @@ const steps = [
 
 <style>
     .approach-section {
-        padding-block: clamp(5rem, 8vw, 7rem);
-        background: #fbf5ec;
+        padding-block: var(--section-padding-y);
+        //background: var(--color-section-secondary);
         border-top: 1px solid rgb(79 84 64 / 5%);
     }
 
@@ -165,7 +165,7 @@ const steps = [
 
     @media (max-width: 44rem) {
         .approach-section {
-            padding-block: 4rem;
+            padding-block: var(--section-padding-y-mobile);
         }
 
         .approach-section__title {

@@ -99,6 +99,15 @@
 	--z-header: 100;
 	--z-overlay: 200;
 	--z-modal: 300;
+
+	/* Section rhythm */
+	--section-padding-y: clamp(3.25rem, 4.5vw, 4.5rem);
+	--section-padding-y-mobile: 3rem;
+
+	/* Section backgrounds */
+	--color-section-primary: #fbf5ec;
+	--color-section-secondary: #f3f2e8;
+	--color-section-white: #fffdf8;
 }
 
 @media (min-width: 48rem) {
