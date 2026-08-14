@@ -1,0 +1,230 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600" width="100%" height="100%">
+  <defs>
+    <!-- Subtle drop shadow for the cards -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.04" />
+    </filter>
+  </defs>
+
+  <style>
+    /* Global Styles */
+    .box { 
+      fill: #FFFFFF; 
+      stroke: #E5E7EB; 
+      stroke-width: 1.5px; 
+      filter: url(#shadow); 
+    }
+    .box-text { 
+      font-family: system-ui, -apple-system, sans-serif; 
+      font-size: 15px; 
+      font-weight: 600; 
+      fill: #111827; 
+      text-anchor: middle; 
+    }
+    .line { 
+      fill: none; 
+      stroke: #3A6B44; 
+      stroke-width: 2px; 
+    }
+    .arrow { 
+      fill: #3A6B44; 
+    }
+    .icon-stroke { 
+      fill: none; 
+      stroke: #2F5233; 
+      stroke-width: 2.5px; 
+      stroke-linecap: round; 
+      stroke-linejoin: round; 
+    }
+    .icon-fill { 
+      fill: #E8F0E5; 
+    }
+    .check-circle { 
+      fill: #3A6B44; 
+      stroke: #FFFFFF; 
+      stroke-width: 2px; 
+    }
+    .check-mark { 
+      fill: none; 
+      stroke: #FFFFFF; 
+      stroke-width: 2px; 
+      stroke-linecap: round; 
+      stroke-linejoin: round; 
+    }
+  </style>
+
+  <!-- ================= INPUT SOURCES ================= -->
+
+  <!-- Email Input -->
+  <g transform="translate(40, 90)">
+    <rect class="box" width="120" height="130" rx="12" />
+    <text class="box-text" x="60" y="100">Email</text>
+    
+    <!-- Envelope Icon -->
+    <g transform="translate(38, 33)">
+      <rect class="icon-fill icon-stroke" width="44" height="32" rx="3" />
+      <path class="icon-stroke" d="M 0 0 L 22 15 L 44 0" />
+    </g>
+  </g>
+
+  <!-- Client Portal Input -->
+  <g transform="translate(40, 240)">
+    <rect class="box" width="120" height="130" rx="12" />
+    <text class="box-text" x="60" y="100">Client Portal</text>
+    
+    <!-- Browser & User Icon -->
+    <g transform="translate(35, 25)">
+      <rect class="icon-fill icon-stroke" width="50" height="34" rx="4" />
+      <line class="icon-stroke" x1="0" y1="12" x2="50" y2="12" />
+      <circle cx="7" cy="6" r="1.5" fill="#2F5233" />
+      <circle cx="13" cy="6" r="1.5" fill="#2F5233" />
+      <!-- User Silhouette -->
+      <circle cx="25" cy="22" r="5" fill="#2F5233" />
+      <path d="M 37 35 A 12 12 0 0 0 13 35 Z" fill="#2F5233" />
+    </g>
+  </g>
+
+  <!-- Spreadsheets Input -->
+  <g transform="translate(40, 390)">
+    <rect class="box" width="120" height="130" rx="12" />
+    <text class="box-text" x="60" y="100">Spreadsheets</text>
+    
+    <!-- Grid Icon -->
+    <g transform="translate(35, 25)">
+      <rect class="icon-fill icon-stroke" width="50" height="34" rx="3" />
+      <line class="icon-stroke" x1="0" y1="13" x2="50" y2="13" />
+      <line class="icon-stroke" x1="0" y1="24" x2="50" y2="24" />
+      <line class="icon-stroke" x1="17" y1="13" x2="17" y2="34" />
+      <line class="icon-stroke" x1="33" y1="13" x2="33" y2="34" />
+    </g>
+  </g>
+
+  <!-- ================= MERGING CONNECTORS ================= -->
+
+  <!-- Top (Email) path to center merge -->
+  <path class="line" d="M 160 155 L 205 155 Q 220 155 220 170 L 220 290 Q 220 305 235 305 L 260 305" />
+  
+  <!-- Bottom (Spreadsheets) path to center merge -->
+  <path class="line" d="M 160 455 L 205 455 Q 220 455 220 440 L 220 320 Q 220 305 235 305 L 260 305" />
+  
+  <!-- Middle (Portal) path straight to merge -->
+  <line class="line" x1="160" y1="305" x2="260" y2="305" />
+  
+  <!-- Merge Arrowhead -->
+  <polygon points="260,300 270,305 260,310" class="arrow" />
+
+
+  <!-- ================= PROCESS WORKFLOW ================= -->
+
+  <!-- Requested Step -->
+  <g transform="translate(270, 230)">
+    <rect class="box" width="120" height="150" rx="12" />
+    <text class="box-text" x="60" y="110">Requested</text>
+    
+    <!-- Document Icon -->
+    <g transform="translate(40, 30)">
+      <path class="icon-fill icon-stroke" d="M 0 0 L 25 0 L 35 10 L 35 45 L 0 45 Z" />
+      <path class="icon-stroke" d="M 25 0 L 25 10 L 35 10" />
+      <line class="icon-stroke" x1="8" y1="15" x2="20" y2="15" />
+      <line class="icon-stroke" x1="8" y1="25" x2="27" y2="25" />
+      <line class="icon-stroke" x1="8" y1="35" x2="27" y2="35" />
+      <!-- Green Check -->
+      <circle class="check-circle" cx="35" cy="45" r="11" />
+      <path class="check-mark" d="M 30 45 L 34 49 L 40 41" />
+    </g>
+  </g>
+
+  <!-- Arrow: Req -> Rec -->
+  <line class="line" x1="390" y1="305" x2="420" y2="305" />
+  <polygon points="420,300 430,305 420,310" class="arrow" />
+
+
+  <!-- Received Step -->
+  <g transform="translate(430, 230)">
+    <rect class="box" width="120" height="150" rx="12" />
+    <text class="box-text" x="60" y="110">Received</text>
+    
+    <!-- Folder Icon -->
+    <g transform="translate(35, 35)">
+      <path class="icon-fill icon-stroke" d="M 0 0 L 15 0 L 20 7 L 45 7 A 2 2 0 0 1 47 9 L 47 40 A 2 2 0 0 1 45 42 L 0 42 A 2 2 0 0 1 -2 40 L -2 2 A 2 2 0 0 1 0 0 Z" />
+      <!-- Green Check -->
+      <circle class="check-circle" cx="40" cy="40" r="11" />
+      <path class="check-mark" d="M 35 40 L 39 44 L 45 36" />
+    </g>
+  </g>
+
+  <!-- Arrow: Rec -> Missing -->
+  <line class="line" x1="550" y1="305" x2="580" y2="305" />
+  <polygon points="580,300 590,305 580,310" class="arrow" />
+
+
+  <!-- Missing Items Step (Highlighted) -->
+  <g transform="translate(590, 230)">
+    <!-- Highlighted Box Styling -->
+    <rect width="120" height="150" rx="12" fill="#FDF8ED" stroke="#D99B29" stroke-width="2" filter="url(#shadow)" />
+    <text class="box-text" x="60" y="103">Missing</text>
+    <text class="box-text" x="60" y="123">Items</text>
+    
+    <!-- Exclamation Icon -->
+    <g transform="translate(60, 50)">
+      <circle cx="0" cy="0" r="24" fill="#C2821A" />
+      <line x1="0" y1="-12" x2="0" y2="4" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" />
+      <circle cx="0" cy="12" r="2.5" fill="#FFFFFF" />
+    </g>
+  </g>
+
+  <!-- 'Needs attention' Note & Dashed Arrow -->
+  <g transform="translate(580, 140)">
+    <rect width="140" height="36" rx="8" fill="#FCE5CD" />
+    <text x="70" y="23" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#B46E14" text-anchor="middle">Needs attention</text>
+    
+    <!-- Dashed Orange Arrow -->
+    <line x1="70" y1="45" x2="70" y2="75" stroke="#B46E14" stroke-width="2" stroke-dasharray="6,4" />
+    <polygon points="66,72 70,80 74,72" fill="#B46E14" />
+  </g>
+
+  <!-- Arrow: Missing -> Review -->
+  <line class="line" x1="710" y1="305" x2="740" y2="305" />
+  <polygon points="740,300 750,305 740,310" class="arrow" />
+
+
+  <!-- Review Step -->
+  <g transform="translate(750, 230)">
+    <rect class="box" width="120" height="150" rx="12" />
+    <text class="box-text" x="60" y="110">Review</text>
+    
+    <!-- People Icon -->
+    <g transform="translate(60, 60)">
+      <!-- Background Person -->
+      <circle cx="18" cy="-12" r="8" class="icon-fill icon-stroke" />
+      <path d="M 5 18 A 15 15 0 0 1 35 18 Z" class="icon-fill icon-stroke" />
+      <!-- Foreground Person -->
+      <circle cx="-5" cy="-8" r="10" class="icon-fill icon-stroke" />
+      <path d="M -25 18 A 18 18 0 0 1 15 18 Z" class="icon-fill icon-stroke" />
+    </g>
+  </g>
+
+  <!-- Arrow: Review -> Ready -->
+  <line class="line" x1="870" y1="305" x2="900" y2="305" />
+  <polygon points="900,300 910,305 900,310" class="arrow" />
+
+
+  <!-- Ready Step -->
+  <g transform="translate(910, 230)">
+    <rect class="box" width="120" height="150" rx="12" />
+    <text class="box-text" x="60" y="110">Ready</text>
+    
+    <!-- Document Icon (Same as Requested) -->
+    <g transform="translate(40, 30)">
+      <path class="icon-fill icon-stroke" d="M 0 0 L 25 0 L 35 10 L 35 45 L 0 45 Z" />
+      <path class="icon-stroke" d="M 25 0 L 25 10 L 35 10" />
+      <line class="icon-stroke" x1="8" y1="15" x2="20" y2="15" />
+      <line class="icon-stroke" x1="8" y1="25" x2="27" y2="25" />
+      <line class="icon-stroke" x1="8" y1="35" x2="27" y2="35" />
+      <!-- Green Check -->
+      <circle class="check-circle" cx="35" cy="45" r="11" />
+      <path class="check-mark" d="M 30 45 L 34 49 L 40 41" />
+    </g>
+  </g>
+
+</svg>
