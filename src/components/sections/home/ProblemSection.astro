@@ -1,0 +1,256 @@
+---
+import Container from "../../common/Container.astro";
+---
+
+<section class="problem-section">
+    <Container>
+        <div class="problem-section__content">
+            <h2 class="problem-section__title">
+                The real problem is not a lack of<br />
+                AI tools.
+            </h2>
+
+            <div class="problem-section__statement">
+                <p>
+                    It is not knowing where they will create worthwhile business
+                    value.
+                </p>
+            </div>
+
+            <div class="problem-section__copy">
+                <p>
+                    Many businesses are <strong>experimenting with AI</strong> while
+                    the workflows that affect daily operations remain slow, manual
+                    and difficult to track.
+                </p>
+
+                <p>
+                    Staff spend time chasing information. Work becomes blocked.
+                    Managers lack visibility. Experienced people handle repetitive
+                    administrative tasks. New tools are considered without a clear
+                    business case.
+                </p>
+
+                <p>
+                    <strong>ArkSystems starts with the workflow</strong>—not the
+                    technology.
+                </p>
+            </div>
+
+            <div class="problem-section__grid">
+                <article class="problem-card">
+	<span class="problem-card__icon material-symbols-rounded" aria-hidden="true">
+		schedule
+	</span>
+
+                    <div>
+                        <h3>Work keeps getting delayed</h3>
+                        <p>
+                            Missing information, unclear handoffs and repeated follow-up
+                            prevent work from moving forward.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="problem-card">
+	<span class="problem-card__icon material-symbols-rounded" aria-hidden="true">
+			work_history
+	</span>
+
+                    <div>
+                        <h3>Staff capacity is being consumed</h3>
+                        <p>
+                            Experienced employees spend valuable time on repetitive
+                            coordination and administrative work.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="problem-card">
+	<span class="problem-card__icon material-symbols-rounded" aria-hidden="true">
+		visibility_off
+	</span>
+
+                    <div>
+                        <h3>Leaders cannot see what is blocked</h3>
+                        <p>
+                            Status information is scattered across email, spreadsheets,
+                            software and individual team members.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="problem-card">
+	<span class="problem-card__icon material-symbols-rounded" aria-hidden="true">
+		psychology_alt
+	</span>
+
+                    <div>
+                        <h3>Technology decisions become uncertain</h3>
+                        <p>
+                            Businesses know AI matters, but they do not know which
+                            opportunity is valuable, feasible or worth the investment.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </Container>
+</section>
+
+<style>
+    .problem-section {
+        padding-block: clamp(5rem, 8vw, 7rem);
+        background: #fbf5ec;
+        border-top: 1px solid rgb(79 84 64 / 5%);
+    }
+
+    .problem-section__content {
+        max-width: 69rem;
+        margin-inline: auto;
+    }
+
+    .problem-section__title {
+        max-width: 37rem;
+        margin: 0;
+        font-size: clamp(2.1rem, 3vw, 2.75rem);
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        color: var(--color-neutral-900);
+    }
+
+    .problem-section__statement {
+        max-width: 41rem;
+        margin-top: 1.6rem;
+        padding: 1.25rem 1.4rem;
+        border-left: 3px solid var(--color-brand-700);
+        border-radius: 0 0.3rem 0.3rem 0;
+        background: rgb(241 240 229 / 72%);
+    }
+
+    .problem-section__statement p {
+        margin: 0;
+        font-family: var(--font-heading);
+        font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+        font-weight: var(--font-weight-semibold);
+        line-height: 1.35;
+        color: var(--color-brand-900);
+    }
+
+    .problem-section__copy {
+        display: grid;
+        gap: 1.35rem;
+        max-width: 56rem;
+        margin-top: 1.8rem;
+    }
+
+    .problem-section__copy p {
+        margin: 0;
+        font-size: 0.98rem;
+        line-height: 1.65;
+        color: var(--color-neutral-700);
+    }
+
+    .problem-section__copy strong {
+        font-weight: var(--font-weight-bold);
+        color: var(--color-brand-800);
+    }
+
+    .problem-section__grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+        margin-top: 3.25rem;
+    }
+
+    .problem-card {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: flex-start;
+        gap: 1.15rem;
+        min-height: 9.5rem;
+        padding: 1.75rem 1.9rem;
+        border: 1px solid rgb(79 84 64 / 13%);
+        border-radius: 0.55rem;
+        background: rgb(255 253 248 / 74%);
+        box-shadow: 0 2px 5px rgb(58 63 46 / 3%);
+    }
+
+    .problem-card__icon {
+        display: grid;
+        width: 2.5rem;
+        height: 2.5rem;
+        flex: 0 0 auto;
+        place-items: center;
+        border-radius: 0.65rem;
+        background: var(--color-brand-100);
+        font-size: 1.4rem;
+        color: var(--color-brand-700);
+    }
+
+    .problem-card h3 {
+        margin: 0 0 0.85rem;
+        font-family: var(--font-body);
+        font-size: 1rem;
+        font-weight: var(--font-weight-medium);
+        line-height: 1.4;
+        color: var(--color-neutral-900);
+    }
+
+    .problem-card p {
+        margin: 0;
+        font-size: 0.94rem;
+        line-height: 1.65;
+        color: var(--color-neutral-700);
+    }
+
+    @media (max-width: 62rem) {
+        .problem-section__content {
+            max-width: 100%;
+        }
+
+        .problem-section__title br {
+            display: none;
+        }
+
+        .problem-section__grid {
+            margin-top: 2.75rem;
+        }
+    }
+
+    @media (max-width: 44rem) {
+        .problem-section {
+            padding-block: 4rem;
+        }
+
+        .problem-section__title {
+            font-size: clamp(2rem, 9vw, 2.5rem);
+        }
+
+        .problem-section__statement {
+            margin-top: 1.4rem;
+            padding: 1rem 1.15rem;
+        }
+
+        .problem-section__copy {
+            margin-top: 1.5rem;
+        }
+
+        .problem-section__grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        .problem-card {
+            gap: 1rem;
+            padding: 1.4rem;
+        }
+
+        .problem-card__icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            font-size: 1.25rem;
+        }
+    }
+</style>
