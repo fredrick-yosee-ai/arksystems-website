@@ -1,0 +1,382 @@
+---
+import Container from "../../common/Container.astro";
+import Button from "../../common/Button.astro";
+
+const deliverables = [
+    "Focused opportunity and workflow review",
+    "Priority workflow and bottleneck summary",
+    "High-level operational and financial value hypothesis",
+    "Practical process, software, automation and AI options",
+    "Recommended next step",
+    "Readiness, adoption, privacy and risk considerations",
+    "Concise Workshop Decision Brief",
+    "Focused Implementation Proposal when justified",
+];
+---
+
+<section class="workshop-section">
+    <Container>
+        <div class="workshop-section__content">
+            <div class="workshop-section__main">
+                <div class="workshop-section__intro">
+                    <p class="workshop-section__eyebrow">The Starting Point</p>
+
+                    <h2 class="workshop-section__title">
+                        AI Opportunity &amp; Business Value Workshop
+                    </h2>
+
+                    <p class="workshop-section__lead">
+                        One focused working day. One priority workflow. One clear next step.
+                    </p>
+
+                    <div class="workshop-section__copy">
+                        <p>
+                            Before investing in another tool or implementation, understand
+                            where AI or automation can create practical value in your business.
+                        </p>
+
+                        <p>
+                            During the workshop, ArkSystems examines one priority workflow,
+                            identifies the main bottlenecks and evaluates the simplest justified
+                            path forward.
+                        </p>
+                    </div>
+
+                    <div class="workshop-deliverables">
+                        <p class="workshop-deliverables__title">What you receive</p>
+
+                        <div class="workshop-deliverables__grid">
+                            {
+                                deliverables.map((item) => (
+                                        <div class="workshop-deliverable">
+										<span
+                                                class="workshop-deliverable__icon material-symbols-rounded"
+                                                aria-hidden="true"
+                                        >
+											check_circle
+										</span>
+
+                                            <span>{item}</span>
+                                        </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="workshop-investment">
+                    <p class="workshop-investment__label">Investment</p>
+
+                    <div class="workshop-investment__divider"></div>
+
+                    <p class="workshop-investment__price">CAD $1,000</p>
+
+                    <p class="workshop-investment__subcopy">
+                        Paid upfront for one focused working day.
+                    </p>
+
+                    <div class="workshop-credit">
+                        <p class="workshop-credit__title">Workshop credit</p>
+
+                        <div class="workshop-credit__divider"></div>
+
+                        <p>
+                            When you proceed with an eligible ArkSystems implementation
+                            sprint of CAD $7,500 or more, the full CAD $1,000 workshop fee
+                            can be credited toward the implementation.
+                        </p>
+
+                        <p>
+                            The implementation agreement must be signed and the required
+                            deposit paid within 30 days of the workshop findings discussion.
+                        </p>
+
+                        <p>
+                            The workshop remains a complete standalone engagement. There is
+                            no requirement to proceed with implementation.
+                        </p>
+                    </div>
+
+                    <div class="workshop-investment__action">
+                        <Button href="/contact" class="workshop-investment__cta">
+                            <span>Book an AI Opportunity Call</span>
+                            <span
+                                    class="workshop-investment__arrow material-symbols-rounded"
+                                    aria-hidden="true"
+                            >
+								arrow_forward
+							</span>
+                        </Button>
+                    </div>
+                </aside>
+            </div>
+
+            <p class="workshop-section__disclaimer">
+                Estimates are based on client-provided information and clearly stated
+                assumptions. Savings, revenue, capacity recovery and other business
+                outcomes are not guaranteed. Taxes, software subscriptions and
+                third-party costs are excluded from the workshop credit.
+            </p>
+        </div>
+    </Container>
+</section>
+
+<style>
+    .workshop-section {
+        padding-block: var(--section-padding-y);
+        background: var(--color-section-secondary);
+        border-top: 1px solid rgb(79 84 64 / 5%);
+    }
+
+    .workshop-section__content {
+        max-width: 69rem;
+        margin-inline: auto;
+    }
+
+    .workshop-section__main {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(20rem, 0.9fr);
+        align-items: start;
+        gap: clamp(3rem, 6vw, 5rem);
+    }
+
+    .workshop-section__eyebrow {
+        margin: 0 0 1.25rem;
+        font-size: 0.76rem;
+        font-weight: var(--font-weight-bold);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-brand-700);
+    }
+
+    .workshop-section__title {
+        max-width: 36rem;
+        margin: 0;
+        font-size: clamp(2.3rem, 3.7vw, 3.2rem);
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        color: var(--color-brand-900);
+    }
+
+    .workshop-section__lead {
+        max-width: 38rem;
+        margin: 1.5rem 0 0;
+        font-family: var(--font-heading);
+        font-size: clamp(1.2rem, 1.7vw, 1.45rem);
+        font-weight: var(--font-weight-semibold);
+        line-height: 1.4;
+        color: var(--color-neutral-900);
+    }
+
+    .workshop-section__copy {
+        display: grid;
+        gap: 1.5rem;
+        max-width: 42rem;
+        margin-top: 2rem;
+    }
+
+    .workshop-section__copy p {
+        margin: 0;
+        font-size: 0.96rem;
+        line-height: 1.7;
+        color: var(--color-neutral-700);
+    }
+
+    .workshop-deliverables {
+        margin-top: 2.6rem;
+        padding: 1.8rem 1.9rem;
+        border: 1px solid rgb(79 84 64 / 12%);
+        border-radius: 0.55rem;
+        background: rgb(255 253 248 / 72%);
+    }
+
+    .workshop-deliverables__title {
+        margin: 0;
+        font-size: 0.96rem;
+        font-weight: var(--font-weight-medium);
+        color: var(--color-brand-800);
+    }
+
+    .workshop-deliverables__title::after {
+        content: "";
+        display: block;
+        margin-top: 0.8rem;
+        border-bottom: 1px solid rgb(79 84 64 / 10%);
+    }
+
+    .workshop-deliverables__grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.4rem 2rem;
+        margin-top: 1.5rem;
+    }
+
+    .workshop-deliverable {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        font-size: 0.92rem;
+        line-height: 1.55;
+        color: var(--color-neutral-700);
+    }
+
+    .workshop-deliverable__icon {
+        flex: 0 0 auto;
+        margin-top: 0.08rem;
+        font-size: 1rem;
+        color: var(--color-brand-700);
+        font-variation-settings:
+                "FILL" 0,
+                "wght" 500,
+                "GRAD" 0,
+                "opsz" 20;
+    }
+
+    .workshop-investment {
+        padding: 2rem 1.8rem;
+        border: 1px solid var(--color-brand-700);
+        border-radius: 0.7rem;
+        background: rgb(255 255 255 / 75%);
+        box-shadow: 0 10px 25px rgb(58 63 46 / 8%);
+    }
+
+    .workshop-investment__label {
+        margin: 0;
+        font-size: 0.8rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--color-neutral-700);
+    }
+
+    .workshop-investment__divider {
+        margin-block: 0.8rem 1.2rem;
+        border-bottom: 1px solid rgb(79 84 64 / 11%);
+    }
+
+    .workshop-investment__price {
+        margin: 0;
+        font-family: var(--font-heading);
+        font-size: clamp(2.7rem, 4.5vw, 3.7rem);
+        font-weight: var(--font-weight-semibold);
+        line-height: 1;
+        color: var(--color-brand-900);
+        white-space: nowrap;
+    }
+
+    .workshop-investment__subcopy {
+        margin: 1.2rem 0 0;
+        font-size: 0.9rem;
+        line-height: 1.55;
+        color: var(--color-neutral-700);
+    }
+
+    .workshop-credit {
+        margin-top: 1.8rem;
+        padding: 1.35rem 1.25rem;
+        border: 1px solid rgb(79 84 64 / 10%);
+        border-radius: 0.55rem;
+        background: var(--color-brand-50);
+    }
+
+    .workshop-credit__title {
+        margin: 0;
+        font-size: 0.92rem;
+        font-weight: var(--font-weight-bold);
+        color: var(--color-brand-800);
+    }
+
+    .workshop-credit__divider {
+        margin-block: 0.65rem 0.9rem;
+        border-bottom: 1px solid rgb(79 84 64 / 15%);
+    }
+
+    .workshop-credit p:not(.workshop-credit__title) {
+        margin: 0;
+        font-size: 0.87rem;
+        line-height: 1.65;
+        color: var(--color-neutral-700);
+    }
+
+    .workshop-credit p + p {
+        margin-top: 1rem;
+    }
+
+    .workshop-investment__action {
+        margin-top: 1.5rem;
+    }
+
+    .workshop-investment__action :global(.workshop-investment__cta) {
+        width: 100%;
+        min-height: 3.4rem;
+        padding-inline: 1.2rem;
+        border-radius: 0.35rem;
+        font-size: 0.73rem;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+    }
+
+    .workshop-investment__arrow {
+        margin-left: 0.3rem;
+        font-size: 1.2rem;
+    }
+
+    .workshop-section__disclaimer {
+        margin: 3.5rem 0 0;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgb(79 84 64 / 8%);
+        font-size: 0.69rem;
+        line-height: 1.5;
+        color: var(--color-text-muted);
+    }
+
+    @media (max-width: 62rem) {
+        .workshop-section__main {
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+
+        .workshop-investment {
+            max-width: 34rem;
+        }
+
+        .workshop-investment__price {
+            white-space: normal;
+        }
+    }
+
+    @media (max-width: 44rem) {
+        .workshop-section {
+            padding-block: var(--section-padding-y-mobile);
+        }
+
+        .workshop-section__title {
+            font-size: clamp(2.1rem, 9vw, 2.6rem);
+        }
+
+        .workshop-section__lead {
+            margin-top: 1.25rem;
+        }
+
+        .workshop-section__copy {
+            margin-top: 1.6rem;
+        }
+
+        .workshop-deliverables {
+            margin-top: 2rem;
+            padding: 1.4rem;
+        }
+
+        .workshop-deliverables__grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .workshop-investment {
+            padding: 1.5rem 1.3rem;
+        }
+
+        .workshop-section__disclaimer {
+            margin-top: 2.5rem;
+        }
+    }
+</style>
