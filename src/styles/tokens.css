@@ -30,8 +30,8 @@
 	--color-text-muted: var(--color-neutral-500);
 	--color-heading: var(--color-brand-900);
 	--color-border: var(--color-neutral-200);
-	--color-primary: var(--color-brand-700);
-	--color-primary-hover: var(--color-brand-800);
+	--color-primary: #2c3c23;
+	--color-primary-hover: #22301b;
 	--color-primary-text: var(--color-white);
 
 	/* Typography */
