@@ -1,0 +1,176 @@
+---
+import Container from "../../common/Container.astro";
+
+const faqs = [
+    {
+        question: "Do you always recommend AI?",
+        answer:
+            "No. The right answer may be a better process, improved use of existing software, integration, automation, practical AI, or no immediate technology change.",
+    },
+    {
+        question: "What types of workflows do you examine?",
+        answer:
+            "ArkSystems focuses on recurring workflows involving document collection, follow-up, approvals, status visibility, information handoffs, and repetitive administrative work.",
+    },
+    {
+        question: "Who is the workshop for?",
+        answer:
+            "The workshop is designed for established businesses with a recurring workflow problem, access to the people who understand it, and the ability to act when a worthwhile opportunity is identified. Our current market focus is accounting, bookkeeping, and CAS firms.",
+    },
+    {
+        question: "What happens after the workshop?",
+        answer:
+            "You receive a clear decision and recommended next step. When implementation is justified, ArkSystems may prepare a focused Implementation Proposal. You are not required to proceed.",
+    },
+    {
+        question: "Do you guarantee savings or ROI?",
+        answer:
+            "No. Financial-value estimates are based on client inputs and stated assumptions. They help support a business decision but do not guarantee a result.",
+    },
+    {
+        question: "Will the workshop solve every workflow in the business?",
+        answer:
+            "No. The workshop intentionally focuses on one priority workflow so the analysis remains practical, specific, and useful.",
+    },
+];
+---
+
+<section class="faq-section">
+    <Container>
+        <div class="faq-section__content">
+            <h2 class="faq-section__title">
+                Frequently asked questions
+            </h2>
+
+            <div class="faq-section__list">
+                {
+                    faqs.map((faq) => (
+                            <details class="faq-item">
+                                <summary class="faq-item__question">
+                                    <span>{faq.question}</span>
+
+                                    <span
+                                            class="faq-item__icon material-symbols-rounded"
+                                            aria-hidden="true"
+                                    >
+									expand_more
+								</span>
+                                </summary>
+
+                                <div class="faq-item__answer">
+                                    <p>{faq.answer}</p>
+                                </div>
+                            </details>
+                    ))
+                }
+            </div>
+        </div>
+    </Container>
+</section>
+
+<style>
+    .faq-section {
+        padding-block: var(--section-padding-y);
+        background: var(--color-section-secondary);
+        border-top: 1px solid rgb(79 84 64 / 5%);
+    }
+
+    .faq-section__content {
+        max-width: 53rem;
+        margin-inline: auto;
+    }
+
+    .faq-section__title {
+        margin: 0;
+        text-align: center;
+        font-size: clamp(2.25rem, 3.5vw, 3rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--color-neutral-900);
+    }
+
+    .faq-section__list {
+        display: grid;
+        gap: 0.85rem;
+        margin-top: 3rem;
+    }
+
+    .faq-item {
+        border: 1px solid rgb(79 84 64 / 12%);
+        border-radius: 0.55rem;
+        background: rgb(255 253 248 / 76%);
+        box-shadow: 0 2px 5px rgb(58 63 46 / 3%);
+        overflow: hidden;
+    }
+
+    .faq-item__question {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        padding: 1.4rem 1.5rem;
+        list-style: none;
+        cursor: pointer;
+        font-size: 0.96rem;
+        font-weight: var(--font-weight-bold);
+        line-height: 1.45;
+        color: var(--color-brand-800);
+    }
+
+    .faq-item__question::-webkit-details-marker {
+        display: none;
+    }
+
+    .faq-item__icon {
+        flex: 0 0 auto;
+        font-size: 1.25rem;
+        color: var(--color-brand-700);
+        transition: transform var(--transition-base);
+    }
+
+    .faq-item[open] .faq-item__icon {
+        transform: rotate(180deg);
+    }
+
+    .faq-item__answer {
+        padding: 0 1.5rem 1.4rem;
+    }
+
+    .faq-item__answer::before {
+        content: "";
+        display: block;
+        margin-bottom: 1rem;
+        border-top: 1px solid rgb(79 84 64 / 10%);
+    }
+
+    .faq-item__answer p {
+        max-width: 46rem;
+        margin: 0;
+        font-size: 0.94rem;
+        line-height: 1.7;
+        color: var(--color-neutral-700);
+    }
+
+    @media (max-width: 44rem) {
+        .faq-section {
+            padding-block: var(--section-padding-y-mobile);
+        }
+
+        .faq-section__title {
+            font-size: clamp(2rem, 9vw, 2.55rem);
+        }
+
+        .faq-section__list {
+            margin-top: 2.4rem;
+        }
+
+        .faq-item__question {
+            padding: 1.2rem;
+            font-size: 0.92rem;
+        }
+
+        .faq-item__answer {
+            padding: 0 1.2rem 1.2rem;
+        }
+    }
+</style>
