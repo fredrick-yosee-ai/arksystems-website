@@ -1,0 +1,165 @@
+---
+import Container from "../../common/Container.astro";
+
+const focusAreas = [
+    {
+        number: "1.",
+        title: "Document collection",
+        body:
+            "Create a clearer way to request, receive, organize and track required information.",
+    },
+    {
+        number: "2.",
+        title: "Follow-up and reminders",
+        body:
+            "Reduce repeated manual chasing while keeping communication appropriately controlled.",
+    },
+    {
+        number: "3.",
+        title: "Workflow visibility",
+        body:
+            "Give staff and managers a clearer view of what is waiting, blocked, under review or ready.",
+    },
+    {
+        number: "4.",
+        title: "Handoffs and approvals",
+        body:
+            "Make ownership, next actions and exception handling easier to understand.",
+    },
+    {
+        number: "5.",
+        title: "Repetitive administration",
+        body:
+            "Identify work that can be simplified, configured or automated without removing necessary judgment.",
+    },
+    {
+        number: "6.",
+        title: "Practical AI adoption",
+        body:
+            "Use AI where it supports a specific workflow and credible business case—not because it is fashionable.",
+    },
+];
+---
+
+<section class="workflow-focus-section">
+    <Container>
+        <div class="workflow-focus-section__content">
+            <h2 class="workflow-focus-section__title">
+                Better workflows help work move forward.
+            </h2>
+
+            <p class="workflow-focus-section__description">
+                ArkSystems focuses on recurring workflows where information, documents,
+                approvals and status updates move between people and systems.
+            </p>
+
+            <div class="workflow-focus-section__grid">
+                {
+                    focusAreas.map((item) => (
+                            <article class="workflow-focus-card">
+                                <h3>
+                                    <span>{item.number}</span>
+                                    {item.title}
+                                </h3>
+
+                                <p>{item.body}</p>
+                            </article>
+                    ))
+                }
+            </div>
+        </div>
+    </Container>
+</section>
+
+<style>
+    .workflow-focus-section {
+        padding-block: var(--section-padding-y);
+        background: var(--color-section-secondary);
+        border-top: 1px solid rgb(79 84 64 / 5%);
+    }
+
+    .workflow-focus-section__content {
+        max-width: 69rem;
+        margin-inline: auto;
+    }
+
+    .workflow-focus-section__title {
+        max-width: 34rem;
+        margin: 0;
+        font-size: clamp(2.25rem, 3.5vw, 3rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--color-neutral-900);
+    }
+
+    .workflow-focus-section__description {
+        max-width: 47rem;
+        margin: 1.5rem 0 0;
+        font-size: 0.98rem;
+        line-height: 1.65;
+        color: var(--color-neutral-700);
+    }
+
+    .workflow-focus-section__grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.25rem;
+        margin-top: 3rem;
+    }
+
+    .workflow-focus-card {
+        min-height: 11rem;
+        padding: 1.8rem 1.9rem;
+        border: 1px solid rgb(79 84 64 / 12%);
+        border-radius: 0.55rem;
+        background: rgb(255 253 248 / 76%);
+        box-shadow: 0 2px 5px rgb(58 63 46 / 3%);
+    }
+
+    .workflow-focus-card h3 {
+        margin: 0 0 1rem;
+        font-family: var(--font-body);
+        font-size: 0.98rem;
+        font-weight: var(--font-weight-bold);
+        line-height: 1.4;
+        color: var(--color-brand-800);
+    }
+
+    .workflow-focus-card h3 span {
+        margin-right: 0.25rem;
+    }
+
+    .workflow-focus-card p {
+        margin: 0;
+        font-size: 0.94rem;
+        line-height: 1.65;
+        color: var(--color-neutral-700);
+    }
+
+    @media (max-width: 62rem) {
+        .workflow-focus-section__grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 44rem) {
+        .workflow-focus-section {
+            padding-block: var(--section-padding-y-mobile);
+        }
+
+        .workflow-focus-section__title {
+            font-size: clamp(2rem, 9vw, 2.55rem);
+        }
+
+        .workflow-focus-section__grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 2.4rem;
+        }
+
+        .workflow-focus-card {
+            min-height: auto;
+            padding: 1.4rem;
+        }
+    }
+</style>
