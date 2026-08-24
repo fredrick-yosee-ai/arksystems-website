@@ -1,28 +1,36 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import HeroSection from "../components/sections/home/HeroSection.astro";
-import ProblemSection from "../components/sections/home/ProblemSection.astro";
-import AccountingFirmsSection from "../components/sections/home/AccountingFirmsSection.astro";
-import ApproachSection from "../components/sections/home/ApproachSection.astro";
-import WorkshopSection from "../components/sections/home/WorkshopSection.astro";
-import DifferentiatorsSection from "../components/sections/home/DifferentiatorsSection.astro";
-import WorkflowFocusSection from "../components/sections/home/WorkflowFocusSection.astro";
-import AboutSection from "../components/sections/home/AboutSection.astro";
-import FaqSection from "../components/sections/home/FaqSection.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-const title = "ArkSystems";
-const description =
-	"ArkSystems helps businesses identify practical AI and workflow opportunities that improve capacity, efficiency, and profit.";
+/*
+ * Homepage shell. The ten sections land in the next two branches:
+ *   build/home-1-4  — hero, the problem, see it work, is this you
+ *   build/home-5-10 — what happens, start with one, who you're working with,
+ *                     how we work, FAQ, closing
+ *
+ * The section IDs the header and footer link to are created with those sections, not
+ * here, so there is one definition of each and not two.
+ */
 ---
 
-<Layout title={title} description={description}>
-	<HeroSection />
-	<ProblemSection />
-	<AccountingFirmsSection />
-	<ApproachSection />
-	<WorkshopSection />
-	<DifferentiatorsSection />
-	<WorkflowFocusSection />
-	<AboutSection />
-	<FaqSection />
-</Layout>
+<BaseLayout
+  title="ArkSystems"
+  description="ArkSystems finds where AI can create real value in your business, then builds that one thing. Metro Vancouver."
+>
+  <h1>Find where AI can create real value in your business.</h1>
+  <p class="scaffold-note">Homepage sections land in the next branch.</p>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: var(--ark-h1);
+    max-width: 16ch;
+    padding-inline: var(--ark-gutter);
+    padding-top: 72px;
+  }
+
+  .scaffold-note {
+    padding-inline: var(--ark-gutter);
+    padding-block: 24px 96px;
+    color: var(--ark-muted);
+  }
+</style>

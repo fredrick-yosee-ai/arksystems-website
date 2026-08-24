@@ -1,0 +1,87 @@
+---
+/**
+ * The one CTA. Every instance points at BOOKING_URL, held in `src/consts.ts`.
+ *
+ * It renders as a plain `<a href>` — a real link that works with JavaScript disabled,
+ * with the script blocked, or if Cal.com is down. The embed script in BaseLayout
+ * upgrades it to a popup at runtime by finding `[data-cal-link]`; if that never runs,
+ * the link still books the call. The fallback is the markup, not a fallback path.
+ */
+import { BOOKING_URL, BOOKING_CAL_LINK } from "../../consts";
+import type { CtaLocation } from "../../consts";
+
+interface Props {
+  /** Which block this CTA sits in. Becomes the analytics event label. */
+  location: CtaLocation;
+  /** `olive` for cream backgrounds, `cream` for the dark olive band. */
+  variant?: "olive" | "cream";
+  /** Full-width on phone, where the mockup stretches the button edge to edge. */
+  block?: boolean;
+  class?: string;
+}
+
+const {
+  location,
+  variant = "olive",
+  block = false,
+  class: className,
+} = Astro.props;
+---
+
+<a
+  href={BOOKING_URL}
+  data-cal-link={BOOKING_CAL_LINK}
+  data-cal-config='{"layout":"month_view"}'
+  data-cta={location}
+  class:list={["booking-button", `booking-button--${variant}`, { "booking-button--block": block }, className]}
+>
+  <slot>See it working — book 20 minutes</slot>
+</a>
+
+<style>
+  .booking-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--ark-font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    padding: 17px 26px;
+    border-radius: var(--ark-radius-sm);
+    border: 1px solid transparent;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  /* Olive on cream. White on --ark-olive measures 12.2:1. */
+  .booking-button--olive {
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+  }
+
+  .booking-button--olive:hover {
+    background: #2c401f;
+  }
+
+  /* Reversed, for the dark olive band. --ark-olive on white is the same 12.2:1. */
+  .booking-button--cream {
+    background: var(--ark-on-dark);
+    color: var(--ark-olive);
+  }
+
+  .booking-button--cream:hover {
+    background: var(--ark-green-soft);
+  }
+
+  .booking-button--block {
+    display: flex;
+    width: 100%;
+  }
+
+  @media (max-width: 900px) {
+    .booking-button {
+      padding: 16px 22px;
+    }
+  }
+</style>

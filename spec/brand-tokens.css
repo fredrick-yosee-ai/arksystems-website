@@ -1,0 +1,109 @@
+/* ArkSystems — brand tokens
+   Source: 05 Brand Guide v1.4. These are decided values, not defaults to tune.
+   Import once, use everywhere. Do not introduce colours that are not in this file. */
+
+:root {
+  /* ---- Core palette ---- */
+  --ark-olive:           #38512F;  /* primary. CTAs, headings, the dark section */
+  --ark-olive-2:         #7A8C3A;  /* secondary. eyebrows, rules, quiet accents */
+  --ark-cream:           #FEF5E7;  /* page background */
+  --ark-charcoal:        #3A3630;  /* body text */
+  --ark-green-soft:      #E2ECDF;  /* light panels, chips */
+  --ark-grey:            #E5E5E0;  /* hairlines, borders */
+
+  /* ---- Gold: the one thing that needs the owner ----
+     Used sparingly and with intent. Gold marks what is waiting on a human.
+     It is never a CTA colour — that would break the limited-emphasis rule. */
+  --ark-gold:            #B88922;
+  --ark-gold-ink:        #8A6614;  /* gold text on light, passes contrast */
+  --ark-gold-bg:         #FBF2DC;
+  --ark-gold-border:     #E8D9B4;
+
+  /* ---- Supporting greens: diagrams and illustration only ---- */
+  --ark-green-1:         #4C6F40;
+  --ark-green-2:         #618D52;
+  --ark-green-3:         #78A767;
+
+  /* ---- Earthy accents: illustration only, never UI ---- */
+  --ark-terracotta:      #A8623E;
+  --ark-amber:           #C99A3E;
+
+  /* ---- Logo ---- */
+  --ark-logo-dark:       #4F5440;
+  --ark-logo-light:      #9E9F7E;
+
+  /* ---- Text on the dark olive section ---- */
+  --ark-on-dark:         #FFFFFF;
+  --ark-on-dark-muted:   #CDD8B8;
+  --ark-on-dark-eyebrow: #B9C88F;
+
+  /* ---- Muted text on cream ---- */
+  --ark-muted:           #6F6A61;
+  --ark-muted-2:         #8A857B;
+
+  /* ---- Type ---- */
+  --ark-font-display: 'Lora', Georgia, 'Times New Roman', serif;
+  --ark-font-body:    'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Display sizes are the desktop values from the approved mockup.
+     The hero h1 drops to 3.5rem beside the illustration and 2.15rem on phone. */
+  --ark-h1:      3.5rem;
+  --ark-h2:      3.1rem;
+  --ark-h3:      1.5rem;
+  --ark-body-lg: 1.16rem;
+  --ark-body:    1rem;
+  --ark-small:   .9rem;
+  --ark-eyebrow: .78rem;
+
+  --ark-eyebrow-tracking: .18em;
+
+  /* ---- Spacing and shape ---- */
+  --ark-radius:       14px;
+  --ark-radius-sm:    9px;
+  --ark-radius-pill:  20px;
+  --ark-gutter:       88px;   /* desktop page padding */
+  --ark-gutter-phone: 18px;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --ark-h1: 2.15rem;
+    --ark-h2: 1.86rem;
+    --ark-h3: 1.16rem;
+    --ark-gutter: var(--ark-gutter-phone);
+  }
+}
+
+/* Base. Body copy is charcoal on cream; headings are display face in olive. */
+body {
+  margin: 0;
+  background: var(--ark-cream);
+  color: var(--ark-charcoal);
+  font-family: var(--ark-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--ark-font-display);
+  color: var(--ark-olive);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.12;
+}
+
+/* Focus must stay visible. Olive on cream is low-contrast for a default outline,
+   so this is deliberately heavier than the browser default. */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--ark-gold);
+  outline-offset: 3px;
+}
+
+/* Respect a reduced-motion preference anywhere animation is added later. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

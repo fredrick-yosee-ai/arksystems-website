@@ -1,209 +1,185 @@
 ---
-import Container from "../common/Container.astro";
+import { SITE, BOOKING_URL, FOOTER_EXPLORE, FOOTER_LEGAL } from "../../consts";
+import arkLogo from "../../../assets/ark.png";
+import { Image } from "astro:assets";
 
-const currentYear = new Date().getFullYear();
-
-const serviceLinks = [
-    { label: "How We Help", href: "/how-we-help" },
-    { label: "The Workshop", href: "/workshop" },
-    { label: "For Accounting Firms", href: "/accounting-firms" },
-];
-
-const companyLinks = [
-    { label: "About", href: "/#" },
-    { label: "Contact", href: "/#" },
-    {
-        label: "LinkedIn",
-        href: "https://www.linkedin.com/company/arksystems",
-        external: true,
-    },
-];
-
-const legalLinks = [
-    { label: "Privacy", href: "/#" },
-    { label: "Terms", href: "/#" },
-];
+const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer">
-    <Container>
-        <div class="site-footer__grid">
-            <div class="site-footer__brand">
-                <a href="/" class="site-footer__brand-name">
-                    ArkSystems
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="/" class="footer__brand-link">
+        <Image src={arkLogo} alt="" width={30} height={30} class="footer__logo" densities={[1, 2]} />
+        <span class="footer__name">{SITE.name}</span>
+      </a>
+
+      <p class="footer__positioning">{SITE.positioning}</p>
+
+      {/* The tagline's second and final appearance. Closing section, then here. */}
+      <p class="footer__tagline">{SITE.tagline}</p>
+    </div>
+
+    <nav class="footer__cols" aria-label="Footer">
+      <div class="footer__col">
+        <h2 class="eyebrow footer__heading">Explore</h2>
+        <ul>
+          {
+            FOOTER_EXPLORE.map((link) => (
+              <li>
+                <a href={link.href} class="footer__link">
+                  {link.label}
                 </a>
+              </li>
+            ))
+          }
+        </ul>
+        {/*
+          The spec puts a quiet "For accounting firms → /accounting" link here, so a CPA
+          arriving by referral has somewhere to go. It is omitted for release one because
+          /accounting ships in release two, and "every link resolves, no 404s in the
+          footer" is a stated quality gate. Restore it with that page.
+        */}
+      </div>
 
-                <p class="site-footer__tagline">
-                    Your AI Partner for Smarter Growth.
-                </p>
+      <div class="footer__col">
+        <h2 class="eyebrow footer__heading">Company</h2>
+        <ul>
+          <li>
+            {/*
+              "Contact" points at the booking link. Every mailto: on the old site had to
+              go, and the page has exactly one action, so this is the coherent
+              destination rather than a second, weaker one.
+            */}
+            <a href={BOOKING_URL} class="footer__link">Contact</a>
+          </li>
+          {/* LinkedIn is in the spec but no URL has been supplied. Add it here. */}
+        </ul>
+      </div>
 
-                <p class="site-footer__supporting">
-                    Make AI work for your business.
-                </p>
-            </div>
+      <div class="footer__col">
+        <h2 class="eyebrow footer__heading">Legal</h2>
+        <ul>
+          {
+            FOOTER_LEGAL.map((link) => (
+              <li>
+                <a href={link.href} class="footer__link">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </nav>
+  </div>
 
-            <div class="site-footer__column">
-                <h2 class="site-footer__heading">Services</h2>
-
-                <ul class="site-footer__links">
-                    {
-                        serviceLinks.map((link) => (
-                                <li>
-                                    <a href={link.href}>{link.label}</a>
-                                </li>
-                        ))
-                    }
-                </ul>
-            </div>
-
-            <div class="site-footer__column">
-                <h2 class="site-footer__heading">Company</h2>
-
-                <ul class="site-footer__links">
-                    {
-                        companyLinks.map((link) => (
-                                <li>
-                                    <a
-                                            href={link.href}
-                                            target={link.external ? "_blank" : undefined}
-                                            rel={link.external ? "noopener noreferrer" : undefined}
-                                    >
-                                        {link.label}
-                                    </a>
-                                </li>
-                        ))
-                    }
-                </ul>
-            </div>
-
-            <div class="site-footer__column">
-                <h2 class="site-footer__heading">Legal</h2>
-
-                <ul class="site-footer__links">
-                    {
-                        legalLinks.map((link) => (
-                                <li>
-                                    <a href={link.href}>{link.label}</a>
-                                </li>
-                        ))
-                    }
-                </ul>
-            </div>
-        </div>
-
-        <div class="site-footer__bottom">
-            <p>
-                © {currentYear} ArkSystems. All rights reserved.
-            </p>
-        </div>
-    </Container>
+  <div class="container">
+    <p class="footer__legal-line">© {year} {SITE.name}. All rights reserved.</p>
+  </div>
 </footer>
 
 <style>
-    .site-footer {
-        border-top: 0.45rem solid var(--color-brand-900);
-        background: #fbf5ec;
-        padding-block: var(--space-20) var(--space-10);
+  .footer {
+    border-top: 1px solid var(--ark-grey);
+    padding-block: 62px 30px;
+    margin-top: auto;
+  }
+
+  .footer__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 2fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  .footer__brand-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .footer__logo {
+    width: 30px;
+    height: auto;
+    display: block;
+  }
+
+  .footer__name {
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--ark-olive);
+  }
+
+  .footer__positioning {
+    margin-top: 16px;
+    max-width: 42ch;
+    font-size: var(--ark-small);
+    line-height: 1.6;
+    color: var(--ark-muted);
+  }
+
+  .footer__tagline {
+    margin-top: 20px;
+    font-family: var(--ark-font-display);
+    font-size: 1.16rem;
+    font-weight: 600;
+    color: var(--ark-olive);
+  }
+
+  .footer__cols {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  .footer__heading {
+    margin: 0 0 16px;
+    font-family: var(--ark-font-body);
+    font-size: var(--ark-eyebrow);
+  }
+
+  .footer__link {
+    display: inline-block;
+    padding-block: 6px;
+    font-size: var(--ark-small);
+    line-height: 1.45;
+    text-decoration: none;
+    color: var(--ark-charcoal);
+  }
+
+  .footer__link:hover {
+    color: var(--ark-olive);
+    text-decoration: underline;
+  }
+
+  .footer__legal-line {
+    margin-top: 46px;
+    padding-top: 22px;
+    border-top: 1px solid var(--ark-grey);
+    font-size: 0.82rem;
+    color: var(--ark-muted-2);
+  }
+
+  @media (max-width: 900px) {
+    .footer {
+      padding-block: 44px 26px;
     }
 
-    .site-footer__grid {
-        display: grid;
-        grid-template-columns: 1.5fr repeat(3, 1fr);
-        gap: clamp(var(--space-10), 6vw, var(--space-20));
+    .footer__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 38px;
     }
 
-    .site-footer__brand {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--space-4);
+    .footer__cols {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 30px;
     }
 
-    .site-footer__brand-name {
-        font-family: var(--font-heading);
-        font-size: var(--font-size-2xl);
-        font-weight: var(--font-weight-semibold);
-        color: var(--color-brand-900);
+    .footer__legal-line {
+      margin-top: 34px;
     }
-
-    .site-footer__tagline {
-        font-size: var(--font-size-lg);
-        color: var(--color-neutral-700);
-    }
-
-    .site-footer__supporting {
-        font-size: var(--font-size-sm);
-        color: var(--color-text-muted);
-    }
-
-    .site-footer__column {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-6);
-    }
-
-    .site-footer__heading {
-        font-family: var(--font-body);
-        font-size: var(--font-size-sm);
-        font-weight: var(--font-weight-bold);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--color-brand-900);
-    }
-
-    .site-footer__links {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-5);
-        list-style: none;
-    }
-
-    .site-footer__links a {
-        font-size: var(--font-size-lg);
-        color: var(--color-neutral-700);
-        transition: color var(--transition-fast);
-    }
-
-    .site-footer__links a:hover {
-        color: var(--color-brand-700);
-    }
-
-    .site-footer__bottom {
-        margin-top: var(--space-20);
-        padding-top: var(--space-8);
-        border-top: var(--border-width) solid var(--color-border);
-    }
-
-    .site-footer__bottom p {
-        font-size: var(--font-size-sm);
-        color: var(--color-text-muted);
-    }
-
-    @media (max-width: 56rem) {
-        .site-footer__grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .site-footer__brand {
-            grid-column: 1 / -1;
-        }
-    }
-
-    @media (max-width: 35rem) {
-        .site-footer {
-            padding-block: var(--space-16) var(--space-8);
-        }
-
-        .site-footer__grid {
-            grid-template-columns: 1fr;
-        }
-
-        .site-footer__brand {
-            grid-column: auto;
-        }
-
-        .site-footer__bottom {
-            margin-top: var(--space-12);
-        }
-    }
+  }
 </style>
