@@ -48,11 +48,28 @@ summary:focus-visible,
 }
 
 /* --------------------------------------------------------------------------
- * DEVIATION 2 — a guard rail, not a value change.
+ * OPEN — --ark-olive-2 as eyebrow text fails AA. NEEDS FREDRICK'S DECISION.
  *
- * --ark-olive-2 #7A8C3A carries white text at only 3.72:1. That clears AA for large
- * text (18.66px bold / 24px regular and above) and for UI components, and fails it for
- * body copy. The token is unchanged; this note exists so nobody reaches for it as a
- * button background later. On cream it is fine as an eyebrow and rule colour, which is
- * what the spec uses it for.
+ * This is a brand colour, so it is deliberately NOT changed here. Measured as used:
+ *
+ *     --ark-olive-2 #7A8C3A on --ark-cream #FEF5E7 ... 3.44 : 1   AA needs 4.5
+ *     --ark-olive-2 #7A8C3A on white ................. 3.72 : 1   AA needs 4.5
+ *
+ * It is the eyebrow colour, so this affects nine places: the hero eyebrow and trust
+ * line, and the section eyebrows in "Is this you?", "How we work", "Who you're working
+ * with" and the FAQ. All are small text, so the 4.5 threshold applies — the 3:1 large-
+ * text allowance does not help.
+ *
+ * Darkening it is the smallest fix that keeps the design. Measured candidates:
+ *
+ *     #687830 ... 4.50 on cream, 4.86 on white   exactly at the threshold
+ *     #64732F ... 4.81 on cream, 5.20 on white   recommended, keeps a margin
+ *     #61702E ... 5.03 on cream, 5.43 on white   safest, visibly darker
+ *
+ * The alternative is to set eyebrows in --ark-olive #38512F, which already passes at
+ * 8.04:1 but is a larger visual change. Nothing is applied until Fredrick chooses.
+ *
+ * Separately, and unrelated to the above: --ark-olive-2 carries white text at 3.72:1,
+ * which clears AA only for large text and UI components. Never use it as a button
+ * background.
  * ------------------------------------------------------------------------ */

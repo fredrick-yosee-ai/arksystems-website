@@ -1,0 +1,150 @@
+---
+/*
+ * Section 8 — how we work. Four steps, then the pull quote.
+ *
+ * The pull quote is the piece that does the most work in this section: it mentions
+ * money in a direction that protects the reader rather than asking of them, which
+ * lowers defences instead of raising them.
+ */
+
+const steps = [
+  {
+    n: "01",
+    title: "Find where it's going",
+    body: "We look at one job and find where the hours and the money are actually going.",
+  },
+  {
+    n: "02",
+    title: "Put a number on it",
+    body: "Using your figures, and assumptions we say out loud, we work out what fixing it would be worth.",
+  },
+  {
+    n: "03",
+    title: "Find the cheapest fix that works",
+    body: "Sometimes that's using something you already pay for properly. Sometimes it's changing how the work moves. Sometimes it's AI. Sometimes it's nothing, yet.",
+  },
+  {
+    n: "04",
+    title: "Build it only if it is worth it",
+    body: "If it is worth doing and we can do it safely, we build it and hand it back working.",
+  },
+];
+---
+
+<section class="how">
+  <div class="container">
+    <p class="eyebrow how__eyebrow">Practical enough to recommend less technology</p>
+
+    <h2 class="how__title">Start with one job. Prove it is worth fixing. Then decide.</h2>
+
+    <ol class="how__steps">
+      {
+        steps.map((step) => (
+          <li class="how__step">
+            <span class="how__number" aria-hidden="true">
+              {step.n}
+            </span>
+            <h3 class="how__step-title">{step.title}</h3>
+            <p class="how__step-body">{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <blockquote class="how__quote">
+      <p>
+        We would rather tell you not to buy something than sell you something that is
+        not worth the money.
+      </p>
+    </blockquote>
+  </div>
+</section>
+
+<style>
+  .how {
+    padding-block: 96px;
+  }
+
+  .how__eyebrow {
+    display: block;
+    margin-bottom: 22px;
+  }
+
+  .how__title {
+    font-size: 2.7rem;
+    letter-spacing: -0.018em;
+  }
+
+  .how__steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px;
+    margin-top: 56px;
+  }
+
+  .how__number {
+    display: block;
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: 1.9rem;
+    color: var(--ark-olive-2);
+  }
+
+  .how__step-title {
+    font-size: 1.1rem;
+    margin-top: 12px;
+  }
+
+  .how__step-body {
+    margin-top: 10px;
+    font-size: 0.98rem;
+    line-height: 1.58;
+    color: #5b564e;
+  }
+
+  .how__quote {
+    margin: 60px 0 0;
+    border-top: 1px solid var(--ark-grey);
+    padding-top: 38px;
+  }
+
+  .how__quote p {
+    font-family: var(--ark-font-display);
+    font-size: 1.8rem;
+    line-height: 1.34;
+    color: var(--ark-olive);
+    max-width: 44ch;
+  }
+
+  @media (max-width: 1100px) {
+    .how__steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 34px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .how {
+      padding-block: 56px;
+    }
+
+    .how__title {
+      font-size: var(--ark-h2);
+    }
+
+    .how__steps {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
+      margin-top: 36px;
+    }
+
+    .how__quote {
+      margin-top: 40px;
+      padding-top: 28px;
+    }
+
+    .how__quote p {
+      font-size: 1.3rem;
+    }
+  }
+</style>

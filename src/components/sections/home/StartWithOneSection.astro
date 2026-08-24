@@ -1,0 +1,95 @@
+---
+/*
+ * Section 6 — start with one.
+ *
+ * DELIBERATE DEVIATION FROM THE MOCKUP, FLAGGED FOR FREDRICK.
+ *
+ * The approved mockup puts a white card here containing a "The foundation is built
+ * once" bar chart with three jobs and a colour legend. The spec's design note for this
+ * section is explicit and gives its reason:
+ *
+ *     "short band, no cards, no icons. It should read as a considered aside,
+ *      not a pitch."
+ *
+ * CLAUDE.md's order of truth puts spec/page-spec.md above the mockups, so this is built
+ * as the aside the spec asks for. The chart is a small change to restore if Fredrick
+ * prefers the mockup — say so and it comes back.
+ */
+---
+
+<section class="start-with-one">
+  <div class="container start-with-one__inner">
+    <h2 class="start-with-one__title">Start with one. Not with everything.</h2>
+
+    <div class="start-with-one__copy">
+      <p class="start-with-one__body">
+        The businesses getting real value from AI didn&rsquo;t transform overnight
+        &mdash; they made one thing faster, properly, then the next. Every hour that
+        comes back goes where it earns: your clients, your work, your growth. And the
+        foundation only gets built once, so each one after the first lands faster than
+        the one before.
+      </p>
+
+      <p class="start-with-one__kicker">
+        A year from now, that is the difference between still thinking about AI and
+        already using it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .start-with-one {
+    padding-block: 88px;
+  }
+
+  .start-with-one__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 80px;
+    align-items: start;
+  }
+
+  .start-with-one__title {
+    font-size: 2.5rem;
+    letter-spacing: -0.015em;
+  }
+
+  .start-with-one__body {
+    font-size: 1.12rem;
+    line-height: 1.68;
+    color: #4a463f;
+  }
+
+  .start-with-one__kicker {
+    margin-top: 30px;
+    font-family: var(--ark-font-display);
+    font-size: 1.5rem;
+    line-height: 1.38;
+    color: var(--ark-olive);
+  }
+
+  @media (max-width: 900px) {
+    .start-with-one {
+      padding-block: 52px;
+    }
+
+    .start-with-one__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 22px;
+    }
+
+    .start-with-one__title {
+      font-size: var(--ark-h2);
+    }
+
+    .start-with-one__body {
+      font-size: 1rem;
+    }
+
+    .start-with-one__kicker {
+      margin-top: 22px;
+      font-size: 1.24rem;
+    }
+  }
+</style>

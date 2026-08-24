@@ -1,0 +1,97 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+import { SITE } from "../../../consts";
+
+/*
+ * Section 10 — closing.
+ *
+ * Opens and closes on gain: the first headline on the page names the upside and so
+ * does the last one. Pain lives only in body copy, where it does recognition work.
+ *
+ * The tagline is set below the CTA as a sign-off, never as a heading. It appears twice
+ * on the site in total — here and once in the footer. A tagline used four times stops
+ * being a tagline.
+ */
+---
+
+<section class="closing on-dark">
+  <div class="container">
+    <h2 class="closing__title">Get those hours back.</h2>
+
+    <p class="closing__body">
+      Twenty minutes. Bring the task you&rsquo;d most like to stop doing. We&rsquo;ll
+      show you what it looks like when it&rsquo;s running, and tell you honestly whether
+      it&rsquo;s worth doing for you.
+    </p>
+
+    <div class="closing__cta">
+      <BookingButton location="closing" variant="cream" class="closing__button" />
+    </div>
+
+    <p class="closing__tagline">{SITE.tagline}</p>
+  </div>
+</section>
+
+<style>
+  .closing {
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+    padding-block: 120px;
+    text-align: center;
+  }
+
+  .closing__title {
+    color: var(--ark-on-dark);
+    font-size: 3.8rem;
+    letter-spacing: -0.024em;
+  }
+
+  .closing__body {
+    margin: 26px auto 0;
+    font-size: 1.18rem;
+    line-height: 1.64;
+    color: #dbe6c4;
+    max-width: 62ch;
+  }
+
+  .closing__cta {
+    margin-top: 40px;
+  }
+
+  .closing__button {
+    font-size: 1.06rem;
+    padding: 18px 38px;
+  }
+
+  .closing__tagline {
+    margin-top: 64px;
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: 0.005em;
+    color: var(--ark-on-dark-eyebrow);
+  }
+
+  @media (max-width: 900px) {
+    .closing {
+      padding-block: 62px;
+    }
+
+    .closing__title {
+      font-size: 2.3rem;
+    }
+
+    .closing__body {
+      font-size: 1.04rem;
+    }
+
+    .closing__cta {
+      margin-top: 30px;
+    }
+
+    .closing__tagline {
+      margin-top: 44px;
+      font-size: 1.5rem;
+    }
+  }
+</style>

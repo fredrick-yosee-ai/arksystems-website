@@ -1,0 +1,153 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+
+/*
+ * Section 5 — what happens when you book.
+ *
+ * The only block that tells the visitor what the one action on the page actually
+ * involves, which is the biggest single reason a warm visitor does not book.
+ *
+ * No commercial terms in this section — not one word. A third step covering price,
+ * staged payment and ownership was written and cut, and a cost reference inside step 2
+ * was cut after it. Both planted "this is going to cost money" at the moment someone
+ * was deciding whether to spend twenty free minutes. Risk reversal lives in the FAQ,
+ * where people who care about it go looking.
+ *
+ * The workshop appears only as the clause "worth spending a day on it properly" in
+ * step 2 — no name, no price, no button.
+ */
+
+const steps = [
+  {
+    label: "The call",
+    body: "You bring the job that annoys you most. We'll show you one of these running, so you can see for yourself what it looks like when that job stops being yours.",
+  },
+  {
+    label: "What you'll hear back",
+    body: "Either: yes, we can take that off you, and here's what that would look like. Or: this one is more complicated than it looks, and it is worth spending a day on it properly before anyone builds anything. Or: you don't actually need us — here's the simpler thing to do instead. That last one happens more often than you'd expect.",
+  },
+];
+---
+
+<section class="what-happens" id="what-happens">
+  <div class="container">
+    <h2 class="what-happens__title">What happens when you book.</h2>
+    <p class="what-happens__intro">Twenty minutes. No sales pitch, no slides.</p>
+
+    <ul class="what-happens__steps">
+      {
+        steps.map((step) => (
+          <li class="what-happens__step">
+            <span class="what-happens__label">{step.label}</span>
+            <p class="what-happens__body">{step.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    {/* Closes on value, not commitment. */}
+    <p class="what-happens__close">
+      Even if we do nothing together, you will know exactly where your week is going.
+      That is worth twenty minutes on its own.
+    </p>
+
+    <div class="what-happens__cta">
+      <BookingButton location="what-happens" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .what-happens {
+    background: var(--ark-green-soft);
+    padding-block: 100px;
+  }
+
+  .what-happens__title {
+    font-size: 2.9rem;
+    letter-spacing: -0.018em;
+  }
+
+  .what-happens__intro {
+    margin-top: 18px;
+    font-size: 1.24rem;
+    color: #4a463f;
+  }
+
+  .what-happens__steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 56px;
+  }
+
+  .what-happens__step {
+    background: #fff;
+    border: 1px solid #d3ddcd;
+    border-radius: var(--ark-radius);
+    padding: 40px;
+  }
+
+  /* Gold marks the step label. It is never used for a CTA. */
+  .what-happens__label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ark-gold-ink);
+  }
+
+  .what-happens__body {
+    margin-top: 18px;
+    font-size: 1.1rem;
+    line-height: 1.64;
+    color: #4a463f;
+  }
+
+  .what-happens__close {
+    margin-top: 52px;
+    font-family: var(--ark-font-display);
+    font-size: 1.7rem;
+    line-height: 1.34;
+    color: var(--ark-olive);
+    max-width: 48ch;
+  }
+
+  .what-happens__cta {
+    margin-top: 36px;
+  }
+
+  @media (max-width: 900px) {
+    .what-happens {
+      padding-block: 56px;
+    }
+
+    .what-happens__title {
+      font-size: var(--ark-h2);
+    }
+
+    .what-happens__intro {
+      font-size: 1.1rem;
+    }
+
+    .what-happens__steps {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .what-happens__step {
+      padding: 26px 22px;
+    }
+
+    .what-happens__body {
+      font-size: 1rem;
+    }
+
+    .what-happens__close {
+      margin-top: 34px;
+      font-size: 1.3rem;
+    }
+  }
+</style>

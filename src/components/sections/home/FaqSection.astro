@@ -1,0 +1,165 @@
+---
+/*
+ * Section 9 — FAQ, rebuilt as objection handling. An FAQ is where you close, not where
+ * you disclose. Buying questions come first, and every answer removes a reason not to
+ * book. Risk reversal lives here rather than in section 5, so that someone thinking
+ * about money finds it and everyone else is left alone.
+ *
+ * Answers are shown open, not collapsed behind a disclosure. A visitor scanning for
+ * the reason not to book should not have to click to find it.
+ *
+ * ---------------------------------------------------------------------------
+ * !! UNRESOLVED CLAIMS-ACCURACY ISSUE — "What happens to my data?" !!
+ *
+ * The approved answer below contains this sentence:
+ *
+ *     "Anything that matters still goes past a person before it happens —
+ *      that's deliberate, not a setting."
+ *
+ * That is not true of the system as Fredrick has described it. It posts
+ * automatically when the category is clear and asks only when it is not, so a routine
+ * receipt is filed without anyone seeing it first. The sentence survives only if
+ * "anything that matters" is read as excluding exactly the cases that are automated,
+ * which is the kind of load-bearing vagueness the brand standard exists to catch:
+ * "make no claim that requires a disclaimer".
+ *
+ * The approved wording is shipped here UNCHANGED, because copy is Fredrick's to
+ * approve and it should not be edited silently. Proposed replacement, awaiting his
+ * approval — accurate to the hybrid model and adding no capability I cannot verify:
+ *
+ *     "We only get access to what the job actually needs, and nothing more.
+ *      When the system is confident, it files the item and shows you what it
+ *      did. When it is not, it stops and asks you before anything happens.
+ *      Nothing is hidden either way. Full detail on the data handling page."
+ *
+ * See CLAUDE.md, "Still open".
+ * ---------------------------------------------------------------------------
+ */
+
+const faqs = [
+  {
+    q: "How long does it take?",
+    a: "Most jobs take two to three weeks from go-ahead to handing it back working. If something would take longer, you'll hear that before you commit, not halfway through.",
+  },
+  {
+    q: "What if it doesn't do what we agreed?",
+    a: "What we're building is written down before we start, and you pay in stages against it. Nothing's final until you've used it and told us it works.",
+  },
+  {
+    q: "What does this cost?",
+    a: "Every job has a set price, agreed before anything starts. The price does not go up as we go. We work it out after a short conversation, because it depends on what the job involves. The workshop has its own price, on its own page.",
+  },
+  {
+    q: "Do I have to change the software I already use?",
+    a: "Usually not. The first thing we look for is whether something you already pay for can do the job, set up properly or connected to something else. Replacing what you use is expensive and disruptive, and it's rarely the cheapest answer.",
+  },
+  {
+    q: "Who owns it when you're done?",
+    a: "You do. It runs on your accounts and you keep the work. There's no ArkSystems subscription attached to it.",
+  },
+  {
+    // See the block comment above — this answer is known to be inaccurate.
+    q: "What happens to my data?",
+    a: "We only get access to what the job actually needs, and nothing more. Anything that matters still goes past a person before it happens — that's deliberate, not a setting. Full detail on the data handling page.",
+  },
+  {
+    q: "Do you guarantee savings or ROI?",
+    a: "No, and be careful of anyone who does. Financial estimates are built from your inputs and clearly stated assumptions, so you can check the arithmetic yourself. We make assumptions and missing information visible, and we don't promise results we can't control.",
+  },
+  {
+    q: "Do you always recommend AI?",
+    a: "No. The answer might be a clearer way of doing it, better use of something you already pay for, connecting two things you already use, automating a small piece of it, or leaving it alone for now. We use AI where it earns its place — not because it's fashionable.",
+  },
+  {
+    q: "What kinds of work do you look at?",
+    a: "Recurring work involving document collection, follow-up, approvals, status visibility, information handoffs, and repetitive administration.",
+  },
+];
+---
+
+<section class="faq">
+  <div class="container faq__inner">
+    <div>
+      <p class="eyebrow faq__eyebrow">Questions</p>
+      <h2 class="faq__title">Before you book</h2>
+    </div>
+
+    <dl class="faq__list">
+      {
+        faqs.map((item) => (
+          <div class="faq__item">
+            <dt class="faq__q">{item.q}</dt>
+            <dd class="faq__a">{item.a}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .faq {
+    background: #fff;
+    padding-block: 96px;
+  }
+
+  .faq__inner {
+    display: grid;
+    grid-template-columns: 0.7fr 1.3fr;
+    gap: 72px;
+    align-items: start;
+  }
+
+  .faq__eyebrow {
+    display: block;
+    margin-bottom: 22px;
+  }
+
+  .faq__title {
+    font-size: 2.4rem;
+    letter-spacing: -0.015em;
+  }
+
+  .faq__list {
+    margin: 0;
+  }
+
+  .faq__item {
+    border-bottom: 1px solid var(--ark-grey);
+    padding: 22px 0;
+  }
+
+  .faq__item:last-child {
+    border-bottom: 0;
+  }
+
+  .faq__q {
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: 1.08rem;
+    line-height: 1.3;
+    color: var(--ark-olive);
+  }
+
+  .faq__a {
+    margin: 10px 0 0;
+    font-size: 1rem;
+    line-height: 1.62;
+    color: #5b564e;
+  }
+
+  @media (max-width: 900px) {
+    .faq {
+      padding-block: 56px;
+    }
+
+    .faq__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 26px;
+    }
+
+    .faq__title {
+      font-size: var(--ark-h2);
+    }
+  }
+</style>
