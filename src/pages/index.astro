@@ -1,36 +1,30 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroSection from "../components/sections/home/HeroSection.astro";
+import ProblemSection from "../components/sections/home/ProblemSection.astro";
+import SeeItWorkSection from "../components/sections/home/SeeItWorkSection.astro";
+import IsThisYouSection from "../components/sections/home/IsThisYouSection.astro";
 
 /*
- * Homepage shell. The ten sections land in the next two branches:
- *   build/home-1-4  — hero, the problem, see it work, is this you
- *   build/home-5-10 — what happens, start with one, who you're working with,
- *                     how we work, FAQ, closing
+ * Sections 5 to 10 are still to come:
+ *   5  What happens when you book
+ *   6  Start with one
+ *   7  Who you're working with
+ *   8  How we work
+ *   9  FAQ
+ *   10 Closing
  *
- * The section IDs the header and footer link to are created with those sections, not
- * here, so there is one definition of each and not two.
+ * Section order is load-bearing. Section 3 must stay below section 2 — showing the fix
+ * before the problem is felt turns a resolution into a product demo.
  */
 ---
 
 <BaseLayout
   title="ArkSystems"
-  description="ArkSystems finds where AI can create real value in your business, then builds that one thing. Metro Vancouver."
+  description="Everyone is talking about AI. We find the one job in your business that would give you back the most time, and take it off you. Metro Vancouver."
 >
-  <h1>Find where AI can create real value in your business.</h1>
-  <p class="scaffold-note">Homepage sections land in the next branch.</p>
+  <HeroSection />
+  <ProblemSection />
+  <SeeItWorkSection />
+  <IsThisYouSection />
 </BaseLayout>
-
-<style>
-  h1 {
-    font-size: var(--ark-h1);
-    max-width: 16ch;
-    padding-inline: var(--ark-gutter);
-    padding-top: 72px;
-  }
-
-  .scaffold-note {
-    padding-inline: var(--ark-gutter);
-    padding-block: 24px 96px;
-    color: var(--ark-muted);
-  }
-</style>

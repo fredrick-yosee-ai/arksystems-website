@@ -1,0 +1,191 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+import { inlineSvg } from "../../../lib/svg";
+import heroDesktopRaw from "../../../../assets/hero-desktop.svg?raw";
+import heroMobileRaw from "../../../../assets/hero-mobile.svg?raw";
+
+/*
+ * The illustration carries the page's argument, so `alt=""` would be wrong. These
+ * descriptions say what the artwork shows and stop there — no claim is made in them
+ * that the picture does not itself make.
+ */
+const heroDesc =
+  "Work arrives all day from the everyday tools a business already uses — messaging, " +
+  "email, payments, accounting, scheduling and storage apps — and all of it converges " +
+  "on a single assistant marked with the ArkSystems logo, on duty around the clock. " +
+  "What comes back is finished: receipts filed and coded, invoices sent on time and " +
+  "chased when they are late, month-end already closed. Two items are flagged in gold " +
+  "as needing the owner, and nothing else is. The closing line reads: that is your " +
+  "evenings back.";
+
+const heroDesktop = inlineSvg(heroDesktopRaw, {
+  prefix: "hero-d",
+  title: "How work reaches the assistant, and what comes back done",
+  desc: heroDesc,
+  className: "hero__art hero__art--desktop",
+});
+
+const heroMobile = inlineSvg(heroMobileRaw, {
+  prefix: "hero-m",
+  title: "How work reaches the assistant, and what comes back done",
+  desc: heroDesc,
+  className: "hero__art hero__art--mobile",
+});
+---
+
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <p class="hero__eyebrow">
+        <span class="eyebrow">Your AI Partner for Smarter Growth</span>
+        <span class="hero__rule" aria-hidden="true"></span>
+      </p>
+
+      <h1 class="hero__title">Find where AI can create real value in your business.</h1>
+
+      <p class="hero__subhead">
+        Everyone is talking about AI. Very few people can tell you which part of your
+        week it should touch first. We find the one job that would give you back the
+        most time, and take it off you. Usually in two or three weeks.
+      </p>
+
+      <div class="hero__cta">
+        <BookingButton location="hero" />
+      </div>
+
+      <p class="hero__cta-note">
+        On the call we&rsquo;ll show you one of these running, and tell you honestly
+        whether it&rsquo;s worth doing for you.
+      </p>
+
+      <p class="hero__trust">Practical &middot; Measurable &middot; Business-first</p>
+    </div>
+
+    <figure class="hero__figure">
+      {/*
+        Both variants are in the document and swapped by CSS, which is why their ids are
+        namespaced — see src/lib/svg.ts. The hidden one is `display: none`, so it is out
+        of the accessibility tree and never announced twice.
+      */}
+      <Fragment set:html={heroDesktop} />
+      <Fragment set:html={heroMobile} />
+      <figcaption class="hero__caption">Everyday tools shown for illustration.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: 72px 84px;
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 640px);
+    gap: 48px;
+    align-items: center;
+  }
+
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .hero__rule {
+    height: 1px;
+    width: 44px;
+    background: var(--ark-olive-2);
+    opacity: 0.45;
+  }
+
+  .hero__title {
+    font-size: var(--ark-h1);
+    letter-spacing: -0.026em;
+  }
+
+  .hero__subhead {
+    margin-top: 26px;
+    font-size: 1.14rem;
+    line-height: 1.62;
+    color: #4a463f;
+    max-width: 54ch;
+  }
+
+  .hero__cta {
+    margin-top: 32px;
+  }
+
+  .hero__cta-note {
+    margin-top: 16px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--ark-muted);
+    max-width: 52ch;
+  }
+
+  .hero__trust {
+    margin-top: 26px;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ark-olive-2);
+  }
+
+  .hero__figure {
+    margin: 0;
+  }
+
+  .hero__caption {
+    margin-top: 10px;
+    text-align: right;
+    font-size: 0.76rem;
+    color: var(--ark-muted-2);
+  }
+
+  /* The intrinsic width/height are stripped in inlineSvg, so these govern the size. */
+  :global(.hero__art) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  :global(.hero__art--mobile) {
+    display: none;
+  }
+
+  /* The phone illustration is deliberately compact. An earlier version was 1418px tall,
+   * which put two full screens of artwork above the first sentence. Do not restore
+   * detail here. */
+  @media (max-width: 900px) {
+    .hero {
+      padding-block: 34px 38px;
+    }
+
+    .hero__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+
+    /* Copy first, illustration after it. */
+    .hero__figure {
+      order: 2;
+    }
+
+    :global(.hero__art--desktop) {
+      display: none;
+    }
+
+    :global(.hero__art--mobile) {
+      display: block;
+      width: min(100%, 354px);
+      margin-inline: auto;
+    }
+
+    .hero__caption {
+      text-align: center;
+    }
+  }
+</style>

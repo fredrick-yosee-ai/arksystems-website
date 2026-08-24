@@ -1,0 +1,224 @@
+---
+/*
+ * Section 4 — self-qualification by symptom. No headcount, no sector.
+ *
+ * The week chart is illustrative, not a claim: it carries no numbers and no source,
+ * and the legend states plainly what the two bands are. It is aria-hidden because the
+ * five criteria beside it are the actual content.
+ */
+
+const criteria = [
+  "The same task takes hours every week, and you cannot charge anyone for it",
+  "Information comes by email, text, photo and paper, and someone matches it all up by hand",
+  "You have looked at AI tools and could not tell which one would actually be worth the money",
+  "The person doing the admin is you, or someone on your team who's far too senior for it",
+  "You'd rather fix one thing properly than buy another subscription",
+];
+
+const week = [
+  { day: "Mon", charged: 72 },
+  { day: "Tue", charged: 64 },
+  { day: "Wed", charged: 68 },
+  { day: "Thu", charged: 60 },
+  { day: "Fri", charged: 55 },
+];
+---
+
+<section class="is-this-you">
+  <div class="container is-this-you__inner">
+    <div>
+      <p class="eyebrow is-this-you__eyebrow">Is this you?</p>
+      <h2 class="is-this-you__title">This tends to be worth a conversation if:</h2>
+
+      <div class="week" aria-hidden="true">
+        <p class="week__label">A week, roughly</p>
+
+        <div class="week__bars">
+          {
+            week.map((entry) => (
+              <div class="week__row">
+                <span class="week__day">{entry.day}</span>
+                <span
+                  class="week__bar"
+                  style={`background: linear-gradient(90deg, var(--ark-olive) 0 ${entry.charged}%, var(--ark-grey) ${entry.charged}%)`}
+                />
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="week__legend">
+          <span><span class="week__swatch week__swatch--charged"></span>The work you charge for</span>
+          <span><span class="week__swatch week__swatch--around"></span>Everything around it</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <ul class="criteria">
+        {
+          criteria.map((item) => (
+            <li class="criteria__item">
+              <span class="criteria__box" aria-hidden="true" />
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="is-this-you__close">
+        If two or three of those landed, there are hours in your week waiting to come
+        back. That is worth a conversation.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .is-this-you {
+    padding-block: 96px;
+  }
+
+  .is-this-you__inner {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 72px;
+    align-items: start;
+  }
+
+  .is-this-you__eyebrow {
+    display: block;
+    margin-bottom: 22px;
+  }
+
+  .is-this-you__title {
+    font-size: 2.5rem;
+    letter-spacing: -0.015em;
+  }
+
+  /* --- the week chart --- */
+
+  .week {
+    margin-top: 40px;
+    background: #fff;
+    border: 1px solid var(--ark-grey);
+    border-radius: var(--ark-radius);
+    padding: 26px;
+  }
+
+  .week__label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ark-muted-2);
+  }
+
+  .week__bars {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    margin-top: 18px;
+  }
+
+  .week__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .week__day {
+    width: 52px;
+    font-size: 0.82rem;
+    color: var(--ark-muted-2);
+  }
+
+  .week__bar {
+    flex: 1;
+    height: 12px;
+    border-radius: 3px;
+  }
+
+  .week__legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--ark-grey);
+  }
+
+  .week__legend > span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.86rem;
+    color: #5b564e;
+  }
+
+  .week__swatch {
+    width: 11px;
+    height: 11px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .week__swatch--charged {
+    background: var(--ark-olive);
+  }
+
+  .week__swatch--around {
+    background: var(--ark-grey);
+  }
+
+  /* --- the criteria list --- */
+
+  .criteria__item {
+    position: relative;
+    padding: 18px 0 18px 38px;
+    border-bottom: 1px solid var(--ark-grey);
+    font-size: 1.08rem;
+    line-height: 1.5;
+  }
+
+  .criteria__item:last-child {
+    border-bottom: 0;
+  }
+
+  .criteria__box {
+    position: absolute;
+    left: 0;
+    top: 23px;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--ark-olive-2);
+    border-radius: 3px;
+  }
+
+  .is-this-you__close {
+    margin-top: 28px;
+    font-size: 1.06rem;
+    line-height: 1.6;
+    color: #5b564e;
+  }
+
+  @media (max-width: 900px) {
+    .is-this-you {
+      padding-block: 56px;
+    }
+
+    .is-this-you__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 36px;
+    }
+
+    .is-this-you__title {
+      font-size: var(--ark-h2);
+    }
+
+    .criteria__item {
+      font-size: 1rem;
+    }
+  }
+</style>

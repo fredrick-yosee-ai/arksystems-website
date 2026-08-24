@@ -1,0 +1,173 @@
+---
+/*
+ * Panel 03 — the line items, landed in the owner's own sheet.
+ *
+ * Unlike the receipt and the chat, this really is tabular data, so it is a real
+ * `<table>`. Screen readers navigate tables well — row and column headers, cell by
+ * cell — so flattening it into a single `role="img"` would lose something instead of
+ * saving the reader from noise.
+ */
+
+const rows = [
+  { date: "14 Sep", item: "Copy paper 8.5x11", category: "Office supplies", amount: "$48.90", gst: "$2.33" },
+  { date: "14 Sep", item: "Shop rags ×3", category: "Materials", amount: "$27.75", gst: "$1.32" },
+  { date: "14 Sep", item: "Safety gloves L", category: "Materials", amount: "$19.98", gst: "$0.95" },
+  { date: "14 Sep", item: "Nitrile gloves, box", category: "Materials", amount: "$34.50", gst: "$1.64" },
+  { date: "14 Sep", item: "Drain cleaner 4L", category: "Materials", amount: "$53.48", gst: "$2.55" },
+];
+---
+
+<div class="sheet">
+  <div class="sheet__scroll">
+    <table class="sheet__table">
+      <caption class="visually-hidden">
+        Sample line items from one receipt, as they appear in the business&rsquo;s own
+        spreadsheet. Illustration using sample data.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Item</th>
+          <th scope="col">Category</th>
+          <th scope="col" class="sheet__num">Amount</th>
+          <th scope="col" class="sheet__num">GST</th>
+          <th scope="col"><span class="visually-hidden">Linked photo</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((row) => (
+            <tr>
+              <td class="sheet__date">{row.date}</td>
+              <th scope="row" class="sheet__item">{row.item}</th>
+              <td class="sheet__category">{row.category}</td>
+              <td class="sheet__num sheet__amount">{row.amount}</td>
+              <td class="sheet__num sheet__gst">{row.gst}</td>
+              <td class="sheet__link">
+                <span class="visually-hidden">Links to the receipt photo</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ark-olive-2)" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                  <path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"></path>
+                  <path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"></path>
+                </svg>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sheet__foot">
+    <span>+ 1 more line from this receipt</span>
+    <span>Every line links back to the photo it came from</span>
+  </div>
+</div>
+
+<style>
+  .sheet {
+    background: #fff;
+    /* Same trap as the chat panel: a white card inside the dark olive band, which sets
+     * `color: var(--ark-on-dark)`. Set the base colour here so no cell can inherit
+     * white onto white — the Amount column did exactly that. */
+    color: var(--ark-charcoal);
+    border-radius: var(--ark-radius);
+    overflow: hidden;
+  }
+
+  .sheet__scroll {
+    overflow-x: auto;
+  }
+
+  .sheet__table {
+    width: 100%;
+    min-width: 660px;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .sheet__table th,
+  .sheet__table td {
+    padding: 13px 11px;
+    font-weight: 400;
+    vertical-align: middle;
+  }
+
+  .sheet__table th:first-child,
+  .sheet__table td:first-child {
+    padding-left: 22px;
+  }
+
+  .sheet__table th:last-child,
+  .sheet__table td:last-child {
+    padding-right: 22px;
+  }
+
+  .sheet__table thead th {
+    background: #f4f1e8;
+    padding-block: 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ark-muted-2);
+    font-family: var(--ark-font-body);
+  }
+
+  .sheet__table tbody tr {
+    border-top: 1px solid #f0ede2;
+  }
+
+  .sheet__table tbody th,
+  .sheet__table tbody td {
+    font-size: 0.94rem;
+  }
+
+  .sheet__num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sheet__date {
+    color: var(--ark-muted-2);
+    white-space: nowrap;
+  }
+
+  .sheet__item {
+    font-weight: 600;
+    color: var(--ark-charcoal);
+    font-family: var(--ark-font-body);
+  }
+
+  .sheet__category {
+    color: #5b564e;
+  }
+
+  .sheet__amount {
+    font-weight: 600;
+  }
+
+  .sheet__gst {
+    color: var(--ark-muted-2);
+  }
+
+  .sheet__link {
+    text-align: right;
+  }
+
+  .sheet__foot {
+    padding: 14px 22px;
+    background: #f4f1e8;
+    font-size: 0.86rem;
+    color: var(--ark-muted-2);
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  @media (max-width: 700px) {
+    .sheet__foot {
+      flex-direction: column;
+      gap: 6px;
+    }
+  }
+</style>

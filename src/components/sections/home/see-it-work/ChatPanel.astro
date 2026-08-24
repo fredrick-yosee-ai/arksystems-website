@@ -1,0 +1,286 @@
+---
+/*
+ * Panel 02 — what comes back, in the chat the owner already uses.
+ *
+ * Same accessibility approach as the receipt: one `role="img"` with a written summary,
+ * because the alternative is a screen reader reading two dozen disconnected fragments.
+ */
+
+const categories = ["Materials · 4", "Office supplies · 1", "Cleaning · 1"];
+---
+
+<div
+  class="chat"
+  role="img"
+  aria-label="A phone chat thread. The photo IMG_4471.jpg is sent at 9:31 am. A reply at 9:32 am reads 'Got it — Westside Supply Co.' and shows a total of $248.60, GST recoverable of $11.84, the date 14 September 2026, payment by debit from the business account, and six lines categorised as four materials, one office supplies and one cleaning. A note in gold flags that returns on the order close on 18 September. The thread ends: already in your sheet, nothing else for you to do."
+>
+  <div class="chat__day"><span>Today</span></div>
+
+  <div class="chat__row chat__row--out">
+    <div class="chat__bubble chat__bubble--out">
+      <div class="chat__thumb">
+        <div class="chat__thumb-paper"></div>
+      </div>
+      <div>
+        <span class="chat__filename">IMG_4471.jpg</span>
+        <span class="chat__time">9:31 am &#10003;&#10003;</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat__card">
+    <div class="chat__card-head">
+      <span class="chat__card-title">Got it &mdash; Westside Supply Co.</span>
+      <span class="chat__card-time">9:32 am</span>
+    </div>
+
+    <div class="chat__facts">
+      <div>
+        <span class="chat__label">Total</span>
+        <span class="chat__figure chat__figure--accent">$248.60</span>
+      </div>
+      <div>
+        <span class="chat__label">GST recoverable</span>
+        <span class="chat__figure">$11.84</span>
+      </div>
+      <div>
+        <span class="chat__label">Date</span>
+        <span class="chat__value">14 Sep 2026</span>
+      </div>
+      <div>
+        <span class="chat__label">Paid by</span>
+        <span class="chat__value">Debit &middot; business account</span>
+      </div>
+    </div>
+
+    <div class="chat__categories">
+      <span class="chat__label chat__label--block">6 lines, categorised</span>
+      <div class="chat__chips">
+        {categories.map((c) => <span class="chat__chip">{c}</span>)}
+      </div>
+    </div>
+  </div>
+
+  {/* Gold marks the one thing that wants the owner's attention. Never a CTA colour. */}
+  <div class="chat__flag">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M12 7v5l3 2"></path>
+    </svg>
+    <span>Heads up &mdash; returns on this order close 18 Sept.</span>
+  </div>
+
+  <div class="chat__done">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--ark-olive-2)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M20 6 9 17l-5-5"></path>
+    </svg>
+    <span>Already in your sheet. Nothing else for you to do.</span>
+  </div>
+</div>
+
+<style>
+  .chat {
+    height: 560px;
+    background: #f3f0e6;
+    /* This panel is light but sits inside the dark olive band, which sets
+     * `color: var(--ark-on-dark)`. Without an explicit colour here, anything not given
+     * one individually inherits white onto a near-white card and disappears. */
+    color: var(--ark-charcoal);
+    border-radius: var(--ark-radius);
+    padding: 26px 26px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .chat__day {
+    text-align: center;
+  }
+
+  .chat__day span {
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--ark-muted-2);
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: var(--ark-radius-pill);
+    padding: 5px 14px;
+  }
+
+  .chat__row--out {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .chat__bubble--out {
+    background: #dce8d4;
+    border-radius: 14px 14px 4px 14px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 78%;
+  }
+
+  .chat__thumb {
+    width: 44px;
+    height: 58px;
+    border-radius: 5px;
+    background: radial-gradient(120% 100% at 30% 10%, #6b7359, #2b3324);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .chat__thumb-paper {
+    width: 26px;
+    height: 36px;
+    background: #fdfcf7;
+    transform: rotate(-4deg);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.45);
+  }
+
+  .chat__filename {
+    display: block;
+    font-size: 0.94rem;
+    font-weight: 600;
+    color: #2f3a27;
+  }
+
+  .chat__time {
+    display: block;
+    font-size: 0.78rem;
+    color: #6c7563;
+    margin-top: 3px;
+  }
+
+  .chat__card {
+    background: #fff;
+    border-radius: 14px 14px 14px 4px;
+    padding: 20px 22px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .chat__card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .chat__card-title {
+    font-size: 1.16rem;
+    font-weight: 700;
+    color: var(--ark-charcoal);
+  }
+
+  .chat__card-time {
+    font-size: 0.8rem;
+    color: var(--ark-muted-2);
+    flex-shrink: 0;
+  }
+
+  .chat__facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 22px;
+    margin-top: 18px;
+  }
+
+  .chat__label {
+    display: block;
+    font-size: 0.76rem;
+    color: var(--ark-muted-2);
+  }
+
+  .chat__label--block {
+    margin-bottom: 10px;
+  }
+
+  .chat__figure {
+    font-size: 1.46rem;
+    font-weight: 700;
+    color: var(--ark-charcoal);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chat__figure--accent {
+    color: var(--ark-olive);
+  }
+
+  .chat__value {
+    font-size: 0.98rem;
+    font-weight: 600;
+  }
+
+  .chat__categories {
+    border-top: 1px solid #f0ede2;
+    margin-top: 18px;
+    padding-top: 16px;
+  }
+
+  .chat__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chat__chip {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--ark-olive);
+    background: var(--ark-green-soft);
+    border-radius: var(--ark-radius-pill);
+    padding: 6px 14px;
+  }
+
+  .chat__flag {
+    background: var(--ark-gold-bg);
+    border: 1px solid var(--ark-gold-border);
+    border-radius: 14px 14px 14px 4px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: var(--ark-gold-ink);
+  }
+
+  .chat__flag svg {
+    flex-shrink: 0;
+  }
+
+  .chat__flag span {
+    font-size: 0.94rem;
+    font-weight: 600;
+  }
+
+  .chat__done {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+
+  .chat__done span {
+    font-size: 0.9rem;
+    color: #5b564e;
+  }
+
+  @media (max-width: 900px) {
+    .chat {
+      height: auto;
+      padding: 20px;
+    }
+
+    .chat__facts {
+      gap: 12px 16px;
+    }
+
+    .chat__figure {
+      font-size: 1.3rem;
+    }
+  }
+</style>
