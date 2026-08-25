@@ -2,11 +2,17 @@
 /*
  * Section 2 — the problem, made concrete.
  *
- * Rebuilt as a single column. The previous layout put the heading and standfirst in a
- * left column, two paragraphs in a right column, and two more full-width underneath —
- * so the eye had to start left, jump right, then come back down and left again. There
- * was no way to tell where to start reading. One column top to bottom removes the
- * question, and the four cards become the scannable payoff at the end.
+ * Two columns, but split by content type rather than mid-sentence: all the prose is in
+ * the left column and all four cards are in the right. The earlier layout put the
+ * heading left, two paragraphs right and two more full-width underneath, so the eye had
+ * to start left, jump right, then come back down and left again with no way to tell
+ * where to begin. Splitting prose from cards keeps one reading order in each column and
+ * uses the width that a single narrow text column was wasting.
+ *
+ * Icons are inline SVG in the Material Symbols idiom, not the Material Symbols font.
+ * The font would be a third-party request, which the self-hosting rule rules out and
+ * which would have to be named on the Privacy page. Stroke weights match the check,
+ * chevron and link icons used elsewhere on the page.
  *
  * Two sentences were cut from the third paragraph — see the note there.
  *
@@ -20,71 +26,84 @@ const cards = [
   {
     title: "Work keeps waiting on information",
     body: "Missing documents, unclear handoffs, and repeated follow-up stop things from moving.",
+    // hourglass — waiting
+    icon: '<path d="M7 3h10M7 21h10"/><path d="M17 3v4a5 5 0 0 1-5 5 5 5 0 0 1-5-5V3"/><path d="M7 21v-4a5 5 0 0 1 5-5 5 5 0 0 1 5 5v4"/>',
   },
   {
     title: "The admin finds your busiest people",
     body: "Receipts, invoices, following up and typing things in end up with whoever gets things done — often the owner, often someone whose time is worth far more than this, often both.",
+    // person — who it lands on
+    icon: '<circle cx="12" cy="8" r="3.4"/><path d="M5.5 20.5a6.5 6.5 0 0 1 13 0"/>',
   },
   {
     title: "Nobody can see what's stuck",
     body: "The answer is in someone's email, or a spreadsheet, or only in their head. To find out what is stuck, you have to ask.",
+    // eye with a slash — no visibility
+    icon: '<path d="M3 3l18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.6 5.2A9.6 9.6 0 0 1 12 5c5.5 0 9 6 9 6a15.4 15.4 0 0 1-2.8 3.6"/><path d="M6.2 6.3A15.4 15.4 0 0 0 3 11s3.5 6 9 6a9.5 9.5 0 0 0 3.1-.5"/>',
   },
   {
     title: "AI feels relevant but unclear",
     body: "You know it matters. You don't know which use is worth the money, or where to start.",
+    // question mark — the unanswered "where"
+    icon: '<circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.8.7c0 1.7-2.4 2-2.4 3.5"/><path d="M12 17.3h.01"/>',
   },
 ];
 ---
 
 <section class="problem" id="the-problem">
-  <div class="container">
-    <div class="problem__head">
+  <div class="container problem__inner">
+    <div class="problem__main">
       <h2 class="problem__title">The real problem is not a lack of AI tools.</h2>
       <p class="problem__standfirst">
         It is not knowing where they would actually be worth using.
       </p>
-    </div>
 
-    <div class="problem__body">
-      {/* Set larger than the rest so the eye has one obvious place to start. */}
-      <p class="problem__lead">
-        Plenty of businesses are already trying AI somewhere. Meanwhile the work that
-        actually slows the week down stays slow, manual and hard to keep track of.
-      </p>
+      <div class="problem__body">
+        {/* Set larger than the rest so the eye has one obvious place to start. */}
+        <p class="problem__lead">
+          Plenty of businesses are already trying AI somewhere. Meanwhile the work that
+          actually slows the week down stays slow, manual and hard to keep track of.
+        </p>
 
-      {/* The "blame the work, never the owner" rule, stated outright. Load-bearing. */}
-      <p>
-        None of this means anything is wrong with how you run your business. It is what
-        happens when a business does well &mdash; the busier you get, the more of this
-        there is.
-      </p>
+        {/* The "blame the work, never the owner" rule, stated outright. Load-bearing. */}
+        <p>
+          None of this means anything is wrong with how you run your business. It is what
+          happens when a business does well &mdash; the busier you get, the more of this
+          there is.
+        </p>
 
-      {/*
-        Trimmed. This paragraph also carried "Most businesses don't need better
-        technology. They need fewer things being passed between people." Both sentences
-        are made more strongly elsewhere — the first by section 8's "Sometimes it's
-        nothing, yet" and the FAQ's "Do you always recommend AI? No", the second by
-        cards one and three below. Everything this paragraph is here to do survives.
-      */}
-      <p>
-        The problem is usually not the work itself. It is everything around the work.
-        Information comes in five different ways. Someone has to ask for it. Someone has
-        to type it in. And nobody can see what is waiting unless they ask.
-      </p>
+        {/*
+          Trimmed. This paragraph also carried "Most businesses don't need better
+          technology. They need fewer things being passed between people." Both sentences
+          are made more strongly elsewhere — the first by How we work's "Sometimes it's
+          nothing, yet" and the FAQ's "Do you always recommend AI? No", the second by
+          cards one and three. Everything this paragraph is here to do survives.
+        */}
+        <p>
+          The problem is usually not the work itself. It is everything around the work.
+          Information comes in five different ways. Someone has to ask for it. Someone has
+          to type it in. And nobody can see what is waiting unless they ask.
+        </p>
 
-      {/* The size-agnostic line. "Owner or a team of twelve" must stay. */}
-      <p>
-        It never looks urgent. Whether it falls to the owner or is shared across a team
-        of twelve, it quietly takes hours that should go into the work you get paid for.
-      </p>
+        {/* The size-agnostic line. "Owner or a team of twelve" must stay. */}
+        <p>
+          It never looks urgent. Whether it falls to the owner or is shared across a team
+          of twelve, it quietly takes hours that should go into the work you get paid for.
+        </p>
+      </div>
     </div>
 
     <ul class="problem__cards">
       {
         cards.map((card) => (
           <li class="problem__card">
-            <h3 class="problem__card-title">{card.title}</h3>
-            <p class="problem__card-body">{card.body}</p>
+            <span class="problem__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={card.icon} />
+            </span>
+            <div>
+              <h3 class="problem__card-title">{card.title}</h3>
+              <p class="problem__card-body">{card.body}</p>
+            </div>
           </li>
         ))
       }
@@ -98,13 +117,19 @@ const cards = [
     padding-block: 96px;
   }
 
-  /* One column, one reading order. The measure sits on the elements themselves, not on
-   * a wrapper — `ch` resolves against the element's own font-size, so on a wrapper it
-   * would be counting 16px characters. */
+  .problem__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* The measure sits on the elements themselves, not on a wrapper — `ch` resolves
+   * against the element's own font-size, so on a wrapper it counts 16px characters. */
   .problem__title {
     font-size: var(--ark-h2);
     letter-spacing: -0.02em;
-    max-width: 20ch;
+    max-width: 18ch;
   }
 
   .problem__standfirst {
@@ -113,12 +138,12 @@ const cards = [
     font-size: 1.7rem;
     line-height: 1.32;
     color: var(--ark-olive-2);
-    max-width: 28ch;
+    max-width: 26ch;
   }
 
   .problem__body {
-    margin-top: 34px;
-    max-width: 68ch;
+    margin-top: 32px;
+    max-width: 62ch;
   }
 
   .problem__body p {
@@ -128,7 +153,7 @@ const cards = [
   }
 
   .problem__body .problem__lead {
-    font-size: 1.24rem;
+    font-size: 1.22rem;
     line-height: 1.6;
     color: #4a463f;
   }
@@ -141,16 +166,45 @@ const cards = [
     margin-top: 20px;
   }
 
+  /* --- the four cards --- */
+
   .problem__cards {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 28px;
-    margin-top: 64px;
+    gap: 14px;
   }
 
   .problem__card {
-    border-top: 2px solid var(--ark-olive-2);
-    padding-top: 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: var(--ark-cream);
+    border: 1px solid var(--ark-grey);
+    border-radius: var(--ark-radius);
+    padding: 22px 24px;
+    transition: border-color 0.18s ease;
+  }
+
+  .problem__card:hover {
+    border-color: var(--ark-olive-2);
+  }
+
+  /* Same icon treatment as the Is this you? checks and the How we work nodes, so the
+   * three sections read as one family. */
+  .problem__icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: var(--ark-green-soft);
+    color: var(--ark-olive);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .problem__icon svg {
+    width: 21px;
+    height: 21px;
   }
 
   .problem__card-title {
@@ -159,16 +213,35 @@ const cards = [
   }
 
   .problem__card-body {
-    margin-top: 10px;
+    margin-top: 8px;
     font-size: 0.97rem;
     line-height: 1.58;
     color: #5b564e;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .problem__card {
+      transition: none;
+    }
+  }
+
+  /* Below the two-column breakpoint the cards move under the prose and go two-up, then
+   * one-up on a phone. */
   @media (max-width: 1100px) {
+    .problem__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 44px;
+    }
+
     .problem__cards {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 32px;
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .problem__cards {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 
@@ -182,18 +255,16 @@ const cards = [
     }
 
     .problem__body {
-      margin-top: 26px;
+      margin-top: 24px;
     }
 
-    .problem__cards {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 26px;
-      margin-top: 42px;
+    .problem__body .problem__lead {
+      font-size: 1.12rem;
     }
   }
 
   /* Phone and any portrait screen: centre the heading block. Body paragraphs and the
-   * four cards keep their left edge — centred prose is harder to read. */
+   * cards keep their left edge — centred prose is harder to read. */
   @media (max-width: 900px), (orientation: portrait) {
     .problem__title,
     .problem__standfirst {

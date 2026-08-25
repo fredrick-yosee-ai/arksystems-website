@@ -162,6 +162,14 @@ Is this you? both do symptom recognition, so nothing else may.
   `(max-width: 900px), (orientation: portrait)`. Body paragraphs deliberately do not —
   centred prose is harder to read, which matters more here than usual given the
   plain-language rule.
+- **Icons are inline SVG in the Material Symbols idiom, never the Material Symbols
+  font.** The font is a third-party request, which the self-hosting rule rules out and
+  which would have to be named on the Privacy page. Keep stroke weight around 1.9–2.6
+  to match the icons already on the page.
+- Where a section splits into two columns, split it by *content type* — all the prose in
+  one column, all the cards in the other. The original section 2 split its body copy
+  across two columns plus a full-width block underneath, and there was genuinely no way
+  to tell where to start reading.
 
 No Tailwind. Plain CSS, tokens imported once, scoped `<style>` per component. Node 24,
 pinned in `.nvmrc`.
