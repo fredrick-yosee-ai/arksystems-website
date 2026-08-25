@@ -1,9 +1,28 @@
 ---
-import { SITE, BOOKING_URL, FOOTER_EXPLORE, FOOTER_LEGAL } from "../../consts";
+import {
+  SITE,
+  BOOKING_URL,
+  FOOTER_EXPLORE,
+  FOOTER_LEGAL,
+  INDUSTRY_LINKS,
+} from "../../consts";
 import arkLogo from "../../../assets/ark.png";
 import { Image } from "astro:assets";
 
 const year = new Date().getFullYear();
+
+/*
+ * The footer carries four columns, and Industries is one of them.
+ *
+ * It is a column rather than a line inside Explore because it is a category that grows:
+ * /accounting is the first industry page and the list is built to take the next one
+ * without anything moving. It also does a job the header cannot — these are plain
+ * <a href> links, rendered unconditionally and never behind a control, so the industry
+ * pages stay reachable when the header's submenu script does not run.
+ */
+
+/* Trailing slashes vary by host and by dev server, so compare without one. */
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
 ---
 
 <footer class="footer">
@@ -27,19 +46,36 @@ const year = new Date().getFullYear();
           {
             FOOTER_EXPLORE.map((link) => (
               <li>
-                <a href={link.href} class="footer__link">
+                <a
+                  href={link.href}
+                  class="footer__link"
+                  aria-current={link.href === path ? "page" : undefined}
+                >
                   {link.label}
                 </a>
               </li>
             ))
           }
         </ul>
-        {/*
-          The spec puts a quiet "For accounting firms → /accounting" link here, so a CPA
-          arriving by referral has somewhere to go. It is omitted for release one because
-          /accounting ships in release two, and "every link resolves, no 404s in the
-          footer" is a stated quality gate. Restore it with that page.
-        */}
+      </div>
+
+      <div class="footer__col">
+        <h2 class="eyebrow footer__heading">Industries</h2>
+        <ul>
+          {
+            INDUSTRY_LINKS.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="footer__link"
+                  aria-current={link.href === path ? "page" : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
       </div>
 
       <div class="footer__col">
@@ -63,7 +99,11 @@ const year = new Date().getFullYear();
           {
             FOOTER_LEGAL.map((link) => (
               <li>
-                <a href={link.href} class="footer__link">
+                <a
+                  href={link.href}
+                  class="footer__link"
+                  aria-current={link.href === path ? "page" : undefined}
+                >
                   {link.label}
                 </a>
               </li>
@@ -88,8 +128,8 @@ const year = new Date().getFullYear();
 
   .footer__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 2fr);
-    gap: 56px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.65fr);
+    gap: 48px;
     align-items: start;
   }
 
@@ -131,8 +171,8 @@ const year = new Date().getFullYear();
 
   .footer__cols {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 32px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px;
   }
 
   .footer__heading {
@@ -155,12 +195,25 @@ const year = new Date().getFullYear();
     text-decoration: underline;
   }
 
+  /* The current page, marked with weight as well as colour. */
+  .footer__link[aria-current="page"] {
+    color: var(--ark-olive);
+    font-weight: 600;
+  }
+
   .footer__legal-line {
     margin-top: 46px;
     padding-top: 22px;
     border-top: 1px solid var(--ark-grey);
     font-size: 0.82rem;
     color: var(--ark-muted);
+  }
+
+  @media (max-width: 1040px) {
+    .footer__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 40px;
+    }
   }
 
   @media (max-width: 900px) {
@@ -174,12 +227,20 @@ const year = new Date().getFullYear();
     }
 
     .footer__cols {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 30px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 30px 24px;
     }
 
     .footer__legal-line {
       margin-top: 34px;
+    }
+  }
+
+  /* Four column headings two-up still fit a 390px phone; below that they do not. */
+  @media (max-width: 560px) {
+    .footer__cols {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
     }
   }
 </style>

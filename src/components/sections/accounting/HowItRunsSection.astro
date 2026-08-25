@@ -1,0 +1,198 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+
+/*
+ * Section 9 — how it runs, and what it costs.
+ *
+ * The doc's build note is the thing to protect: the word "from" in step 3 is
+ * load-bearing. "from CAD $4,000" sets a floor without promising a ceiling, and "CAD
+ * $4,000" flat would be a different and worse claim — one the next sentence would then
+ * have to walk back. It is not a typo and it does not get tidied.
+ *
+ * The step titles drop the "Step N — " prefix, which the doc's own reading rules make an
+ * element label rather than copy, in the same way "Card 1 — " and "Point 1 — " are
+ * elsewhere in the file. The number survives as the step marker, so nothing is lost and
+ * nothing is said twice.
+ *
+ * Step 2 carries the second required /workshop link, on the words that name it. Unlike
+ * the one in section 8, this anchor is already in the approved copy, so nothing had to
+ * be added. /workshop still 404s — see the note in ForYourClientsSection.
+ *
+ * This section is the only place on the site outside the workshop page itself where a
+ * price appears. The brand rule is value before cost, and the eight sections above this
+ * one are what earn the right to it. Do not move it up the page.
+ */
+
+const steps = [
+  {
+    n: "1",
+    title: "Twenty minutes, free",
+    body: "You describe the job you would most like to stop doing by hand. We tell you honestly whether it is a good candidate, and whether the thing you are describing is really what is holding up your week.",
+  },
+  {
+    n: "2",
+    // Split so "The workshop" can carry the link without breaking the sentence apart.
+    titleLink: { label: "The workshop", href: "/workshop" },
+    titleRest: ", CAD $1,000",
+    body: "One day. We go through your actual workflows and come back with the one thing worth building first, what it would involve, and what it would not fix. The full fee is credited against implementation if you go ahead. If you do not, you keep the findings and owe nothing further.",
+  },
+  {
+    n: "3",
+    title: "The build, from CAD $4,000",
+    body: "One narrow workflow, running in about two to three weeks. The price is fixed and agreed before anything starts, and it does not move as we go. What it depends on is what the job involves, which is what the workshop is for. Nothing is final until you have used it and told us it works.",
+  },
+];
+---
+
+<section class="runs">
+  <div class="container">
+    <h2 class="runs__title">A short paid piece of work, then a decision.</h2>
+
+    <ol class="runs__steps">
+      {
+        steps.map((step) => (
+          <li class="runs__step">
+            <span class="runs__node" aria-hidden="true">{step.n}</span>
+            <h3 class="runs__step-title">
+              {step.titleLink ? (
+                <Fragment><a class="runs__link" href={step.titleLink.href}>{step.titleLink.label}</a>{step.titleRest}</Fragment>
+              ) : (
+                step.title
+              )}
+            </h3>
+            <p class="runs__step-body">{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="runs__cta">
+      <BookingButton location="acc-how-it-runs" block>
+        See it working — book 20 minutes
+      </BookingButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  .runs {
+    background: #fff;
+    padding-block: 96px;
+  }
+
+  .runs__title {
+    font-size: var(--ark-h2);
+    letter-spacing: -0.02em;
+    max-width: 22ch;
+  }
+
+  .runs__steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 52px;
+  }
+
+  .runs__step {
+    position: relative;
+    background: var(--ark-cream);
+    border: 1px solid var(--ark-grey);
+    border-radius: var(--ark-radius);
+    padding: 30px 30px 32px;
+  }
+
+  .runs__node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: 1.14rem;
+  }
+
+  /* The connector between cards, so three priced stages read as one path rather than as
+   * three options to choose between. It stops after the third. */
+  .runs__step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: calc(100% + 1px);
+    top: 52px;
+    width: 22px;
+    height: 2px;
+    background: var(--ark-grey);
+  }
+
+  .runs__step-title {
+    margin-top: 20px;
+    font-size: 1.28rem;
+    line-height: 1.3;
+  }
+
+  .runs__link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--ark-olive-2);
+  }
+
+  .runs__link:hover {
+    text-decoration-color: var(--ark-olive);
+  }
+
+  .runs__step-body {
+    margin-top: 12px;
+    font-size: 1rem;
+    line-height: 1.64;
+    color: #5b564e;
+  }
+
+  .runs__cta {
+    margin-top: 40px;
+  }
+
+  @media (max-width: 1000px) {
+    .runs__steps {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    /* Vertical run of the connector once the cards stack. */
+    .runs__step:not(:last-child)::after {
+      left: 52px;
+      top: calc(100% + 1px);
+      width: 2px;
+      height: 16px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .runs {
+      padding-block: 56px;
+    }
+
+    .runs__steps {
+      margin-top: 34px;
+    }
+
+    .runs__step {
+      padding: 26px 22px 28px;
+    }
+
+    .runs__step-title {
+      font-size: 1.16rem;
+    }
+  }
+
+  @media (max-width: 900px), (orientation: portrait) {
+    .runs__title {
+      text-align: center;
+      margin-inline: auto;
+    }
+  }
+</style>

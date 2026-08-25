@@ -1,0 +1,108 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE, BOOKING_URL } from "../consts";
+
+import HeroSection from "../components/sections/accounting/HeroSection.astro";
+import ActualProblemSection from "../components/sections/accounting/ActualProblemSection.astro";
+import WhatWeBuildSection from "../components/sections/accounting/WhatWeBuildSection.astro";
+import WhereWeStopSection from "../components/sections/accounting/WhereWeStopSection.astro";
+import InPracticeSection from "../components/sections/accounting/InPracticeSection.astro";
+import FitsWhatYouUseSection from "../components/sections/accounting/FitsWhatYouUseSection.astro";
+import DataGoesSection from "../components/sections/accounting/DataGoesSection.astro";
+import ForYourClientsSection from "../components/sections/accounting/ForYourClientsSection.astro";
+import HowItRunsSection from "../components/sections/accounting/HowItRunsSection.astro";
+import FaqSection from "../components/sections/accounting/FaqSection.astro";
+import CloseSection from "../components/sections/accounting/CloseSection.astro";
+
+/*
+ * /accounting — the destination for all cold outbound. Never the homepage.
+ *
+ * Copy is docs/accounting-page.md, used verbatim. Where the Stitch design and the doc
+ * disagreed, the doc won: the design was exported against an older draft and still
+ * carries the review-everything model that was superseded on 24 Aug 2026 — "checked by
+ * a person" in section 3, "coding them for review" in the subhead, "Human review by
+ * design" in the trust line, and a hero card claiming every critical decision routes
+ * back to a person. None of those shipped. The design was used for layout only.
+ *
+ * Eleven sections, in the doc's order. The Stitch export renders section 7 between 4 and
+ * 5; that is not followed. The order here is an argument, and it runs: this is your week
+ * (2), here is what we would build (3), here is what we will not touch (4), here is what
+ * that looks like day to day (5), it does not displace anything (6), and only then, once
+ * a reader has a reason to care, where the client data goes (7). Moving 7 up asks the
+ * reader to evaluate a data-handling policy for something they have not yet decided they
+ * want.
+ *
+ * Three CTAs: hero, section 9, close. All point at BOOKING_URL. The workshop is linked
+ * from sections 8 and 9 but is not sold here — it becomes a recommendation made on the
+ * call.
+ *
+ * Schema: Service and FAQPage, as the doc specifies. FAQPage is emitted by the FAQ
+ * component, next to the questions it describes, so the two cannot drift apart.
+ *
+ * LocalBusiness is NOT emitted. The doc says it is inherited from the shared layout; it
+ * is not, and there is no JSON-LD in the layout at all. It is deliberately not invented
+ * here — a LocalBusiness node needs a real street address and real hours, and making
+ * either up would be a false claim on a page whose entire argument is that we do not
+ * make claims we cannot stand behind. It is Fredrick's to supply.
+ */
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "AI for accounting firm operations",
+  serviceType: "Business process automation for accounting practices",
+  description:
+    "One narrow workflow built for the document and admin work around an accounting practice — collecting client documents, reading them, coding them against rules the firm sets, and chasing what has not arrived. Not accounting, tax, bookkeeping sign-off or assurance work.",
+  provider: {
+    "@type": "Organization",
+    name: SITE.name,
+    url: SITE.url,
+  },
+  areaServed: {
+    "@type": "AdministrativeArea",
+    name: "British Columbia",
+  },
+  audience: {
+    "@type": "BusinessAudience",
+    name: "Accounting firms",
+  },
+  url: `${SITE.url}/accounting`,
+  potentialAction: {
+    "@type": "ReserveAction",
+    name: "Book 20 minutes",
+    target: BOOKING_URL,
+  },
+};
+---
+
+{/*
+  Title and description are the approved strings from docs/accounting-page.md, used
+  character for character. The title uses a pipe and the rest of the site uses an em
+  dash, which is why it goes through titleOverride rather than being rebuilt from the
+  site pattern — the doc counted the characters (51 and 147) and the separator is part
+  of what it counted.
+*/}
+<BaseLayout
+  title="AI for Accounting Firm Operations in BC"
+  titleOverride="AI for Accounting Firm Operations in BC | ArkSystems"
+  description="We build one narrow workflow for the document and admin work around your practice — never the accounting itself. Metro Vancouver. Book 20 minutes."
+>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(serviceSchema)}
+    is:inline
+  />
+
+  <HeroSection />
+  <ActualProblemSection />
+  <WhatWeBuildSection />
+  <WhereWeStopSection />
+  <InPracticeSection />
+  <FitsWhatYouUseSection />
+  <DataGoesSection />
+  <ForYourClientsSection />
+  <HowItRunsSection />
+  <FaqSection />
+  <CloseSection />
+</BaseLayout>

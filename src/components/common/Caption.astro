@@ -1,0 +1,51 @@
+---
+/**
+ * A visible source attribution, sitting immediately under the claim it supports.
+ *
+ * This exists because of a rule in `docs/accounting-page.md`: every figure on the
+ * /accounting page belongs to a third party, and its caption "must render visibly next
+ * to the claim it supports, not as a hidden footnote". So this is deliberately NOT a
+ * footnote pattern — there is no marker to follow, no jump to the bottom of the page,
+ * and nothing that disappears when a stylesheet fails. The attribution is a sibling of
+ * the paragraph making the claim, in source order, and it renders wherever that
+ * paragraph renders.
+ *
+ * It is quiet but not hidden: --ark-muted on cream measures 4.9:1, which clears AA for
+ * small text. Do not make it lighter to "balance" the block.
+ *
+ * `<cite>` would be wrong here. These caption strings name the study, the publisher and
+ * the date, and several of them add a caveat about who paid for the research — that
+ * caveat is the honest part and it is not a title of a work.
+ */
+
+interface Props {
+  /** Sits on the dark olive band rather than on cream or white. */
+  onDark?: boolean;
+  class?: string;
+}
+
+const { onDark = false, class: className } = Astro.props;
+---
+
+<p class:list={["caption", { "caption--on-dark": onDark }, className]}>
+  <slot />
+</p>
+
+<style>
+  .caption {
+    margin-top: 12px;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--ark-muted);
+    /* The rule above the caption ties it to the paragraph it belongs to, so it reads as
+     * an attribution for that block rather than as the start of the next one. */
+    padding-top: 10px;
+    border-top: 1px solid var(--ark-grey);
+    max-width: 62ch;
+  }
+
+  .caption--on-dark {
+    color: var(--ark-on-dark-muted);
+    border-top-color: rgba(255, 255, 255, 0.22);
+  }
+</style>

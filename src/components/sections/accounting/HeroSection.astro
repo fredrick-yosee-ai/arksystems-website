@@ -1,0 +1,445 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+
+/*
+ * Section 1 — the hero.
+ *
+ * Copy is verbatim from docs/accounting-page.md. The build note there is the thing to
+ * respect: the second half of the subhead — "Never the accounting itself. That stays
+ * with your professionals, where it belongs." — is the scope promise, and it is the
+ * reason a cold visitor keeps reading rather than deciding we are selling bookkeeping
+ * software. It is not truncated and not visually demoted; it sits in the same paragraph
+ * at the same size as the rest.
+ *
+ * ---------------------------------------------------------------------------
+ * About the illustration.
+ *
+ * The Stitch design fills this space with two mock UI cards. They were not built,
+ * because one of them carried invented copy — "Every critical decision routes back to
+ * your team. We automate the extraction, not the conclusion." — which describes the
+ * review-everything model that was superseded on 24 Aug 2026. The system posts
+ * automatically where a rule is clear and stops where it is not. Stitch made the same
+ * substitution in the trust line, replacing "Rules you set, recorded as it goes" with
+ * "Human review by design". Both are false under the hybrid model, so neither shipped.
+ *
+ * What is here instead is a diagram of the process the page actually describes, drawn
+ * in the same Material Symbols idiom as the icons elsewhere on the site. Every label in
+ * it is lifted from copy elsewhere in the doc rather than written fresh:
+ *
+ *   "Photo", "Email attachment", "Forwarded statement" ... section 5, step 1
+ *   "Read and coded" .......................................... section 5, step 2 heading
+ *   "against your rules" ...................................... sections 3 and 5
+ *   "Held for a person" ....................................... section 5, step 3
+ *   "Ready for review" ........................................ section 8
+ *   "Recorded as it goes" ..................................... section 1, trust line
+ *
+ * It shows no figures, no vendor names, no results, and no client. There is nothing in
+ * it to caveat, which is the test from the claims standard.
+ *
+ * The gold branch is deliberate and is the one piece of colour semantics on the page:
+ * brand-tokens.css reserves gold for "what is waiting on a human", and that is exactly
+ * what the held-back items are. Gold is never used as a CTA colour.
+ *
+ * It is inlined rather than loaded through <img> for the reason in CLAUDE.md — an SVG
+ * in an <img> is an isolated document and cannot reach the page's webfonts, so every
+ * label would fall back to Georgia. One SVG serves both sizes: it is a vertical flow,
+ * so it scales down without the two-file id-collision problem that lib/svg.ts exists to
+ * solve, and on a phone it is capped narrow rather than being allowed to push the first
+ * sentence off the screen.
+ * ---------------------------------------------------------------------------
+ */
+
+const trustItems = [
+  "Metro Vancouver",
+  "Built for Canadian practices",
+  "Rules you set, recorded as it goes",
+];
+---
+
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <p class="eyebrow hero__eyebrow">For accounting and bookkeeping practices</p>
+
+      <h1 class="hero__title">
+        Your people should be doing the accounting. Not chasing the paperwork.
+      </h1>
+
+      <p class="hero__subhead">
+        We build one narrow system for the work that surrounds a practice — collecting
+        client documents, reading them, coding them the way you would, and chasing what
+        has not arrived. Never the accounting itself. That stays with your professionals,
+        where it belongs. Usually running in two or three weeks.
+      </p>
+
+      <div class="hero__cta">
+        <BookingButton location="acc-hero" block>
+          See it working — book 20 minutes
+        </BookingButton>
+        <p class="hero__cta-note">
+          Twenty minutes. Bring the job you'd most like to stop doing by hand.
+        </p>
+      </div>
+
+      <ul class="hero__trust">
+        {
+          trustItems.map((item) => (
+            <li class="hero__trust-item">{item}</li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="hero__visual">
+      <svg
+        class="hero__diagram"
+        viewBox="0 0 460 474"
+        fill="none"
+        role="img"
+        aria-labelledby="acc-hero-dia-title acc-hero-dia-desc"
+      >
+        <title id="acc-hero-dia-title">How one document moves through the system</title>
+        <desc id="acc-hero-dia-desc">
+          A flow diagram. At the top, three ways a client sends something in: a photo, an
+          email attachment and a forwarded statement. All three feed into a single step
+          labelled "Read and coded, against your rules". That step splits in two. Most
+          items go to "Ready for review", with the source document still attached. Items
+          the rules do not cover go to "Held for a person", marked in gold. Underneath
+          both, a band reads "Recorded as it goes — what went in, what came out, and
+          which tool handled it".
+        </desc>
+
+        <!-- Row 1: the three ways it arrives. -->
+        <g class="dia-tile">
+          <rect x="50" y="6" width="52" height="52" rx="14" />
+          <g class="dia-icon" transform="translate(64 20)">
+            <rect x="1" y="3" width="22" height="18" rx="3" />
+            <circle cx="12" cy="12" r="4.6" />
+            <path d="M8 3l1.6-2.4h4.8L16 3" />
+          </g>
+        </g>
+        <text class="dia-label" x="76" y="76" text-anchor="middle">Photo</text>
+
+        <g class="dia-tile">
+          <rect x="204" y="6" width="52" height="52" rx="14" />
+          <g class="dia-icon" transform="translate(218 20)">
+            <rect x="1" y="3" width="22" height="17" rx="3" />
+            <path d="M1.6 5.2 12 13l10.4-7.8" />
+          </g>
+        </g>
+        <text class="dia-label" x="230" y="76" text-anchor="middle">Email</text>
+        <text class="dia-label" x="230" y="90" text-anchor="middle">attachment</text>
+
+        <g class="dia-tile">
+          <rect x="358" y="6" width="52" height="52" rx="14" />
+          <g class="dia-icon" transform="translate(372 20)">
+            <path d="M5 1.5h9.5L19 6v16.5H5z" />
+            <path d="M14.5 1.5V6H19" />
+            <path d="M8.4 11h7.2M8.4 15h7.2M8.4 18.4h4.4" />
+          </g>
+        </g>
+        <text class="dia-label" x="384" y="76" text-anchor="middle">Forwarded</text>
+        <text class="dia-label" x="384" y="90" text-anchor="middle">statement</text>
+
+        <!-- Connectors converging on the single step below. -->
+        <path class="dia-line" d="M76 100v14a8 8 0 0 0 8 8h138" />
+        <path class="dia-line" d="M230 100v22" />
+        <path class="dia-line" d="M384 100v14a8 8 0 0 1-8 8H238" />
+        <path class="dia-arrow" d="M225 118.5l5 5 5-5" />
+
+        <!-- The one step that does the work. -->
+        <rect class="dia-panel" x="0" y="132" width="460" height="96" rx="16" />
+        <g class="dia-panel-icon" transform="translate(28 162)">
+          <path d="M3 20V4a2 2 0 0 1 2-2h9l6 6v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <path d="M14 2v6h6" />
+          <path d="m8 14 2.6 2.6L16 11" />
+        </g>
+        <text class="dia-panel-title" x="76" y="172">Read and coded</text>
+        <text class="dia-panel-sub" x="76" y="196">against your rules —</text>
+        <text class="dia-panel-sub" x="76" y="212">the original stays attached</text>
+
+        <!-- The split. Most items go left; the ones no rule covers go right, in gold. -->
+        <path class="dia-line" d="M230 228v14a8 8 0 0 1-8 8H118a8 8 0 0 0-8 8v14" />
+        <path class="dia-line" d="M230 228v14a8 8 0 0 0 8 8h104a8 8 0 0 1 8 8v14" />
+        <path class="dia-arrow" d="M105 268.5l5 5 5-5" />
+        <path class="dia-arrow dia-arrow--gold" d="M345 268.5l5 5 5-5" />
+
+        <rect class="dia-card dia-card--clean" x="0" y="282" width="220" height="90" rx="14" />
+        <g class="dia-card-icon" transform="translate(24 302)">
+          <circle cx="10" cy="10" r="9" />
+          <path d="m6.2 10.2 2.6 2.6 5-5.4" />
+        </g>
+        <text class="dia-card-title" x="24" y="342">Ready for review</text>
+        <text class="dia-card-sub" x="24" y="360">most of them, most days</text>
+
+        <rect class="dia-card dia-card--held" x="240" y="282" width="220" height="90" rx="14" />
+        <g class="dia-card-icon dia-card-icon--gold" transform="translate(264 302)">
+          <circle cx="10" cy="10" r="9" />
+          <path d="M10 5.4v5.2M10 14.2h.01" />
+        </g>
+        <text class="dia-card-title dia-card-title--gold" x="264" y="342">Held for a person</text>
+        <text class="dia-card-sub dia-card-sub--gold" x="264" y="360">what the rules do not cover</text>
+
+        <!-- The trail underneath both paths. -->
+        <path class="dia-line" d="M110 372v18a8 8 0 0 0 8 8h112" />
+        <path class="dia-line" d="M350 372v18a8 8 0 0 1-8 8H238" />
+        <path class="dia-arrow" d="M225 394.5l5 5 5-5" />
+
+        <rect class="dia-strip" x="0" y="408" width="460" height="62" rx="14" />
+        <g class="dia-card-icon" transform="translate(24 429)">
+          <path d="M3.4 10a6.6 6.6 0 1 1 1.9 4.7" />
+          <path d="M3 10.4 5.4 8l2.4 2.4" />
+          <path d="M10 6.6V10l2.6 1.6" />
+        </g>
+        <text class="dia-strip-title" x="60" y="435">Recorded as it goes</text>
+        <text class="dia-strip-sub" x="60" y="453">what went in, what came out, which tool</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: #fff;
+    padding-block: 74px 96px;
+    border-bottom: 1px solid var(--ark-grey);
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 72px;
+    align-items: center;
+  }
+
+  .hero__eyebrow {
+    display: block;
+    margin-bottom: 22px;
+  }
+
+  /* The measure sits on the element that carries the font-size, never on a wrapper —
+   * `ch` resolves against the element's own font-size, so on a wrapper it would count
+   * 16px characters and cramp a display heading to a third of its width. */
+  .hero__title {
+    font-size: var(--ark-h1);
+    letter-spacing: -0.022em;
+    max-width: 17ch;
+  }
+
+  .hero__subhead {
+    margin-top: 26px;
+    max-width: 58ch;
+    font-size: var(--ark-body-lg);
+    line-height: 1.66;
+    color: #5b564e;
+  }
+
+  .hero__cta {
+    margin-top: 34px;
+  }
+
+  .hero__cta-note {
+    margin-top: 14px;
+    font-size: var(--ark-small);
+    line-height: 1.55;
+    color: var(--ark-muted);
+    max-width: 46ch;
+  }
+
+  /* The trust line. Three items, separated by a middot that is drawn rather than typed,
+   * so a screen reader gets three list items instead of one run-on string. */
+  .hero__trust {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 18px;
+    margin-top: 34px;
+    padding-top: 22px;
+    border-top: 1px solid var(--ark-grey);
+  }
+
+  .hero__trust-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--ark-muted);
+  }
+
+  .hero__trust-item + .hero__trust-item::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--ark-olive-2);
+    margin-right: 18px;
+    flex-shrink: 0;
+  }
+
+  /* --- the diagram --- */
+
+  .hero__visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero__diagram {
+    width: 100%;
+    max-width: 440px;
+    height: auto;
+  }
+
+  .dia-tile rect {
+    fill: var(--ark-green-soft);
+  }
+
+  .dia-icon,
+  .dia-panel-icon,
+  .dia-card-icon {
+    fill: none;
+    stroke: var(--ark-olive);
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .dia-panel-icon {
+    stroke: var(--ark-on-dark);
+  }
+
+  .dia-card-icon--gold {
+    stroke: var(--ark-gold-ink);
+  }
+
+  .dia-label {
+    font-family: var(--ark-font-body);
+    font-size: 12.5px;
+    font-weight: 600;
+    fill: var(--ark-muted);
+  }
+
+  .dia-line {
+    stroke: var(--ark-grey);
+    stroke-width: 1.6;
+    fill: none;
+  }
+
+  .dia-arrow {
+    stroke: var(--ark-olive-2);
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+
+  .dia-arrow--gold {
+    stroke: var(--ark-gold);
+  }
+
+  .dia-panel {
+    fill: var(--ark-olive);
+  }
+
+  .dia-panel-title {
+    font-family: var(--ark-font-display);
+    font-size: 19px;
+    font-weight: 700;
+    fill: var(--ark-on-dark);
+  }
+
+  .dia-panel-sub {
+    font-family: var(--ark-font-body);
+    font-size: 13px;
+    fill: var(--ark-on-dark-muted);
+  }
+
+  .dia-card--clean {
+    fill: var(--ark-green-soft);
+  }
+
+  .dia-card--held {
+    fill: var(--ark-gold-bg);
+    stroke: var(--ark-gold-border);
+    stroke-width: 1.4;
+  }
+
+  .dia-card-title {
+    font-family: var(--ark-font-display);
+    font-size: 16px;
+    font-weight: 700;
+    fill: var(--ark-olive);
+  }
+
+  .dia-card-title--gold {
+    fill: var(--ark-gold-ink);
+  }
+
+  .dia-card-sub {
+    font-family: var(--ark-font-body);
+    font-size: 12.5px;
+    fill: #5b564e;
+  }
+
+  .dia-card-sub--gold {
+    fill: var(--ark-gold-ink);
+  }
+
+  .dia-strip {
+    fill: var(--ark-cream);
+    stroke: var(--ark-grey);
+    stroke-width: 1.4;
+  }
+
+  .dia-strip-title {
+    font-family: var(--ark-font-display);
+    font-size: 15px;
+    font-weight: 700;
+    fill: var(--ark-olive);
+  }
+
+  .dia-strip-sub {
+    font-family: var(--ark-font-body);
+    font-size: 12.5px;
+    fill: var(--ark-muted);
+  }
+
+  @media (max-width: 1100px) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 48px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      padding-block: 44px 56px;
+    }
+
+    .hero__subhead {
+      margin-top: 20px;
+      font-size: 1.05rem;
+    }
+
+    /* Deliberately small. The lesson from the homepage hero is that an illustration
+     * allowed to run full width on a phone puts screens of artwork between the reader
+     * and the first sentence. */
+    .hero__diagram {
+      max-width: 330px;
+    }
+  }
+
+  /* Phone and any portrait screen: centre the heading block and the trust line. Body
+   * prose keeps its left edge — centred prose is harder to read, which matters more
+   * here than usual given the plain-language rule. */
+  @media (max-width: 900px), (orientation: portrait) {
+    .hero__title,
+    .hero__eyebrow {
+      text-align: center;
+      margin-inline: auto;
+    }
+
+    .hero__trust {
+      justify-content: center;
+    }
+  }
+</style>

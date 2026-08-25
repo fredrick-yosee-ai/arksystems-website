@@ -1,0 +1,211 @@
+---
+/*
+ * Section 3 — what we actually build.
+ *
+ * The H2 is "Bounded, logged, and under your rules." The Stitch design renders it as
+ * "…and checked by a person", which is an older line describing the review-everything
+ * model that was superseded on 24 Aug 2026. The doc's wording is the current one and is
+ * the one that is true: where a rule is clear the system applies it, and where it is not
+ * it stops. Card 2 says exactly that, and it would contradict a heading promising a
+ * person checks everything.
+ *
+ * The closing line carries the page's only link to proof, and the doc marks it
+ * "[Link → homepage, See It Work]". The link is attached to the phrase that names the
+ * thing — "a document-capture system we built and run" — rather than being appended as a
+ * separate "see it working →" call to action, which would be new copy. It also means the
+ * link text describes its destination when read on its own, which a bare "see it working"
+ * does not.
+ *
+ * That line is the only place on the page that refers to work we have done, and it is
+ * carefully bounded: a system we built and run ourselves, not a client engagement, not a
+ * result, not a name. Nothing about it may be strengthened.
+ */
+
+const cards = [
+  {
+    title: "It has a right answer",
+    body: "We only take on work where correct and incorrect can be told apart. A total was read off an invoice correctly, or it was not. That is something a machine can be held to.",
+    // target — one correct answer
+    icon: '<circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4.4"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/>',
+  },
+  {
+    title: "You decide how much it does on its own",
+    body: "Where a rule is clear, it applies it. Where it is not, it stops and asks. Where that line sits is your call and it is a setting, not a rebuild — a firm processing five hundred identical transactions a month should not be clicking five hundred times, and a firm with complicated clients should not be trusting a default.",
+    // sliders — the line you set, as a setting
+    icon: '<path d="M4 7h9M17.5 7H20M4 17h3.5M12 17h8"/><circle cx="15.2" cy="7" r="2.3"/><circle cx="9.7" cy="17" r="2.3"/>',
+  },
+  {
+    title: "It leaves a trail",
+    body: "Every item records what went in, what came out, and which version of which tool handled it — with the source document still attached. That is not decoration. It is what makes the output usable in a file.",
+    // document with a list — the record
+    icon: '<path d="M5 20.5V3.5a1 1 0 0 1 1-1h8l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z"/><path d="M14 2.5v5h5"/><path d="M8.6 12.5h6.8M8.6 16h4.4"/>',
+  },
+];
+---
+
+<section class="build">
+  <div class="container">
+    <div class="build__head">
+      <h2 class="build__title">
+        The document work. Bounded, logged, and under your rules.
+      </h2>
+      <p class="build__body">
+        We do not sell a platform and we do not try to automate a practice. We find the
+        one task costing your team the most hours for the least professional judgment,
+        and we build that single thing properly.
+      </p>
+    </div>
+
+    <ul class="build__cards">
+      {
+        cards.map((card) => (
+          <li class="build__card">
+            <span class="build__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={card.icon} />
+            </span>
+            <h3 class="build__card-title">{card.title}</h3>
+            <p class="build__card-body">{card.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="build__closing on-dark">
+      <p class="build__closing-text">
+        The nearest example is <a class="build__link" href="/#see-it-work">a
+        document-capture system we built and run</a>: a receipt or an invoice arrives the
+        way it already arrives, and a clean, coded line comes out the other end with the
+        original image still attached to it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .build {
+    background: #fff;
+    padding-block: 96px;
+  }
+
+  .build__title {
+    font-size: var(--ark-h2);
+    letter-spacing: -0.02em;
+    max-width: 22ch;
+  }
+
+  .build__body {
+    margin-top: 26px;
+    max-width: 66ch;
+    font-size: 1.16rem;
+    line-height: 1.7;
+    color: #5b564e;
+  }
+
+  .build__cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 56px;
+  }
+
+  .build__card {
+    background: var(--ark-cream);
+    border: 1px solid var(--ark-grey);
+    border-radius: var(--ark-radius);
+    padding: 30px 28px 32px;
+  }
+
+  .build__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--ark-green-soft);
+    color: var(--ark-olive);
+  }
+
+  .build__icon svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .build__card-title {
+    margin-top: 20px;
+    font-size: var(--ark-h3);
+    line-height: 1.28;
+  }
+
+  .build__card-body {
+    margin-top: 12px;
+    font-size: 0.99rem;
+    line-height: 1.62;
+    color: #5b564e;
+  }
+
+  /* The dark band. `.on-dark` swaps the focus ring to the light gold that clears 3:1 on
+   * olive — see the deviation note in tokens.css. */
+  .build__closing {
+    margin-top: 34px;
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+    border-radius: var(--ark-radius);
+    padding: 34px 38px;
+  }
+
+  .build__closing-text {
+    font-size: 1.08rem;
+    line-height: 1.68;
+    max-width: 88ch;
+  }
+
+  .build__link {
+    color: var(--ark-on-dark);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--ark-on-dark-eyebrow);
+  }
+
+  .build__link:hover {
+    text-decoration-color: var(--ark-on-dark);
+  }
+
+  @media (max-width: 1000px) {
+    .build__cards {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .build {
+      padding-block: 56px;
+    }
+
+    .build__body {
+      margin-top: 20px;
+      font-size: 1.05rem;
+    }
+
+    .build__cards {
+      margin-top: 36px;
+    }
+
+    .build__closing {
+      padding: 26px 22px;
+    }
+
+    .build__closing-text {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 900px), (orientation: portrait) {
+    .build__title {
+      text-align: center;
+      margin-inline: auto;
+    }
+  }
+</style>

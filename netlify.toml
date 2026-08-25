@@ -19,16 +19,13 @@ to = "/"
 status = 301
 force = true
 
-# RELEASE ONE ONLY. The real destination is /accounting, but that page does not
-# ship until release two, and a 301 to a 404 is worse than no redirect — browsers
-# and search engines cache a 301 hard, so it would be difficult to correct later.
-# 302 says "temporary, do not re-index", which is exactly true right now.
-#
-# WHEN /accounting SHIPS: change `to` to "/accounting" and `status` to 301.
+# /accounting has now shipped, so this is the permanent destination it was always
+# meant to have. It was a temporary 302 to the homepage only because /accounting did
+# not exist yet and a 301 to a 404 is cached hard by browsers and search engines.
 [[redirects]]
 from = "/accounting-firms"
-to = "/"
-status = 302
+to = "/accounting"
+status = 301
 force = true
 
 # /workshop keeps its path in the rebuild, so it needs no redirect.

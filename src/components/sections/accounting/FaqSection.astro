@@ -1,0 +1,230 @@
+---
+import Caption from "../../common/Caption.astro";
+
+/*
+ * Section 10 — FAQ, and the page's FAQPage schema.
+ *
+ * Built on <details>/<summary>, like the homepage FAQ, so it works with no JavaScript at
+ * all: keyboard operable, announced correctly as a disclosure, open and closed state
+ * handled by the browser. Every answer stays in the DOM whether open or shut, so nothing
+ * is hidden from search engines or from find-on-page.
+ *
+ * ---------------------------------------------------------------------------
+ * Captions.
+ *
+ * Three of these answers quote someone else's research, and the doc requires each
+ * attribution to render visibly next to the claim it supports. Two consequences:
+ *
+ * 1. The caption is a sibling of the answer inside the same <details>, so it is on
+ *    screen whenever the figure it belongs to is on screen. There is no state in which
+ *    a reader can see "63%" and not see who published it.
+ *
+ * 2. The caption text is also written into the FAQPage schema's answer, not just into
+ *    the visible markup. A rich result can show an answer on its own, away from this
+ *    page, and a third party's figure quoted without its source is exactly the hidden
+ *    footnote the doc rules out. Two of these captions also say the survey was paid for
+ *    by a vendor, which is the most useful part and the first thing that would be lost.
+ *
+ * Note what the captions themselves do: they name the publisher and, twice, say plainly
+ * that the research was vendor-sponsored. That is the page arguing against its own
+ * evidence. It stays.
+ * ---------------------------------------------------------------------------
+ *
+ * Every figure here belongs to a third party. There is no ArkSystems result anywhere on
+ * this page and there is nothing here to strengthen.
+ */
+
+const faqs = [
+  {
+    q: "Do you do any actual accounting work?",
+    a: "No. We do not file anything, take tax positions, give professional advice, perform assurance work or sign anything. We handle the document and admin work that happens before your work starts, and we stop there. Every accounting decision stays with your people.",
+  },
+  {
+    q: "We tried an AI tool already and it was not impressive.",
+    a: "That is common, and it is not you. In one survey of audit and accounting decision-makers, 63% said the tools they had used were neither comprehensive nor user-friendly and 65% said they lacked depth. The pattern behind it is consistent: these tools do well on work that has a right answer and badly on work that needs judgment. We only build the first kind, and only for work that never needed your judgment in the first place.",
+    caption:
+      "Caseware/IDC study, reported in Accounting Today, February 2026. Vendor-sponsored survey.",
+  },
+  {
+    q: "Will this actually free up capacity, or just make tasks faster?",
+    a: "Fair question, and the honest answer is that it depends on where your hold-up is. If a job is waiting on a client or waiting on a review, faster data entry changes very little — the work sits in the same queue, just typed more quickly. One year-long study of accounting professionals found 74% completing tasks faster after adopting AI but only 22% seeing a substantial rise in overall work rate. That is why the first conversation is about which queue is actually holding up your week, and why sometimes we tell people there is nothing worth building.",
+    caption:
+      "ICAS, with Alliance Manchester Business School and Aston Business School, March 2026.",
+  },
+  {
+    q: "Does this make our firm compliant?",
+    a: "No tool can. Compliance is a property of your practice, not of software, and anyone telling you otherwise is selling. What we can do is make sure the tool is not the thing standing in your way — the record Rule 218 expects is written as it goes, the data path is documented, and you will know which providers touch what.",
+  },
+  {
+    q: "Our clients will ask whether we are using AI on their files.",
+    a: "Most of them are fine with it. In one 2026 survey of small business owners, only 2% were uncomfortable with AI being involved at all, while 89% wanted to be told where it was used. What they want is disclosure, not abstinence. We give you plain language you can send, describing what the system does, what it never touches, and what a person still checks.",
+    caption:
+      "Karbon Client Trust Report 2026, n=350 small business owners. Published by a software vendor.",
+  },
+  {
+    q: "If it is faster, our clients will ask why the fee has not changed.",
+    a: "That conversation is already happening in this profession, and Rule 214 means you are expected to have considered it. We are not going to tell you how to price. We will tell you exactly what changed, so that whatever you decide, you can explain it.",
+  },
+  {
+    q: "How long before we see anything?",
+    a: "A working version in about two to three weeks from go-ahead, for a single workflow. If a job would take longer than that, you hear it before you commit rather than halfway through.",
+  },
+  {
+    q: "What if it does not do what we agreed?",
+    a: "What is being built is written down before anything starts, and you pay in stages against it. Nothing is final until you have used it and confirmed it works.",
+  },
+  {
+    q: "Do you work outside British Columbia?",
+    a: "Yes. We are in Metro Vancouver and work remotely across Canada. The Code references on this page are CPABC's, but equivalent obligations exist in every province with local variation, and we will work to yours.",
+  },
+];
+
+/* The caption travels with the answer — see the note above. */
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.caption ? `${item.a} (Source: ${item.caption})` : item.a,
+    },
+  })),
+};
+---
+
+<section class="faq" id="faq">
+  <div class="container">
+    <h2 class="faq__title">FAQ</h2>
+
+    <div class="faq__list">
+      {
+        faqs.map((item) => (
+          <details class="faq__item">
+            <summary class="faq__q">
+              <span>{item.q}</span>
+              <svg
+                class="faq__chevron"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </summary>
+            <div class="faq__a">
+              <p>{item.a}</p>
+              {item.caption && <Caption>{item.caption}</Caption>}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline />
+
+<style>
+  .faq {
+    background: var(--ark-cream);
+    padding-block: 96px;
+  }
+
+  .faq__title {
+    font-size: var(--ark-h2);
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+
+  .faq__list {
+    max-width: 820px;
+    margin: 44px auto 0;
+  }
+
+  .faq__item {
+    background: #fff;
+    border: 1px solid var(--ark-grey);
+    border-radius: var(--ark-radius);
+  }
+
+  .faq__item + .faq__item {
+    margin-top: 12px;
+  }
+
+  .faq__item[open] {
+    border-color: var(--ark-olive-2);
+  }
+
+  .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 22px 26px;
+    cursor: pointer;
+    font-family: var(--ark-font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--ark-olive);
+    list-style: none;
+  }
+
+  .faq__q::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__chevron {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    color: var(--ark-olive-2);
+    transition: transform 0.18s ease;
+  }
+
+  .faq__item[open] .faq__chevron {
+    transform: rotate(180deg);
+  }
+
+  .faq__a {
+    padding: 0 26px 24px;
+  }
+
+  .faq__a p {
+    font-size: 1rem;
+    line-height: 1.68;
+    color: #5b564e;
+    max-width: 72ch;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq__chevron {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .faq {
+      padding-block: 56px;
+    }
+
+    .faq__list {
+      margin-top: 30px;
+    }
+
+    .faq__q {
+      padding: 18px 20px;
+      font-size: 1.02rem;
+    }
+
+    .faq__a {
+      padding: 0 20px 20px;
+    }
+  }
+</style>

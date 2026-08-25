@@ -3,6 +3,45 @@ import BookingButton from "../common/BookingButton.astro";
 import { NAV_LINKS, SITE } from "../../consts";
 import arkLogo from "../../../assets/ark.png";
 import { Image } from "astro:assets";
+
+/*
+ * The site header.
+ *
+ * Two renderings of the same NAV_LINKS data: a horizontal bar above 800px, and a
+ * stacked panel below it. Both are generated from the one list in consts.ts, so a new
+ * page is added in one place and appears in both.
+ *
+ * ---------------------------------------------------------------------------
+ * Submenus.
+ *
+ * An item with `children` becomes a disclosure — a <button aria-expanded> that opens a
+ * panel — not a link, and not a hover-only menu. Three reasons it is built this way:
+ *
+ * - A parent that is also a link is the oldest trap in navigation. On a touch screen
+ *   the first tap has to mean one of "follow the link" or "open the menu", and whichever
+ *   you choose is wrong for someone. "Industries" is not a page, so it is not a link.
+ * - Hover alone excludes touch and keyboard entirely. Hover is added on top, for
+ *   pointers that have it, but the click and the keyboard are the real interface.
+ * - aria-expanded is what tells a screen reader this is a thing that opens, and whether
+ *   it is open right now. A <div> with a chevron says neither.
+ *
+ * On a phone the submenu is not a second tap. It renders as a labelled group with its
+ * children indented underneath, already open — there is no room to hide things behind
+ * an extra interaction in a panel the visitor already had to open.
+ *
+ * WITH JAVASCRIPT OFF the desktop submenu does not open, exactly as the phone menu does
+ * not open. That is not a dead end: the footer carries every industry page as a plain
+ * <a href>, always rendered and never behind a control. That is the no-JS path and it
+ * is the reason this one is allowed to need a script.
+ * ---------------------------------------------------------------------------
+ */
+
+/* Trailing slashes vary by host and by dev server, so compare without one. */
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const isCurrent = (href?: string) => href !== undefined && href === path;
+/* A parent is marked when one of its children is the page you are on. */
+const hasCurrentChild = (item: (typeof NAV_LINKS)[number]) =>
+  (item.children ?? []).some((child) => isCurrent(child.href));
 ---
 
 <header class="header">
@@ -15,13 +54,57 @@ import { Image } from "astro:assets";
     <nav class="header__nav" aria-label="Primary">
       <ul class="header__list">
         {
-          NAV_LINKS.map((link) => (
-            <li>
-              <a href={link.href} class="header__link">
-                {link.label}
-              </a>
-            </li>
-          ))
+          NAV_LINKS.map((item, index) =>
+            item.children ? (
+              <li class="header__item">
+                <button
+                  type="button"
+                  class:list={["header__link", "header__disclosure", { "is-current": hasCurrentChild(item) }]}
+                  aria-expanded="false"
+                  aria-controls={`nav-submenu-${index}`}
+                  data-nav-disclosure
+                >
+                  {item.label}
+                  <svg
+                    class="header__chevron"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+
+                <ul class="header__submenu" id={`nav-submenu-${index}`} hidden>
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="header__submenu-link"
+                        aria-current={isCurrent(child.href) ? "page" : undefined}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ) : (
+              <li class="header__item">
+                <a
+                  href={item.href}
+                  class:list={["header__link", { "is-current": isCurrent(item.href) }]}
+                  aria-current={isCurrent(item.href) ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ),
+          )
         }
       </ul>
     </nav>
@@ -59,13 +142,40 @@ import { Image } from "astro:assets";
     <div class="container">
       <ul class="header__menu-list">
         {
-          NAV_LINKS.map((link) => (
-            <li>
-              <a href={link.href} class="header__menu-link">
-                {link.label}
-              </a>
-            </li>
-          ))
+          NAV_LINKS.map((item) =>
+            item.children ? (
+              <li class="header__menu-group">
+                {/*
+                  A heading, not a control. The children are already visible, so there is
+                  nothing here to expand and nothing to announce as expandable.
+                */}
+                <p class="header__menu-heading">{item.label}</p>
+                <ul>
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class:list={["header__menu-link", "header__menu-link--child", { "is-current": isCurrent(child.href) }]}
+                        aria-current={isCurrent(child.href) ? "page" : undefined}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ) : (
+              <li>
+                <a
+                  href={item.href}
+                  class:list={["header__menu-link", { "is-current": isCurrent(item.href) }]}
+                  aria-current={isCurrent(item.href) ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ),
+          )
         }
       </ul>
     </div>
@@ -113,10 +223,19 @@ import { Image } from "astro:assets";
   .header__list {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 26px;
+  }
+
+  /* The positioning context for a submenu panel. */
+  .header__item {
+    position: relative;
   }
 
   .header__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--ark-font-body);
     font-size: 0.94rem;
     text-decoration: none;
     color: var(--ark-charcoal);
@@ -125,6 +244,89 @@ import { Image } from "astro:assets";
 
   .header__link:hover {
     color: var(--ark-olive);
+  }
+
+  /* The current page, marked with weight and a rule rather than colour alone — colour
+   * alone is not something everyone can see. */
+  .header__link.is-current {
+    color: var(--ark-olive);
+    font-weight: 600;
+  }
+
+  .header__disclosure {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .header__chevron {
+    width: 14px;
+    height: 14px;
+    color: var(--ark-olive-2);
+    transition: transform 0.16s ease;
+  }
+
+  .header__disclosure[aria-expanded="true"] {
+    color: var(--ark-olive);
+  }
+
+  .header__disclosure[aria-expanded="true"] .header__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* --- The submenu panel ---------------------------------------------- */
+
+  .header__submenu {
+    position: absolute;
+    top: calc(100% + 14px);
+    left: -18px;
+    min-width: 208px;
+    background: #fff;
+    border: 1px solid var(--ark-grey);
+    border-radius: var(--ark-radius-sm);
+    padding: 7px;
+    box-shadow: 0 12px 28px rgba(58, 54, 48, 0.11);
+  }
+
+  .header__submenu[hidden] {
+    display: none;
+  }
+
+  /*
+   * The gap between the trigger and the panel is padding on this pseudo-element rather
+   * than empty space. Hover-open closes on mouseleave, and a real 14px gap means the
+   * pointer leaves the item on the way down to the link it is reaching for.
+   */
+  .header__submenu::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -14px;
+    height: 14px;
+  }
+
+  .header__submenu-link {
+    display: block;
+    padding: 10px 13px;
+    border-radius: 6px;
+    font-size: 0.94rem;
+    line-height: 1.35;
+    text-decoration: none;
+    color: var(--ark-charcoal);
+    white-space: nowrap;
+  }
+
+  .header__submenu-link:hover {
+    background: var(--ark-green-soft);
+    color: var(--ark-olive);
+  }
+
+  .header__submenu-link[aria-current="page"] {
+    background: var(--ark-green-soft);
+    color: var(--ark-olive);
+    font-weight: 600;
   }
 
   .header__actions {
@@ -206,18 +408,80 @@ import { Image } from "astro:assets";
     color: var(--ark-charcoal);
   }
 
+  .header__menu-link.is-current {
+    color: var(--ark-olive);
+    font-weight: 600;
+  }
+
   .header__menu-list > li + li {
     border-top: 1px solid var(--ark-grey);
   }
 
-  /* The spec's breakpoint: below 800px the links collapse, the button does not. */
-  @media (max-width: 800px) {
+  .header__menu-group {
+    padding-block: 13px 4px;
+  }
+
+  .header__menu-heading {
+    font-size: var(--ark-eyebrow);
+    font-weight: 700;
+    letter-spacing: var(--ark-eyebrow-tracking);
+    text-transform: uppercase;
+    color: var(--ark-olive-2);
+  }
+
+  /* Indented, so the group heading reads as a heading and not as a dead link. */
+  .header__menu-link--child {
+    padding-block: 11px;
+    padding-left: 14px;
+    border-left: 2px solid var(--ark-grey);
+    margin-top: 6px;
+  }
+
+  .header__menu-link--child.is-current {
+    border-left-color: var(--ark-olive);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header__chevron {
+      transition: none;
+    }
+  }
+
+  /*
+   * The links collapse into the menu below 1060px; the Book button never does.
+   *
+   * The spec set this at 800px, and at 800px it was right — four items and the button
+   * fit. Adding Industries makes five, and five do not: measured at 1024px the bar needs
+   * about 497px of links against 359px of room, because the page gutter opens from 18px
+   * to 88px a side above 900px and takes the space with it. The overflow that causes is
+   * not cosmetic — a bar wider than the viewport widens documentElement.scrollWidth, and
+   * iOS Safari answers that by widening the layout viewport and scrolling the whole page
+   * sideways into blank space.
+   *
+   * The alternative was to shorten "What happens when you book", which is 181px on its
+   * own and more than a third of the row. That is an approved nav label from
+   * docs/page-spec.md, so it is not mine to trim; if it is ever shortened, this comes
+   * back down and 880px is achievable.
+   */
+  @media (max-width: 1060px) {
     .header__nav {
       display: none;
     }
 
     .header__toggle {
       display: inline-flex;
+    }
+  }
+
+  /* Just above the collapse point the row is still tight, so the gap closes and the
+   * type steps down before anything is allowed to wrap. */
+  @media (min-width: 1061px) and (max-width: 1200px) {
+    .header__list {
+      gap: 18px;
+    }
+
+    .header__link {
+      font-size: 0.9rem;
     }
   }
 
@@ -260,7 +524,7 @@ import { Image } from "astro:assets";
     }
   }
 
-  @media (min-width: 801px) {
+  @media (min-width: 1061px) {
     .header__menu {
       display: none;
     }
@@ -268,6 +532,8 @@ import { Image } from "astro:assets";
 </style>
 
 <script>
+  /* --- The collapsing phone menu --------------------------------------- */
+
   const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
   const menu = document.querySelector<HTMLElement>("[data-menu]");
 
@@ -294,8 +560,93 @@ import { Image } from "astro:assets";
     });
 
     // Resizing past the breakpoint must not leave the panel open and orphaned.
-    window.matchMedia("(min-width: 801px)").addEventListener("change", (event) => {
+    // Keep this number the same as the collapse breakpoint in the stylesheet above.
+    window.matchMedia("(min-width: 1061px)").addEventListener("change", (event) => {
       if (event.matches) setOpen(false);
+    });
+  }
+
+  /* --- Desktop submenus ------------------------------------------------ */
+
+  /*
+   * Written as a loop over every disclosure rather than against the one that exists
+   * today. Adding a second parent to NAV_LINKS should need no change here, including
+   * the rule that opening one closes the other.
+   */
+  const disclosures = [
+    ...document.querySelectorAll<HTMLButtonElement>("[data-nav-disclosure]"),
+  ]
+    .map((button) => {
+      const panel = document.getElementById(
+        button.getAttribute("aria-controls") ?? "",
+      );
+      return panel ? { button, panel, item: button.closest("li") } : null;
+    })
+    .filter((entry): entry is { button: HTMLButtonElement; panel: HTMLElement; item: HTMLLIElement | null } => entry !== null);
+
+  if (disclosures.length > 0) {
+    const setSubmenu = (
+      entry: (typeof disclosures)[number],
+      open: boolean,
+    ) => {
+      entry.button.setAttribute("aria-expanded", String(open));
+      entry.panel.hidden = !open;
+    };
+
+    const closeAll = (except?: (typeof disclosures)[number]) => {
+      for (const entry of disclosures) {
+        if (entry !== except) setSubmenu(entry, false);
+      }
+    };
+
+    // Hover is an addition for pointers that have one, never the only way in.
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+    for (const entry of disclosures) {
+      entry.button.addEventListener("click", () => {
+        const open = entry.button.getAttribute("aria-expanded") === "true";
+        closeAll(entry);
+        setSubmenu(entry, !open);
+      });
+
+      entry.item?.addEventListener("mouseenter", () => {
+        if (!canHover.matches) return;
+        closeAll(entry);
+        setSubmenu(entry, true);
+      });
+
+      entry.item?.addEventListener("mouseleave", () => {
+        // Leaving with the pointer must not yank the panel away from a keyboard user
+        // who is currently inside it.
+        if (!canHover.matches) return;
+        if (entry.item?.contains(document.activeElement)) return;
+        setSubmenu(entry, false);
+      });
+
+      // Tabbing out of the last link in the panel closes it behind you.
+      entry.item?.addEventListener("focusout", (event) => {
+        const next = (event as FocusEvent).relatedTarget as Node | null;
+        if (next && entry.item?.contains(next)) return;
+        setSubmenu(entry, false);
+      });
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      const open = disclosures.find(
+        (entry) => entry.button.getAttribute("aria-expanded") === "true",
+      );
+      if (!open) return;
+      setSubmenu(open, false);
+      open.button.focus();
+    });
+
+    // A click anywhere else on the page dismisses an open panel.
+    document.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement;
+      if (target.closest("[data-nav-disclosure]")) return;
+      if (target.closest(".header__submenu")) return;
+      closeAll();
     });
   }
 </script>

@@ -1,0 +1,212 @@
+---
+import Caption from "../../common/Caption.astro";
+
+/*
+ * Section 7 — where your client data goes.
+ *
+ * The doc's build note: keep the four points as distinct blocks, do not compress into a
+ * paragraph. That is not a style preference. A reader who is going to be held personally
+ * responsible for their client files needs to be able to find one of these four answers
+ * without reading the other three, and a paragraph makes that impossible.
+ *
+ * The CPABC caption is the reason common/Caption.astro exists. Points 3 and 4 both rest
+ * on someone else's published guidance, and the doc requires the attribution to render
+ * visibly next to the claim rather than as a footnote. It sits directly under the grid,
+ * immediately after point 4 in reading order, covering both — it is not a marker to
+ * follow and there is nothing to expand.
+ *
+ * Nothing in this section is an ArkSystems claim about compliance. Every statement is
+ * either a description of how we build (points 1, 2, 3) or a statement about what the
+ * regulator says (points 3, 4, and the closing line). The distinction is the section.
+ */
+
+const points = [
+  {
+    title: "It stays in systems you own",
+    body: "We do not run a platform that holds your records. Data goes into your accounts and your storage, not ours.",
+    // building — your own house
+    icon: '<path d="M3.6 20.4h16.8"/><path d="M5.4 20.4V9.6l6.6-4.4 6.6 4.4v10.8"/><path d="M10 20.4v-5.2h4v5.2"/>',
+  },
+  {
+    title: "Every provider in the path is named, in writing, first",
+    body: "Including any AI provider that reads a document, and where in the world it processes. You see that list before anything is connected, not after.",
+    // list — the named list
+    icon: '<path d="M9.2 6.4h11M9.2 12h11M9.2 17.6h11"/><path d="M4.2 6.4h.01M4.2 12h.01M4.2 17.6h.01"/>',
+  },
+  {
+    title: "We scope what leaves your systems",
+    body: "Your regulator's guidance on this is blunt: CPABC advises against putting confidential information into AI queries at all, even after checking a provider's terms, because it may be stored and reused in ways you cannot predict. We design around that rather than around a vendor's assurances.",
+    // shield with a keyhole — what is allowed out
+    icon: '<path d="M12 3.2 4.8 6.2v5.1c0 4.2 2.9 8.1 7.2 9.3 4.3-1.2 7.2-5.1 7.2-9.3V6.2z"/><circle cx="12" cy="10.8" r="1.7"/><path d="M12 12.5v2.8"/>',
+  },
+  {
+    title: "Everything is recorded as it happens",
+    body: "What went in, what came out, which tool and which version handled it, with the source document attached. CPABC's Rule 218 expects that record to exist for AI-assisted work. It is easier to have it written as you go than to reconstruct it later.",
+    // clock with an arrow — the running record
+    icon: '<path d="M3.6 12a8.4 8.4 0 1 1 2.5 6"/><path d="M3.2 12.6 6 9.8l2.8 2.8"/><path d="M12 7.6V12l3.2 2"/>',
+  },
+];
+---
+
+<section class="data">
+  <div class="container">
+    <div class="data__head">
+      <h2 class="data__title">The question you should be asking, before anything else.</h2>
+      <p class="data__body">
+        Your client files are not yours to be relaxed about. So here is the straight
+        answer, before you have to ask for it.
+      </p>
+    </div>
+
+    <ul class="data__points">
+      {
+        points.map((point) => (
+          <li class="data__point">
+            <span class="data__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={point.icon} />
+            </span>
+            <h3 class="data__point-title">{point.title}</h3>
+            <p class="data__point-body">{point.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    {/* Attribution for the CPABC guidance relied on in points 3 and 4. Must stay visible. */}
+    <Caption class="data__caption">
+      CPABC, "A review of the CPABC Code of Professional Conduct and how it may relate to
+      AI tool employment", 30 June 2025.
+    </Caption>
+
+    <div class="data__closing on-dark">
+      <p>
+        There is no Canadian AI legislation to satisfy — Bill C-27 did not pass. What
+        actually binds you is your Code, PIPEDA, and your own quality management
+        obligations, and those are enough to rule out most of what is being sold to you.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .data {
+    background: #fff;
+    padding-block: 96px;
+  }
+
+  .data__title {
+    font-size: var(--ark-h2);
+    letter-spacing: -0.02em;
+    max-width: 22ch;
+  }
+
+  .data__body {
+    margin-top: 26px;
+    max-width: 62ch;
+    font-size: 1.16rem;
+    line-height: 1.7;
+    color: #5b564e;
+  }
+
+  .data__points {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 52px;
+  }
+
+  .data__point {
+    background: var(--ark-cream);
+    border: 1px solid var(--ark-grey);
+    border-radius: var(--ark-radius);
+    padding: 30px 30px 32px;
+  }
+
+  .data__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--ark-green-soft);
+    color: var(--ark-olive);
+  }
+
+  .data__icon svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .data__point-title {
+    margin-top: 20px;
+    font-size: 1.22rem;
+    line-height: 1.3;
+  }
+
+  .data__point-body {
+    margin-top: 12px;
+    font-size: 1rem;
+    line-height: 1.64;
+    color: #5b564e;
+  }
+
+  .data__caption {
+    margin-top: 20px;
+  }
+
+  .data__closing {
+    margin-top: 34px;
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+    border-radius: var(--ark-radius);
+    padding: 34px 38px;
+  }
+
+  .data__closing p {
+    font-size: 1.08rem;
+    line-height: 1.68;
+    max-width: 88ch;
+  }
+
+  @media (max-width: 1000px) {
+    .data__points {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .data {
+      padding-block: 56px;
+    }
+
+    .data__body {
+      margin-top: 20px;
+      font-size: 1.05rem;
+    }
+
+    .data__points {
+      margin-top: 34px;
+    }
+
+    .data__point {
+      padding: 26px 22px 28px;
+    }
+
+    .data__closing {
+      padding: 26px 22px;
+    }
+
+    .data__closing p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 900px), (orientation: portrait) {
+    .data__title {
+      text-align: center;
+      margin-inline: auto;
+    }
+  }
+</style>

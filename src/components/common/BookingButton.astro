@@ -15,7 +15,10 @@ interface Props {
   location: CtaLocation;
   /** `olive` for cream backgrounds, `cream` for the dark olive band. */
   variant?: "olive" | "cream";
-  /** Full-width on phone, where the mockup stretches the button edge to edge. */
+  /**
+   * Full-width on phone, where the mockup stretches the button edge to edge. It stays
+   * inline at desktop widths, where a button the width of the page reads as a banner.
+   */
   block?: boolean;
   class?: string;
 }
@@ -74,9 +77,23 @@ const {
     background: var(--ark-green-soft);
   }
 
-  .booking-button--block {
-    display: flex;
-    width: 100%;
+  /*
+   * Phone only, which is what the prop has always said it is for. It was written
+   * unconditionally at first, so a `block` button would have run the full width of a
+   * 1440px page; nothing had used the prop yet, so nothing changed when this was
+   * corrected.
+   *
+   * This is also the only way a caller can widen this button. A class passed in through
+   * the `class` prop lands on this element, but the CSS behind it lives in the caller's
+   * scoped stylesheet and is compiled against the caller's scope attribute, which this
+   * element does not carry — so the rule never matches and silently does nothing. Any
+   * sizing a section needs belongs here, as a prop.
+   */
+  @media (max-width: 900px) {
+    .booking-button--block {
+      display: flex;
+      width: 100%;
+    }
   }
 
   @media (max-width: 900px) {

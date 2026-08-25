@@ -1,0 +1,103 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+import { SITE } from "../../../consts";
+
+/*
+ * Section 11 — the close.
+ *
+ * Set on the dark olive band, matching the homepage's closing section rather than the
+ * Stitch design, which ends this page on a light background. Two pages on one site
+ * should not end differently, and the tagline in particular has one established
+ * treatment: display face, on olive, below the CTA, as a sign-off and never as a
+ * heading. It appears twice per page at most — here and in the footer.
+ *
+ * The heading names the gain, which is the same discipline the homepage follows: the
+ * page opens and closes on the upside, and pain lives only in body copy where it is
+ * doing recognition work.
+ *
+ * The body's second half is the risk reversal and is the reason this reads as an offer
+ * rather than a request — "if it is not, you will still leave knowing where your week
+ * actually goes" gives the reader something even when the answer is no. It is verbatim
+ * and it is the last thing they read before the button.
+ */
+---
+
+<section class="close on-dark">
+  <div class="container">
+    <h2 class="close__title">Start with the one job you would most like to stop doing.</h2>
+
+    <p class="close__body">
+      Twenty minutes. We will tell you whether it is worth building, and if it is not, you
+      will still leave knowing where your week actually goes.
+    </p>
+
+    <div class="close__cta">
+      <BookingButton location="acc-closing" variant="cream" block>
+        See it working — book 20 minutes
+      </BookingButton>
+    </div>
+
+    <p class="close__tagline">{SITE.tagline}</p>
+  </div>
+</section>
+
+<style>
+  .close {
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+    padding-block: 120px;
+    text-align: center;
+  }
+
+  .close__title {
+    color: var(--ark-on-dark);
+    font-size: 3.4rem;
+    letter-spacing: -0.024em;
+    max-width: 24ch;
+    margin-inline: auto;
+  }
+
+  .close__body {
+    margin: 26px auto 0;
+    font-size: 1.18rem;
+    line-height: 1.64;
+    color: #dbe6c4;
+    max-width: 60ch;
+  }
+
+  .close__cta {
+    margin-top: 40px;
+  }
+
+  .close__tagline {
+    margin-top: 64px;
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: 0.005em;
+    color: var(--ark-on-dark-eyebrow);
+  }
+
+  @media (max-width: 900px) {
+    .close {
+      padding-block: 62px;
+    }
+
+    .close__title {
+      font-size: 2.1rem;
+    }
+
+    .close__body {
+      font-size: 1.04rem;
+    }
+
+    .close__cta {
+      margin-top: 30px;
+    }
+
+    .close__tagline {
+      margin-top: 44px;
+      font-size: 1.5rem;
+    }
+  }
+</style>

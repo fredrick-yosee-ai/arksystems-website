@@ -7,13 +7,28 @@ import "../styles/base.css";
 interface Props {
   title: string;
   description: string;
+  /**
+   * The complete <title>, used exactly as given, suffix and separator included.
+   *
+   * Most pages want the site-wide pattern below and should pass `title` alone. This
+   * exists for pages whose title tag is itself approved copy — /accounting's is written
+   * out character for character in docs/accounting-page.md, separator included, and
+   * differs from the site pattern. Rebuilding it from parts would silently change it.
+   */
+  titleOverride?: string;
   /** Set on pages that should stay out of search results. */
   noindex?: boolean;
 }
 
-const { title, description, noindex = false } = Astro.props;
+const {
+  title,
+  titleOverride,
+  description,
+  noindex = false,
+} = Astro.props;
 
-const pageTitle = title === SITE.name ? SITE.name : `${title} — ${SITE.name}`;
+const pageTitle =
+  titleOverride ?? (title === SITE.name ? SITE.name : `${title} — ${SITE.name}`);
 const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url);
 ---
 
@@ -38,6 +53,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url);
     <meta name="twitter:card" content="summary_large_image" />
 
     <meta name="generator" content={Astro.generator} />
+
+    {/*
+      Per-page <head> additions — in practice, JSON-LD. It lives with the page rather
+      than here because the schema describes that page's content: /accounting emits
+      Service and FAQPage, and only that page can know what is in its own FAQ.
+
+      Note for whoever adds sitewide LocalBusiness schema: it belongs here, not in a
+      page. It is not written yet — it needs a real address and real hours, and
+      inventing either would be a false claim.
+    */}
+    <slot name="head" />
   </head>
 
   <body>

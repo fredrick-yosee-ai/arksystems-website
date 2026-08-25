@@ -30,28 +30,64 @@ export type CtaLocation =
   | "demo"
   | "what-happens"
   | "closing"
-  | "nav";
+  | "nav"
+  /* /accounting. Prefixed so the two pages' CTAs never merge into one number — the
+   * whole reason for naming them is to learn which block converts, and "hero" meaning
+   * two different heroes would destroy that. */
+  | "acc-hero"
+  | "acc-how-it-runs"
+  | "acc-closing";
+
+export interface NavItem {
+  label: string;
+  /** Omitted on an item that exists only to open a submenu. */
+  href?: string;
+  /** Present on a parent. One level only — see the note on INDUSTRY_LINKS. */
+  children?: readonly NavItem[];
+}
+
+/**
+ * Industry pages: one page per kind of business, written for that reader rather than
+ * for business owners in general.
+ *
+ * This is a list of one today. It is a list, and it is grouped under a parent in both
+ * menus, because /accounting is the first of several and not a one-off — adding the
+ * next industry should be a line here and nothing else. Naming the group "Industries"
+ * rather than putting "Accounting firms" straight in the bar is what makes that true;
+ * a top-level "Accounting" would have to be demoted later, and a nav item that moves is
+ * a nav item people stop finding.
+ *
+ * Keep this one level deep. A submenu inside a submenu is a different interaction
+ * problem — on a phone especially — and nothing here needs one.
+ */
+export const INDUSTRY_LINKS: readonly NavItem[] = [
+  { label: "Accounting firms", href: "/accounting" },
+] as const;
 
 /**
  * Primary navigation. Below 800px these collapse into a menu but the Book button stays
  * visible in the bar — most warm traffic arrives on a phone after meeting Fredrick in
  * person, and the previous site hid the CTA from exactly that visitor.
+ *
+ * The first three are homepage anchors written absolute, so they work from any page:
+ * from /accounting they go home and land on the section rather than doing nothing.
  */
-export const NAV_LINKS = [
+export const NAV_LINKS: readonly NavItem[] = [
   { label: "The problem", href: "/#the-problem" },
   { label: "See it work", href: "/#see-it-work" },
   { label: "What happens when you book", href: "/#what-happens" },
+  { label: "Industries", children: INDUSTRY_LINKS },
   { label: "About", href: "/about" },
 ] as const;
 
-export const FOOTER_EXPLORE = [
+export const FOOTER_EXPLORE: readonly NavItem[] = [
   { label: "See it work", href: "/#see-it-work" },
   { label: "What happens when you book", href: "/#what-happens" },
   { label: "The workshop", href: "/workshop" },
   { label: "About", href: "/about" },
 ] as const;
 
-export const FOOTER_LEGAL = [
+export const FOOTER_LEGAL: readonly NavItem[] = [
   { label: "Privacy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
   { label: "Data handling", href: "/data-handling" },

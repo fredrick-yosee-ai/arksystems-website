@@ -1,0 +1,210 @@
+---
+/*
+ * Section 8 — for your clients, not just your practice.
+ *
+ * This is the section that changes what the page is worth to a firm. Everything before
+ * it offers to take work off the practice; this offers to fix the thing upstream that
+ * creates the work in the first place. It is also the one section where a reader could
+ * suspect a conflict of interest, which is why the third beat exists and why it gets its
+ * own panel rather than being buried at the end of a paragraph. A CPA reading "no
+ * referral fee and no margin" needs to find it without hunting.
+ *
+ * ---------------------------------------------------------------------------
+ * The /workshop link is mine, not the doc's.
+ *
+ * The doc's internal-links list requires a link to /workshop from sections 8 and 9.
+ * Section 9 has a natural anchor — step 2 is literally called "The workshop". Section 8
+ * does not: its copy never mentions the workshop, so there was no phrase to attach a
+ * link to and Fredrick asked me to build one.
+ *
+ * It is a standalone link rather than added prose, and its label is exactly "The
+ * workshop" — the same label the site footer already uses for that destination, so the
+ * two agree. It makes no claim and adds no sentence to copy that was argued over. If it
+ * should say something else, it is one string.
+ *
+ * NOTE: /workshop does not exist yet and currently 404s. Both links on this page point
+ * at it because the doc requires them to. This is the same known gap as the footer's
+ * existing "The workshop" link, and it is a launch blocker for the page, not a defect in
+ * it. See CLAUDE.md, "Still to build for release one".
+ * ---------------------------------------------------------------------------
+ */
+---
+
+<section class="clients">
+  <div class="container">
+    <div class="clients__head">
+      <h2 class="clients__title">
+        The same system, pointed at the client who keeps sending you a shoebox.
+      </h2>
+      <p class="clients__body">
+        Most of what slows a practice down does not start inside the practice. It starts
+        with a client who sends receipts in five formats, three weeks late, and always
+        just before a deadline.
+      </p>
+    </div>
+
+    <div class="clients__row">
+      <div class="clients__main">
+        <p class="clients__sub">
+          We can build the capture side into that client's own systems rather than yours,
+          so what reaches you is already clean and coded and ready for review. You
+          introduce us, we work with them directly, and you go back to being their
+          accountant.
+        </p>
+
+        <a class="clients__workshop" href="/workshop">
+          The workshop
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4.5 12h14M13 6.5 18.5 12 13 17.5" />
+          </svg>
+        </a>
+      </div>
+
+      {/* The conflict-of-interest answer. Given its own block so it is findable. */}
+      <div class="clients__panel">
+        <span class="clients__panel-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3.4 4.9 6.4v5c0 4.2 2.9 8 7.1 9.2 4.2-1.2 7.1-5 7.1-9.2v-5z" />
+            <path d="m9.2 11.9 2.3 2.3 4.2-4.5" />
+          </svg>
+        </span>
+        <p>
+          There is no referral fee and no margin, which means there is nothing for you to
+          disclose and nothing that could look like an interest in the recommendation.
+          What you get is a client whose records arrive on time and in one piece. We do
+          not sell them anything else, and we do not go around you.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .clients {
+    background: var(--ark-cream);
+    padding-block: 96px;
+  }
+
+  .clients__title {
+    font-size: var(--ark-h2);
+    letter-spacing: -0.02em;
+    max-width: 26ch;
+  }
+
+  .clients__body {
+    margin-top: 26px;
+    max-width: 66ch;
+    font-size: 1.16rem;
+    line-height: 1.7;
+    color: #5b564e;
+  }
+
+  .clients__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 44px;
+    align-items: start;
+    margin-top: 44px;
+  }
+
+  .clients__sub {
+    max-width: 60ch;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #5b564e;
+  }
+
+  .clients__workshop {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ark-olive);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--ark-olive-2);
+  }
+
+  .clients__workshop:hover {
+    text-decoration-color: var(--ark-olive);
+  }
+
+  .clients__workshop svg {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+  }
+
+  .clients__panel {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    background: var(--ark-green-soft);
+    border-radius: var(--ark-radius);
+    padding: 30px 32px;
+  }
+
+  .clients__panel-icon {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--ark-olive);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .clients__panel-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .clients__panel p {
+    font-size: 1.02rem;
+    line-height: 1.66;
+    color: var(--ark-charcoal);
+  }
+
+  @media (max-width: 1000px) {
+    .clients__row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .clients {
+      padding-block: 56px;
+    }
+
+    .clients__body {
+      margin-top: 20px;
+      font-size: 1.05rem;
+    }
+
+    .clients__row {
+      margin-top: 30px;
+    }
+
+    .clients__sub {
+      font-size: 1rem;
+    }
+
+    .clients__panel {
+      padding: 24px 22px;
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 900px), (orientation: portrait) {
+    .clients__title {
+      text-align: center;
+      margin-inline: auto;
+    }
+  }
+</style>

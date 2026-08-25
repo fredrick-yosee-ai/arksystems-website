@@ -1,0 +1,224 @@
+---
+/*
+ * Section 4 — where we stop.
+ *
+ * The doc's build note governs the layout: the two columns sit side by side so the
+ * boundary reads at a glance, and this gets the same visual weight as section 3. It is a
+ * selling section, not fine print, and it must not be styled as a disclaimer — for a
+ * regulated reader the scope limit is the reassurance, not the small print.
+ *
+ * The two icon sets are different on purpose. What we handle gets a check; what stays
+ * with you gets a person. A reader scanning the two columns should be able to tell which
+ * is which from the icons alone, before reading a word.
+ *
+ * The columns are <ul>s and their headings are real <h3>s, so the boundary survives with
+ * styles off and reads correctly to a screen reader — which matters more here than
+ * anywhere else on the page, because this section is the one making a claim about what
+ * ArkSystems is not licensed to do.
+ */
+
+const weHandle = [
+  "Collecting documents from clients, in whatever form they send them",
+  "Reading what is on them and pulling out the figures",
+  "Coding and categorizing against rules you set, and stopping on anything that falls outside them",
+  "Routing, filing and naming things consistently",
+  "Chasing what has not arrived yet",
+  "Getting clean data to the point where your work starts",
+];
+
+const staysWithYou = [
+  "Every accounting decision",
+  "Every tax position",
+  "Every judgment call — including where the line sits between what runs on its own and what stops for a person",
+  "What gets filed, and when",
+  "Anything a client is advised",
+  "Sign-off on all of it",
+];
+---
+
+<section class="stop">
+  <div class="container">
+    <div class="stop__head">
+      <h2 class="stop__title">We do not do accounting. That is the point.</h2>
+      <p class="stop__body">
+        ArkSystems does not file anything, does not take tax positions, does not give
+        professional advice, does not perform assurance work, and does not sign anything.
+        Nobody here holds a designation and we do not pretend otherwise.
+      </p>
+    </div>
+
+    <div class="stop__columns">
+      <div class="stop__column">
+        <h3 class="stop__column-title">What we handle</h3>
+        <ul class="stop__list">
+          {
+            weHandle.map((item) => (
+              <li class="stop__item">
+                <span class="stop__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="m8 12.3 2.7 2.7L16 9.6" />
+                  </svg>
+                </span>
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="stop__column stop__column--yours">
+        <h3 class="stop__column-title">What stays with you</h3>
+        <ul class="stop__list">
+          {
+            staysWithYou.map((item) => (
+              <li class="stop__item">
+                <span class="stop__icon stop__icon--yours" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8.4" r="3.4" />
+                    <path d="M5.6 19.4a6.4 6.4 0 0 1 12.8 0" />
+                  </svg>
+                </span>
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <p class="stop__closing">
+      Nothing we build decides anything you have not already decided. It applies the rules
+      you set, records what it did and why, and stops where your rules stop. The paperwork
+      arrives in a state where deciding is quick, and the deciding is still yours.
+    </p>
+  </div>
+</section>
+
+<style>
+  .stop {
+    background: var(--ark-cream);
+    padding-block: 96px;
+  }
+
+  .stop__title {
+    font-size: var(--ark-h2);
+    letter-spacing: -0.02em;
+    max-width: 20ch;
+  }
+
+  .stop__body {
+    margin-top: 26px;
+    max-width: 68ch;
+    font-size: 1.16rem;
+    line-height: 1.7;
+    color: #5b564e;
+  }
+
+  .stop__columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 52px;
+  }
+
+  .stop__column {
+    background: #fff;
+    border: 1px solid var(--ark-grey);
+    border-radius: var(--ark-radius);
+    padding: 32px 30px 34px;
+  }
+
+  /* The right column is the one the reader needs to trust. The soft green marks it as
+   * theirs rather than ours, using the panel colour already on the page. */
+  .stop__column--yours {
+    background: var(--ark-green-soft);
+    border-color: #cfdfca;
+  }
+
+  .stop__column-title {
+    font-size: var(--ark-h3);
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--ark-grey);
+  }
+
+  .stop__column--yours .stop__column-title {
+    border-bottom-color: #cfdfca;
+  }
+
+  .stop__list {
+    display: grid;
+    gap: 15px;
+    margin-top: 22px;
+  }
+
+  .stop__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    font-size: 1.01rem;
+    line-height: 1.55;
+    color: var(--ark-charcoal);
+  }
+
+  .stop__icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+    color: var(--ark-olive-2);
+  }
+
+  .stop__icon--yours {
+    color: var(--ark-olive);
+  }
+
+  .stop__icon svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+  }
+
+  .stop__closing {
+    margin-top: 34px;
+    max-width: 88ch;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--ark-charcoal);
+    border-left: 4px solid var(--ark-olive-2);
+    padding-left: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .stop {
+      padding-block: 56px;
+    }
+
+    .stop__body {
+      margin-top: 20px;
+      font-size: 1.05rem;
+    }
+
+    .stop__columns {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .stop__column {
+      padding: 26px 22px 28px;
+    }
+
+    .stop__closing {
+      font-size: 1rem;
+      padding-left: 18px;
+    }
+  }
+
+  @media (max-width: 900px), (orientation: portrait) {
+    .stop__title {
+      text-align: center;
+      margin-inline: auto;
+    }
+  }
+</style>
