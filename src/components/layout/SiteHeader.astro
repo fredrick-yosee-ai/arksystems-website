@@ -47,7 +47,14 @@ const hasCurrentChild = (item: (typeof NAV_LINKS)[number]) =>
 <header class="header">
   <div class="container header__inner">
     <a href="/" class="header__brand">
-      <Image src={arkLogo} alt="" width={28} height={28} class="header__logo" densities={[1, 2]} />
+      {/*
+        Width only, no height. assets/ark.png is 260x233, not square, and passing
+        height={28} alongside width={28} made Astro generate a 28x28 file — its image
+        service resizes with `fit: cover`, so it scaled the mark to fill the square and
+        cropped roughly 3px off each side. The logo shipped chipped on both edges at
+        every width. Given width alone, Astro derives the height from the source ratio.
+      */}
+      <Image src={arkLogo} alt="" width={28} class="header__logo" densities={[1, 2]} />
       <span class="header__name">{SITE.name}</span>
     </a>
 

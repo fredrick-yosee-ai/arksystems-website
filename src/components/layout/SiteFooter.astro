@@ -29,7 +29,9 @@ const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
   <div class="container footer__inner">
     <div class="footer__brand">
       <a href="/" class="footer__brand-link">
-        <Image src={arkLogo} alt="" width={30} height={30} class="footer__logo" densities={[1, 2]} />
+        {/* Width only — see the note in SiteHeader. A square height on a 260x233 source
+            makes Astro cover-crop the mark's left and right edges. */}
+        <Image src={arkLogo} alt="" width={30} class="footer__logo" densities={[1, 2]} />
         <span class="footer__name">{SITE.name}</span>
       </a>
 
