@@ -2,6 +2,14 @@
 /*
  * Section 2 — the problem, made concrete.
  *
+ * Rebuilt as a single column. The previous layout put the heading and standfirst in a
+ * left column, two paragraphs in a right column, and two more full-width underneath —
+ * so the eye had to start left, jump right, then come back down and left again. There
+ * was no way to tell where to start reading. One column top to bottom removes the
+ * question, and the four cards become the scannable payoff at the end.
+ *
+ * Two sentences were cut from the third paragraph — see the note there.
+ *
  * Size-agnostic on purpose. v1 opened this with "most owner-led businesses" and framed
  * the admin card around the owner, which made the whole page read as if it were for
  * sole operators. The target spans roughly CAD $500k–$5M in revenue and many of those
@@ -31,37 +39,43 @@ const cards = [
 <section class="problem" id="the-problem">
   <div class="container">
     <div class="problem__head">
-      <div>
-        <h2 class="problem__title">The real problem is not a lack of AI tools.</h2>
-        <p class="problem__standfirst">
-          It is not knowing where they would actually be worth using.
-        </p>
-      </div>
-
-      <div class="problem__intro">
-        <p>
-          Plenty of businesses are already trying AI somewhere. Meanwhile the work that
-          actually slows the week down stays slow, manual and hard to keep track of.
-        </p>
-        <p>
-          None of this means anything is wrong with how you run your business. It is what
-          happens when a business does well &mdash; the busier you get, the more of this
-          there is.
-        </p>
-      </div>
+      <h2 class="problem__title">The real problem is not a lack of AI tools.</h2>
+      <p class="problem__standfirst">
+        It is not knowing where they would actually be worth using.
+      </p>
     </div>
 
     <div class="problem__body">
-      <p>
-        And the problem usually is not the work itself. It is everything around the work.
-        Most businesses don&rsquo;t need better technology. They need fewer things being
-        passed between people. Information comes in five different ways. Someone has to
-        ask for it. Someone has to type it in. And nobody can see what is waiting unless
-        they ask.
+      {/* Set larger than the rest so the eye has one obvious place to start. */}
+      <p class="problem__lead">
+        Plenty of businesses are already trying AI somewhere. Meanwhile the work that
+        actually slows the week down stays slow, manual and hard to keep track of.
       </p>
+
+      {/* The "blame the work, never the owner" rule, stated outright. Load-bearing. */}
       <p>
-        It never looks urgent. Whether it falls to the owner or is shared across a team of
-        twelve, it quietly takes hours that should go into the work you get paid for.
+        None of this means anything is wrong with how you run your business. It is what
+        happens when a business does well &mdash; the busier you get, the more of this
+        there is.
+      </p>
+
+      {/*
+        Trimmed. This paragraph also carried "Most businesses don't need better
+        technology. They need fewer things being passed between people." Both sentences
+        are made more strongly elsewhere — the first by section 8's "Sometimes it's
+        nothing, yet" and the FAQ's "Do you always recommend AI? No", the second by
+        cards one and three below. Everything this paragraph is here to do survives.
+      */}
+      <p>
+        The problem is usually not the work itself. It is everything around the work.
+        Information comes in five different ways. Someone has to ask for it. Someone has
+        to type it in. And nobody can see what is waiting unless they ask.
+      </p>
+
+      {/* The size-agnostic line. "Owner or a team of twelve" must stay. */}
+      <p>
+        It never looks urgent. Whether it falls to the owner or is shared across a team
+        of twelve, it quietly takes hours that should go into the work you get paid for.
       </p>
     </div>
 
@@ -84,44 +98,47 @@ const cards = [
     padding-block: 96px;
   }
 
-  .problem__head {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 72px;
-    align-items: start;
-  }
-
+  /* One column, one reading order. The measure sits on the elements themselves, not on
+   * a wrapper — `ch` resolves against the element's own font-size, so on a wrapper it
+   * would be counting 16px characters. */
   .problem__title {
     font-size: var(--ark-h2);
     letter-spacing: -0.02em;
+    max-width: 20ch;
   }
 
   .problem__standfirst {
     margin-top: 18px;
     font-family: var(--ark-font-display);
     font-size: 1.7rem;
-    line-height: 1.28;
+    line-height: 1.32;
     color: var(--ark-olive-2);
-  }
-
-  .problem__intro p + p {
-    margin-top: 18px;
+    max-width: 28ch;
   }
 
   .problem__body {
-    margin-top: 30px;
-    max-width: 88ch;
+    margin-top: 34px;
+    max-width: 68ch;
+  }
+
+  .problem__body p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #5b564e;
+  }
+
+  .problem__body .problem__lead {
+    font-size: 1.24rem;
+    line-height: 1.6;
+    color: #4a463f;
   }
 
   .problem__body p + p {
-    margin-top: 18px;
+    margin-top: 16px;
   }
 
-  .problem__intro p,
-  .problem__body p {
-    font-size: 1.08rem;
-    line-height: 1.68;
-    color: #4a463f;
+  .problem__lead + p {
+    margin-top: 20px;
   }
 
   .problem__cards {
@@ -160,17 +177,12 @@ const cards = [
       padding-block: 56px;
     }
 
-    .problem__head {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 26px;
-    }
-
     .problem__standfirst {
       font-size: 1.3rem;
     }
 
     .problem__body {
-      margin-top: 22px;
+      margin-top: 26px;
     }
 
     .problem__cards {
@@ -186,10 +198,6 @@ const cards = [
     .problem__title,
     .problem__standfirst {
       text-align: center;
-    }
-
-    .problem__standfirst {
-      max-width: 30ch;
       margin-inline: auto;
     }
   }

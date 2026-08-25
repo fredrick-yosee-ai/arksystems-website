@@ -5,20 +5,26 @@ import ProblemSection from "../components/sections/home/ProblemSection.astro";
 import SeeItWorkSection from "../components/sections/home/SeeItWorkSection.astro";
 import IsThisYouSection from "../components/sections/home/IsThisYouSection.astro";
 import WhatHappensSection from "../components/sections/home/WhatHappensSection.astro";
-import StartWithOneSection from "../components/sections/home/StartWithOneSection.astro";
 import WhoYouWorkWithSection from "../components/sections/home/WhoYouWorkWithSection.astro";
 import HowWeWorkSection from "../components/sections/home/HowWeWorkSection.astro";
 import FaqSection from "../components/sections/home/FaqSection.astro";
 import ClosingSection from "../components/sections/home/ClosingSection.astro";
 
 /*
+ * Nine sections. The spec's section 6, "Start with one. Not with everything.", was
+ * removed at Fredrick's request. The argument it carried is not lost: "start with one"
+ * is now made by the How we work heading — "Start with one job. Prove it is worth
+ * fixing. Then decide." What did go with it is the expansion beat, the point that the
+ * foundation is only built once so later jobs land faster. Nothing else on the page
+ * makes that point; if it is wanted back it needs a home.
+ *
  * Section order is load-bearing, not arbitrary:
  *
- * - Section 3 must stay below section 2. Showing the fix before the problem is felt
- *   turns a resolution into a product demo, and the recognition work in section 2 is
- *   what gives section 3 its charge.
- * - Sections 2 and 4 both do symptom recognition, so nothing else may.
- * - The page opens and closes on gain: sections 1 and 10 name the upside.
+ * - See it work must stay below The problem. Showing the fix before the problem is
+ *   felt turns a resolution into a product demo, and the recognition work in The
+ *   problem is what gives it its charge.
+ * - The problem and Is this you? both do symptom recognition, so nothing else may.
+ * - The page opens and closes on gain: the hero and the closing name the upside.
  *
  * There is one CTA on this page, repeated: hero, demo, what-happens, closing, plus the
  * nav button. The workshop is not sold here — it becomes a recommendation made on the
@@ -35,7 +41,6 @@ import ClosingSection from "../components/sections/home/ClosingSection.astro";
   <SeeItWorkSection />
   <IsThisYouSection />
   <WhatHappensSection />
-  <StartWithOneSection />
   <WhoYouWorkWithSection />
   <HowWeWorkSection />
   <FaqSection />

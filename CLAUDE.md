@@ -120,7 +120,7 @@ remains anywhere. Do not reintroduce either.
 
 ## Where the homepage lives
 
-Built and live. `src/pages/index.astro` composes ten sections in a fixed order:
+Built and live. `src/pages/index.astro` composes **nine** sections in a fixed order:
 
 | # | Section | Component |
 |---|---|---|
@@ -129,20 +129,39 @@ Built and live. `src/pages/index.astro` composes ten sections in a fixed order:
 | 3 | See it work | `sections/home/SeeItWorkSection.astro` + `see-it-work/{Receipt,Chat,Sheet}Panel.astro`, `see-it-work/MonthEndStrip.astro` |
 | 4 | Is this you? | `sections/home/IsThisYouSection.astro` |
 | 5 | What happens when you book | `sections/home/WhatHappensSection.astro` |
-| 6 | Start with one | `sections/home/StartWithOneSection.astro` |
-| 7 | Who you're working with | `sections/home/WhoYouWorkWithSection.astro` |
-| 8 | How we work | `sections/home/HowWeWorkSection.astro` |
-| 9 | FAQ | `sections/home/FaqSection.astro` |
-| 10 | Closing | `sections/home/ClosingSection.astro` |
+| 6 | Who you're working with | `sections/home/WhoYouWorkWithSection.astro` |
+| 7 | How we work | `sections/home/HowWeWorkSection.astro` |
+| 8 | FAQ | `sections/home/FaqSection.astro` |
+| 9 | Closing | `sections/home/ClosingSection.astro` |
+
+**The spec's section 6, "Start with one. Not with everything.", was removed** at
+Fredrick's request. "Start with one" survives as the How we work heading. What went with
+it is the expansion beat — that the foundation is built once, so later jobs land faster
+than the first. Nothing else on the page makes that point. If it is wanted back it needs
+a home; do not silently re-add it here.
 
 Shared: `layouts/BaseLayout.astro` (head, Cal.com embed, skip link), `layout/SiteHeader`
 and `SiteFooter`, `common/BookingButton.astro` (every CTA), `consts.ts` (BOOKING_URL,
 nav and footer link data), `lib/svg.ts` (inlining hero SVGs), `styles/brand-tokens.css`
 then `styles/tokens.css` then `styles/base.css`.
 
-**Section order is load-bearing.** Section 3 must stay below section 2 — showing the fix
-before the problem is felt turns a resolution into a product demo. Sections 2 and 4 both
-do symptom recognition, so nothing else may.
+**Section order is load-bearing.** See it work must stay below The problem — showing the
+fix before the problem is felt turns a resolution into a product demo. The problem and
+Is this you? both do symptom recognition, so nothing else may.
+
+**Layout rules learned the hard way, worth keeping:**
+
+- Set a `ch` measure on the element that carries the font-size, never on a wrapper —
+  `ch` resolves against the element's own font-size, so on a wrapper it counts 16px
+  characters and cramps a display heading to a third of its width.
+- Nothing may be wider than the viewport, even inside an `overflow-x: auto` box. A wide
+  child still widens `documentElement.scrollWidth`, and iOS Safari answers that by
+  widening the layout viewport — the whole page then scrolls sideways into blank space.
+  Check `documentElement.scrollWidth`, not `body.scrollWidth`; body shows nothing.
+- Headings, eyebrows and short closing lines centre under
+  `(max-width: 900px), (orientation: portrait)`. Body paragraphs deliberately do not —
+  centred prose is harder to read, which matters more here than usual given the
+  plain-language rule.
 
 No Tailwind. Plain CSS, tokens imported once, scoped `<style>` per component. Node 24,
 pinned in `.nvmrc`.

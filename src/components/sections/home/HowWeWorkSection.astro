@@ -2,6 +2,15 @@
 /*
  * Section 8 — how we work. Four steps, then the pull quote.
  *
+ * Rebuilt as a connected stepper. The four steps were previously four loose columns
+ * with a large numeral floating above each; on desktop that read as a list rather than
+ * a sequence, and stacked on a phone it fell apart completely — four disconnected
+ * blocks with nothing showing that step 2 follows step 1.
+ *
+ * Now each step is a node on a line: the line runs left-to-right between the numbers on
+ * desktop and top-to-bottom beside them on a phone, so the order is visible at both
+ * sizes instead of having to be inferred from the numerals.
+ *
  * The pull quote is the piece that does the most work in this section: it mentions
  * money in a direction that protects the reader rather than asking of them, which
  * lowers defences instead of raising them.
@@ -41,11 +50,13 @@ const steps = [
       {
         steps.map((step) => (
           <li class="how__step">
-            <span class="how__number" aria-hidden="true">
+            <span class="how__node" aria-hidden="true">
               {step.n}
             </span>
-            <h3 class="how__step-title">{step.title}</h3>
-            <p class="how__step-body">{step.body}</p>
+            <div class="how__content">
+              <h3 class="how__step-title">{step.title}</h3>
+              <p class="how__step-body">{step.body}</p>
+            </div>
           </li>
         ))
       }
@@ -73,6 +84,7 @@ const steps = [
   .how__title {
     font-size: 2.7rem;
     letter-spacing: -0.018em;
+    max-width: 26ch;
   }
 
   .how__steps {
@@ -82,17 +94,45 @@ const steps = [
     margin-top: 56px;
   }
 
-  .how__number {
-    display: block;
+  .how__step {
+    position: relative;
+  }
+
+  .how__node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--ark-green-soft);
+    color: var(--ark-olive);
     font-family: var(--ark-font-display);
     font-weight: 700;
-    font-size: 1.9rem;
-    color: var(--ark-olive-2);
+    font-size: 1.02rem;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+
+  /* The connector. Horizontal on desktop, running from each node across the grid gap
+   * into the next column. The last step has none, which is what ends the sequence. */
+  .how__step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 23px;
+    left: 58px;
+    right: -32px;
+    height: 1px;
+    background: var(--ark-grey);
+  }
+
+  .how__content {
+    margin-top: 20px;
   }
 
   .how__step-title {
     font-size: 1.1rem;
-    margin-top: 12px;
+    line-height: 1.3;
   }
 
   .how__step-body {
@@ -119,7 +159,12 @@ const steps = [
   @media (max-width: 1100px) {
     .how__steps {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 34px;
+      gap: 34px 32px;
+    }
+
+    /* With two per row, the connector must not run off the end of a row. */
+    .how__step:nth-child(2n)::after {
+      display: none;
     }
   }
 
@@ -133,8 +178,6 @@ const steps = [
     }
 
     .how__steps {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 28px;
       margin-top: 36px;
     }
 
@@ -148,12 +191,60 @@ const steps = [
     }
   }
 
-  /* Phone and any portrait screen: centre the heading and the pull quote. The four
-   * numbered steps keep their left edge. */
+  /* Phone: the same stepper turned vertical. Number on the left, content beside it, and
+   * the line running down between nodes, so the four steps read as one sequence
+   * instead of four unrelated blocks. */
+  @media (max-width: 700px) {
+    .how__steps {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+
+    .how__step {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding-bottom: 30px;
+    }
+
+    .how__step:last-child {
+      padding-bottom: 0;
+    }
+
+    .how__node {
+      width: 42px;
+      height: 42px;
+      font-size: 0.96rem;
+    }
+
+    /* Vertical connector, from under this node to the top of the next. Re-enabled for
+     * the even-numbered steps that the two-column rule above switched off. */
+    .how__step:not(:last-child)::after {
+      display: block;
+      top: 50px;
+      bottom: 6px;
+      left: 20px;
+      right: auto;
+      width: 1px;
+      height: auto;
+    }
+
+    .how__content {
+      margin-top: 0;
+      padding-top: 3px;
+    }
+  }
+
+  /* Phone and any portrait screen: centre the heading and the pull quote. The steps
+   * keep their left edge — they are a sequence, and the connector reads as a spine. */
   @media (max-width: 900px), (orientation: portrait) {
     .how__eyebrow,
     .how__title {
       text-align: center;
+    }
+
+    .how__title {
+      margin-inline: auto;
     }
 
     .how__quote p {
