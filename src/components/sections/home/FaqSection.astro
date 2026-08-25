@@ -5,8 +5,13 @@
  * book. Risk reversal lives here rather than in section 5, so that someone thinking
  * about money finds it and everyone else is left alone.
  *
- * Answers are shown open, not collapsed behind a disclosure. A visitor scanning for
- * the reason not to book should not have to click to find it.
+ * Foldable, centred, titled "FAQ" — Fredrick's call, replacing the earlier two-column
+ * layout with the "Before you book" heading.
+ *
+ * Built on <details>/<summary>, so it works with no JavaScript at all: keyboard
+ * operable, announced correctly as a disclosure, and open/closed state handled by the
+ * browser. Every answer stays in the DOM whether open or shut, so nothing is hidden
+ * from search engines or from find-on-page.
  *
  * ---------------------------------------------------------------------------
  * !! UNRESOLVED CLAIMS-ACCURACY ISSUE — "What happens to my data?" !!
@@ -78,22 +83,37 @@ const faqs = [
 ---
 
 <section class="faq">
-  <div class="container faq__inner">
-    <div>
-      <p class="eyebrow faq__eyebrow">Questions</p>
-      <h2 class="faq__title">Before you book</h2>
-    </div>
+  <div class="container">
+    <h2 class="faq__title">FAQ</h2>
 
-    <dl class="faq__list">
+    <div class="faq__list">
       {
         faqs.map((item) => (
-          <div class="faq__item">
-            <dt class="faq__q">{item.q}</dt>
-            <dd class="faq__a">{item.a}</dd>
-          </div>
+          <details class="faq__item">
+            <summary class="faq__q">
+              <span>{item.q}</span>
+              <svg
+                class="faq__chevron"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </summary>
+            <div class="faq__a">
+              <p>{item.a}</p>
+            </div>
+          </details>
         ))
       }
-    </dl>
+    </div>
   </div>
 </section>
 
@@ -103,49 +123,88 @@ const faqs = [
     padding-block: 96px;
   }
 
-  .faq__inner {
-    display: grid;
-    grid-template-columns: 0.7fr 1.3fr;
-    gap: 72px;
-    align-items: start;
-  }
-
-  .faq__eyebrow {
-    display: block;
-    margin-bottom: 22px;
-  }
-
   .faq__title {
     font-size: 2.4rem;
     letter-spacing: -0.015em;
+    text-align: center;
   }
 
   .faq__list {
-    margin: 0;
+    max-width: 780px;
+    margin: 46px auto 0;
+    border-top: 1px solid var(--ark-grey);
   }
 
   .faq__item {
     border-bottom: 1px solid var(--ark-grey);
-    padding: 22px 0;
-  }
-
-  .faq__item:last-child {
-    border-bottom: 0;
   }
 
   .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 22px 4px;
+    cursor: pointer;
+    list-style: none;
     font-family: var(--ark-font-display);
     font-weight: 700;
-    font-size: 1.08rem;
-    line-height: 1.3;
+    font-size: 1.12rem;
+    line-height: 1.35;
     color: var(--ark-olive);
+    transition: color 0.15s ease;
   }
 
-  .faq__a {
-    margin: 10px 0 0;
+  /* Safari draws its own triangle unless this is removed too. */
+  .faq__q::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__q:hover {
+    color: #2c401f;
+  }
+
+  .faq__chevron {
+    flex-shrink: 0;
+    color: var(--ark-olive-2);
+    transition: transform 0.25s ease;
+  }
+
+  .faq__item[open] .faq__chevron {
+    transform: rotate(180deg);
+  }
+
+  .faq__a p {
+    padding: 0 4px 24px;
+    max-width: 68ch;
     font-size: 1rem;
     line-height: 1.62;
     color: #5b564e;
+  }
+
+  /* The open/close animation. `::details-content` and `interpolate-size` are recent;
+   * where they are unsupported the panel simply opens instantly, which is a fine
+   * fallback — nothing depends on the transition. */
+  @supports selector(details::details-content) {
+    .faq__item::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition:
+        block-size 0.28s ease,
+        content-visibility 0.28s allow-discrete;
+      transition-behavior: allow-discrete;
+    }
+
+    .faq__item[open]::details-content {
+      block-size: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq__chevron,
+    .faq__item::details-content {
+      transition: none;
+    }
   }
 
   @media (max-width: 900px) {
@@ -153,13 +212,31 @@ const faqs = [
       padding-block: 56px;
     }
 
-    .faq__inner {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 26px;
-    }
-
     .faq__title {
       font-size: var(--ark-h2);
     }
+
+    .faq__list {
+      margin-top: 30px;
+    }
+
+    .faq__q {
+      font-size: 1.02rem;
+      padding: 18px 2px;
+      gap: 14px;
+    }
+
+    .faq__a p {
+      padding: 0 2px 20px;
+      font-size: 0.98rem;
+    }
+  }
+</style>
+
+<style is:global>
+  /* `interpolate-size` has to sit on :root to let block-size animate to `auto`.
+   * Scoped styles cannot target :root, hence the global block. */
+  :root {
+    interpolate-size: allow-keywords;
   }
 </style>

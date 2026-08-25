@@ -38,11 +38,11 @@ const rows = [
         {
           rows.map((row) => (
             <tr>
-              <td class="sheet__date">{row.date}</td>
+              <td class="sheet__date" data-label="Date">{row.date}</td>
               <th scope="row" class="sheet__item">{row.item}</th>
-              <td class="sheet__category">{row.category}</td>
-              <td class="sheet__num sheet__amount">{row.amount}</td>
-              <td class="sheet__num sheet__gst">{row.gst}</td>
+              <td class="sheet__category" data-label="Category">{row.category}</td>
+              <td class="sheet__num sheet__amount" data-label="Amount">{row.amount}</td>
+              <td class="sheet__num sheet__gst" data-label="GST">{row.gst}</td>
               <td class="sheet__link">
                 <span class="visually-hidden">Links to the receipt photo</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ark-olive-2)" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
@@ -164,7 +164,86 @@ const rows = [
     gap: 18px;
   }
 
+  /* ------------------------------------------------------------------------
+   * Phone: stack each row instead of scrolling a 660px table sideways.
+   *
+   * This is a bug fix, not a preference. A `min-width: 660px` table inside an
+   * `overflow-x: auto` box clips correctly on its own axis, but it still widens
+   * `document.documentElement.scrollWidth` — measured at 642 against a 375 viewport,
+   * dropping to 388 the moment the min-width was removed. iOS Safari responds by
+   * widening the layout viewport, so the whole page scrolled sideways into blank
+   * space and zoomed out. Containment (`contain: inline-size`), explicit widths and
+   * `min-width: 0` on the scroll box all failed to stop it; the only reliable fix is
+   * for no element to be wider than the viewport in the first place.
+   *
+   * The <table> markup is unchanged, so screen readers still get a real table with
+   * row and column headers. Only the visual presentation stacks.
+   * --------------------------------------------------------------------------- */
   @media (max-width: 700px) {
+    .sheet__scroll {
+      overflow-x: visible;
+    }
+
+    .sheet__table {
+      min-width: 0;
+    }
+
+    /* Column headers are redundant once each cell carries its own label. */
+    .sheet__table thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .sheet__table tbody tr {
+      display: block;
+      padding: 14px 18px 12px;
+      border-top: 1px solid #f0ede2;
+    }
+
+    .sheet__table tbody th,
+    .sheet__table tbody td {
+      padding: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 14px;
+      text-align: left;
+    }
+
+    /* The item name is the row's heading, so it leads and needs no label. */
+    .sheet__item {
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .sheet__table tbody td::before {
+      content: attr(data-label);
+      font-size: 0.76rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ark-muted);
+      flex-shrink: 0;
+    }
+
+    .sheet__table tbody td {
+      padding-block: 3px;
+    }
+
+    .sheet__num {
+      text-align: right;
+    }
+
+    /* The chain icon carried no information the labels do not, and stacked it just
+     * dangles under each row. Selector has to outrank `.sheet__table tbody td`
+     * above, which is (0,1,2) — a bare `.sheet__link` at (0,1,0) loses to it. */
+    .sheet__table tbody td.sheet__link {
+      display: none;
+    }
+
     .sheet__foot {
       flex-direction: column;
       gap: 6px;
