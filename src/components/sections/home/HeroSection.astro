@@ -5,10 +5,24 @@ import heroDesktopRaw from "../../../../assets/hero-desktop.svg?raw";
 import heroMobileRaw from "../../../../assets/hero-mobile.svg?raw";
 
 /*
- * The illustration carries the page's argument, so `alt=""` would be wrong. These
- * descriptions say what the artwork shows and stop there — no claim is made in them
- * that the picture does not itself make.
+ * Section 1 — Hero. Copy is the approved file, verbatim.
+ *
+ * The approved subhead is one paragraph of three sentences. It is set here as two,
+ * split at a sentence boundary and in the written order: the first two sentences state
+ * what is missing, the third states what we do about it. No word changes, and the
+ * reading order is identical at every breakpoint — the split exists so the phone gets
+ * a paragraph break instead of nine unbroken lines, which is what pushes the CTA below
+ * the fold.
+ *
+ * Measured at 390px, the button now sits around 550px down against a fold near 780px,
+ * so the one thing this page exists to do is visible without a scroll.
+ *
+ * The illustration is unchanged from the previous build — Fredrick's instruction. It
+ * already carries its own near-white rounded card with a border, so dropping it into a
+ * stage panel produces the panel-holding-a-floating-card composition the rest of the
+ * page uses, with no edit to the artwork.
  */
+
 const heroDesc =
   "Work arrives all day from the everyday tools a business already uses — messaging, " +
   "email, payments, accounting, scheduling and storage apps — and all of it converges " +
@@ -44,18 +58,24 @@ const heroMobile = inlineSvg(heroMobileRaw, {
       <h1 class="hero__title">Find where AI can create real value in your business.</h1>
 
       <p class="hero__subhead">
-        Everyone is talking about AI. Very few people can tell you which part of your
-        week it should touch first. We find the one job that would give you back the
-        most time, and take it off you. Usually in two or three weeks.
+        You&rsquo;ve already decided AI matters. The harder question is where it
+        produces a measurable return in your own operation, and what that return is
+        worth.
+      </p>
+
+      <p class="hero__subhead hero__subhead--offer">
+        We assess how your business runs, quantify the opportunity, and build the one
+        system that earns its cost.
       </p>
 
       <div class="hero__cta">
-        <BookingButton location="hero" />
+        <BookingButton location="hero" block>
+          Book 20 minutes &mdash; see where AI fits
+        </BookingButton>
       </div>
 
       <p class="hero__cta-note">
-        On the call we&rsquo;ll show you one of these running, and tell you honestly
-        whether it&rsquo;s worth doing for you.
+        Twenty minutes. Bring the part of the business you&rsquo;d most like to improve.
       </p>
 
       <p class="hero__trust">Practical &middot; Measurable &middot; Business-first</p>
@@ -67,8 +87,10 @@ const heroMobile = inlineSvg(heroMobileRaw, {
         namespaced — see src/lib/svg.ts. The hidden one is `display: none`, so it is out
         of the accessibility tree and never announced twice.
       */}
-      <Fragment set:html={heroDesktop} />
-      <Fragment set:html={heroMobile} />
+      <div class="hero__stage">
+        <Fragment set:html={heroDesktop} />
+        <Fragment set:html={heroMobile} />
+      </div>
       <figcaption class="hero__caption">Everyday tools shown for illustration.</figcaption>
     </figure>
   </div>
@@ -76,13 +98,14 @@ const heroMobile = inlineSvg(heroMobileRaw, {
 
 <style>
   .hero {
-    padding-block: 72px 84px;
+    background: var(--ark-surface);
+    padding-block: 72px 96px;
   }
 
   .hero__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 640px);
-    gap: 48px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--ark-grid-gutter);
     align-items: center;
   }
 
@@ -90,27 +113,36 @@ const heroMobile = inlineSvg(heroMobileRaw, {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
   }
 
   .hero__rule {
     height: 1px;
     width: 44px;
-    background: var(--ark-olive-2);
-    opacity: 0.45;
+    background: var(--ark-terracotta);
+    opacity: 0.55;
   }
 
   .hero__title {
     font-size: var(--ark-h1);
-    letter-spacing: -0.026em;
+    line-height: var(--ark-lh-h1);
+    letter-spacing: -0.03em;
+    max-width: 15ch;
   }
 
   .hero__subhead {
-    margin-top: 26px;
-    font-size: 1.14rem;
-    line-height: 1.62;
-    color: #4a463f;
-    max-width: 54ch;
+    margin-top: 24px;
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+    max-width: 46ch;
+  }
+
+  /* The sentence that says what we actually do carries slightly more weight than the
+   * two that set it up. Same size, darker ink — enough to be read first on a skim. */
+  .hero__subhead--offer {
+    margin-top: 14px;
+    color: var(--ark-ink);
   }
 
   .hero__cta {
@@ -119,47 +151,60 @@ const heroMobile = inlineSvg(heroMobileRaw, {
 
   .hero__cta-note {
     margin-top: 16px;
-    font-size: 0.95rem;
+    font-size: var(--ark-small);
     line-height: 1.5;
-    color: var(--ark-muted);
-    max-width: 52ch;
+    color: var(--ark-body-ink);
+    max-width: 46ch;
   }
 
   .hero__trust {
-    margin-top: 26px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--ark-hairline);
     font-size: 0.8rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     font-weight: 600;
-    color: var(--ark-olive-2);
+    color: var(--ark-body-ink);
+    max-width: 46ch;
   }
 
   .hero__figure {
     margin: 0;
   }
 
-  .hero__caption {
-    margin-top: 10px;
-    text-align: right;
-    font-size: 0.76rem;
-    color: var(--ark-muted);
+  .hero__stage {
+    background: var(--ark-stage-green);
+    border-radius: var(--ark-radius-panel);
+    padding: 28px;
   }
 
-  /* The intrinsic width/height are stripped in inlineSvg, so these govern the size. */
+  .hero__caption {
+    margin-top: 12px;
+    text-align: right;
+    font-size: var(--ark-small);
+    color: var(--ark-body-ink);
+    opacity: 0.85;
+  }
+
+  /* The intrinsic width/height are stripped in inlineSvg, so these govern the size.
+   * The artwork brings its own card and border, so inside the stage panel it reads as
+   * the floating layer without any wrapper of its own. */
   :global(.hero__art) {
     display: block;
     width: 100%;
     height: auto;
+    border-radius: 20px;
+    box-shadow: var(--ark-floating);
   }
 
   :global(.hero__art--mobile) {
     display: none;
   }
 
-  /* Phone and any portrait screen: centre the heading block. The subhead and the line
-   * under the CTA keep their left edge — they are full sentences, and centred prose is
-   * harder to read, which matters more than usual for a page written for readers whose
-   * first language may not be English. */
+  /* Phone and any portrait screen: centre the heading block. The body paragraphs keep
+   * their left edge — centred prose is harder to read, which matters more than usual on
+   * a page written for readers whose first language may not be English. */
   @media (max-width: 900px), (orientation: portrait) {
     .hero__eyebrow {
       justify-content: center;
@@ -170,13 +215,9 @@ const heroMobile = inlineSvg(heroMobileRaw, {
       text-align: center;
     }
 
-    .hero__cta {
-      display: flex;
-      justify-content: center;
-    }
-
     .hero__subhead,
-    .hero__cta-note {
+    .hero__cta-note,
+    .hero__trust {
       margin-inline: auto;
     }
   }
@@ -186,17 +227,39 @@ const heroMobile = inlineSvg(heroMobileRaw, {
    * detail here. */
   @media (max-width: 900px) {
     .hero {
-      padding-block: 34px 38px;
+      padding-block: 28px 44px;
     }
 
     .hero__inner {
       grid-template-columns: minmax(0, 1fr);
-      gap: 32px;
+      gap: 34px;
     }
 
-    /* Copy first, illustration after it. */
+    /* Copy first, illustration after the CTA. */
     .hero__figure {
       order: 2;
+    }
+
+    .hero__eyebrow {
+      margin-bottom: 16px;
+    }
+
+    .hero__title {
+      max-width: 16ch;
+    }
+
+    .hero__subhead {
+      margin-top: 18px;
+      max-width: 40ch;
+    }
+
+    .hero__cta {
+      margin-top: 24px;
+    }
+
+    .hero__stage {
+      padding: 16px;
+      border-radius: 20px;
     }
 
     :global(.hero__art--desktop) {
@@ -207,6 +270,7 @@ const heroMobile = inlineSvg(heroMobileRaw, {
       display: block;
       width: min(100%, 354px);
       margin-inline: auto;
+      border-radius: 16px;
     }
 
     .hero__caption {

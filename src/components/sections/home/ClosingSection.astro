@@ -3,10 +3,11 @@ import BookingButton from "../../common/BookingButton.astro";
 import { SITE } from "../../../consts";
 
 /*
- * Section 10 — closing.
+ * Section 8 — the close. The page's only dark band, which is what makes it read as the
+ * end rather than as one more section.
  *
- * Opens and closes on gain: the first headline on the page names the upside and so
- * does the last one. Pain lives only in body copy, where it does recognition work.
+ * Opens and closes on gain: the first headline on the page names the upside and so does
+ * the last one. Pain lives only in body copy, where it does recognition work.
  *
  * The tagline is set below the CTA as a sign-off, never as a heading. It appears twice
  * on the site in total — here and once in the footer. A tagline used four times stops
@@ -15,18 +16,22 @@ import { SITE } from "../../../consts";
 ---
 
 <section class="closing on-dark">
-  <div class="container">
-    <h2 class="closing__title">Get those hours back.</h2>
+  <div class="container closing__inner">
+    <h2 class="closing__title">Establish where AI is worth it for your business.</h2>
 
     <p class="closing__body">
-      Twenty minutes. Bring the task you&rsquo;d most like to stop doing. We&rsquo;ll
-      show you what it looks like when it&rsquo;s running, and tell you honestly whether
-      it&rsquo;s worth doing for you.
+      Twenty minutes. Bring the part of the operation that costs you most. We&rsquo;ll
+      tell you whether AI applies, what the return would be, and whether it&rsquo;s worth
+      committing to.
     </p>
 
     <div class="closing__cta">
-      <BookingButton location="closing" variant="cream" class="closing__button" />
+      <BookingButton location="closing" variant="cream" block>
+        Book 20 minutes
+      </BookingButton>
     </div>
+
+    <p class="closing__note">Based in Metro Vancouver, working remotely across Canada.</p>
 
     <p class="closing__tagline">{SITE.tagline}</p>
   </div>
@@ -37,34 +42,43 @@ import { SITE } from "../../../consts";
     background: var(--ark-olive);
     color: var(--ark-on-dark);
     padding-block: 120px;
+  }
+
+  .closing__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
   }
 
   .closing__title {
     color: var(--ark-on-dark);
-    font-size: 3.8rem;
-    letter-spacing: -0.024em;
+    font-size: 3.25rem;
+    line-height: 1.08;
+    letter-spacing: -0.026em;
+    max-width: 20ch;
   }
 
   .closing__body {
-    margin: 26px auto 0;
-    font-size: 1.18rem;
-    line-height: 1.64;
-    color: #dbe6c4;
-    max-width: 62ch;
+    margin-top: 26px;
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-on-dark-muted);
+    max-width: 58ch;
   }
 
   .closing__cta {
-    margin-top: 40px;
+    margin-top: 38px;
   }
 
-  .closing__button {
-    font-size: 1.06rem;
-    padding: 18px 38px;
+  .closing__note {
+    margin-top: 18px;
+    font-size: var(--ark-small);
+    color: var(--ark-on-dark-muted);
   }
 
   .closing__tagline {
-    margin-top: 64px;
+    margin-top: 60px;
     font-family: var(--ark-font-display);
     font-weight: 700;
     font-size: 2rem;
@@ -78,15 +92,21 @@ import { SITE } from "../../../consts";
     }
 
     .closing__title {
-      font-size: 2.3rem;
+      font-size: var(--ark-h2);
+      line-height: var(--ark-lh-h2);
+      max-width: 18ch;
     }
 
+    /* The one dark-band paragraph, and the only place body copy is centred besides the
+     * pause section. Three short sentences, no list to lose your place in. */
     .closing__body {
-      font-size: 1.04rem;
+      margin-top: 18px;
+      max-width: 36ch;
     }
 
     .closing__cta {
-      margin-top: 30px;
+      margin-top: 28px;
+      width: 100%;
     }
 
     .closing__tagline {

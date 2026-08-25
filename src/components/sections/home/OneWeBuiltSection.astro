@@ -1,0 +1,295 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+import ExpenseCapturePanel from "./one-we-built/ExpenseCapturePanel.astro";
+
+/*
+ * Section 5 — one we built.
+ *
+ * COPY CHANGE, made on Fredrick's instruction of Aug 25 2026 and flagged here because
+ * this is the only section that departs from the approved file.
+ *
+ *     H2    "This one was expense management."  ->  "AI Assisted Expense Manager"
+ *     Body  "For one business, the opportunity  ->  "We built this one for expense
+ *            was expense capture."                  capture."
+ *
+ * Two problems, one fix. The approved wording described a delivered engagement, which
+ * the standing claims rule prohibits: no client names, no results, nothing implying a
+ * completed client engagement. And the section is stronger naming the thing than
+ * narrating it — the h2 is now what we built, and the eyebrow above it ("One we built")
+ * supplies the sentence the heading used to be.
+ *
+ * "AI Assisted Expense Manager" is set as given, capitals included, because it is a name
+ * rather than a sentence. It is the one heading on the page that does not end in a full
+ * stop, and that is deliberate.
+ *
+ * The four steps keep AI as the actor where AI is the actor. That is not a stylistic
+ * leftover from third person: "we read your invoices" and "AI reads your invoices" are
+ * different claims to a reader deciding who gets access to their email, and the FAQ two
+ * sections down answers the access question directly. What changed to first person is
+ * everything about the reader — "the owner", "the bookkeeper", "a business" are now
+ * you and yours.
+ *
+ * This section is deliberately NOT the tallest on the page. Sections 3 and 4 carry the
+ * argument; this one shows the standard of the work and gets out of the way.
+ *
+ * DOM order is head, panel, steps, foot. On desktop the panel is grid-placed into the
+ * second column beside all three; on a phone that order puts the demonstration directly
+ * under the paragraph that introduces it, before the four steps that explain it. The
+ * panel is the most persuasive thing in the section, so it should not sit behind four
+ * steps of text on the screen where scrolling costs the most.
+ */
+
+const steps = [
+  {
+    title: "AI monitors the channels where your spending already arrives",
+    body: "Your supplier invoices, subscription receipts and order confirmations are captured automatically, across every channel they come in on.",
+  },
+  {
+    title: "Paper takes one photograph",
+    body: "That is the only manual step left to you, and it takes seconds. Everything else has already been captured.",
+  },
+  {
+    title: "AI reads, codes and files every item",
+    body: "Separated into lines, categorized, tax isolated, with the source document kept against every entry.",
+  },
+  {
+    title: "Your month closes complete",
+    body: "Your bookkeeper works straight from a categorized report, rather than from a folder of material that has to be reconciled first.",
+  },
+];
+---
+
+<section class="section section--white built" id="one-we-built">
+  <div class="container built__grid">
+    <div class="built__head">
+      <span class="eyebrow">One we built</span>
+      <h2 class="section__title built__title">AI Assisted Expense Manager</h2>
+      <p class="section__lede">
+        We built this one for expense capture. Most evidence of what you spend already
+        arrives electronically &mdash; supplier invoices, subscription receipts, order
+        confirmations. AI monitors those channels and captures each item on arrival. You
+        forward nothing by hand.
+      </p>
+    </div>
+
+    <div class="built__panel">
+      <ExpenseCapturePanel />
+    </div>
+
+    <ol class="built__steps">
+      {
+        steps.map((step, index) => (
+          <li class="built__step">
+            <span class="built__node" aria-hidden="true">{index + 1}</span>
+            <div>
+              <h3 class="built__step-title">
+                <span class="built__step-n">Step {index + 1}</span>
+                {step.title}
+              </h3>
+              <p class="built__step-body">{step.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="built__foot">
+      <p class="built__close">
+        You do nothing. Your bookkeeper receives a finished month.
+      </p>
+      <p class="built__reposition">
+        Yours will almost certainly be something else. We show you this one so you can
+        see the standard of what we hand over.
+      </p>
+      <BookingButton location="proof" block>
+        Book 20 minutes &mdash; see what yours could look like
+      </BookingButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  .built__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 56px;
+    align-items: start;
+  }
+
+  .built__head {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* The panel spans all three rows of the copy column and centres against them. */
+  .built__panel {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+    position: sticky;
+    top: 104px;
+  }
+
+  .built__steps {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 40px;
+  }
+
+  .built__foot {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 36px;
+  }
+
+  .built__title {
+    max-width: 18ch;
+  }
+
+  .built__step {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    column-gap: 16px;
+    padding-bottom: 22px;
+    position: relative;
+  }
+
+  .built__step:last-child {
+    padding-bottom: 0;
+  }
+
+  .built__step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 14px;
+    top: 34px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--ark-hairline);
+  }
+
+  .built__node {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .built__step-title {
+    font-size: var(--ark-label);
+    font-family: var(--ark-font-body);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--ark-ink);
+    padding-top: 4px;
+  }
+
+  /* "Step 1 —" is set as a separate quiet label rather than run into the heading. The
+   * headings are the sentence a skimmer reads; the numbering is orientation, and it is
+   * already carried by the node and by the list being an <ol>. */
+  .built__step-n {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ark-terracotta-ink);
+    margin-bottom: 3px;
+  }
+
+  .built__step-body {
+    margin-top: 5px;
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .built__close {
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    color: var(--ark-ink);
+    max-width: 34ch;
+  }
+
+  .built__reposition {
+    margin-top: 14px;
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-muted);
+    max-width: 52ch;
+  }
+
+  .built__foot :global(.booking-button) {
+    margin-top: 28px;
+  }
+
+  @media (max-width: 1100px) {
+    .built__grid {
+      column-gap: 36px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .built__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* One column, in DOM order. Every explicit placement above is undone here or the
+     * items stack into the rows they were pinned to and leave gaps behind them. */
+    .built__head,
+    .built__panel,
+    .built__steps,
+    .built__foot {
+      grid-column: 1;
+      grid-row: auto;
+    }
+
+    .built__panel {
+      position: static;
+      margin-top: 28px;
+    }
+
+    .built__steps {
+      margin-top: 32px;
+    }
+
+    .built__step {
+      grid-template-columns: 28px minmax(0, 1fr);
+      column-gap: 13px;
+      padding-bottom: 18px;
+    }
+
+    .built__step:not(:last-child)::before {
+      left: 13px;
+      top: 32px;
+    }
+
+    .built__node {
+      width: 28px;
+      height: 28px;
+      font-size: 0.8125rem;
+    }
+
+    .built__step-body {
+      font-size: 1rem;
+    }
+
+    .built__foot {
+      margin-top: 32px;
+    }
+
+    .built__close {
+      max-width: 30ch;
+    }
+  }
+</style>

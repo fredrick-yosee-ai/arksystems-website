@@ -1,0 +1,233 @@
+---
+/*
+ * The illustration for section 4, and it exists to carry one sentence: "Delay accounts
+ * for most of the cost in most processes, and appears in nobody's budget."
+ *
+ * So it is a map of where the elapsed time in a process actually goes — four short
+ * bars of work and one long bar of waiting. Drawn that way, the argument makes itself:
+ * the expensive row is the one where nobody is doing anything.
+ *
+ * Built in HTML and CSS rather than as an SVG. The bars are proportional widths, which
+ * CSS does natively and correctly at every breakpoint, and the labels are real text, so
+ * they reflow, zoom and get read out instead of being baked into a viewBox.
+ *
+ * The waiting row is gold. brand-tokens.css reserves gold for one meaning — what is
+ * waiting on a human — and a stalled process step is exactly that. It is the only gold
+ * in this section.
+ *
+ * No figures. A dollar amount here would read as a finding from a real engagement, and
+ * this is a drawing. The proportions are illustrative and the caption says so.
+ */
+
+const stages = [
+  { label: "Enquiry received", share: 8 },
+  { label: "Information gathered", share: 14 },
+  { label: "Waiting for a decision", share: 58, stalled: true },
+  { label: "Work done", share: 12 },
+  { label: "Invoiced", share: 8 },
+];
+---
+
+<figure class="pmap">
+  <div class="pmap__stage">
+    <div class="pmap__card">
+      <div class="pmap__head">
+        <span class="pmap__dot" aria-hidden="true"></span>
+        <span class="pmap__head-label">One process, end to end</span>
+      </div>
+
+      {/* The table is the content. The bars beside each row are a second rendering of
+          the same numbers, so they are hidden from assistive technology. */}
+      <ul class="pmap__rows">
+        {
+          stages.map((stage) => (
+            <li class:list={["pmap__row", { "pmap__row--stalled": stage.stalled }]}>
+              <span class="pmap__label">{stage.label}</span>
+              <span class="pmap__track" aria-hidden="true">
+                <span class="pmap__bar" style={`width:${stage.share}%`} />
+              </span>
+              <span class="pmap__share">{stage.share}%</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="pmap__note">
+        <span class="pmap__note-key" aria-hidden="true"></span>
+        Most of the elapsed time, and in nobody&rsquo;s budget.
+      </p>
+    </div>
+  </div>
+
+  <figcaption class="pmap__caption">
+    Illustration of a process map. Proportions shown are an example, not a measurement.
+  </figcaption>
+</figure>
+
+<style>
+  .pmap {
+    margin: 0;
+  }
+
+  .pmap__stage {
+    background: var(--ark-stage-green);
+    border-radius: var(--ark-radius-panel);
+    padding: 44px;
+  }
+
+  .pmap__card {
+    background: var(--ark-white);
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius);
+    box-shadow: var(--ark-floating);
+    padding: 26px 24px 22px;
+  }
+
+  .pmap__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--ark-hairline);
+  }
+
+  .pmap__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--ark-terracotta);
+  }
+
+  .pmap__head-label {
+    font-size: var(--ark-small);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ark-body-ink);
+  }
+
+  .pmap__rows {
+    margin-top: 6px;
+  }
+
+  .pmap__row {
+    display: grid;
+    grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr) 2.6rem;
+    align-items: center;
+    gap: 12px;
+    padding-block: 11px;
+    border-bottom: 1px solid rgba(231, 227, 217, 0.7);
+  }
+
+  .pmap__row:last-child {
+    border-bottom: 0;
+  }
+
+  .pmap__label {
+    font-size: 0.875rem;
+    line-height: 1.3;
+    color: var(--ark-body-ink);
+  }
+
+  .pmap__track {
+    display: block;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(231, 227, 217, 0.85);
+    overflow: hidden;
+  }
+
+  .pmap__bar {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--ark-olive-2);
+  }
+
+  .pmap__share {
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    color: var(--ark-muted);
+  }
+
+  .pmap__row--stalled .pmap__label {
+    font-weight: 600;
+    color: var(--ark-gold-ink);
+  }
+
+  .pmap__row--stalled .pmap__bar {
+    background: var(--ark-gold);
+  }
+
+  .pmap__row--stalled .pmap__share {
+    font-weight: 600;
+    color: var(--ark-gold-ink);
+  }
+
+  .pmap__note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 10px 12px;
+    border-radius: var(--ark-radius-sm);
+    background: var(--ark-gold-bg);
+    border: 1px solid var(--ark-gold-border);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--ark-gold-ink);
+  }
+
+  .pmap__note-key {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--ark-gold);
+  }
+
+  .pmap__caption {
+    margin-top: 12px;
+    font-size: var(--ark-small);
+    color: var(--ark-body-ink);
+    opacity: 0.85;
+  }
+
+  /* Phone: the label column is the first thing to give, so it becomes its own line
+   * above the bar. A 9.5rem label column at 350px leaves the bar too short to show a
+   * proportion, which is the only thing the bar is for. */
+  @media (max-width: 900px) {
+    .pmap__stage {
+      padding: 16px;
+      border-radius: 20px;
+    }
+
+    .pmap__card {
+      padding: 18px 16px 16px;
+    }
+
+    .pmap__row {
+      grid-template-columns: minmax(0, 1fr) 2.4rem;
+      row-gap: 7px;
+      padding-block: 10px;
+    }
+
+    .pmap__label {
+      grid-column: 1;
+    }
+
+    .pmap__share {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .pmap__track {
+      grid-column: 1 / -1;
+      height: 8px;
+    }
+
+    .pmap__caption {
+      text-align: center;
+    }
+  }
+</style>

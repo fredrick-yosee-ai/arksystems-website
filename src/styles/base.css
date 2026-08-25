@@ -107,9 +107,134 @@ a {
   font-weight: 700;
   letter-spacing: var(--ark-eyebrow-tracking);
   text-transform: uppercase;
-  color: var(--ark-olive-2);
+  /* Terracotta, not olive-2, since the Aug 25 amendment. It is the one saturated mark
+   * on an otherwise green-and-cream page, so it does the job an eyebrow exists to do:
+   * tell you a new section has started without shouting. Text shade, never the raw
+   * brand hex — see brand-tokens.css. */
+  color: var(--ark-terracotta-ink);
 }
 
 .on-dark .eyebrow {
   color: var(--ark-on-dark-eyebrow);
+}
+
+/* --- Section primitives -------------------------------------------------
+ * Eight sections share one head shape: eyebrow, h2, then a lede paragraph. That was
+ * duplicated in every component before, which meant a change to the rhythm was eight
+ * edits and drifted after two of them. Section-specific styling still lives in the
+ * component; only the shape shared by all of them is here.
+ * ---------------------------------------------------------------------- */
+
+.section {
+  padding-block: var(--ark-section);
+}
+
+/* The three background bands. The page alternates between them so the scroll has
+ * landmarks — on a phone especially, where a section boundary is otherwise invisible. */
+.section--surface { background: var(--ark-surface); }
+.section--white   { background: var(--ark-white); }
+.section--cream   { background: var(--ark-cream); }
+.section--stage   { background: var(--ark-stage-green); }
+
+.section__head {
+  max-width: 60rem;
+}
+
+.section__head .eyebrow {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.section__title {
+  font-size: var(--ark-h2);
+  line-height: var(--ark-lh-h2);
+  letter-spacing: -0.025em;
+  /* The measure sits on the element carrying the font-size, never on a wrapper — `ch`
+   * resolves against the element's own size, so on a wrapper it counts 16px characters
+   * and cramps a display heading to a third of its width. */
+  max-width: 24ch;
+}
+
+.section__lede {
+  margin-top: 24px;
+  font-size: var(--ark-body-lg);
+  line-height: var(--ark-lh-body);
+  color: var(--ark-body-ink);
+  max-width: 62ch;
+}
+
+/* The closing line most sections end on. Heavier than body, lighter than a heading —
+ * it is the sentence the section wants you to leave with. */
+.section__close {
+  margin-top: 56px;
+  font-family: var(--ark-font-display);
+  font-weight: 700;
+  font-size: var(--ark-h3);
+  line-height: var(--ark-lh-h3);
+  letter-spacing: -0.01em;
+  color: var(--ark-ink);
+  max-width: 46ch;
+}
+
+/* A white card on a hairline border. The card layer of the design. */
+.card {
+  background: var(--ark-white);
+  border: 1px solid var(--ark-hairline);
+  border-radius: var(--ark-radius);
+  box-shadow: var(--ark-raised);
+  padding: 32px;
+}
+
+/* A tinted panel that holds an illustration. The plane behind the card layer. */
+.stage {
+  background: var(--ark-stage-green);
+  border-radius: var(--ark-radius-panel);
+  padding: 40px;
+}
+
+/* Headings, eyebrows and short closing lines centre on phone and in portrait. Body
+ * paragraphs deliberately do not — centred prose is harder to read, which matters more
+ * than usual on a page written for readers whose first language may not be English. */
+@media (max-width: 900px), (orientation: portrait) {
+  .section__head {
+    text-align: center;
+  }
+
+  .section__title {
+    margin-inline: auto;
+  }
+
+  .section__head .section__lede {
+    text-align: left;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding-block: var(--ark-section-phone);
+  }
+
+  .section__title {
+    max-width: 20ch;
+  }
+
+  .section__lede {
+    margin-top: 18px;
+    max-width: 40ch;
+  }
+
+  .section__close {
+    margin-top: 36px;
+    max-width: 34ch;
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .stage {
+    padding: 20px;
+    border-radius: 20px;
+  }
 }

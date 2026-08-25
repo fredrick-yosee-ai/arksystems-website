@@ -51,28 +51,23 @@ summary:focus-visible,
 }
 
 /* --------------------------------------------------------------------------
- * OPEN — --ark-olive-2 as eyebrow text fails AA. NEEDS FREDRICK'S DECISION.
+ * RESOLVED Aug 25 2026 — --ark-olive-2 as eyebrow text.
  *
- * This is a brand colour, so it is deliberately NOT changed here. Measured as used:
+ * This was logged here as open and awaiting Fredrick's decision: --ark-olive-2
+ * #7A8C3A measured 3.44:1 on cream and 3.72:1 on white, against an AA requirement of
+ * 4.5 for small text. It was the eyebrow colour, so it failed in nine places.
  *
- *     --ark-olive-2 #7A8C3A on --ark-cream #FEF5E7 ... 3.44 : 1   AA needs 4.5
- *     --ark-olive-2 #7A8C3A on white ................. 3.72 : 1   AA needs 4.5
+ * Two things closed it. The design amendment moves eyebrows to terracotta, so olive-2
+ * is no longer an eyebrow colour at all; and the value itself was darkened to #61702E
+ * in brand-tokens.css for its remaining uses — rules and quiet accents — which now
+ * measures at least 4.64:1 against every background the site uses, including the new
+ * near-white surface and stage-green, where the old recommendation of #64732F would
+ * still have failed at 4.44.
  *
- * It is the eyebrow colour, so this affects nine places: the hero eyebrow and trust
- * line, and the section eyebrows in "Is this you?", "How we work", "Who you're working
- * with" and the FAQ. All are small text, so the 4.5 threshold applies — the 3:1 large-
- * text allowance does not help.
+ * The eyebrow colour that replaced it, --ark-terracotta-ink #945637, was measured the
+ * same way and clears 4.92:1 at worst. The raw brand terracotta #A8623E does not, and
+ * is scoped to non-text use only. Both notes are in brand-tokens.css.
  *
- * Darkening it is the smallest fix that keeps the design. Measured candidates:
- *
- *     #687830 ... 4.50 on cream, 4.86 on white   exactly at the threshold
- *     #64732F ... 4.81 on cream, 5.20 on white   recommended, keeps a margin
- *     #61702E ... 5.03 on cream, 5.43 on white   safest, visibly darker
- *
- * The alternative is to set eyebrows in --ark-olive #38512F, which already passes at
- * 8.04:1 but is a larger visual change. Nothing is applied until Fredrick chooses.
- *
- * Separately, and unrelated to the above: --ark-olive-2 carries white text at 3.72:1,
- * which clears AA only for large text and UI components. Never use it as a button
- * background.
+ * Standing constraint, unchanged: --ark-olive-2 carries white text at large-text
+ * contrast only. Never use it as a button background.
  * ------------------------------------------------------------------------ */

@@ -17,18 +17,22 @@ export const SITE = {
   tagline: "Think AI, Think Ark.",
   url: "https://arksystems.ca",
   positioning:
-    "We find where your hours are going, fix what matters most, and use AI only where it is worth it.",
+    "We assess where AI produces a measurable return in your business, quantify it, and build it.",
 } as const;
 
 /**
- * Analytics event names for CTA clicks. The spec names these five so it is possible to
- * learn which block does the conversion work. The provider is still unchosen — see
- * CLAUDE.md — so nothing is wired up yet; these are the agreed names for when it is.
+ * Analytics event names for CTA clicks. Naming them is what makes it possible to learn
+ * which block does the conversion work. The provider is still unchosen — see CLAUDE.md
+ * — so nothing is wired up yet; these are the agreed names for when it is.
+ *
+ * The homepage names come from the approved copy, which specifies `cta_hero`,
+ * `cta_where`, `cta_proof` and `cta_close`. They replace the previous set — "demo" and
+ * "what-happens" named sections that the rebuilt page no longer has.
  */
 export type CtaLocation =
   | "hero"
-  | "demo"
-  | "what-happens"
+  | "where"
+  | "proof"
   | "closing"
   | "nav"
   /* /accounting. Prefixed so the two pages' CTAs never merge into one number — the
@@ -74,15 +78,15 @@ export const INDUSTRY_LINKS: readonly NavItem[] = [
  */
 export const NAV_LINKS: readonly NavItem[] = [
   { label: "The problem", href: "/#the-problem" },
-  { label: "See it work", href: "/#see-it-work" },
-  { label: "What happens when you book", href: "/#what-happens" },
+  { label: "Where AI pays", href: "/#where-ai-pays" },
+  { label: "How we find it", href: "/#how-we-find-it" },
   { label: "Industries", children: INDUSTRY_LINKS },
   { label: "About", href: "/about" },
 ] as const;
 
 export const FOOTER_EXPLORE: readonly NavItem[] = [
-  { label: "See it work", href: "/#see-it-work" },
-  { label: "What happens when you book", href: "/#what-happens" },
+  { label: "Where AI pays", href: "/#where-ai-pays" },
+  { label: "One we built", href: "/#one-we-built" },
   { label: "The workshop", href: "/workshop" },
   { label: "About", href: "/about" },
 ] as const;

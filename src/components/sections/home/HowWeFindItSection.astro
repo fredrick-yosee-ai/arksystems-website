@@ -1,0 +1,212 @@
+---
+import ProcessMapPanel from "./how-we-find-it/ProcessMapPanel.astro";
+
+/*
+ * Section 4 — how we find it. With section 3, this is where the argument is actually
+ * made, so it gets the space and section 5 does not.
+ *
+ * Four steps on a connected rail, not four cards. The order is the whole meaning here:
+ * "build only if the case holds" is a promise that depends on the reader having already
+ * passed through mapping and quantifying, and a grid of four cards says those things
+ * happen in no particular order. It is an <ol>, so the sequence is in the document and
+ * not only in the paint.
+ *
+ * The Applied Intelligence stepper dims inactive steps to 45% opacity. That is not done
+ * here: it fails contrast, and it means something — a process partway through — that is
+ * false on a static page. All four steps are legible. The rail carries the sequence
+ * instead, which is what it is for.
+ */
+
+const steps = [
+  {
+    title: "We map one process end to end.",
+    body: "Who handles it, at what frequency, and where it stalls. Delay accounts for most of the cost in most processes, and appears in nobody's budget.",
+  },
+  {
+    title: "We quantify the opportunity.",
+    body: "Built from your figures, with every assumption stated so you can test it. A weak business case is worth establishing before capital is committed.",
+  },
+  {
+    title: "We recommend the lowest-cost option that works.",
+    body: "Frequently that's software you already license, configured correctly. Sometimes it's a change to the sequence of work. Sometimes it's AI. Sometimes the recommendation is to do nothing.",
+  },
+  {
+    title: "We build and deploy.",
+    body: "A fixed fee, agreed in advance.",
+  },
+];
+---
+
+<section class="section section--cream find" id="how-we-find-it">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">How we find it</span>
+      <h2 class="section__title find__title">
+        Assessment first. Business case second. Build only if the case holds.
+      </h2>
+    </div>
+
+    <div class="find__body">
+      <ol class="find__steps">
+        {
+          steps.map((step, index) => (
+            <li class="find__step">
+              <span class="find__node" aria-hidden="true">{index + 1}</span>
+              <div class="find__step-copy">
+                <h3 class="find__step-title">{step.title}</h3>
+                <p class="find__step-body">{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="find__panel">
+        <ProcessMapPanel />
+      </div>
+    </div>
+
+    <p class="find__close">
+      We deliver both the assessment and the implementation. When the business case
+      doesn&rsquo;t hold, we tell you with the same confidence as when it does.
+    </p>
+  </div>
+</section>
+
+<style>
+  .find__title {
+    max-width: 28ch;
+  }
+
+  .find__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: center;
+    margin-top: 60px;
+  }
+
+  .find__steps {
+    background: var(--ark-white);
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius);
+    box-shadow: var(--ark-raised);
+    padding: 34px 34px 34px 30px;
+  }
+
+  .find__step {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    column-gap: 18px;
+    padding-bottom: 26px;
+    position: relative;
+  }
+
+  .find__step:last-child {
+    padding-bottom: 0;
+  }
+
+  /* The rail. Drawn from each node down to the next rather than as one element behind
+   * the list, so it stops at the last node instead of running past it. */
+  .find__step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 38px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--ark-terracotta);
+    opacity: 0.35;
+  }
+
+  .find__node {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--ark-terracotta);
+    color: var(--ark-white);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .find__step-title {
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    padding-top: 4px;
+  }
+
+  .find__step-body {
+    margin-top: 8px;
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .find__close {
+    margin: 72px auto 0;
+    max-width: 52ch;
+    text-align: center;
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    color: var(--ark-ink);
+  }
+
+  @media (max-width: 1100px) {
+    .find__body {
+      gap: 36px;
+    }
+  }
+
+  /* Phone: one column, steps before the panel. The panel illustrates step one, so it
+   * reads correctly underneath — and putting a 400px illustration above four steps of
+   * text would cost the reader a screen before the section says anything. */
+  @media (max-width: 900px) {
+    .find__body {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
+      margin-top: 34px;
+    }
+
+    .find__steps {
+      padding: 24px 20px 24px 18px;
+    }
+
+    .find__step {
+      grid-template-columns: 30px minmax(0, 1fr);
+      column-gap: 14px;
+      padding-bottom: 20px;
+    }
+
+    .find__step:not(:last-child)::before {
+      left: 14px;
+      top: 34px;
+    }
+
+    .find__node {
+      width: 30px;
+      height: 30px;
+      font-size: 0.875rem;
+    }
+
+    .find__step-title {
+      padding-top: 2px;
+    }
+
+    .find__step-body {
+      font-size: 1rem;
+    }
+
+    .find__close {
+      margin-top: 40px;
+      max-width: 34ch;
+    }
+  }
+</style>

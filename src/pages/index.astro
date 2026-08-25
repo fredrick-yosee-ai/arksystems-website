@@ -1,48 +1,132 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE, BOOKING_URL } from "../consts";
+
 import HeroSection from "../components/sections/home/HeroSection.astro";
 import ProblemSection from "../components/sections/home/ProblemSection.astro";
-import SeeItWorkSection from "../components/sections/home/SeeItWorkSection.astro";
-import IsThisYouSection from "../components/sections/home/IsThisYouSection.astro";
-import WhatHappensSection from "../components/sections/home/WhatHappensSection.astro";
-import WhoYouWorkWithSection from "../components/sections/home/WhoYouWorkWithSection.astro";
-import HowWeWorkSection from "../components/sections/home/HowWeWorkSection.astro";
+import WhereAiPaysSection from "../components/sections/home/WhereAiPaysSection.astro";
+import HowWeFindItSection from "../components/sections/home/HowWeFindItSection.astro";
+import OneWeBuiltSection from "../components/sections/home/OneWeBuiltSection.astro";
+import StartWithOneSection from "../components/sections/home/StartWithOneSection.astro";
+import FounderStripSection from "../components/sections/home/FounderStripSection.astro";
 import FaqSection from "../components/sections/home/FaqSection.astro";
 import ClosingSection from "../components/sections/home/ClosingSection.astro";
 
 /*
- * Nine sections. The spec's section 6, "Start with one. Not with everything.", was
- * removed at Fredrick's request. The argument it carried is not lost: "start with one"
- * is now made by the How we work heading — "Start with one job. Prove it is worth
- * fixing. Then decide." What did go with it is the expansion beat, the point that the
- * foundation is only built once so later jobs land faster. Nothing else on the page
- * makes that point; if it is wanted back it needs a home.
+ * The homepage, rebuilt Aug 25 2026 against docs/homepage-copy.md.
  *
- * Section order is load-bearing, not arbitrary:
+ * This is a repositioning, not a restyle. The previous page sold "we find the one job
+ * that gives you back the most time". This one sells an AI consulting firm that assesses
+ * where AI produces a return, quantifies it, and builds it. Three sections of the old
+ * page had no equivalent and were deleted: "Is this you?", "What happens when you book",
+ * and the long "Who you're working with" — the last of which survives, condensed, as the
+ * founder strip.
  *
- * - See it work must stay below The problem. Showing the fix before the problem is
- *   felt turns a resolution into a product demo, and the recognition work in The
- *   problem is what gives it its charge.
- * - The problem and Is this you? both do symptom recognition, so nothing else may.
- * - The page opens and closes on gain: the hero and the closing name the upside.
+ * Eight approved sections plus the founder strip, in this order:
  *
- * There is one CTA on this page, repeated: hero, demo, what-happens, closing, plus the
- * nav button. The workshop is not sold here — it becomes a recommendation made on the
- * call.
+ *   1  Hero                 the promise
+ *   2  The problem          why AI spending fails. No CTA — recognition only
+ *   3  Where AI actually pays   six places. The reader self-identifies
+ *   4  How we find it       assessment, business case, build only if it holds
+ *   5  One we built         the demonstration
+ *   6  Start with one       the pause
+ *      Founder strip        who you are dealing with, immediately before the questions
+ *   7  Before you book      the objections
+ *   8  Close                the ask
+ *
+ * Section order is load-bearing:
+ *
+ * - 3 and 4 carry the argument and get the most space. 5 deliberately does not — it is
+ *   evidence for a case that has already been made, and a demonstration given before
+ *   the argument is a product demo.
+ * - 2 must precede 3. "Where AI pays" only means something to a reader who has just
+ *   accepted that they cannot tell where it pays in their own business.
+ * - 6 sits between the demonstration and the questions because it is the only section
+ *   that asks nothing of the reader. Four sections of input in a row read as a pitch.
+ * - The founder strip sits after 6 and before 7: credibility immediately before
+ *   objections, where it costs the least attention and does the most work.
+ *
+ * Four CTAs, all the same booking link: hero, section 3, section 5, close — the
+ * cta_hero / cta_where / cta_proof / cta_close of the copy file, plus the nav button.
+ * Section 2 has none, by instruction.
+ *
+ * Schema: FAQPage is emitted by the FAQ component, beside the questions it describes,
+ * so the two cannot drift. Organization and Service are below. LocalBusiness is named in
+ * the copy file but is NOT emitted — it needs a real street address and real hours, and
+ * inventing either would be a false claim. It is Fredrick's to supply.
  */
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE.name,
+  url: SITE.url,
+  description:
+    "AI consulting firm. We assess where AI produces a measurable return in a business, quantify it, and build it.",
+  areaServed: {
+    "@type": "AdministrativeArea",
+    name: "Canada",
+  },
+  /* sameAs is specified in the copy file as pointing at LinkedIn. The URL is not in the
+   * repo, and a guessed profile URL is worse than none — it is a claim about identity.
+   * Add the real one here when it is supplied. */
+};
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "AI opportunity assessment and implementation",
+  serviceType: "AI consulting",
+  description:
+    "We map one business process end to end, quantify what the opportunity is worth from your own figures, recommend the lowest-cost option that works, and build it for a fixed fee agreed in advance.",
+  provider: {
+    "@type": "Organization",
+    name: SITE.name,
+    url: SITE.url,
+  },
+  areaServed: {
+    "@type": "AdministrativeArea",
+    name: "Canada",
+  },
+  url: `${SITE.url}/`,
+  potentialAction: {
+    "@type": "ReserveAction",
+    name: "Book 20 minutes",
+    target: BOOKING_URL,
+  },
+};
 ---
 
+{/*
+  Title and description are the approved strings from the copy file, used character for
+  character — including its pipe separator, which differs from the site's em dash
+  pattern, so this page passes titleOverride rather than title alone.
+*/}
 <BaseLayout
-  title="ArkSystems"
-  description="Everyone is talking about AI. We find the one job in your business that would give you back the most time, and take it off you. Metro Vancouver."
+  title={SITE.name}
+  titleOverride="ArkSystems — AI Consulting for Businesses | Vancouver BC"
+  description="We assess where AI produces a measurable return in your business, quantify it, and build it. Metro Vancouver, working across Canada. Book twenty minutes."
 >
+  <Fragment slot="head">
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationSchema)}
+      is:inline
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(serviceSchema)}
+      is:inline
+    />
+  </Fragment>
+
   <HeroSection />
   <ProblemSection />
-  <SeeItWorkSection />
-  <IsThisYouSection />
-  <WhatHappensSection />
-  <WhoYouWorkWithSection />
-  <HowWeWorkSection />
+  <WhereAiPaysSection />
+  <HowWeFindItSection />
+  <OneWeBuiltSection />
+  <StartWithOneSection />
+  <FounderStripSection />
   <FaqSection />
   <ClosingSection />
 </BaseLayout>

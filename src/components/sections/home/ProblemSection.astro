@@ -1,275 +1,252 @@
 ---
+import Icon from "../../common/Icon.astro";
+
 /*
- * Section 2 — the problem, made concrete.
+ * Section 2 — the problem. No call to action here, by instruction. This section's job
+ * is recognition; a button in the middle of it asks for a decision before the reader
+ * has finished agreeing with the diagnosis.
  *
- * Two columns, but split by content type rather than mid-sentence: all the prose is in
- * the left column and all four cards are in the right. The earlier layout put the
- * heading left, two paragraphs right and two more full-width underneath, so the eye had
- * to start left, jump right, then come back down and left again with no way to tell
- * where to begin. Splitting prose from cards keeps one reading order in each column and
- * uses the width that a single narrow text column was wasting.
+ * The three blocks are the three numbers the body paragraph says are missing — where
+ * AI applies, what the problem costs, what the return would be — so they are cards in
+ * a row rather than a list. A row lets you see there are three of them at a glance,
+ * which is the point the closing line then picks up with "all three".
  *
- * Icons are inline SVG in the Material Symbols idiom, not the Material Symbols font.
- * The font would be a third-party request, which the self-hosting rule rules out and
- * which would have to be named on the Privacy page. Stroke weights match the check,
- * chevron and link icons used elsewhere on the page.
+ * Each block's copy is one bold lead sentence and one supporting sentence. The lead is
+ * the h3, exactly as written in the approved file, full stop included.
  *
- * Two sentences were cut from the third paragraph — see the note there.
+ * COPY CHANGE, Fredrick's instruction of Aug 25 2026 — the heading and lede only.
  *
- * Size-agnostic on purpose. v1 opened this with "most owner-led businesses" and framed
- * the admin card around the owner, which made the whole page read as if it were for
- * sole operators. The target spans roughly CAD $500k–$5M in revenue and many of those
- * businesses have staff. Segmentation happens in section 5, never above it.
+ *   was  "AI spending fails when it starts with the technology instead of the business
+ *         case." ... "Without those three figures, any AI investment is a guess with an
+ *         invoice attached."
+ *
+ * The section has to show the problem without opening on failure. Telling a reader in
+ * the first line of the second section that spending like theirs fails puts them on the
+ * defensive at the exact moment the page needs agreement, and "a guess with an invoice
+ * attached" closed the paragraph on the same note.
+ *
+ * The replacement states the same problem from the other side: three numbers are
+ * missing, and they are missing because nobody has time to work them out while the
+ * business is running — which is the standing rule that the reader's admin load is what
+ * success creates, not evidence of bad management. The paragraph now ends on what
+ * having the numbers gives them. Nothing about the diagnosis is softened; the three
+ * cards below are unchanged.
+ *
+ * The lede was then rewritten a second time, on the same day and the same instruction,
+ * for plain language. The first replacement opened "The tools aren't the constraint.
+ * Three figures are, and they're rarely to hand:" — an ellipsis the reader has to
+ * reassemble before the sentence means anything, followed by two idioms ("to hand", and
+ * "on faith" at the end). That is precisely what the standing rule warns about: the
+ * risk to a reader whose first language is not English is idiom, not vocabulary. Four
+ * plain sentences now, no ellipsis, and "figures" is "numbers" throughout.
  */
 
-const cards = [
+const blocks = [
   {
-    title: "Work keeps waiting on information",
-    body: "Missing documents, unclear handoffs, and repeated follow-up stop things from moving.",
-    // hourglass — waiting
-    icon: '<path d="M7 3h10M7 21h10"/><path d="M17 3v4a5 5 0 0 1-5 5 5 5 0 0 1-5-5V3"/><path d="M7 21v-4a5 5 0 0 1 5-5 5 5 0 0 1 5 5v4"/>',
+    icon: "assess",
+    title: "Not every inefficiency is an AI opportunity.",
+    body: "A share of what slows your business requires AI. The remainder requires a process change, or better use of software you already license. Telling them apart requires examination, not a demonstration.",
   },
   {
-    title: "The admin finds your busiest people",
-    body: "Receipts, invoices, following up and typing things in end up with whoever gets things done — often the owner, often someone whose time is worth far more than this, often both.",
-    // person — who it lands on
-    icon: '<circle cx="12" cy="8" r="3.4"/><path d="M5.5 20.5a6.5 6.5 0 0 1 13 0"/>',
+    icon: "cost",
+    title: "The cost of the problem is rarely quantified.",
+    body: "You know which processes create friction. You don't know what they cost you monthly, which leaves any investment decision unsupported.",
   },
   {
-    title: "Nobody can see what's stuck",
-    body: "The answer is in someone's email, or a spreadsheet, or only in their head. To find out what is stuck, you have to ask.",
-    // eye with a slash — no visibility
-    icon: '<path d="M3 3l18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.6 5.2A9.6 9.6 0 0 1 12 5c5.5 0 9 6 9 6a15.4 15.4 0 0 1-2.8 3.6"/><path d="M6.2 6.3A15.4 15.4 0 0 0 3 11s3.5 6 9 6a9.5 9.5 0 0 0 3.1-.5"/>',
+    icon: "benchmark",
+    title: "There's no internal benchmark.",
+    body: "Your team understands the operation better than we ever will. What they don't have is a reference for what AI delivers in practice, what it costs, and what timeline is realistic.",
   },
-  {
-    title: "AI feels relevant but unclear",
-    body: "You know it matters. You don't know which use is worth the money, or where to start.",
-    // question mark — the unanswered "where"
-    icon: '<circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.8.7c0 1.7-2.4 2-2.4 3.5"/><path d="M12 17.3h.01"/>',
-  },
-];
+] as const;
 ---
 
-<section class="problem" id="the-problem">
-  <div class="container problem__inner">
-    <div class="problem__main">
-      <h2 class="problem__title">The real problem is not a lack of AI tools.</h2>
-      <p class="problem__standfirst">
-        It is not knowing where they would actually be worth using.
-      </p>
-
-      <div class="problem__body">
-        {/* Set larger than the rest so the eye has one obvious place to start. */}
-        <p class="problem__lead">
-          Plenty of businesses are already trying AI somewhere. Meanwhile the work that
-          actually slows the week down stays slow, manual and hard to keep track of.
-        </p>
-
-        {/* The "blame the work, never the owner" rule, stated outright. Load-bearing. */}
-        <p>
-          None of this means anything is wrong with how you run your business. It is what
-          happens when a business does well &mdash; the busier you get, the more of this
-          there is.
-        </p>
-
-        {/*
-          Trimmed. This paragraph also carried "Most businesses don't need better
-          technology. They need fewer things being passed between people." Both sentences
-          are made more strongly elsewhere — the first by How we work's "Sometimes it's
-          nothing, yet" and the FAQ's "Do you always recommend AI? No", the second by
-          cards one and three. Everything this paragraph is here to do survives.
-        */}
-        <p>
-          The problem is usually not the work itself. It is everything around the work.
-          Information comes in five different ways. Someone has to ask for it. Someone has
-          to type it in. And nobody can see what is waiting unless they ask.
-        </p>
-
-        {/* The size-agnostic line. "Owner or a team of twelve" must stay. */}
-        <p>
-          It never looks urgent. Whether it falls to the owner or is shared across a team
-          of twelve, it quietly takes hours that should go into the work you get paid for.
-        </p>
+<section class="section section--cream problem" id="the-problem">
+  <div class="container">
+    <div class="section__head problem__head">
+      <div class="problem__head-lead">
+        <span class="eyebrow">The problem</span>
+        <h2 class="section__title problem__title">
+          AI pays when it starts with your business case, not with the technology.
+        </h2>
       </div>
+      <p class="section__lede problem__lede">
+        The tools aren&rsquo;t the problem. The hard part is seeing <strong>where AI
+        would help in your business</strong>, <strong>what that help is worth</strong>,
+        and <strong>what it would cost to build</strong>. Nobody has time to work that
+        out while the business is running. Once you have those answers, AI is a decision
+        like any other in the business.
+      </p>
     </div>
 
-    <ul class="problem__cards">
+    <ul class="problem__grid">
       {
-        cards.map((card) => (
-          <li class="problem__card">
+        blocks.map((block) => (
+          <li class="card problem__card">
             <span class="problem__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" set:html={card.icon} />
+              <Icon name={block.icon} />
             </span>
-            <div>
-              <h3 class="problem__card-title">{card.title}</h3>
-              <p class="problem__card-body">{card.body}</p>
-            </div>
+            <h3 class="problem__card-title">{block.title}</h3>
+            <p class="problem__card-body">{block.body}</p>
           </li>
         ))
       }
     </ul>
+
+    <p class="problem__close">
+      We establish all three: where AI applies in your business, what the problem costs
+      you now, and what the return would be.
+    </p>
   </div>
 </section>
 
 <style>
-  .problem {
-    background: #fff;
-    padding-block: 96px;
+  /* Desktop: the head is two columns — heading left, paragraph right.
+   *
+   * It was one left-aligned block inside a 1240px container, and a 26ch heading over a
+   * 62ch paragraph left roughly a third of the section empty on the right. On a band
+   * that is the full width of the page that reads as something failing to load rather
+   * than as deliberate space.
+   *
+   * The split follows the standing rule that a two-column section is split by content
+   * type: all the display type in one column, all the prose in the other. It also puts
+   * the three bold phrases at the top right of the section, which is where the eye goes
+   * after the heading.
+   *
+   * The query is the exact complement of the centring rule in base.css, which fires on
+   * `(max-width: 900px), (orientation: portrait)`. A portrait tablet centres its heading
+   * and must not also be holding two columns.
+   */
+  @media (min-width: 901px) and (orientation: landscape) {
+    .problem__head {
+      max-width: none;
+      display: grid;
+      /* Slightly wider left column: the heading is capped at 26ch and stops on its own,
+       * so the extra width goes to the prose, which fills its column exactly. */
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+      column-gap: 56px;
+      align-items: start;
+    }
+
+    .problem__lede {
+      /* No top margin — it sits beside the heading, not under it. The 2px nudge puts its
+       * first line on the heading's first baseline rather than its cap height. */
+      margin-top: 2px;
+      /* The column is the measure here. It lands at ~62ch, which is the cap the base
+       * .section__lede rule sets anyway. */
+      max-width: none;
+    }
   }
 
-  .problem__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: 64px;
-    align-items: start;
-  }
-
-  /* The measure sits on the elements themselves, not on a wrapper — `ch` resolves
-   * against the element's own font-size, so on a wrapper it counts 16px characters. */
   .problem__title {
-    font-size: var(--ark-h2);
-    letter-spacing: -0.02em;
-    max-width: 18ch;
-  }
-
-  .problem__standfirst {
-    margin-top: 18px;
-    font-family: var(--ark-font-display);
-    font-size: 1.7rem;
-    line-height: 1.32;
-    color: var(--ark-olive-2);
     max-width: 26ch;
   }
 
-  .problem__body {
-    margin-top: 32px;
-    max-width: 62ch;
+  /* The three things the reader can't see are the three the section is about. Bold alone
+   * is not enough separation from body ink at 20px, so they take the display ink too. */
+  .problem__lede strong {
+    font-weight: 600;
+    color: var(--ark-ink);
   }
 
-  .problem__body p {
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: #5b564e;
-  }
-
-  .problem__body .problem__lead {
-    font-size: 1.22rem;
-    line-height: 1.6;
-    color: #4a463f;
-  }
-
-  .problem__body p + p {
-    margin-top: 16px;
-  }
-
-  .problem__lead + p {
-    margin-top: 20px;
-  }
-
-  /* --- the four cards --- */
-
-  .problem__cards {
+  .problem__grid {
     display: grid;
-    gap: 14px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ark-grid-gutter);
+    margin-top: 64px;
   }
 
   .problem__card {
     display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    background: var(--ark-cream);
-    border: 1px solid var(--ark-grey);
-    border-radius: var(--ark-radius);
-    padding: 22px 24px;
-    transition: border-color 0.18s ease;
+    flex-direction: column;
+    gap: 14px;
   }
 
-  .problem__card:hover {
-    border-color: var(--ark-olive-2);
-  }
-
-  /* Same icon treatment as the Is this you? checks and the How we work nodes, so the
-   * three sections read as one family. */
   .problem__icon {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    border-radius: 11px;
-    background: var(--ark-green-soft);
-    color: var(--ark-olive);
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .problem__icon svg {
-    width: 21px;
-    height: 21px;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--ark-radius-pill);
+    background: var(--ark-stage-green);
+    color: var(--ark-olive);
+    margin-bottom: 4px;
   }
 
   .problem__card-title {
-    font-size: 1.06rem;
-    line-height: 1.3;
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    max-width: 22ch;
   }
 
   .problem__card-body {
-    margin-top: 8px;
-    font-size: 0.97rem;
-    line-height: 1.58;
-    color: #5b564e;
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .problem__card {
-      transition: none;
-    }
+  /* The closing line is centred and sits on its own — it is the section's conclusion,
+   * and the only sentence here that speaks about us rather than about them. */
+  .problem__close {
+    margin: 64px auto 0;
+    max-width: 44ch;
+    text-align: center;
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    color: var(--ark-ink);
   }
 
-  /* Below the two-column breakpoint the cards move under the prose and go two-up, then
-   * one-up on a phone. */
   @media (max-width: 1100px) {
-    .problem__inner {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 44px;
-    }
-
-    .problem__cards {
+    .problem__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
     }
   }
 
-  @media (max-width: 760px) {
-    .problem__cards {
-      grid-template-columns: minmax(0, 1fr);
-    }
-  }
-
+  /* Phone: three cards stacked is three screens, which is the most a reader will give
+   * a section that has no call to action in it. The icon moves inline with the heading
+   * so each card opens with its point rather than with a 44px circle, and the padding
+   * comes in — the card is doing less work here than at desktop, where it also has to
+   * hold a column. */
   @media (max-width: 900px) {
-    .problem {
-      padding-block: 56px;
+    .problem__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+      margin-top: 36px;
     }
 
-    .problem__standfirst {
-      font-size: 1.3rem;
+    .problem__card {
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr);
+      column-gap: 14px;
+      row-gap: 8px;
+      align-items: center;
+      padding: 20px;
     }
 
-    .problem__body {
-      margin-top: 24px;
+    .problem__icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 0;
+      grid-row: 1;
     }
 
-    .problem__body .problem__lead {
-      font-size: 1.12rem;
+    .problem__card-title {
+      grid-column: 2;
+      max-width: none;
     }
-  }
 
-  /* Phone and any portrait screen: centre the heading block. Body paragraphs and the
-   * cards keep their left edge — centred prose is harder to read. */
-  @media (max-width: 900px), (orientation: portrait) {
-    .problem__title,
-    .problem__standfirst {
-      text-align: center;
-      margin-inline: auto;
+    .problem__card-body {
+      grid-column: 1 / -1;
+      font-size: 1rem;
+    }
+
+    .problem__close {
+      margin-top: 40px;
+      max-width: 30ch;
     }
   }
 </style>

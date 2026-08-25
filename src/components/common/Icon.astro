@@ -1,0 +1,70 @@
+---
+/*
+ * The icon set. Hand-drawn inline SVG, in the Material Symbols idiom but never the
+ * Material Symbols font — the font is a third-party request, which the self-hosting
+ * rule forbids and which would have to be named on the Privacy page.
+ *
+ * Every icon is drawn on the same 24-unit grid, stroked rather than filled, at a
+ * weight of 1.9–2.6 so it sits alongside the icons already on the site. They inherit
+ * `currentColor`, so a caller sets the colour by setting text colour on the wrapper.
+ *
+ * Keep the geometry legible at 22px. These are read at a glance beside a heading, not
+ * studied — an icon that needs a second look is doing the heading's job badly.
+ */
+
+interface Props {
+  name: keyof typeof ICONS;
+  size?: number;
+  class?: string;
+}
+
+const ICONS = {
+  /* Section 2 — the problem. */
+
+  /* A magnifier with a check inside: examination, not demonstration. */
+  assess: `<circle cx="10.5" cy="10.5" r="6.4"/><path d="m15.3 15.3 5 5"/><path d="m7.7 10.6 2 2 3.4-3.7"/>`,
+
+  /* Stacked payment cards. The cost of the problem, unmeasured. */
+  cost: `<rect x="2.6" y="4.6" width="15.2" height="10.2" rx="2.2"/><circle cx="10.2" cy="9.7" r="2.4"/><path d="M6.4 18.6h12.2a2.8 2.8 0 0 0 2.8-2.8V8.4"/>`,
+
+  /* A ruler. There is no internal benchmark to measure against. */
+  benchmark: `<rect x="2.4" y="8.2" width="19.2" height="7.6" rx="2"/><path d="M7.2 8.2v3.1M12 8.2v4.2M16.8 8.2v3.1"/>`,
+
+  /* Section 3 — where AI actually pays. */
+
+  /* A priced document. Quote turnaround. */
+  quote: `<path d="M6.6 2.8h6.6l4.2 4.2v14.2H6.6z"/><path d="M13.2 2.8V7h4.2"/><path d="M14 11.6a2 2 0 0 0-3.4 1.3c0 2.1 3.6 1.2 3.6 3.2A2 2 0 0 1 10.8 17"/><path d="M12.3 10v1.1M12.3 17.4v1.1"/>`,
+
+  /* A crescent moon. Enquiries answered at any hour. */
+  afterHours: `<path d="M20.4 14.9A8.6 8.6 0 0 1 9.1 3.6a8.9 8.9 0 1 0 11.3 11.3z"/>`,
+
+  /* Two speech bubbles, one behind the other. The same questions, every week. */
+  recurring: `<path d="M8.2 3.4h11.4a1.8 1.8 0 0 1 1.8 1.8v6.4a1.8 1.8 0 0 1-1.8 1.8h-1.2v3.2l-3.4-3.2H8.2a1.8 1.8 0 0 1-1.8-1.8V5.2a1.8 1.8 0 0 1 1.8-1.8z"/><path d="M6.4 8.6H4.4a1.8 1.8 0 0 0-1.8 1.8v5.4a1.8 1.8 0 0 0 1.8 1.8h.9v3l3.2-3h3.7"/>`,
+
+  /* A framed bar chart. Reporting available on demand. */
+  reporting: `<rect x="2.8" y="3.6" width="18.4" height="16.8" rx="2.2"/><path d="M8 16.4v-3.8M12 16.4v-6.6M16 16.4v-2.2"/>`,
+
+  /* A clipboard with a check. What has arrived, and what has not. */
+  documents: `<rect x="4.8" y="4" width="14.4" height="16.6" rx="2.2"/><rect x="9" y="2.1" width="6" height="3.8" rx="1.4"/><path d="m9.1 13.2 2.3 2.3 4.5-4.7"/>`,
+
+  /* A person, and beside them the written-down version of what they know. */
+  keyPerson: `<circle cx="8.4" cy="7.4" r="3.1"/><path d="M3.2 19.6a5.2 5.2 0 0 1 10.4 0"/><rect x="15.4" y="8.2" width="6.2" height="9.2" rx="1.4"/><path d="M17.2 11.2h2.6M17.2 14.2h2.6"/>`,
+} as const;
+
+const { name, size = 22, class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.9"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  set:html={ICONS[name]}
+/>

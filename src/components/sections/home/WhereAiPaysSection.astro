@@ -1,0 +1,222 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+import Icon from "../../common/Icon.astro";
+
+/*
+ * Section 3 — where AI actually pays. Six blocks, and the section that carries the
+ * argument along with section 4.
+ *
+ * The six exist to be *scanned*, not read end to end. The closing line asks the reader
+ * to work out which one is theirs, and they can only do that if all six are in view
+ * close enough together to compare. That is the whole layout brief: on desktop a 3×2
+ * grid, on a phone six compact rows rather than six stacked cards. Six full cards on a
+ * 390px screen is roughly 1,400px of scroll — by the fourth the reader has stopped
+ * comparing and started skipping, and the CTA underneath never gets reached.
+ *
+ * Nothing is hidden behind a tap. Every sentence is visible at every width; the phone
+ * version just stops giving each one a card's worth of padding.
+ *
+ * The terracotta rule along the top separates these from section 2's cards at a
+ * glance: those are what is wrong, these are where the return is.
+ */
+
+const places = [
+  {
+    icon: "quote",
+    title: "Quote turnaround",
+    body: "AI produces the quote from your own pricing the moment an enquiry arrives. Response time is frequently the deciding factor in whether the work is won.",
+  },
+  {
+    icon: "afterHours",
+    title: "After-hours response",
+    body: "AI answers enquiries at any hour and escalates only what requires your judgment. No enquiry waits until morning because nobody was available.",
+  },
+  {
+    icon: "recurring",
+    title: "Recurring enquiries",
+    body: "AI answers the questions your team fields every week, in your own language, without consuming staff time that has higher-value uses.",
+  },
+  {
+    icon: "reporting",
+    title: "Management reporting",
+    body: "AI compiles your operating figures continuously, so reporting is available on demand rather than produced on request.",
+  },
+  {
+    icon: "documents",
+    title: "Document collection",
+    body: "AI requests, tracks and follows up the documents your work depends on, and reports what remains outstanding.",
+  },
+  {
+    icon: "keyPerson",
+    title: "Key-person dependency",
+    body: "AI captures how specialized work is performed, which reduces the operational risk of one individual being unavailable.",
+  },
+] as const;
+---
+
+<section class="section pays" id="where-ai-pays">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">Where AI actually pays</span>
+      <h2 class="section__title pays__title">
+        AI returns show up in six places more often than anywhere else.
+      </h2>
+      <p class="section__lede">
+        Some of these recover cost. Others recover revenue that was being lost without
+        anyone recording it. These are where we look first.
+      </p>
+    </div>
+
+    <ul class="pays__grid">
+      {
+        places.map((place) => (
+          <li class="pays__item">
+            <span class="pays__icon" aria-hidden="true">
+              <Icon name={place.icon} />
+            </span>
+            <h3 class="pays__item-title">{place.title}</h3>
+            <p class="pays__item-body">{place.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="pays__foot">
+      <p class="pays__close">
+        One of these costs your business materially more than the others. We identify
+        which, and establish what it&rsquo;s worth, before you commit anything.
+      </p>
+      <BookingButton location="where" block>
+        Book 20 minutes &mdash; find out which one is yours
+      </BookingButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pays {
+    background: var(--ark-surface);
+  }
+
+  .pays__title {
+    max-width: 24ch;
+  }
+
+  .pays__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ark-grid-gutter);
+    margin-top: 64px;
+  }
+
+  .pays__item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--ark-white);
+    border: 1px solid var(--ark-hairline);
+    border-top: 3px solid var(--ark-terracotta);
+    border-radius: var(--ark-radius);
+    box-shadow: var(--ark-raised);
+    padding: 30px;
+  }
+
+  .pays__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--ark-radius-pill);
+    /* The accent at low opacity, so the icon well reads as terracotta's quiet register
+     * rather than as a second saturated mark competing with the rule above it. */
+    background: rgba(168, 98, 62, 0.12);
+    color: var(--ark-terracotta-ink);
+    margin-bottom: 2px;
+  }
+
+  .pays__item-title {
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+  }
+
+  .pays__item-body {
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .pays__foot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    margin-top: 72px;
+    text-align: center;
+  }
+
+  .pays__close {
+    max-width: 46ch;
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    color: var(--ark-ink);
+  }
+
+  @media (max-width: 1100px) {
+    .pays__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Phone: rows, not cards. The terracotta rule moves from the top edge to the left
+   * edge, which is what keeps six stacked items reading as one set instead of six
+   * separate announcements — the eye follows a single vertical line down the column. */
+  @media (max-width: 900px) {
+    .pays__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      margin-top: 36px;
+    }
+
+    .pays__item {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      column-gap: 14px;
+      row-gap: 6px;
+      align-items: center;
+      padding: 18px 18px 18px 16px;
+      border-top: 1px solid var(--ark-hairline);
+      border-left: 3px solid var(--ark-terracotta);
+      border-radius: 0 var(--ark-radius) var(--ark-radius) 0;
+    }
+
+    .pays__icon {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 0;
+    }
+
+    .pays__item-title {
+      font-size: 1.0625rem;
+    }
+
+    .pays__item-body {
+      grid-column: 1 / -1;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+
+    .pays__foot {
+      margin-top: 44px;
+      gap: 24px;
+    }
+
+    .pays__close {
+      max-width: 30ch;
+    }
+  }
+</style>

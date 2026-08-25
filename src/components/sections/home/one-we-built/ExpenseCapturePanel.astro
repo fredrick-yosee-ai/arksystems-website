@@ -1,0 +1,348 @@
+---
+/*
+ * The demonstration panel for section 5, drawn to the build note in the approved copy.
+ *
+ * The previous build showed a single photographed receipt entering a chat. That
+ * illustration now contradicts its own section: the copy says most evidence of spending
+ * already arrives electronically and that AI monitors those channels, so a picture of
+ * someone photographing a receipt describes a receipt-scanning app, which is precisely
+ * what this section must never imply.
+ *
+ * So the picture is a convergence. Three inbound sources arrive on their own channels,
+ * meet in one place, and leave as a finished categorized month. The photograph is one
+ * of the three and is marked as the only manual one — the small exception in the
+ * picture, not the whole of it.
+ *
+ * THE BADGE IS THE MOST IMPORTANT ELEMENT HERE. The approved file calls it "the most
+ * important instruction in this file": a visitor scrolling past must understand within
+ * one second that this exists rather than being a mockup. It is pinned inside the panel
+ * at every breakpoint, never demoted to a caption underneath, and it is gold because
+ * gold is the reserved attention colour.
+ *
+ * Built in HTML and CSS with one small SVG for the converging lines. Real text reflows,
+ * zooms and can be read out; text baked into a viewBox does none of those.
+ */
+
+const sources = [
+  { label: "Supplier invoice", channel: "Email", icon: "doc" },
+  { label: "Subscription receipt", channel: "Email", icon: "repeat" },
+  { label: "Paper receipt", channel: "Photo", icon: "camera", manual: true },
+];
+
+const lines = [
+  { category: "Materials", count: "3 items", amount: "$482.10" },
+  { category: "Subscriptions", count: "2 items", amount: "$96.00" },
+  { category: "Fuel", count: "1 item", amount: "$71.40" },
+];
+---
+
+<figure class="cap">
+  <div class="cap__stage">
+    <div class="cap__card">
+      <p class="cap__badge">Real system &middot; Sample data</p>
+
+      <p class="cap__title">Expense capture</p>
+
+      <ul class="cap__sources">
+        {
+          sources.map((source) => (
+            <li class:list={["cap__source", { "cap__source--manual": source.manual }]}>
+              <span class="cap__icon" aria-hidden="true">
+                {source.icon === "doc" && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6.8 3h6.4l4 4v14H6.8z" />
+                    <path d="M13.2 3v4.2h4" />
+                    <path d="M9.6 12.4h5M9.6 15.8h5" />
+                  </svg>
+                )}
+                {source.icon === "repeat" && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4.6 10.4a7.4 7.4 0 0 1 12.6-4.2" />
+                    <path d="M19.4 13.6a7.4 7.4 0 0 1-12.6 4.2" />
+                    <path d="M17.4 2.6v3.8h-3.8M6.6 21.4v-3.8h3.8" />
+                  </svg>
+                )}
+                {source.icon === "camera" && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3.4 7.8h3.8l1.6-2.4h6.4l1.6 2.4h3.8v11.4H3.4z" />
+                    <circle cx="12" cy="13.2" r="3.4" />
+                  </svg>
+                )}
+              </span>
+              <span class="cap__source-label">{source.label}</span>
+              <span class="cap__channel">{source.channel}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="cap__manual-note">One manual step. Everything else arrives on its own.</p>
+
+      {/* Decorative. The convergence it draws is stated in the line underneath it. */}
+      <svg class="cap__converge" viewBox="0 0 300 40" fill="none" aria-hidden="true">
+        <path d="M52 3C52 22 150 14 150 34" stroke="var(--ark-olive-2)" stroke-width="2" stroke-linecap="round" opacity="0.55" />
+        <path d="M150 3v31" stroke="var(--ark-olive-2)" stroke-width="2" stroke-linecap="round" opacity="0.55" />
+        <path d="M248 3C248 22 150 14 150 34" stroke="var(--ark-olive-2)" stroke-width="2" stroke-linecap="round" opacity="0.55" />
+        <path d="m144.5 29 5.5 6 5.5-6" stroke="var(--ark-olive-2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+
+      <p class="cap__node">Captured on arrival, read, coded and filed</p>
+
+      <div class="cap__report">
+        <div class="cap__report-head">
+          <span>Month closed</span>
+          <span class="cap__report-flag">Complete</span>
+        </div>
+        <ul class="cap__lines">
+          {
+            lines.map((line) => (
+              <li class="cap__line">
+                <span class="cap__line-cat">{line.category}</span>
+                <span class="cap__line-count">{line.count}</span>
+                <span class="cap__line-amt">{line.amount}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="cap__report-foot">Tax isolated &middot; source document on every entry</p>
+      </div>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .cap {
+    margin: 0;
+  }
+
+  .cap__stage {
+    background: var(--ark-stage-green);
+    border-radius: var(--ark-radius-panel);
+    padding: 40px;
+  }
+
+  .cap__card {
+    position: relative;
+    background: var(--ark-white);
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius);
+    box-shadow: var(--ark-floating);
+    padding: 26px 24px 24px;
+  }
+
+  /* Pinned inside the panel, at every breakpoint. See the note at the top of this file
+   * before moving, shrinking or captioning it. */
+  .cap__badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding-inline: 12px;
+    border-radius: var(--ark-radius-pill);
+    background: var(--ark-gold-bg);
+    border: 1px solid var(--ark-gold-border);
+    color: var(--ark-gold-ink);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .cap__title {
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ark-ink);
+    padding-right: 9rem;
+  }
+
+  .cap__sources {
+    margin-top: 16px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .cap__source {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius-sm);
+    background: var(--ark-surface);
+  }
+
+  .cap__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--ark-stage-green);
+    color: var(--ark-olive);
+  }
+
+  .cap__icon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .cap__source-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ark-ink);
+  }
+
+  .cap__channel {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ark-muted);
+  }
+
+  /* The one manual source is marked, not hidden. It is a truthful part of the picture
+   * and the copy names it as a step; what the design must not do is let it dominate. */
+  .cap__source--manual {
+    border-color: rgba(168, 98, 62, 0.4);
+  }
+
+  .cap__source--manual .cap__icon {
+    background: rgba(168, 98, 62, 0.12);
+    color: var(--ark-terracotta-ink);
+  }
+
+  .cap__source--manual .cap__channel {
+    color: var(--ark-terracotta-ink);
+  }
+
+  .cap__manual-note {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--ark-muted);
+  }
+
+  .cap__converge {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 4px;
+  }
+
+  .cap__node {
+    text-align: center;
+    padding: 10px 14px;
+    border-radius: var(--ark-radius-sm);
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .cap__report {
+    margin-top: 16px;
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius-sm);
+    overflow: hidden;
+  }
+
+  .cap__report-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--ark-surface);
+    border-bottom: 1px solid var(--ark-hairline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--ark-ink);
+  }
+
+  .cap__report-flag {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ark-olive);
+    background: var(--ark-green-soft);
+    border-radius: var(--ark-radius-pill);
+    padding: 3px 10px;
+  }
+
+  .cap__line {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: baseline;
+    gap: 12px;
+    padding: 9px 14px;
+    border-bottom: 1px solid rgba(231, 227, 217, 0.7);
+    font-size: 0.8125rem;
+  }
+
+  .cap__line-cat {
+    color: var(--ark-ink);
+    font-weight: 600;
+  }
+
+  .cap__line-count {
+    color: var(--ark-muted);
+    font-size: 0.75rem;
+  }
+
+  .cap__line-amt {
+    color: var(--ark-body-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cap__report-foot {
+    padding: 9px 14px;
+    font-size: 0.75rem;
+    color: var(--ark-muted);
+  }
+
+  @media (max-width: 900px) {
+    .cap__stage {
+      padding: 14px;
+      border-radius: 20px;
+    }
+
+    .cap__card {
+      padding: 20px 14px 16px;
+    }
+
+    .cap__badge {
+      height: 24px;
+      padding-inline: 10px;
+      font-size: 0.625rem;
+    }
+
+    .cap__title {
+      padding-right: 7.5rem;
+    }
+
+    /* The channel tag is the first thing to go — "Email" beside "Subscription receipt"
+     * on a 350px row forces the label to wrap, and the label is the part that matters. */
+    .cap__source {
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 9px;
+      padding: 8px 10px;
+    }
+
+    .cap__icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .cap__channel {
+      display: none;
+    }
+  }
+</style>

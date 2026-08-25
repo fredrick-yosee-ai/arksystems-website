@@ -1,90 +1,76 @@
 ---
+import { SITE } from "../../../consts";
+
 /*
- * Section 9 — FAQ, rebuilt as objection handling. An FAQ is where you close, not where
- * you disclose. Buying questions come first, and every answer removes a reason not to
- * book. Risk reversal lives here rather than in section 5, so that someone thinking
- * about money finds it and everyone else is left alone.
+ * Section 7 — before you book, and the page's FAQPage schema.
  *
- * Foldable, centred, titled "FAQ" — Fredrick's call, replacing the earlier two-column
- * layout with the "Before you book" heading.
+ * An FAQ is where you close, not where you disclose. All four questions are buying
+ * questions and every answer removes a reason not to book.
  *
  * Built on <details>/<summary>, so it works with no JavaScript at all: keyboard
- * operable, announced correctly as a disclosure, and open/closed state handled by the
+ * operable, announced correctly as a disclosure, open and closed state handled by the
  * browser. Every answer stays in the DOM whether open or shut, so nothing is hidden
- * from search engines or from find-on-page.
+ * from search engines, from find-on-page, or from the schema below.
+ *
+ * Collapsed at every width — Fredrick's instruction of Aug 25 2026. Four long answers
+ * set open would be roughly two extra screens on a phone immediately before the closing
+ * CTA, and on desktop the shorter section keeps the close in view.
  *
  * ---------------------------------------------------------------------------
- * !! UNRESOLVED CLAIMS-ACCURACY ISSUE — "What happens to my data?" !!
+ * RESOLVED — the "What happens to my data?" claims-accuracy issue.
  *
- * The approved answer below contains this sentence:
+ * The previous answer said "Anything that matters still goes past a person before it
+ * happens — that's deliberate, not a setting", which was untrue under the hybrid model:
+ * the system posts automatically when the category is clear and asks when it is not, so
+ * a routine item is filed without anyone seeing it first. It was logged as an open
+ * launch blocker in CLAUDE.md.
  *
- *     "Anything that matters still goes past a person before it happens —
- *      that's deliberate, not a setting."
- *
- * That is not true of the system as Fredrick has described it. It posts
- * automatically when the category is clear and asks only when it is not, so a routine
- * receipt is filed without anyone seeing it first. The sentence survives only if
- * "anything that matters" is read as excluding exactly the cases that are automated,
- * which is the kind of load-bearing vagueness the brand standard exists to catch:
- * "make no claim that requires a disclaimer".
- *
- * The approved wording is shipped here UNCHANGED, because copy is Fredrick's to
- * approve and it should not be edited silently. Proposed replacement, awaiting his
- * approval — accurate to the hybrid model and adding no capability I cannot verify:
- *
- *     "We only get access to what the job actually needs, and nothing more.
- *      When the system is confident, it files the item and shows you what it
- *      did. When it is not, it stops and asks you before anything happens.
- *      Nothing is hidden either way. Full detail on the data handling page."
- *
- * See CLAUDE.md, "Still open".
+ * The approved answer below fixes it and is used verbatim. "You determine what runs
+ * automatically and what stops for review, and every step is recorded either way" is
+ * accurate to the hybrid model, describes a setting rather than denying one, and claims
+ * no capability that cannot be demonstrated.
  * ---------------------------------------------------------------------------
  */
 
 const faqs = [
   {
-    q: "How long does it take?",
-    a: "Most jobs take two to three weeks from go-ahead to handing it back working. If something would take longer, you'll hear that before you commit, not halfway through.",
-  },
-  {
-    q: "What if it doesn't do what we agreed?",
-    a: "What we're building is written down before we start, and you pay in stages against it. Nothing's final until you've used it and told us it works.",
-  },
-  {
     q: "What does this cost?",
-    a: "Every job has a set price, agreed before anything starts. The price does not go up as we go. We work it out after a short conversation, because it depends on what the job involves. The workshop has its own price, on its own page.",
-  },
-  {
-    q: "Do I have to change the software I already use?",
-    a: "Usually not. The first thing we look for is whether something you already pay for can do the job, set up properly or connected to something else. Replacing what you use is expensive and disruptive, and it's rarely the cheapest answer.",
-  },
-  {
-    q: "Who owns it when you're done?",
-    a: "You do. It runs on your accounts and you keep the work. There's no ArkSystems subscription attached to it.",
-  },
-  {
-    // See the block comment above — this answer is known to be inaccurate.
-    q: "What happens to my data?",
-    a: "We only get access to what the job actually needs, and nothing more. Anything that matters still goes past a person before it happens — that's deliberate, not a setting. Full detail on the data handling page.",
-  },
-  {
-    q: "Do you guarantee savings or ROI?",
-    a: "No, and be careful of anyone who does. Financial estimates are built from your inputs and clearly stated assumptions, so you can check the arithmetic yourself. We make assumptions and missing information visible, and we don't promise results we can't control.",
+    a: "Every engagement carries a fixed fee, agreed before work begins, and it doesn't increase as we go. We establish it after a short conversation, because it depends on the scope of the work.",
   },
   {
     q: "Do you always recommend AI?",
-    a: "No. The answer might be a clearer way of doing it, better use of something you already pay for, connecting two things you already use, automating a small piece of it, or leaving it alone for now. We use AI where it earns its place — not because it's fashionable.",
+    a: "No. Frequently the answer is a process change, or better use of software you already license. We recommend AI where AI produces a return, and we say so plainly when it doesn't.",
   },
   {
-    q: "What kinds of work do you look at?",
-    a: "Recurring work involving document collection, follow-up, approvals, status visibility, information handoffs, and repetitive administration.",
+    q: "Who owns it when you're done?",
+    a: "You do. It operates on your accounts and the work remains your property. There's no ArkSystems subscription attached to it.",
+  },
+  {
+    q: "What happens to my data?",
+    a: "We take access to what the work requires and nothing beyond it. You determine what runs automatically and what stops for review, and every step is recorded either way.",
   },
 ];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a,
+    },
+  })),
+  url: `${SITE.url}/`,
+};
 ---
 
-<section class="faq">
+<section class="section section--cream faq" id="before-you-book">
   <div class="container">
-    <h2 class="faq__title">FAQ</h2>
+    <div class="section__head faq__head">
+      <h2 class="section__title faq__title">Before you book</h2>
+    </div>
 
     <div class="faq__list">
       {
@@ -117,26 +103,24 @@ const faqs = [
   </div>
 </section>
 
-<style>
-  .faq {
-    background: #fff;
-    padding-block: 96px;
-  }
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline />
 
+<style>
+  /* No eyebrow on this one. Every other section's eyebrow is its short name and the
+   * heading is a sentence; here the approved heading IS the short name, so an eyebrow
+   * would set "Before you book" twice in a row and be read out twice. */
   .faq__title {
-    font-size: 2.4rem;
-    letter-spacing: -0.015em;
-    text-align: center;
+    max-width: none;
   }
 
   .faq__list {
-    max-width: 780px;
-    margin: 46px auto 0;
-    border-top: 1px solid var(--ark-grey);
+    max-width: 820px;
+    margin-top: 44px;
+    border-top: 1px solid var(--ark-hairline);
   }
 
   .faq__item {
-    border-bottom: 1px solid var(--ark-grey);
+    border-bottom: 1px solid var(--ark-hairline);
   }
 
   .faq__q {
@@ -149,9 +133,9 @@ const faqs = [
     list-style: none;
     font-family: var(--ark-font-display);
     font-weight: 700;
-    font-size: 1.12rem;
+    font-size: 1.1875rem;
     line-height: 1.35;
-    color: var(--ark-olive);
+    color: var(--ark-ink);
     transition: color 0.15s ease;
   }
 
@@ -161,12 +145,12 @@ const faqs = [
   }
 
   .faq__q:hover {
-    color: #2c401f;
+    color: var(--ark-terracotta-ink);
   }
 
   .faq__chevron {
     flex-shrink: 0;
-    color: var(--ark-olive-2);
+    color: var(--ark-terracotta);
     transition: transform 0.25s ease;
   }
 
@@ -177,66 +161,50 @@ const faqs = [
   .faq__a p {
     padding: 0 4px 24px;
     max-width: 68ch;
-    font-size: 1rem;
-    line-height: 1.62;
-    color: #5b564e;
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
   }
 
-  /* The open/close animation. `::details-content` and `interpolate-size` are recent;
-   * where they are unsupported the panel simply opens instantly, which is a fine
-   * fallback — nothing depends on the transition. */
-  @supports selector(details::details-content) {
-    .faq__item::details-content {
-      block-size: 0;
-      overflow: hidden;
-      transition:
-        block-size 0.28s ease,
-        content-visibility 0.28s allow-discrete;
-      transition-behavior: allow-discrete;
-    }
-
-    .faq__item[open]::details-content {
-      block-size: auto;
-    }
-  }
+  /* NO open/close height animation here, deliberately, and it should not be added back
+   * without testing that the answers actually appear.
+   *
+   * The obvious implementation — `::details-content { block-size: 0 }` transitioning to
+   * `block-size: auto` under `interpolate-size` — was built and measured, and it does not
+   * merely fail to animate: it stops the FAQ opening at all. Listing content-visibility
+   * in the transition takes the property out of the browser's hands, so it stays
+   * `hidden` through the open state; hidden content has no size, `auto` resolves to 0,
+   * and every answer stays invisible while `details.open` reports true. Measured on the
+   * built page: the list stayed exactly 241px tall whether open or shut, and each answer
+   * returned `checkVisibility() === false`. Adding `content-visibility: visible` to the
+   * open state did not reliably fix it either.
+   *
+   * So the disclosure is left to the browser, which does it correctly and instantly. The
+   * chevron rotation below is the feedback, and it is enough. A disclosure widget's job
+   * is to disclose; a 280ms ease on the way there is not worth the risk of shipping four
+   * questions that cannot be answered.
+   */
 
   @media (prefers-reduced-motion: reduce) {
-    .faq__chevron,
-    .faq__item::details-content {
+    .faq__chevron {
       transition: none;
     }
   }
 
   @media (max-width: 900px) {
-    .faq {
-      padding-block: 56px;
-    }
-
-    .faq__title {
-      font-size: var(--ark-h2);
-    }
-
     .faq__list {
-      margin-top: 30px;
+      margin-top: 28px;
     }
 
     .faq__q {
-      font-size: 1.02rem;
+      font-size: 1.0625rem;
       padding: 18px 2px;
       gap: 14px;
     }
 
     .faq__a p {
       padding: 0 2px 20px;
-      font-size: 0.98rem;
+      font-size: 1rem;
     }
-  }
-</style>
-
-<style is:global>
-  /* `interpolate-size` has to sit on :root to let block-size animate to `auto`.
-   * Scoped styles cannot target :root, hence the global block. */
-  :root {
-    interpolate-size: allow-keywords;
   }
 </style>

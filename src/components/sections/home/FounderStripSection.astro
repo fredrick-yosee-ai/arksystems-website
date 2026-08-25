@@ -1,0 +1,165 @@
+---
+import { Image } from "astro:assets";
+import fredPortrait from "../../../../assets/fred.jpg";
+
+/*
+ * The founder strip. Not in the approved copy file — kept at Fredrick's instruction of
+ * Aug 25 2026, condensed from the previous build's "Who you're working with" section.
+ *
+ * Why it survives the rewrite: this page's audience is warm traffic, people who have
+ * met Fredrick or been referred by someone who has. A page with no face on it asks that
+ * reader to re-establish who they are dealing with. Cold traffic goes to /accounting and
+ * never sees this.
+ *
+ * Why it is a strip and not a section: the approved page runs a tight argument, and a
+ * full founder section here would interrupt it. This sits between the pause and the
+ * objections — credibility immediately before the questions, which is where it does the
+ * most work and costs the least attention.
+ *
+ * Voice: written *about* Fredrick, never in first person, so the page reads as a company
+ * with a founder rather than a person with a website.
+ *
+ * Every claim here is unarguable and needs no verification: years, two named products
+ * founded and shipped, location. Nothing states or implies a client engagement. It is
+ * the condensed version of the longer text, not new copy — the two paragraphs about
+ * dealing directly with the builder were cut, not rewritten.
+ */
+
+const chips = [
+  "15+ years engineering",
+  "Two products founded and shipped",
+  "Metro Vancouver",
+  "Founder-led delivery",
+];
+---
+
+<section class="section founder">
+  <div class="container founder__inner">
+    {/* Square source, cropped to a circle — so the intrinsic ratio must be 1:1 or the
+        crop pulls off-centre. */}
+    <Image
+      src={fredPortrait}
+      alt="Fredrick, founder of ArkSystems"
+      widths={[176, 352]}
+      sizes="(max-width: 900px) 120px, 176px"
+      class="founder__portrait"
+    />
+
+    <div class="founder__copy">
+      <span class="eyebrow">Who you&rsquo;re working with</span>
+
+      <h2 class="founder__title">
+        You work directly with the people who build your system.
+      </h2>
+
+      <p class="founder__body">
+        ArkSystems is led by its founder, Fredrick, who spent more than fifteen years in
+        software engineering, solution architecture, systems integration and cloud
+        infrastructure, and who founded and shipped two technology products, FoodyGuru
+        and YoseeAI.
+      </p>
+
+      <ul class="founder__chips">
+        {chips.map((chip) => <li class="founder__chip">{chip}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .founder {
+    background: var(--ark-surface);
+    /* Shorter than a full section. It is a strip, and the padding is what says so. */
+    padding-block: 72px;
+  }
+
+  .founder__inner {
+    display: grid;
+    grid-template-columns: 176px minmax(0, 1fr);
+    gap: 44px;
+    align-items: center;
+  }
+
+  .founder__portrait {
+    width: 176px;
+    height: 176px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid var(--ark-white);
+    box-shadow: var(--ark-raised);
+  }
+
+  .founder .eyebrow {
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .founder__title {
+    font-size: 1.75rem;
+    line-height: 1.22;
+    letter-spacing: -0.018em;
+    max-width: 26ch;
+  }
+
+  .founder__body {
+    margin-top: 16px;
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+    max-width: 66ch;
+  }
+
+  .founder__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .founder__chip {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--ark-olive);
+    background: var(--ark-green-soft);
+    border-radius: var(--ark-radius-pill);
+    padding: 5px 14px;
+  }
+
+  @media (max-width: 900px) {
+    .founder {
+      padding-block: 48px;
+    }
+
+    /* Portrait above, centred. At 390px a 120px circle beside text leaves the text
+     * about 200px wide, which wraps the heading to five lines. */
+    .founder__inner {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .founder__portrait {
+      width: 120px;
+      height: 120px;
+      border-width: 4px;
+    }
+
+    .founder__title {
+      font-size: 1.375rem;
+      max-width: 20ch;
+      margin-inline: auto;
+    }
+
+    .founder__body {
+      text-align: left;
+      max-width: 40ch;
+      margin-inline: auto;
+      font-size: 1rem;
+    }
+
+    .founder__chips {
+      justify-content: center;
+    }
+  }
+</style>
