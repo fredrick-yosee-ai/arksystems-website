@@ -16,11 +16,20 @@ The page has exactly one job: get the visitor onto a 20-minute call.
 ## Where the truth lives, in order
 
 1. Fredrick's current instruction
-2. `spec/page-spec.md` — the approved page spec, v3.3. Section-by-section copy and structure
-3. `spec/copy-blocks.md` — the same copy, extracted and ready to paste
-4. `reference/homepage-desktop.html` and `reference/homepage-mobile.html` — the approved
-   mockups. Open them in a browser. They are the visual target, not a suggestion
-5. `spec/brand-tokens.css` — every colour and type decision
+2. `docs/page-spec.md` — the approved page spec, v3.3. Section-by-section copy and structure
+3. **The built homepage in `src/`** — for the ten homepage sections this is now the record
+   of what was actually shipped, and its component comments carry the reasoning
+4. `src/styles/brand-tokens.css` — every colour and type decision
+
+Two sources that used to be listed here are gone, removed once the homepage was built:
+
+- `spec/copy-blocks.md` — the approved copy, now living in the components themselves
+- `reference/homepage-desktop.html` and `reference/homepage-mobile.html` — the approved
+  mockups. They were the visual target for the build and it matched them; they are
+  recoverable from git history if a future page needs them
+
+`brand-tokens.css` moved from `spec/` into `src/styles/` because it is not a document.
+`src/styles/tokens.css` imports it, and the site renders unstyled without it.
 
 ## The one constant
 
@@ -28,9 +37,13 @@ The page has exactly one job: get the visitor onto a 20-minute call.
 export const BOOKING_URL = "https://cal.com/fredrick-arksystems/ark-discovery-call";
 ```
 
-Every CTA on every page points here. Nine of them in the approved mockup. Hold it in one
-place so it changes in one place. The event is configured for 20 minutes, which is why
-the page is allowed to say "20 minutes".
+Every CTA on every page points here. Hold it in one place so it changes in one place —
+it lives in `src/consts.ts`. The event is configured for 20 minutes, which is why the
+page is allowed to say "20 minutes".
+
+The homepage carries five: nav, hero, demo, what-happens, closing. (An earlier note here
+said nine; that was five on the desktop mockup plus four on the mobile one, not nine per
+page.)
 
 Cal.com's embed (`embed.js`) can open the booker in a popup instead of navigating away.
 Prefer that, but keep a plain `<a href>` fallback that works if the script fails. Any
@@ -70,8 +83,15 @@ Ark logo embedded as base64, so inlining them needs no extra asset wiring.
 The phone version is deliberately small. An earlier version was 1418px tall, which put
 two full screens of illustration above the first sentence. Do not "improve" it by
 restoring detail.
-- `assets/hero-desktop-full.svg` — 1520×1070, kept as a source asset only. Its labels
-  are unreadable below about 1100px wide. Not for use in the page.
+`assets/hero-desktop-full.svg` (1520×1070) used to sit alongside these as an unused
+source asset. It was deleted in the cleanup — its labels were unreadable below about
+1100px and it was never for use in a page. It is in git history if ever needed.
+
+**Both hero SVGs define the same five ids** — `ar`, `arg`, `daynight`, `discg`, `halo`.
+The responsive swap needs both inlined in the document at once, and ids are
+document-global, so without namespacing the mobile artwork paints itself with gradients
+built for a 720×700 viewBox. `src/lib/svg.ts` rewrites the ids per variant and adds the
+`<title>`/`<desc>` text alternative. Use it for any future inlined SVG.
 
 **Self-host the fonts.** Lora and Source Sans 3, subset, woff2. Faster than Google
 Fonts, and it keeps a third-party request off the page, which keeps the Privacy page
@@ -85,30 +105,60 @@ that person was a defect in the old site.
 must stay large enough to actually read — it was 122px wide with 6px type in an earlier
 build, which defeated the entire point of showing a real receipt.
 
-## Redirects — do not skip this
+## Redirects — done, in `netlify.toml`
 
-The live site currently serves these paths:
+- `/how-we-help` → `/` as a **301**. That page has no equivalent; its content is now
+  homepage sections 2, 3 and 8.
+- `/accounting-firms` → `/` as a **302**, deliberately temporary. The real destination is
+  `/accounting`, which does not exist yet, and a 301 to a 404 is cached hard by browsers
+  and search engines. **When `/accounting` ships, change the target and make it a 301.**
+- `/workshop` keeps its path, so it needs no redirect — but the page does not exist yet
+  and currently 404s.
 
-- `/how-we-help`
-- `/workshop`
-- `/accounting-firms`
+The old site's broken navigation is gone: every nav link now resolves, and no `mailto:`
+remains anywhere. Do not reintroduce either.
 
-The spec calls the accounting page `/accounting`. Whatever the final structure, every
-changed path needs a 301 in `netlify.toml` or the existing links and search equity die.
+## Where the homepage lives
 
-Also note: the current live navigation is broken. "How We Help", "The Workshop", "For
-Accounting Firms", "About", "Privacy" and "Terms" all point at `/`, and "Book a Call" is
-still a `mailto:`. Do not carry any of that forward.
+Built and live. `src/pages/index.astro` composes ten sections in a fixed order:
 
-## What ships in release one
+| # | Section | Component |
+|---|---|---|
+| 1 | Hero | `sections/home/HeroSection.astro` |
+| 2 | The problem | `sections/home/ProblemSection.astro` |
+| 3 | See it work | `sections/home/SeeItWorkSection.astro` + `see-it-work/{Receipt,Chat,Sheet}Panel.astro`, `see-it-work/MonthEndStrip.astro` |
+| 4 | Is this you? | `sections/home/IsThisYouSection.astro` |
+| 5 | What happens when you book | `sections/home/WhatHappensSection.astro` |
+| 6 | Start with one | `sections/home/StartWithOneSection.astro` |
+| 7 | Who you're working with | `sections/home/WhoYouWorkWithSection.astro` |
+| 8 | How we work | `sections/home/HowWeWorkSection.astro` |
+| 9 | FAQ | `sections/home/FaqSection.astro` |
+| 10 | Closing | `sections/home/ClosingSection.astro` |
 
-- Homepage (10 sections, per the spec)
-- `/workshop` — minimal reference page, reachable from nav and footer
-- About
-- **Privacy, Terms, Data Handling** — these are launch blockers, not polish. CASL needs
-  a privacy basis, and the AI Opportunity Fit Form has had an open privacy-notice
-  placeholder since July. Drafts are in `legal/`, marked for review. They must not go
-  live unreviewed.
+Shared: `layouts/BaseLayout.astro` (head, Cal.com embed, skip link), `layout/SiteHeader`
+and `SiteFooter`, `common/BookingButton.astro` (every CTA), `consts.ts` (BOOKING_URL,
+nav and footer link data), `lib/svg.ts` (inlining hero SVGs), `styles/brand-tokens.css`
+then `styles/tokens.css` then `styles/base.css`.
+
+**Section order is load-bearing.** Section 3 must stay below section 2 — showing the fix
+before the problem is felt turns a resolution into a product demo. Sections 2 and 4 both
+do symptom recognition, so nothing else may.
+
+No Tailwind. Plain CSS, tokens imported once, scoped `<style>` per component. Node 24,
+pinned in `.nvmrc`.
+
+## Still to build for release one
+
+- `/workshop` — minimal reference page, reachable from nav and footer. **Footer links to
+  it now and it 404s.**
+- `/about` — **linked from nav and footer, 404s.**
+- **Privacy, Terms, Data Handling** — launch blockers, not polish. CASL needs a privacy
+  basis, and the AI Opportunity Fit Form has had an open privacy-notice placeholder since
+  July. **All three are linked from the live footer and 404 today**, and the live FAQ
+  answer to "What happens to my data?" ends by pointing at the data handling page.
+  Unreviewed drafts are in `docs/legal/`. They are drafts, not pages: they must not be
+  turned into routes until Fredrick has done a factual review and a Canadian privacy
+  practitioner has seen them.
 
 `/accounting` follows immediately after release one. All cold outbound points there,
 never at the homepage.
@@ -116,7 +166,7 @@ never at the homepage.
 ## Decided Aug 24 2026 — these were open, they are not any more
 
 Fredrick's instruction outranks this file. Where these contradict an earlier line here
-or in `spec/page-spec.md`, these win.
+or in `docs/page-spec.md`, these win.
 
 - **The receipt system is hybrid.** It posts automatically when the category is clear,
   and asks when it is not. It does *not* route everything past a person.
@@ -136,7 +186,7 @@ or in `spec/page-spec.md`, these win.
   the version that is actually true. The hero SVG already gets this right: *"Two things
   need you. Nothing else does."*
 
-- **The hero SVGs are correct; `spec/page-spec.md` §Section 1's "Visual" paragraph is
+- **The hero SVGs are correct; `docs/page-spec.md` §Section 1's "Visual" paragraph is
   stale.** That paragraph describes an expense-capture pipeline with a "you review"
   step, an *"Example: expense capture"* header and a *"Sample data"* tag. No such
   artwork exists. Build the hero from `assets/hero-desktop.svg` and

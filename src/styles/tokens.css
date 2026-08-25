@@ -1,12 +1,15 @@
 /* ArkSystems — design tokens for the build.
  *
- * The brand values themselves live in `spec/brand-tokens.css` and are imported here
- * unchanged, so that file stays the single source of truth. Everything below the import
- * is a deliberate, documented deviation. Keep that list short and keep it explained —
- * if it grows, the spec file should be corrected instead.
+ * The brand values themselves live in `./brand-tokens.css`, transcribed from Brand
+ * Guide v1.4, and are imported here unchanged so that file stays the single source of
+ * truth. Everything below the import is a deliberate, documented deviation. Keep that
+ * list short and keep it explained — if it grows, correct brand-tokens.css instead.
+ *
+ * That file used to sit in `spec/`. It was moved into `src/styles/` because it is not a
+ * document — it is a build input, and the whole site renders unstyled without it.
  */
 
-@import "../../spec/brand-tokens.css";
+@import "./brand-tokens.css";
 
 /* --------------------------------------------------------------------------
  * DEVIATION 1 — focus ring contrast.
