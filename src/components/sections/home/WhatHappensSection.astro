@@ -150,4 +150,23 @@ const steps = [
       font-size: 1.3rem;
     }
   }
+
+  /* Phone and any portrait screen: centre the heading, the intro line and the closing
+   * line. The two step cards keep their left edge — they are full paragraphs. */
+  @media (max-width: 900px), (orientation: portrait) {
+    .what-happens__title,
+    .what-happens__intro,
+    .what-happens__close {
+      text-align: center;
+    }
+
+    .what-happens__close {
+      margin-inline: auto;
+    }
+
+    .what-happens__cta {
+      display: flex;
+      justify-content: center;
+    }
+  }
 </style>

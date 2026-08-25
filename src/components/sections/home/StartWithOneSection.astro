@@ -93,4 +93,18 @@
       font-size: 1.24rem;
     }
   }
+
+  /* Phone and any portrait screen: centre the heading and the kicker. The body
+   * paragraph keeps its left edge. */
+  @media (max-width: 900px), (orientation: portrait) {
+    .start-with-one__title,
+    .start-with-one__kicker {
+      text-align: center;
+    }
+
+    .start-with-one__body {
+      max-width: 62ch;
+      margin-inline: auto;
+    }
+  }
 </style>

@@ -147,4 +147,18 @@ const steps = [
       font-size: 1.3rem;
     }
   }
+
+  /* Phone and any portrait screen: centre the heading and the pull quote. The four
+   * numbered steps keep their left edge. */
+  @media (max-width: 900px), (orientation: portrait) {
+    .how__eyebrow,
+    .how__title {
+      text-align: center;
+    }
+
+    .how__quote p {
+      text-align: center;
+      margin-inline: auto;
+    }
+  }
 </style>

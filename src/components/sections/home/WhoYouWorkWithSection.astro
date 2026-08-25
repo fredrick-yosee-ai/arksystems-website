@@ -24,11 +24,13 @@ const chips = [
 
 <section class="who">
   <div class="container who__inner">
+    {/* Square source, cropped to a circle — so the intrinsic ratio must be 1:1 or the
+        crop pulls off-centre. */}
     <Image
       src={fredPortrait}
       alt="Fredrick, founder of ArkSystems"
       widths={[330, 660]}
-      sizes="(max-width: 900px) 220px, 330px"
+      sizes="(max-width: 900px) 200px, 330px"
       class="who__portrait"
     />
 
@@ -79,9 +81,12 @@ const chips = [
   .who__portrait {
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
-    border-radius: var(--ark-radius);
+    /* Sits slightly high in the frame so the crop keeps the face centred rather than
+     * cutting the top of the head. */
+    object-position: 50% 22%;
+    border-radius: 50%;
     display: block;
   }
 
@@ -129,23 +134,48 @@ const chips = [
     color: var(--ark-olive);
   }
 
+  /* Phone and any portrait screen: the portrait leads, centred, with the eyebrow and
+   * heading centred under it. The body paragraphs stay left-aligned — they are long,
+   * and centred prose is harder to read, which matters more than usual for a page
+   * written for readers whose first language may not be English. */
+  @media (max-width: 900px), (orientation: portrait) {
+    .who__inner {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: 26px;
+    }
+
+    .who__portrait {
+      width: 200px;
+    }
+
+    .who__eyebrow,
+    .who__title {
+      text-align: center;
+    }
+
+    .who__title {
+      max-width: 24ch;
+      margin-inline: auto;
+    }
+
+    .who__body {
+      max-width: 62ch;
+      margin-inline: auto;
+    }
+
+    .who__chips {
+      justify-content: center;
+    }
+  }
+
   @media (max-width: 900px) {
     .who {
       padding-block: 56px;
     }
 
-    .who__inner {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 28px;
-    }
-
-    .who__portrait {
-      width: 220px;
-    }
-
     .who__title {
       font-size: var(--ark-h2);
-      max-width: none;
     }
 
     .who__body {

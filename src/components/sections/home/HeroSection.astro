@@ -156,6 +156,31 @@ const heroMobile = inlineSvg(heroMobileRaw, {
     display: none;
   }
 
+  /* Phone and any portrait screen: centre the heading block. The subhead and the line
+   * under the CTA keep their left edge — they are full sentences, and centred prose is
+   * harder to read, which matters more than usual for a page written for readers whose
+   * first language may not be English. */
+  @media (max-width: 900px), (orientation: portrait) {
+    .hero__eyebrow {
+      justify-content: center;
+    }
+
+    .hero__title,
+    .hero__trust {
+      text-align: center;
+    }
+
+    .hero__cta {
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero__subhead,
+    .hero__cta-note {
+      margin-inline: auto;
+    }
+  }
+
   /* The phone illustration is deliberately compact. An earlier version was 1418px tall,
    * which put two full screens of artwork above the first sentence. Do not restore
    * detail here. */

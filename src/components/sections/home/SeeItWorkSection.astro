@@ -226,4 +226,26 @@ const whatChanges = [
       margin-top: 30px;
     }
   }
+
+  /* Phone and any portrait screen: centre the section heading and the closing beat.
+   * Panel copy and the intro keep their left edge. */
+  @media (max-width: 900px), (orientation: portrait) {
+    .see-it-work__eyebrow,
+    .see-it-work__title {
+      text-align: center;
+    }
+
+    .see-it-work__title {
+      margin-inline: auto;
+    }
+
+    .see-it-work__changes {
+      text-align: center;
+    }
+
+    .see-it-work__cta {
+      display: flex;
+      justify-content: center;
+    }
+  }
 </style>

@@ -179,4 +179,18 @@ const cards = [
       margin-top: 42px;
     }
   }
+
+  /* Phone and any portrait screen: centre the heading block. Body paragraphs and the
+   * four cards keep their left edge — centred prose is harder to read. */
+  @media (max-width: 900px), (orientation: portrait) {
+    .problem__title,
+    .problem__standfirst {
+      text-align: center;
+    }
+
+    .problem__standfirst {
+      max-width: 30ch;
+      margin-inline: auto;
+    }
+  }
 </style>
