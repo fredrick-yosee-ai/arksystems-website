@@ -99,6 +99,47 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url);
 
       Cal("init", { origin: "https://cal.com" });
       Cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-    </script>
+
+      /*
+       * Keep the booker on our own page.
+       *
+       * Cal's embed installs its own delegated click handler that opens the modal, but
+       * it never cancels the default action — `preventDefault` appears zero times in
+       * embed.js. On a plain <a href> that means both things happen at once: the modal
+       * opens and the browser navigates to cal.com. The navigation wins, and the
+       * visitor leaves the site, which is exactly what the embed was meant to avoid.
+       *
+       * So we cancel the default ourselves — but only once the embed has actually
+       * registered <cal-modal-box>. Until then there is no modal to show and the link
+       * must still work, which is the whole point of it being a real <a href>: if the
+       * script is blocked, slow, or fails, the CTA still books the call.
+       *
+       * Capture phase, so this runs before Cal's own document-level handler.
+       * preventDefault does not stop propagation, so Cal still opens the modal.
+       */
+      document.addEventListener(
+        "click",
+        function (event) {
+          var trigger =
+            event.target &&
+            event.target.closest &&
+            event.target.closest("[data-cal-link]");
+          if (!trigger) return;
+
+          // A deliberate "open in a new tab" gesture should do exactly that, and
+          // should not also open a modal on the page being left behind.
+          if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+            event.stopPropagation();
+            return;
+          }
+
+          // Embed not ready yet — let the link navigate rather than doing nothing.
+          if (!window.customElements || !customElements.get("cal-modal-box")) return;
+
+          event.preventDefault();
+        },
+        true,
+      );
+</script>
   </body>
 </html>
