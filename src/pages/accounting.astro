@@ -3,47 +3,80 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { SITE, BOOKING_URL } from "../consts";
 
 import HeroSection from "../components/sections/accounting/HeroSection.astro";
-import ActualProblemSection from "../components/sections/accounting/ActualProblemSection.astro";
-import WhatWeBuildSection from "../components/sections/accounting/WhatWeBuildSection.astro";
+import ProblemSection from "../components/sections/accounting/ProblemSection.astro";
+import WhereAiEarnsSection from "../components/sections/accounting/WhereAiEarnsSection.astro";
 import WhereWeStopSection from "../components/sections/accounting/WhereWeStopSection.astro";
-import InPracticeSection from "../components/sections/accounting/InPracticeSection.astro";
-import FitsWhatYouUseSection from "../components/sections/accounting/FitsWhatYouUseSection.astro";
-import DataGoesSection from "../components/sections/accounting/DataGoesSection.astro";
-import ForYourClientsSection from "../components/sections/accounting/ForYourClientsSection.astro";
-import HowItRunsSection from "../components/sections/accounting/HowItRunsSection.astro";
+import BuildLabSection from "../components/sections/accounting/BuildLabSection.astro";
+import DiscoverySection from "../components/sections/accounting/DiscoverySection.astro";
 import FaqSection from "../components/sections/accounting/FaqSection.astro";
 import CloseSection from "../components/sections/accounting/CloseSection.astro";
 
 /*
- * /accounting — the destination for all cold outbound. Never the homepage.
+ * /accounting — the destination for all cold outbound. Outbound never points at the
+ * homepage.
  *
- * Copy is docs/accounting-page.md, used verbatim. Where the Stitch design and the doc
- * disagreed, the doc won: the design was exported against an older draft and still
- * carries the review-everything model that was superseded on 24 Aug 2026 — "checked by
- * a person" in section 3, "coding them for review" in the subhead, "Human review by
- * design" in the trust line, and a hero card claiming every critical decision routes
- * back to a person. None of those shipped. The design was used for layout only.
+ * REBUILT Aug 25 2026 against the approved copy in docs/accounting-page.md, which was
+ * replaced wholesale on the same day. This is a different page from the one that
+ * shipped before it, not a restyle: eleven sections became eight, and three of the copy
+ * file's rules cut across roughly a third of what was live.
  *
- * Eleven sections, in the doc's order. The Stitch export renders section 7 between 4 and
- * 5; that is not followed. The order here is an argument, and it runs: this is your week
- * (2), here is what we would build (3), here is what we will not touch (4), here is what
- * that looks like day to day (5), it does not displace anything (6), and only then, once
- * a reader has a reason to care, where the client data goes (7). Moving 7 up asks the
- * reader to evaluate a data-handling policy for something they have not yet decided they
- * want.
+ * The three page rules, all of them worth reading before editing anything here:
  *
- * Three CTAs: hero, section 9, close. All point at BOOKING_URL. The workshop is linked
- * from sections 8 and 9 but is not sold here — it becomes a recommendation made on the
- * call.
+ * 1. NO GOVERNANCE, COMPLIANCE OR REGULATORY CONTENT. No professional conduct rules, no
+ *    legislation, no privacy law, no compliance framing. The previous build carried a
+ *    whole section of it — CPABC's Code, Rule 218, PIPEDA, with sourced captions. All
+ *    gone. It made the page read as a compliance vendor rather than a builder, and it
+ *    answered a concern before the reader had it. Data handling is answered once, in
+ *    the FAQ.
  *
- * Schema: Service and FAQPage, as the doc specifies. FAQPage is emitted by the FAQ
+ * 2. DOCUMENT COLLECTION IS ONE EXAMPLE, NOT THE OFFER. Earlier drafts described one
+ *    problem in every section, which made ArkSystems look like a document-collection
+ *    tool. Section 3 carries six areas; section 5 shows one in detail and says plainly
+ *    that it is one of several.
+ *
+ * 3. THE WORD "AGENT" APPEARS NOWHERE. "AI" for the capability, "the system" for the
+ *    built thing. An agent is one delivery format, and naming one makes it the whole
+ *    business.
+ *
+ * Eight sections, in the copy file's order:
+ *
+ *   1  Hero               the promise
+ *   2  The problem        four familiar ones. No CTA — recognition only
+ *   3  Where AI earns     six places. The breadth section; the reader self-identifies
+ *   4  Where it stops     what we don't touch. The reassurance, not the fine print
+ *   5  From our build lab the demonstration
+ *   6  Discovery          one paragraph, one button, one price
+ *   7  Before you book    the objections
+ *   8  Close              the ask
+ *
+ * Order is load-bearing. 3 and 4 carry the argument and get the most space; 5
+ * deliberately does not, because a demonstration given before the argument is a product
+ * demo. The Stitch export renders sections in a different order and that is not
+ * followed.
+ *
+ * EYEBROWS ON SECTIONS 1 AND 5 ONLY. The copy file specifies an eyebrow in exactly
+ * those two places. Stitch added four more, each restating the heading beneath it, and
+ * it also rendered one of the file's build notes as visible page copy. Build notes are
+ * instructions to the builder and never appear on the page.
+ *
+ * FIVE CTAs, all pointing at BOOKING_URL: hero, section 3, section 5, section 6, close.
+ * Labelled acc-hero / acc-where / acc-proof / acc-discovery / acc-closing so this page's
+ * numbers never merge with the homepage's. Section 2 has none, by instruction.
+ *
+ * THREE COMPONENTS WERE DELETED in the rebuild and are recoverable from git history:
+ * FitsWhatYouUseSection, DataGoesSection and ForYourClientsSection. Nothing in the new
+ * copy corresponds to them; what survives of the last two lives in two FAQ answers.
+ * InPracticeSection, ActualProblemSection, WhatWeBuildSection and HowItRunsSection were
+ * replaced by the sections above.
+ *
+ * Schema: Service and FAQPage, as the copy file specifies. FAQPage is emitted by the FAQ
  * component, next to the questions it describes, so the two cannot drift apart.
  *
- * LocalBusiness is NOT emitted. The doc says it is inherited from the shared layout; it
- * is not, and there is no JSON-LD in the layout at all. It is deliberately not invented
- * here — a LocalBusiness node needs a real street address and real hours, and making
- * either up would be a false claim on a page whose entire argument is that we do not
- * make claims we cannot stand behind. It is Fredrick's to supply.
+ * LocalBusiness is NOT emitted. The copy file says it is inherited from the shared
+ * layout; it is not, and there is no JSON-LD in the layout at all. It is deliberately
+ * not invented here — a LocalBusiness node needs a real street address and real hours,
+ * and making either up would be a false claim on a page whose entire argument is that
+ * we do not make claims we cannot stand behind. It is Fredrick's to supply.
  */
 
 const serviceSchema = {
@@ -52,7 +85,7 @@ const serviceSchema = {
   name: "AI for accounting firm operations",
   serviceType: "Business process automation for accounting practices",
   description:
-    "One narrow workflow built for the document and admin work around an accounting practice — collecting client documents, reading them, coding them against rules the firm sets, and chasing what has not arrived. Not accounting, tax, bookkeeping sign-off or assurance work.",
+    "AI built into the administrative work that surrounds professional work in an accounting practice — client onboarding, document collection, routine client questions, file status, deadline exposure and internal reporting. Not accounting, tax positions, assurance work or sign-off.",
   provider: {
     "@type": "Organization",
     name: SITE.name,
@@ -60,11 +93,11 @@ const serviceSchema = {
   },
   areaServed: {
     "@type": "AdministrativeArea",
-    name: "British Columbia",
+    name: "Canada",
   },
   audience: {
     "@type": "BusinessAudience",
-    name: "Accounting firms",
+    name: "Accounting and bookkeeping firms",
   },
   url: `${SITE.url}/accounting`,
   potentialAction: {
@@ -77,15 +110,25 @@ const serviceSchema = {
 
 {/*
   Title and description are the approved strings from docs/accounting-page.md, used
-  character for character. The title uses a pipe and the rest of the site uses an em
-  dash, which is why it goes through titleOverride rather than being rebuilt from the
-  site pattern — the doc counted the characters (51 and 147) and the separator is part
-  of what it counted.
+  character for character — the file counted them (54 and 148) and the pipe separator is
+  part of what it counted, which is why this goes through titleOverride rather than being
+  rebuilt from the site's em-dash pattern.
+
+  Two deviations from the file, both from the Aug 25 instruction that takes the location
+  line off the site:
+
+  - The description drops its closing "Across Canada." (148 chars becomes 133). It is a
+    statement about where we work, which is the thing being removed.
+  - The title KEEPS "Vancouver", and it is now the only place on the site that names the
+    location. Flagged for Fredrick rather than decided here: this is a search-targeting
+    token in a title tag, not a sentence on the page, and it is doing real work for the
+    cold queries the copy file lists. Removing a geographic signal from a title is an SEO
+    decision. Say the word and it goes too.
 */}
 <BaseLayout
-  title="AI for Accounting Firm Operations in BC"
-  titleOverride="AI for Accounting Firm Operations in BC | ArkSystems"
-  description="We build one narrow workflow for the document and admin work around your practice — never the accounting itself. Metro Vancouver. Book 20 minutes."
+  title="AI for Accounting Firms"
+  titleOverride="AI for Accounting Firms | ArkSystems Vancouver"
+  description="We build AI into the administrative work inside your practice, never the accounting itself. Fixed fee, from CAD $4,000."
 >
   <script
     slot="head"
@@ -95,14 +138,11 @@ const serviceSchema = {
   />
 
   <HeroSection />
-  <ActualProblemSection />
-  <WhatWeBuildSection />
+  <ProblemSection />
+  <WhereAiEarnsSection />
   <WhereWeStopSection />
-  <InPracticeSection />
-  <FitsWhatYouUseSection />
-  <DataGoesSection />
-  <ForYourClientsSection />
-  <HowItRunsSection />
+  <BuildLabSection />
+  <DiscoverySection />
   <FaqSection />
   <CloseSection />
 </BaseLayout>

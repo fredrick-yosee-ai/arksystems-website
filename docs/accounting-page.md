@@ -1,46 +1,78 @@
 # /accounting — page copy
 
+**Approved Aug 25 2026. This file REPLACED the previous `/accounting` copy in full.**
+The page it describes is a different page from the one that shipped before it — eight
+sections rather than eleven, a new H1, and three page rules that cut across roughly a
+third of what was live. The old file is in git history if it is ever needed.
+
 **Page:** `/accounting`
-**Audience:** Canadian accounting, bookkeeping and CAS firms. Destination for cold outbound.
+**Audience:** Canadian accounting, bookkeeping and CAS firms. The destination for all cold outbound. Outbound never points at the homepage.
+**Voice:** ArkSystems brand voice — the standing rules live in `CLAUDE.md`.
+**Design:** the Applied Intelligence system, in `src/styles/brand-tokens.css`.
+
+**Where the built page departs from this file, and why.** Four places, all recorded in
+the component that carries them. Nothing else deviates.
+
+1. **Every location line is deleted** — Fredrick's instruction of Aug 25 2026. Section 1's
+   trust line loses "Metro Vancouver", section 8 loses its line under the CTA entirely,
+   and section 7 loses "Do you work outside British Columbia?" *with its answer*, because
+   the answer was the location line and a question with nothing behind it is worse than
+   no question. The meta description below loses its closing "Across Canada." The title
+   tag keeps "Vancouver" and is now the only place on the site naming the location —
+   flagged for Fredrick, kept for now because it is a search-targeting token rather than
+   a sentence on the page.
+2. **Eyebrows appear on sections 1 and 5 only**, which is where this file specifies them.
+3. **Section 5 carries one line not in this file** — "This is one of six areas, not the
+   offer. We built another for expense capture." — which is where the internal link to
+   the homepage demonstration, required by the SEO section below, is attached.
+4. **`LocalBusiness` schema is not emitted.** This file says it comes from the shared
+   layout. It does not; there is no JSON-LD in the layout. It needs a real street address
+   and real hours, and inventing either would be a false claim on this page in particular.
 
 **How to read this file**
 
 - **Blockquoted text is page copy.** Use it verbatim.
-- **Bold labels** name the element, and are not page content.
-- **Caption:** lines must render visibly next to the claim they support, not as a hidden footnote.
-- **Build note:** lines are instructions, and never appear on the page.
+- **Bold labels** name the element and are not page content.
+- **Build note:** lines are instructions and never appear on the page.
+
+---
+
+## Two rules specific to this page
+
+**No governance, compliance or regulatory content.** No professional conduct rules, no legislation, no privacy law, no compliance framing anywhere. That material made the page read as a compliance vendor rather than a builder, and it addressed a concern before the reader had it. Data security is answered once, plainly, in the FAQ.
+
+**Document collection is one example, not the offer.** Earlier versions described a single problem across every section, which made ArkSystems look like a document-collection tool. Section 3 now carries six areas. Section 5 shows one in detail and says plainly that it is one of several.
+
+**Never describe ArkSystems as an agent builder.** An agent is one form of what gets built. Sometimes the answer is a workflow change, or better use of software the firm already licenses, or nothing at all. The page says "AI" for the capability and "the system" for the built thing. The word "agent" appears nowhere, because naming one delivery format makes it the whole business.
 
 ---
 
 ## SEO
 
-**Title tag** (51 chars)
-> AI for Accounting Firm Operations in BC | ArkSystems
+**URL:** `/accounting`, with a 301 from the live `/accounting-firms`. The homepage footer link labelled "For accounting firms" points here.
 
-**Meta description** (147 chars)
-> We build one narrow workflow for the document and admin work around your practice — never the accounting itself. Metro Vancouver. Book 20 minutes.
+**Title tag** (54 chars)
+> AI for Accounting Firms | ArkSystems Vancouver
+
+**Meta description** (133 chars as shipped; 148 as approved)
+> We build AI into the administrative work inside your practice, never the accounting itself. Fixed fee, from CAD $4,000.
+
+The approved string ended "Across Canada." That sentence is removed under the Aug 25
+instruction — see departure 1 at the top of this file.
 
 **Target queries**
 
 - `AI consultant for accounting firms`
-- `AI readiness assessment for accounting firms`
+- `AI for accounting firm operations`
 - `automate client document collection accounting firm`
-- `AI compliance for BC accounting firms`
+- `reduce admin time accounting practice`
 - `build vs buy accounting firm automation`
 
-**Do not target:** `bookkeeping automation`, `accounting workflow software`, `AI bookkeeping tools`, `AI for accountants`. Wrong intent, and that traffic arrives comparing a $4,000 build against a $20-a-month app.
+**Do not target:** `bookkeeping automation`, `accounting workflow software`, `AI bookkeeping tools`. Wrong intent, owned by funded vendors, and that traffic arrives comparing a $4,000 build against a $20-a-month application.
 
-**Schema**
+**Schema:** `Service` (areaServed Canada, audience accounting firms), `FAQPage` on section 7, `LocalBusiness` from the shared layout.
 
-- `Service` — areaServed: British Columbia; audience: accounting firms
-- `FAQPage` — on section 10
-- `LocalBusiness` — inherited from the shared layout
-
-**Internal links**
-
-- `/workshop` from sections 8 and 9
-- The homepage See It Work section from section 3
-- The homepage footer link labelled "For accounting firms" points here
+**Internal links:** the homepage demonstration from section 5.
 
 ---
 
@@ -50,265 +82,210 @@
 > For accounting and bookkeeping practices
 
 **H1**
-> Your people should be doing the accounting. Not chasing the paperwork.
+> AI that works inside the practice you already have.
 
 **Subhead**
-> We build one narrow system for the work that surrounds a practice — collecting client documents, reading them, coding them the way you would, and chasing what has not arrived. Never the accounting itself. That stays with your professionals, where it belongs. Usually running in two or three weeks.
+> ArkSystems builds AI into the administrative work that surrounds professional work — onboarding, document collection, routine client questions, file status, deadline exposure. Your process doesn't change. The steps that never needed a qualified person stop waiting for one.
 
-**Primary CTA**
-> See it working — book 20 minutes
+**CTA**
+> Book 20 minutes — see where AI fits your practice
 
 **Line under CTA**
-> Twenty minutes. Bring the job you'd most like to stop doing by hand.
+> Twenty minutes. Bring the task consuming the most qualified time in your firm.
 
-**Trust line**
-> Metro Vancouver · Built for Canadian practices · Rules you set, recorded as it goes
+**Trust line** — two items as shipped, three as approved
+> Built for Canadian practices · Rules you set, recorded as it goes
 
-**Build note:** the second half of the subhead is the scope promise and the reason a cold visitor keeps reading. Do not truncate or visually demote it.
+Approved: "Metro Vancouver · Built for Canadian practices · Rules you set, recorded as it
+goes". The first item is removed under the Aug 25 instruction.
 
----
-
-## Section 2 — The actual problem
-
-**H2**
-> Most of the week is not accounting.
-
-**Body**
-> It is asking a client for documents. Asking again. Reading whatever finally turns up, in whatever form it turned up in, and putting it somewhere it can be used. Then finding out on the Thursday before a deadline that two things are still missing and one of them is wrong.
-
-**Body, second paragraph**
-> None of that means a practice is badly run. It is what happens when work arrives from a lot of clients at once, each with their own way of doing things, and none of them thinking about your deadline.
-
-**Four recognitions**
-
-> **The same request, three times.** The first ask, the reminder, and the one that finally works. Every client, every period.
-
-> **Nobody can see what is outstanding.** To find out what is still missing you have to ask someone, and they have to go and look.
-
-> **The same figures get handled twice.** Once by whoever received them, again by whoever put them where they belong.
-
-> **It all lands at once.** The month before a filing deadline is when the chasing is worst and when there is least time to do it.
-
-**Build note:** no figures or statistics anywhere in this section.
+**Build note:** the subhead is split into two paragraphs at the sentence boundary before
+"Your process doesn't change" — same words, same order. Unsplit it is nine lines of lede
+at 390px and the CTA falls under the fold, which is the single measurement this hero has
+to hold.
 
 ---
 
-## Section 3 — What we actually build
+## Section 2 — The problem
+
+**No call to action here.**
 
 **H2**
-> The document work. Bounded, logged, and under your rules.
+> The problems are familiar. What's new is that AI can now solve them.
 
 **Body**
-> We do not sell a platform and we do not try to automate a practice. We find the one task costing your team the most hours for the least professional judgment, and we build that single thing properly.
+> These are the four we hear most often from practices.
 
-**Three cards**
+**Four blocks**
 
-**Card 1 — It has a right answer**
-> We only take on work where correct and incorrect can be told apart. A total was read off an invoice correctly, or it was not. That is something a machine can be held to.
+> **Client records arrive late and incomplete.** Work sits blocked until they come in, someone chases repeatedly, and the worst senders are the biggest clients.
 
-**Card 2 — You decide how much it does on its own**
-> Where a rule is clear, it applies it. Where it is not, it stops and asks. Where that line sits is your call and it is a setting, not a rebuild — a firm processing five hundred identical transactions a month should not be clicking five hundred times, and a firm with complicated clients should not be trusting a default.
+> **Qualified staff spend hours on work that needs no qualification.** Sorting, re-keying, renaming, forwarding. Time billable at professional rates goes into tasks any system should be doing.
 
-**Card 3 — It leaves a trail**
-> Every item records what went in, what came out, and which version of which tool handled it — with the source document still attached. That is not decoration. It is what makes the output usable in a file.
+> **The same questions arrive every week.** Deadlines, missing slips, what to send and how. Each one interrupts someone mid-file to answer something answered fifty times before.
+
+> **File status is not visible.** Which files are waiting on the client, which are ready for review, which are at risk of missing a deadline — the information exists, but nowhere it can be seen without asking.
 
 **Closing line**
-> The nearest example is a document-capture system we built and run: a receipt or an invoice arrives the way it already arrives, and a clean, coded line comes out the other end with the original image still attached to it. [Link → homepage, See It Work]
+> Every one of these is now solvable with AI, inside the systems you already run. The question is which one is costing your practice most — and that's what we establish first.
 
 ---
 
-## Section 4 — Where we stop
+## Section 3 — Where AI earns its cost
+
+**This is the breadth section.** Any firm should find themselves in at least two of these.
 
 **H2**
-> We do not do accounting. That is the point.
+> Six places AI earns its cost in a practice.
 
 **Body**
-> ArkSystems does not file anything, does not take tax positions, does not give professional advice, does not perform assurance work, and does not sign anything. Nobody here holds a designation and we do not pretend otherwise.
+> Each of the problems above maps to work AI can run today — and there are more. These are the six places it earns its cost fastest in a practice.
 
-**Column 1 — What we handle**
-> - Collecting documents from clients, in whatever form they send them
-> - Reading what is on them and pulling out the figures
-> - Coding and categorizing against rules you set, and stopping on anything that falls outside them
-> - Routing, filing and naming things consistently
-> - Chasing what has not arrived yet
-> - Getting clean data to the point where your work starts
+**Six blocks**
 
-**Column 2 — What stays with you**
+> **Client onboarding.** AI collects what a new client is required to provide, opens the file, and reports what remains outstanding, so onboarding takes days rather than weeks.
+
+> **Document collection.** AI gathers records as they arrive, extracts the figures, codes them against your rules, and pursues what hasn't come in.
+
+> **Routine client questions.** AI answers the questions your team fields every week, in your firm's own words, and passes anything unusual to a person.
+
+> **File status.** AI reports where every file sits and what's blocking it, so partners stop asking and staff stop interrupting work to answer.
+
+> **Deadline exposure.** AI identifies which files are at risk weeks before the deadline rather than during it, when there's still time to act.
+
+> **Internal reporting.** AI assembles work-in-progress, realization and capacity figures continuously, so the numbers are available rather than requested.
+
+**Closing line**
+> One of these costs your practice more than the rest. It's rarely the one people expect, and it's usually never been measured.
+
+**CTA**
+> Book 20 minutes — find out which one is yours
+
+---
+
+## Section 4 — Where it stops
+
+**H2**
+> We don't do accounting. That's the point.
+
+**Body**
+> ArkSystems doesn't file, take tax positions, provide professional advice, perform assurance work or sign anything. Nobody here holds a designation and we don't imply otherwise. We build the system. Your practice keeps its process, and every judgment inside it.
+
+**Column 1 — What the system performs**
+> - Collects, extracts and routes information
+> - Codes and categorizes against rules you set
+> - Stops on anything outside those rules
+> - Pursues what hasn't arrived
+> - Answers routine questions in your firm's words
+> - Reports status, exposure and capacity
+
+**Column 2 — What remains with the firm**
 > - Every accounting decision
 > - Every tax position
-> - Every judgment call — including where the line sits between what runs on its own and what stops for a person
+> - Every judgment call, including where the line sits between what runs automatically and what stops for a person
 > - What gets filed, and when
 > - Anything a client is advised
 > - Sign-off on all of it
 
 **Closing line**
-> Nothing we build decides anything you have not already decided. It applies the rules you set, records what it did and why, and stops where your rules stop. The paperwork arrives in a state where deciding is quick, and the deciding is still yours.
-
-**Build note:** the two columns sit side by side so the boundary reads at a glance. Same visual weight as section 3 — this is a selling section, not fine print.
+> Nothing we build decides anything you haven't already decided. It applies rules you set, records what it did and why, and stops where your rules stop.
 
 ---
 
-## Section 5 — What it looks like in a practice
+## Section 5 — From our build lab
+
+**Eyebrow**
+> From our build lab
 
 **H2**
-> One client, one period, nobody chasing anything.
+> Tax season, document collection — built and working.
 
 **Body**
-> The clearest way to describe this is to walk through a month of one client's records, from the point they leave that client to the point your work begins.
+> A working system we built for the heaviest document period in the calendar. It manages client records from first contact to a filing-ready folder, and it runs without a person driving it. Shown here with sample data.
 
-**Step 1 — They send it however they already send it**
-> A photo, an email attachment, a forwarded statement. You are not asking them to learn a portal or change a habit, because the ones who send things late are exactly the ones who will not.
+**Persistent label on the demo**
+> Working system · Sample data
 
-**Step 2 — It gets read and coded**
-> The figures come off the document and a category is applied, following whatever rules you have set. The original image stays attached to the entry, so anyone looking at it later can see the source without going to find it.
+**Step 1 — Each client receives a personal upload link**
+> The system opens the season with a greeting to every client and a link of their own. No portal to learn, no account to create.
 
-**Step 3 — Anything outside those rules gets held back**
-> A blurred total, an unfamiliar vendor, an amount that does not sit right. Those stop and wait for a person instead of being pushed through. Your reviewer sees a short list of things needing a decision, not a full ledger to re-check.
+**Step 2 — Every upload is checked on arrival**
+> The system verifies that each document is valid and legible, and identifies what that client is still missing against what their filing requires.
 
-**Step 4 — What has not arrived is visible**
-> Without asking anyone. You can see what is outstanding for that client, and so can whoever is chasing it.
+**Step 3 — It follows up until the file is complete**
+> Wrong document, unreadable scan, missing slip — the system communicates with the client directly, back and forth, until a valid version arrives.
 
-**Step 5 — The chasing happens without someone remembering to do it**
-> A reminder goes out on schedule, in your firm's name, and stops when the document arrives.
+**Step 4 — Complete files move to a workable folder**
+> When everything required is in and verified, the set moves, organized and named, to where your team works from. What reaches your staff is ready.
 
-**Closing line**
-> At the end of it, your person opens a review queue instead of an inbox. What they are doing is accounting. What they were doing before was sorting.
+**Closing line, stronger weight**
+> Your team opens a filing-ready folder instead of an inbox.
 
-**Build note:** this must read as a numbered sequence, not five feature cards.
-
----
-
-## Section 6 — It fits what you already use
-
-**H2**
-> This is not a system you have to move into.
-
-**Body**
-> Most practices already run eight or ten pieces of software, and the last thing any of them needs is an eleventh with its own login. We do not sell a platform. What we build works inside the tools you already have, and writes into the accounts you already keep.
-
-**Sub-body**
-> That includes the good ones. If Dext or Hubdoc already handles a part of this well, we leave it alone and build around it. The work worth doing is almost never inside a tool — it is in the gaps between them. The handoffs, the re-keying, the chasing, and the thing one person does every Friday that has never been written down.
-
-**Closing line**
-> It also means there is nothing to migrate away from if you stop working with us. The records were always yours and they stay where they are.
-
----
-
-## Section 7 — Where your client data goes
-
-**H2**
-> The question you should be asking, before anything else.
-
-**Body**
-> Your client files are not yours to be relaxed about. So here is the straight answer, before you have to ask for it.
-
-**Point 1 — It stays in systems you own**
-> We do not run a platform that holds your records. Data goes into your accounts and your storage, not ours.
-
-**Point 2 — Every provider in the path is named, in writing, first**
-> Including any AI provider that reads a document, and where in the world it processes. You see that list before anything is connected, not after.
-
-**Point 3 — We scope what leaves your systems**
-> Your regulator's guidance on this is blunt: CPABC advises against putting confidential information into AI queries at all, even after checking a provider's terms, because it may be stored and reused in ways you cannot predict. We design around that rather than around a vendor's assurances.
-
-**Point 4 — Everything is recorded as it happens**
-> What went in, what came out, which tool and which version handled it, with the source document attached. CPABC's Rule 218 expects that record to exist for AI-assisted work. It is easier to have it written as you go than to reconstruct it later.
-
-**Caption:** CPABC, "A review of the CPABC Code of Professional Conduct and how it may relate to AI tool employment", 30 June 2025.
-
-**Closing line**
-> There is no Canadian AI legislation to satisfy — Bill C-27 did not pass. What actually binds you is your Code, PIPEDA, and your own quality management obligations, and those are enough to rule out most of what is being sold to you.
-
-**Build note:** keep the four points as distinct blocks. Do not compress into a paragraph.
-
----
-
-## Section 8 — For your clients, not just your practice
-
-**H2**
-> The same system, pointed at the client who keeps sending you a shoebox.
-
-**Body**
-> Most of what slows a practice down does not start inside the practice. It starts with a client who sends receipts in five formats, three weeks late, and always just before a deadline.
-
-**Sub-body**
-> We can build the capture side into that client's own systems rather than yours, so what reaches you is already clean and coded and ready for review. You introduce us, we work with them directly, and you go back to being their accountant.
-
-**Sub-body, second beat**
-> There is no referral fee and no margin, which means there is nothing for you to disclose and nothing that could look like an interest in the recommendation. What you get is a client whose records arrive on time and in one piece. We do not sell them anything else, and we do not go around you.
-
----
-
-## Section 9 — How it runs, and what it costs
-
-**H2**
-> A short paid piece of work, then a decision.
-
-**Step 1 — Twenty minutes, free**
-> You describe the job you would most like to stop doing by hand. We tell you honestly whether it is a good candidate, and whether the thing you are describing is really what is holding up your week.
-
-**Step 2 — The workshop, CAD $1,000**
-> One day. We go through your actual workflows and come back with the one thing worth building first, what it would involve, and what it would not fix. The full fee is credited against implementation if you go ahead. If you do not, you keep the findings and owe nothing further.
-
-**Step 3 — The build, from CAD $4,000**
-> One narrow workflow, running in about two to three weeks. The price is fixed and agreed before anything starts, and it does not move as we go. What it depends on is what the job involves, which is what the workshop is for. Nothing is final until you have used it and told us it works.
+**What this means for a practice**
+> No chasing during the busiest weeks of the year. No qualified time spent sorting and checking uploads. Every client's file either complete or visibly waiting — and the follow-up already happening.
 
 **CTA**
-> See it working — book 20 minutes
+> Book 20 minutes — see it working
 
-**Build note:** the word "from" in step 3 is load-bearing. It sets a floor without promising a ceiling. "CAD $4,000" flat is a different and worse claim — do not edit it out.
+**Build note — the most important instruction in this file.** The "Working system · Sample data" label sits on the demo panel itself at every breakpoint. Sample data is stated visibly; the page never claims or implies this was built for a client.
+
+**Build note:** this section is not the tallest on the page. Sections 3 and 4 carry the argument.
 
 ---
 
-## Section 10 — FAQ
+## Section 6 — How it runs, and what it costs
+
+**H2**
+> We run a discovery. You decide what happens after.
+
+**Body**
+> We start with a discovery: we sit with your team, understand how the work actually moves, and draw up an implementation plan with a fixed price — from CAD $4,000, depending on what your workflow involves. If the plan makes sense to you, we build it. If it doesn't, you keep the plan and owe nothing.
+
+**CTA**
+> Book your free 20-minute call
+
+**Build note:** no numbered steps, no process diagram. One paragraph, one button. The word "from" in the price is load-bearing — it sets a floor without promising a ceiling, which is what allows the page to publish a figure while ArkSystems never publishes a payment schedule.
+
+---
+
+## Section 7 — Before you book
 
 **Build note:** mark up with `FAQPage` schema.
 
-**Do you do any actual accounting work?**
-> No. We do not file anything, take tax positions, give professional advice, perform assurance work or sign anything. We handle the document and admin work that happens before your work starts, and we stop there. Every accounting decision stays with your people.
+**Do you perform any accounting work?**
+> No. We don't file, take tax positions, provide professional advice, perform assurance work or sign anything. We build the system that runs the administrative steps around your work. Your firm performs the accounting, exactly as it does now.
 
-**We tried an AI tool already and it was not impressive.**
-> That is common, and it is not you. In one survey of audit and accounting decision-makers, 63% said the tools they had used were neither comprehensive nor user-friendly and 65% said they lacked depth. The pattern behind it is consistent: these tools do well on work that has a right answer and badly on work that needs judgment. We only build the first kind, and only for work that never needed your judgment in the first place.
+**Where does our client data go?**
+> Into systems you already own. We don't operate a platform that holds your records, so there's nothing to migrate away from if you stop working with us. Every provider in the path is named in writing before anything is connected, and you decide what runs automatically and what stops for a person.
 
-**Caption:** Caseware/IDC study, reported in Accounting Today, February 2026. Vendor-sponsored survey.
+**We tried an AI tool and it wasn't impressive.**
+> Common, and not a reflection on your firm. General tools perform well on work with a determinate answer and poorly on work requiring judgment. We build only the first kind, and only for work that never required your judgment.
 
-**Will this actually free up capacity, or just make tasks faster?**
-> Fair question, and the honest answer is that it depends on where your hold-up is. If a job is waiting on a client or waiting on a review, faster data entry changes very little — the work sits in the same queue, just typed more quickly. One year-long study of accounting professionals found 74% completing tasks faster after adopting AI but only 22% seeing a substantial rise in overall work rate. That is why the first conversation is about which queue is actually holding up your week, and why sometimes we tell people there is nothing worth building.
+**We already use Dext and Karbon. Why would we need this?**
+> Often you wouldn't, and we'll say so. Those products are good at what they do. What's usually worth building is the work between the products — the handoffs, the re-keying, the chasing, and the task one person performs every Friday that has never been written down.
 
-**Caption:** ICAS, with Alliance Manchester Business School and Aston Business School, March 2026.
+**Who owns it when you're finished?**
+> You do. It operates on your accounts and the work remains your property. There's no ArkSystems subscription attached to it.
 
-**Does this make our firm compliant?**
-> No tool can. Compliance is a property of your practice, not of software, and anyone telling you otherwise is selling. What we can do is make sure the tool is not the thing standing in your way — the record Rule 218 expects is written as it goes, the data path is documented, and you will know which providers touch what.
-
-**Our clients will ask whether we are using AI on their files.**
-> Most of them are fine with it. In one 2026 survey of small business owners, only 2% were uncomfortable with AI being involved at all, while 89% wanted to be told where it was used. What they want is disclosure, not abstinence. We give you plain language you can send, describing what the system does, what it never touches, and what a person still checks.
-
-**Caption:** Karbon Client Trust Report 2026, n=350 small business owners. Published by a software vendor.
-
-**If it is faster, our clients will ask why the fee has not changed.**
-> That conversation is already happening in this profession, and Rule 214 means you are expected to have considered it. We are not going to tell you how to price. We will tell you exactly what changed, so that whatever you decide, you can explain it.
-
-**How long before we see anything?**
-> A working version in about two to three weeks from go-ahead, for a single workflow. If a job would take longer than that, you hear it before you commit rather than halfway through.
-
-**What if it does not do what we agreed?**
-> What is being built is written down before anything starts, and you pay in stages against it. Nothing is final until you have used it and confirmed it works.
-
-**Do you work outside British Columbia?**
-> Yes. We are in Metro Vancouver and work remotely across Canada. The Code references on this page are CPABC's, but equivalent obligations exist in every province with local variation, and we will work to yours.
+**~~Do you work outside British Columbia?~~** — REMOVED, question and answer both.
+The answer was the location line, and it goes with it under the Aug 25 instruction. Five
+questions ship, not six.
 
 ---
 
-## Section 11 — Close
+## Section 8 — Close
 
 **H2**
-> Start with the one job you would most like to stop doing.
+> Pick the problem. We'll tell you if AI solves it.
 
 **Body**
-> Twenty minutes. We will tell you whether it is worth building, and if it is not, you will still leave knowing where your week actually goes.
+> Twenty minutes. Bring whichever of these problems costs your practice most. We'll tell you whether AI solves it, what that would be worth, and whether it's worth building at all.
 
 **CTA**
-> See it working — book 20 minutes
+> Book 20 minutes
+
+**~~Line under CTA~~** — REMOVED under the Aug 25 instruction. The CTA is followed
+directly by the tagline.
 
 **Tagline**
 > Think AI, Think Ark.
@@ -317,6 +294,20 @@
 
 ## Claims
 
-Every figure on this page belongs to a third party and must keep its caption visible. Nothing here is an ArkSystems result.
+Nothing on this page describes a result achieved for a client, because there are none yet. Section 5 presents a working system ArkSystems built itself, shown with sample data and never presented as client work. Section 3 describes what AI does in these situations, not what has been delivered for anyone named.
 
-**Never claimed on this page:** any hours-saved figure, any ROI figure, any client outcome, any completed engagement, any compliance guarantee, any partnership with a named software vendor, or any capability to perform accounting, tax, bookkeeping sign-off or assurance work.
+**Never claimed:** hours saved, ROI figures, client outcomes, completed engagements, delivery timelines, guarantees, compliance assurances, or partnership with any named software vendor.
+
+**Three claims in the Stitch design export were NOT built**, and each one breaks a line
+above: "enterprise-grade, SOC2 compliant infrastructure" (a compliance assurance), "built
+and running within 4 to 6 weeks of the discovery session" (a delivery timeline), and a
+"Case Studies" nav item (a permanently banned construction). None appears anywhere in
+this file — the design tool wrote them. The export also rewrote all four blocks in
+section 2 as solutions rather than problems, trimmed the third item in section 4's second
+column, and rendered one of this file's own build notes as visible body copy. The design
+was used for layout only; this file is the copy.
+
+**No figures appear in the hero illustration.** Section 5's demonstration panel carries
+the "Working system · Sample data" badge, and that badge is what licenses the sample
+figures inside it. The hero carries no badge and therefore gets no numbers — a figure in
+an unlabelled graphic is a claim.

@@ -22,9 +22,15 @@ The page has exactly one job: get the visitor onto a 20-minute call.
    consulting firm that assesses where AI produces a return, quantifies it, and builds it
 3. `docs/page-spec.md` — the older page spec, v3.3. Still the record for anything the new
    copy file does not cover, but where the two disagree about the homepage, the copy wins
-4. **The built homepage in `src/`** — for the nine homepage sections this is the record of
-   what was actually shipped, and its component comments carry the reasoning
-5. `src/styles/brand-tokens.css` — every colour and type decision
+4. `docs/accounting-page.md` — the approved `/accounting` copy. **Replaced in full on
+   Aug 25 2026.** The page it describes is a different page from the eleven-section one
+   that shipped before it, and it carries three page rules of its own — no compliance
+   content, document collection as one example rather than the offer, and the word
+   "agent" nowhere. The old file is in git history
+5. **The built pages in `src/`** — for the nine homepage sections and the eight on
+   `/accounting`, this is the record of what was actually shipped, and the component
+   comments carry the reasoning
+6. `src/styles/brand-tokens.css` — every colour and type decision
 
 Two sources that used to be listed here are gone, removed once the homepage was built:
 
@@ -245,8 +251,8 @@ pinned in `.nvmrc`.
   turned into routes until Fredrick has done a factual review and a Canadian privacy
   practitioner has seen them.
 
-`/accounting` follows immediately after release one. All cold outbound points there,
-never at the homepage.
+`/accounting` is built and rebuilt — see below. All cold outbound points there, never at
+the homepage.
 
 ## Decided Aug 24 2026 — these were open, they are not any more
 
@@ -341,6 +347,110 @@ or in `docs/page-spec.md`, these win.
   model and was an open launch blocker. The approved replacement is accurate: *"You
   determine what runs automatically and what stops for review, and every step is recorded
   either way."* **This item is closed.**
+
+## Decided Aug 25 2026 — the /accounting rebuild
+
+`docs/accounting-page.md` was replaced in full on the same day the homepage was rebuilt,
+and `/accounting` was rebuilt against it. Eleven sections became eight. Where anything
+here contradicts an older line in this file, this wins.
+
+**Three page rules, and they are not style preferences:**
+
+- **No governance, compliance or regulatory content anywhere.** No professional conduct
+  rules, no legislation, no privacy law, no compliance framing. The previous build cited
+  CPABC's Code, Rule 218 and PIPEDA across a whole section with sourced captions. All of
+  it is gone. It made the page read as a compliance vendor rather than a builder, and it
+  answered a concern before the reader had it. Data handling is answered once, plainly,
+  in the FAQ.
+- **Document collection is one example, not the offer.** Earlier drafts described one
+  problem in every section, which made ArkSystems look like a document-collection tool.
+  Section 3 carries six areas; section 5 shows one and says plainly it is one of several.
+- **The word "agent" appears nowhere.** "AI" for the capability, "the system" for the
+  built thing. An agent is one delivery format, and naming one makes it the whole
+  business.
+
+**Eight sections, in `src/pages/accounting.astro`:**
+
+| # | Section | Component |
+|---|---------|-----------|
+| 1 | Hero | `sections/accounting/HeroSection.astro` + `hero/PracticeBoardPanel.astro` |
+| 2 | The problem | `sections/accounting/ProblemSection.astro` |
+| 3 | Where AI earns its cost | `sections/accounting/WhereAiEarnsSection.astro` |
+| 4 | Where it stops | `sections/accounting/WhereWeStopSection.astro` |
+| 5 | From our build lab | `sections/accounting/BuildLabSection.astro` + `build-lab/DocumentIntakePanel.astro` |
+| 6 | Discovery, and what it costs | `sections/accounting/DiscoverySection.astro` |
+| 7 | Before you book | `sections/accounting/FaqSection.astro` |
+| 8 | Close | `sections/accounting/CloseSection.astro` |
+
+**Seven components were deleted** and are recoverable from git history:
+`ActualProblemSection`, `WhatWeBuildSection`, `InPracticeSection`, `HowItRunsSection`,
+`FitsWhatYouUseSection`, `DataGoesSection` and `ForYourClientsSection`. The last three
+had no equivalent in the new copy; what survives of two of them lives in FAQ answers.
+`common/Caption.astro` still exists but is now referenced by nothing — it was built for
+the sourced figures the compliance rule removed.
+
+**Section 5 must not be the tallest section on the page.** The copy file says so, and it
+is a real measurement, not a feeling: 3 and 4 carry the argument, and a demonstration
+given before the argument is a product demo. The first build of it came out at 1444px
+against section 3's 1240. It ships at 1219px, held there by a two-column foot and a 96px
+band rather than 112. **Check the number again if a block is ever added to it.**
+
+**The demonstration panel's badge is the most load-bearing element on the page.** The
+copy file calls its build note "the most important instruction in this file": "Working
+system · Sample data" sits on the panel itself at every breakpoint, never as a caption
+underneath. It is what licenses the sample figures inside the panel. The hero
+illustration carries no badge and therefore carries **no figures at all** — a number in
+an unlabelled graphic is a claim, and there are no results to claim yet.
+
+**`/accounting` publishes a price and the homepage still does not.** "From CAD $4,000"
+sits in section 6 and in the meta description. The value-before-cost rule is scoped to
+the homepage; the copy file argues the case for this page and the word "from" is
+load-bearing — it sets a floor without promising a ceiling, which is what allows a figure
+to be published while the payment schedule never is. Do not tidy "from" out of it, and do
+not move the price up the page.
+
+**The workshop is no longer sold or linked from `/accounting`.** The old build ran a
+three-step priced ladder there including the workshop at CAD $1,000. Section 6 is now one
+paragraph and one button, by instruction. What gets recommended after the call is a
+decision made on the call.
+
+**Three claims in the Stitch design export were not built**, and each breaks a standing
+rule: "SOC2 compliant infrastructure" (a compliance assurance), "built and running within
+4 to 6 weeks" (a delivery timeline), and a "Case Studies" nav item (permanently banned).
+None appears in the approved copy — the design tool wrote them. It also rewrote all four
+problem blocks as solutions, trimmed section 4's most important line, and rendered one of
+the copy file's own build notes as visible body copy. **The design was used for layout
+only. The copy file is the copy.**
+
+**Eyebrows appear on sections 1 and 5 only**, which is where the copy file specifies
+them. Stitch added four more, each restating the heading beneath it.
+
+**`.section--warm` was added to `base.css`.** An eight-section page runs out of landmarks
+across four bands and ends up with two adjacent sections sharing a colour. The value was
+already in `brand-tokens.css`.
+
+**`CtaLocation` gained `acc-where`, `acc-proof` and `acc-discovery` and lost
+`acc-how-it-runs`**, which named a section that no longer exists.
+
+## Standing instruction, Aug 25 2026 — no location lines
+
+Fredrick's instruction: the line "Based in Metro Vancouver, working remotely across
+Canada." and everything like it comes off the site. Removed from five places, and they
+travel together — do not restore one alone:
+
+- the homepage close, under the CTA
+- the homepage founder strip, where it was one of four chips (three now)
+- `/accounting`'s hero trust line, where it was the first of three items (two now)
+- `/accounting`'s close, under the CTA
+- `/accounting`'s FAQ question "Do you work outside British Columbia?", **removed with its
+  answer** — the answer *was* the line, and a question with nothing behind it is worse
+  than no question. Five questions ship, not six
+
+The homepage meta description lost the same sentence. **Two survivors, both flagged for
+Fredrick and both deliberate:** the title tags still read "…| Vancouver BC" and "…|
+ArkSystems Vancouver". They are search-targeting tokens rather than sentences on the
+page, and dropping a geographic signal from a title is an SEO decision, not a layout one.
+Say the word and they go too.
 
 ## Still open — do not guess these
 

@@ -49,6 +49,30 @@ const ICONS = {
 
   /* A person, and beside them the written-down version of what they know. */
   keyPerson: `<circle cx="8.4" cy="7.4" r="3.1"/><path d="M3.2 19.6a5.2 5.2 0 0 1 10.4 0"/><rect x="15.4" y="8.2" width="6.2" height="9.2" rx="1.4"/><path d="M17.2 11.2h2.6M17.2 14.2h2.6"/>`,
+
+  /* ---- /accounting ----
+   *
+   * Four icons shared between that page's sections 2 and 3, which is deliberate. The
+   * copy says each problem "maps to work AI can run today", and an item that repeats
+   * its icon two sections later is the cheapest way to make that mapping visible —
+   * `documents`, `recurring` and `fileStatus` each appear once as a problem and once as
+   * a place AI earns its cost. `sorting` and `onboarding` have no partner, which is
+   * also honest: the sets are not the same length and the copy never says they are. */
+
+  /* A document with a clock over it. Records that arrive, but late. */
+  lateRecords: `<path d="M6.2 2.9h6.4l4 4v6.1"/><path d="M12.6 2.9v4.1h4"/><path d="M16.6 13v8.1H6.2V2.9"/><circle cx="17.4" cy="16.6" r="4.4"/><path d="M17.4 14.4v2.4l1.6 1"/>`,
+
+  /* Paper being pushed sideways into place. Qualified time spent sorting. */
+  sorting: `<rect x="2.6" y="4.4" width="9.4" height="7" rx="1.8"/><rect x="2.6" y="14" width="9.4" height="5.6" rx="1.8"/><path d="M15.4 7.9h5.9M15.4 16.8h5.9"/><path d="m18.9 5.5 2.4 2.4-2.4 2.4M17.8 14.4l-2.4 2.4 2.4 2.4"/>`,
+
+  /* A list behind an eye. Where every file stands — visible, or not. */
+  fileStatus: `<path d="M4.4 8.2V4.3a1.6 1.6 0 0 1 1.6-1.6h9.2l4 4v3.6"/><path d="M15.2 2.7v4.2h4"/><path d="M4.4 12.6v7a1.6 1.6 0 0 0 1.6 1.6h4.2"/><path d="M21.4 16.6s-1.9 3.4-4.8 3.4-4.8-3.4-4.8-3.4 1.9-3.4 4.8-3.4 4.8 3.4 4.8 3.4z"/><circle cx="16.6" cy="16.6" r="1.4"/>`,
+
+  /* A person with a plus. A new client being opened. */
+  onboarding: `<circle cx="9.4" cy="7.2" r="3.4"/><path d="M3.2 19.8a6.2 6.2 0 0 1 12.4 0"/><path d="M18.4 11.4v5.8M15.5 14.3h5.8"/>`,
+
+  /* A calendar with a warning inside it. Deadline exposure, seen early. */
+  deadline: `<rect x="3" y="4.8" width="18" height="16.2" rx="2.2"/><path d="M3 9.8h18"/><path d="M7.8 2.9v3.8M16.2 2.9v3.8"/><path d="M12 12.9v3.2M12 18.4h.01"/>`,
 } as const;
 
 const { name, size = 22, class: className } = Astro.props;

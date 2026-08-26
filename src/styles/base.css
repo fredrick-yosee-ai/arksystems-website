@@ -135,6 +135,10 @@ a {
 .section--white   { background: var(--ark-white); }
 .section--cream   { background: var(--ark-cream); }
 .section--stage   { background: var(--ark-stage-green); }
+/* The warm stage. Added for /accounting, which alternates across five bands rather than
+ * the homepage's four — an eight-section page runs out of landmarks otherwise and two
+ * adjacent sections end up sharing a colour. The value was already in brand-tokens. */
+.section--warm    { background: var(--ark-stage-warm); }
 
 .section__head {
   max-width: 60rem;

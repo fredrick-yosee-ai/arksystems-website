@@ -1,0 +1,227 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+import Icon from "../../common/Icon.astro";
+
+/*
+ * Section 3 — where AI earns its cost. The breadth section, and with section 4 it
+ * carries the argument, so it gets the most vertical space on the page.
+ *
+ * The copy file's brief for it is one line: any firm should find themselves in at least
+ * two of these. That is a layout instruction as much as a copy one. The six exist to be
+ * SCANNED and compared, which is why they are a 3x2 grid on desktop and six compact
+ * rows on a phone rather than six stacked cards — six full cards at 390px is roughly
+ * 1,400px of scroll, and by the fourth the reader has stopped comparing and started
+ * skipping, so the CTA underneath never gets reached. Nothing is hidden behind a tap;
+ * the phone version simply stops giving each item a card's worth of padding, and the
+ * terracotta rule moves from the top edge to the left edge so six stacked items still
+ * read as one set.
+ *
+ * NO EYEBROW. The copy file specifies eyebrows in exactly two places, section 1 and
+ * section 5, and this is not one of them. The Stitch design added "WHERE AI EARNS ITS
+ * COST" above a heading that already reads "Six places AI earns its cost in a practice",
+ * which sets the same phrase twice and has a screen reader announce it twice.
+ *
+ * The design also rendered the file's build note — "This is the breadth section. Any
+ * firm should find themselves in at least two of these." — as visible terracotta body
+ * copy under that eyebrow. Build notes are instructions to the builder and never appear
+ * on the page. It is not here.
+ *
+ * Three of the six icons repeat from section 2, against the same work seen as a problem.
+ * See the note in Icon.astro.
+ */
+
+const places = [
+  {
+    icon: "onboarding",
+    title: "Client onboarding",
+    body: "AI collects what a new client is required to provide, opens the file, and reports what remains outstanding, so onboarding takes days rather than weeks.",
+  },
+  {
+    icon: "documents",
+    title: "Document collection",
+    body: "AI gathers records as they arrive, extracts the figures, codes them against your rules, and pursues what hasn't come in.",
+  },
+  {
+    icon: "recurring",
+    title: "Routine client questions",
+    body: "AI answers the questions your team fields every week, in your firm's own words, and passes anything unusual to a person.",
+  },
+  {
+    icon: "fileStatus",
+    title: "File status",
+    body: "AI reports where every file sits and what's blocking it, so partners stop asking and staff stop interrupting work to answer.",
+  },
+  {
+    icon: "deadline",
+    title: "Deadline exposure",
+    body: "AI identifies which files are at risk weeks before the deadline rather than during it, when there's still time to act.",
+  },
+  {
+    icon: "reporting",
+    title: "Internal reporting",
+    body: "AI assembles work-in-progress, realization and capacity figures continuously, so the numbers are available rather than requested.",
+  },
+] as const;
+---
+
+<section class="section section--surface earns" id="where-ai-earns">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title earns__title">
+        Six places AI earns its cost in a practice.
+      </h2>
+      <p class="section__lede">
+        Each of the problems above maps to work AI can run today &mdash; and there are
+        more. These are the six places it earns its cost fastest in a practice.
+      </p>
+    </div>
+
+    <ul class="earns__grid">
+      {
+        places.map((place) => (
+          <li class="earns__item">
+            <span class="earns__icon" aria-hidden="true">
+              <Icon name={place.icon} />
+            </span>
+            <h3 class="earns__item-title">{place.title}</h3>
+            <p class="earns__item-body">{place.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="earns__foot">
+      <p class="earns__close">
+        One of these costs your practice more than the rest. It&rsquo;s rarely the one
+        people expect, and it&rsquo;s usually never been measured.
+      </p>
+      <BookingButton location="acc-where" block>
+        Book 20 minutes &mdash; find out which one is yours
+      </BookingButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  .earns__title {
+    max-width: 22ch;
+  }
+
+  .earns__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ark-grid-gutter);
+    margin-top: 64px;
+  }
+
+  .earns__item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--ark-white);
+    border: 1px solid var(--ark-hairline);
+    border-top: 3px solid var(--ark-terracotta);
+    border-radius: var(--ark-radius);
+    box-shadow: var(--ark-raised);
+    padding: 30px;
+  }
+
+  .earns__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--ark-radius-pill);
+    /* The accent at low opacity, so the well reads as terracotta's quiet register
+     * rather than as a second saturated mark competing with the rule above it. */
+    background: rgba(168, 98, 62, 0.12);
+    color: var(--ark-terracotta-ink);
+    margin-bottom: 2px;
+  }
+
+  .earns__item-title {
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+  }
+
+  .earns__item-body {
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .earns__foot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    margin-top: 72px;
+    text-align: center;
+  }
+
+  .earns__close {
+    max-width: 46ch;
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    color: var(--ark-ink);
+  }
+
+  @media (max-width: 1100px) {
+    .earns__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Phone: rows, not cards. The terracotta rule moves from the top edge to the left
+   * edge, which is what keeps six stacked items reading as one set — the eye follows a
+   * single vertical line down the column instead of six separate announcements. */
+  @media (max-width: 900px) {
+    .earns__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      margin-top: 36px;
+    }
+
+    .earns__item {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      column-gap: 14px;
+      row-gap: 6px;
+      align-items: center;
+      padding: 18px 18px 18px 16px;
+      border-top: 1px solid var(--ark-hairline);
+      border-left: 3px solid var(--ark-terracotta);
+      border-radius: 0 var(--ark-radius) var(--ark-radius) 0;
+    }
+
+    .earns__icon {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 0;
+    }
+
+    .earns__item-title {
+      font-size: 1.0625rem;
+    }
+
+    .earns__item-body {
+      grid-column: 1 / -1;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+
+    .earns__foot {
+      margin-top: 44px;
+      gap: 24px;
+    }
+
+    .earns__close {
+      max-width: 32ch;
+    }
+  }
+</style>

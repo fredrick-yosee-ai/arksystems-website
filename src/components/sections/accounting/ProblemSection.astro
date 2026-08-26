@@ -1,0 +1,211 @@
+---
+import Icon from "../../common/Icon.astro";
+
+/*
+ * Section 2 — the problem. No call to action, by instruction in the copy file.
+ *
+ * The heading does the work that keeps this section off the defensive: "The problems
+ * are familiar. What's new is that AI can now solve them." Nothing here is presented as
+ * something the reader should have fixed already. The four blocks describe the shape of
+ * practice work, and the standing rule applies with full force — blame the work, never
+ * the owner. A firm whose biggest clients send records late is not a badly run firm.
+ *
+ * THE STITCH DESIGN REWROTE ALL FOUR BLOCKS AND IS NOT FOLLOWED. Its cards describe
+ * solutions ("Automated, polite follow-ups handle the nagging", "AI structures the raw
+ * data"), which turns the problem section into a second feature list and leaves the
+ * reader nothing to agree with before section 3 starts selling. The copy file's four
+ * blocks are used verbatim: each names a problem and stops. Solutions arrive one
+ * section later, which is the order the page is built on.
+ *
+ * Icons repeat in section 3 on purpose — see the note in Icon.astro. Three of these
+ * four appear again beside the place AI earns its cost on the same work, which is the
+ * cheapest way to make the copy's "each of the problems above maps to" visible.
+ *
+ * The icon wells are stage-green with an olive glyph, the same as the homepage's
+ * problem cards. Section 3's are terracotta. Two pages, one grammar: what is wrong is
+ * green and quiet, where the return is is the saturated accent.
+ */
+
+const blocks = [
+  {
+    icon: "lateRecords",
+    title: "Client records arrive late and incomplete.",
+    body: "Work sits blocked until they come in, someone chases repeatedly, and the worst senders are the biggest clients.",
+  },
+  {
+    icon: "sorting",
+    title: "Qualified staff spend hours on work that needs no qualification.",
+    body: "Sorting, re-keying, renaming, forwarding. Time billable at professional rates goes into tasks any system should be doing.",
+  },
+  {
+    icon: "recurring",
+    title: "The same questions arrive every week.",
+    body: "Deadlines, missing slips, what to send and how. Each one interrupts someone mid-file to answer something answered fifty times before.",
+  },
+  {
+    icon: "fileStatus",
+    title: "File status is not visible.",
+    body: "Which files are waiting on the client, which are ready for review, which are at risk of missing a deadline — the information exists, but nowhere it can be seen without asking.",
+  },
+] as const;
+---
+
+<section class="section section--warm problem" id="the-problem">
+  <div class="container">
+    <div class="section__head problem__head">
+      <h2 class="section__title problem__title">
+        The problems are familiar. What&rsquo;s new is that AI can now solve them.
+      </h2>
+      {/*
+        The lede is one short sentence and the heading is two, so a stacked head leaves
+        most of a full-width band empty — which reads as something failing to load
+        rather than as space, the lesson from the homepage's section 2. Setting the
+        lede in the second column, bottom-aligned against the heading, turns that
+        emptiness into a deliberate caption. The media query below is the exact
+        complement of the centring rule in base.css, so a portrait tablet centres its
+        heading and is never also holding two columns.
+      */}
+      <p class="section__lede problem__lede">
+        These are the four we hear most often from practices.
+      </p>
+    </div>
+
+    <ul class="problem__cards">
+      {
+        blocks.map((block) => (
+          <li class="card problem__card">
+            <span class="problem__icon" aria-hidden="true">
+              <Icon name={block.icon} />
+            </span>
+            <h3 class="problem__card-title">{block.title}</h3>
+            <p class="problem__card-body">{block.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    {/*
+      The closing line is the hinge into section 3, and its second half is the promise
+      the whole page rests on — that we establish which one costs most rather than
+      assuming. It is set apart on a terracotta rule so it is not read as a fifth card.
+    */}
+    <p class="problem__close">
+      Every one of these is now solvable with AI, inside the systems you already run.
+      <strong>
+        The question is which one is costing your practice most &mdash; and that&rsquo;s
+        what we establish first.
+      </strong>
+    </p>
+  </div>
+</section>
+
+<style>
+  .problem__head {
+    max-width: none;
+  }
+
+  .problem__title {
+    max-width: 22ch;
+  }
+
+  .problem__cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ark-grid-gutter);
+    margin-top: 56px;
+  }
+
+  .problem__card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .problem__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--ark-radius-pill);
+    background: var(--ark-stage-green);
+    color: var(--ark-olive);
+    margin-bottom: 4px;
+  }
+
+  .problem__card-title {
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+  }
+
+  .problem__card-body {
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .problem__close {
+    margin-top: 44px;
+    max-width: 72ch;
+    background: var(--ark-white);
+    border: 1px solid var(--ark-hairline);
+    border-left: 4px solid var(--ark-terracotta);
+    border-radius: 0 var(--ark-radius) var(--ark-radius) 0;
+    box-shadow: var(--ark-raised);
+    padding: 26px 30px;
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  /* The bold run takes the display ink as well as the weight. At 20px, weight alone
+   * does not separate far enough from body ink to be worth doing. */
+  .problem__close strong {
+    font-weight: 600;
+    color: var(--ark-ink);
+  }
+
+  @media (min-width: 901px) and (orientation: landscape) {
+    .problem__head {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      column-gap: 56px;
+      align-items: end;
+    }
+
+    .problem__lede {
+      margin-top: 0;
+      padding-bottom: 6px;
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .problem__cards {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .problem__card {
+      gap: 9px;
+    }
+
+    .problem__icon {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 0;
+    }
+
+    .problem__card-body {
+      font-size: 1rem;
+    }
+
+    .problem__close {
+      margin-top: 24px;
+      padding: 20px 20px 20px 18px;
+      font-size: 1.0625rem;
+    }
+  }
+</style>

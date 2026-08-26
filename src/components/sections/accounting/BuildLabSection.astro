@@ -1,0 +1,375 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+import DocumentIntakePanel from "./build-lab/DocumentIntakePanel.astro";
+
+/*
+ * Section 5 — from our build lab.
+ *
+ * DELIBERATELY NOT THE TALLEST SECTION ON THE PAGE. The copy file says so and the
+ * reasoning is the same as the homepage's: 3 and 4 carry the argument, and a
+ * demonstration given before the argument is a product demo. This is evidence for a
+ * case that has already been made, so it shows the standard of the work and gets out of
+ * the way.
+ *
+ * WHAT IS AND IS NOT CLAIMED HERE. This is a system ArkSystems built for itself, shown
+ * with sample data. It is never presented as client work, there is no firm named, no
+ * hours saved, no result. The badge on the panel says "Working system · Sample data" at
+ * every breakpoint — see the note in build-lab/DocumentIntakePanel.astro, which is the
+ * single most load-bearing instruction in the copy file.
+ *
+ * "Document collection is one example, not the offer" is the copy file's second page
+ * rule. Earlier drafts of this page described one workflow in every section, which made
+ * ArkSystems look like a document-collection tool. Section 3 carries six areas; this
+ * one shows a single area in detail and the sentence under the closing line says
+ * plainly that it is one of several. Do not let a future edit turn this back into the
+ * page's subject.
+ *
+ * THE INTERNAL LINK the copy file's SEO section asks for — "the homepage demonstration
+ * from section 5" — is carried on the words "expense capture" in that sentence. It is
+ * the only line here not lifted from the file, and it exists to satisfy that
+ * requirement while doing the repositioning work at the same time.
+ *
+ * DOM ORDER IS head, panel, steps, foot. On desktop the panel is grid-placed into the
+ * second column beside all three; on a phone that order puts the demonstration directly
+ * under the paragraph introducing it, before the four steps that explain it. The panel
+ * is the most persuasive thing in the section and should not sit behind four steps of
+ * text on the screen where scrolling costs the most.
+ */
+
+const steps = [
+  {
+    title: "Each client receives a personal upload link",
+    body: "The system opens the season with a greeting to every client and a link of their own. No portal to learn, no account to create.",
+  },
+  {
+    title: "Every upload is checked on arrival",
+    body: "The system verifies that each document is valid and legible, and identifies what that client is still missing against what their filing requires.",
+  },
+  {
+    title: "It follows up until the file is complete",
+    body: "Wrong document, unreadable scan, missing slip — the system communicates with the client directly, back and forth, until a valid version arrives.",
+  },
+  {
+    title: "Complete files move to a workable folder",
+    body: "When everything required is in and verified, the set moves, organized and named, to where your team works from. What reaches your staff is ready.",
+  },
+];
+---
+
+<section class="section section--white lab" id="from-our-build-lab">
+  <div class="container lab__grid">
+    <div class="lab__head">
+      <span class="eyebrow">From our build lab</span>
+      <h2 class="section__title lab__title">
+        Tax season, document collection &mdash; built and working.
+      </h2>
+      <p class="section__lede">
+        A working system we built for the heaviest document period in the calendar. It
+        manages client records from first contact to a filing-ready folder, and it runs
+        without a person driving it. Shown here with sample data.
+      </p>
+    </div>
+
+    <div class="lab__panel">
+      <DocumentIntakePanel />
+      {/*
+        This line sits under the panel rather than in the foot for two reasons. It is
+        the caveat on the demonstration, so it belongs against the demonstration — and
+        in DOM order that puts it directly after the panel on a phone, where the reader
+        has just looked at one workflow in detail and is most likely to mistake it for
+        the offer. It also keeps the foot to two rows, which is what holds this section
+        under the height of sections 3 and 4.
+      */}
+      <p class="lab__one-of">
+        This is one of six areas, not the offer. We built another for
+        <a href="/#one-we-built">expense capture</a>.
+      </p>
+    </div>
+
+    <ol class="lab__steps">
+      {
+        steps.map((step, index) => (
+          <li class="lab__step">
+            <span class="lab__node" aria-hidden="true">{index + 1}</span>
+            <div>
+              <h3 class="lab__step-title">
+                <span class="lab__step-n">Step {index + 1}</span>
+                {step.title}
+              </h3>
+              <p class="lab__step-body">{step.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="lab__foot">
+      <p class="lab__close">
+        Your team opens a filing-ready folder instead of an inbox.
+      </p>
+      <p class="lab__means">
+        No chasing during the busiest weeks of the year. No qualified time spent sorting
+        and checking uploads. Every client&rsquo;s file either complete or visibly
+        waiting &mdash; and the follow-up already happening.
+      </p>
+      <BookingButton location="acc-proof" block>
+        Book 20 minutes &mdash; see it working
+      </BookingButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Less vertical space than sections 3 and 4, deliberately and by instruction: this is
+   * evidence for a case already made, not the case itself. Measured after the change —
+   * 1219px against section 3's 1240 and section 2's 1155. If a future edit adds a block
+   * here, check that number again rather than assuming it still holds. */
+  .lab {
+    padding-block: 96px;
+  }
+
+  .lab__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 56px;
+    align-items: start;
+  }
+
+  .lab__head {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* The panel spans all three rows of the copy column and centres against them. */
+  .lab__panel {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+    position: sticky;
+    top: 104px;
+  }
+
+  .lab__steps {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 32px;
+  }
+
+  /* The foot runs as two columns of its own, which is the load-bearing part of keeping
+   * this section shorter than 3 and 4 — see the note above the section rule. Stacked, it
+   * is four blocks and 322px; paired, it is 145px and reads better, because the closing
+   * line and the button belong together and the two supporting paragraphs belong
+   * together. */
+  .lab__foot {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 32px;
+    align-items: start;
+  }
+
+  .lab__close {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .lab__foot :global(.booking-button) {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+    justify-self: start;
+    margin-top: 22px;
+  }
+
+  /* Spans both foot rows so the tall paragraph sits beside the closing line AND the
+   * button rather than forcing a third row underneath them. */
+  .lab__means {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .lab__title {
+    max-width: 20ch;
+  }
+
+  .lab__step {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    column-gap: 16px;
+    padding-bottom: 18px;
+    position: relative;
+  }
+
+  .lab__step:last-child {
+    padding-bottom: 0;
+  }
+
+  .lab__step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 14px;
+    top: 34px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--ark-hairline);
+  }
+
+  .lab__node {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .lab__step-title {
+    font-size: var(--ark-label);
+    font-family: var(--ark-font-body);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--ark-ink);
+    padding-top: 4px;
+  }
+
+  /* "Step 1" is a separate quiet label rather than run into the heading. The headings
+   * are the sentence a skimmer reads; the numbering is orientation, and it is already
+   * carried by the node and by the list being an <ol>. */
+  .lab__step-n {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ark-terracotta-ink);
+    margin-bottom: 3px;
+  }
+
+  .lab__step-body {
+    margin-top: 5px;
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .lab__close {
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    color: var(--ark-ink);
+    max-width: 32ch;
+  }
+
+  .lab__means {
+    margin-top: 0;
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+    max-width: 54ch;
+  }
+
+  .lab__one-of {
+    margin-top: 16px;
+    font-size: var(--ark-small);
+    line-height: 1.6;
+    color: var(--ark-muted);
+  }
+
+  .lab__one-of a {
+    color: var(--ark-terracotta-ink);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  @media (max-width: 1100px) {
+    .lab__grid {
+      column-gap: 36px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .lab {
+      padding-block: var(--ark-section-phone);
+    }
+
+    .lab__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* One column, in DOM order. Every explicit placement above has to be undone here or
+     * the items stack into the rows they were pinned to and leave gaps behind them. */
+    .lab__head,
+    .lab__panel,
+    .lab__steps,
+    .lab__foot {
+      grid-column: 1;
+      grid-row: auto;
+    }
+
+    .lab__panel {
+      position: static;
+      margin-top: 28px;
+    }
+
+    .lab__steps {
+      margin-top: 32px;
+    }
+
+    .lab__step {
+      grid-template-columns: 28px minmax(0, 1fr);
+      column-gap: 13px;
+      padding-bottom: 18px;
+    }
+
+    .lab__step:not(:last-child)::before {
+      left: 13px;
+      top: 32px;
+    }
+
+    .lab__node {
+      width: 28px;
+      height: 28px;
+      font-size: 0.8125rem;
+    }
+
+    .lab__step-body {
+      font-size: 1rem;
+    }
+
+    /* One column again. Every explicit placement in the foot has to be undone here too,
+     * or the four blocks stack into the rows they were pinned to and leave gaps. */
+    .lab__foot {
+      margin-top: 32px;
+      grid-template-columns: minmax(0, 1fr);
+      column-gap: 0;
+    }
+
+    .lab__close,
+    .lab__means,
+    .lab__foot :global(.booking-button) {
+      grid-column: 1;
+      grid-row: auto;
+    }
+
+    .lab__means {
+      margin-top: 14px;
+    }
+
+    .lab__close {
+      max-width: 28ch;
+    }
+
+    .lab__means {
+      font-size: 1rem;
+    }
+  }
+</style>

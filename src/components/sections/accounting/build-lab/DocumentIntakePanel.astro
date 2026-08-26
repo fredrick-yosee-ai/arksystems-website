@@ -1,0 +1,299 @@
+---
+/*
+ * The demonstration panel for section 5.
+ *
+ * THE BADGE IS THE MOST IMPORTANT ELEMENT ON THIS PAGE. The copy file calls its build
+ * note "the most important instruction in this file": "Working system · Sample data"
+ * sits on the demo panel itself at every breakpoint. A visitor scrolling past has to
+ * understand, without reading a caption, that the figures below are sample data and
+ * that the page is not claiming a client engagement. So it is pinned inside the panel,
+ * never demoted to a line underneath, never shrunk out of legibility, and it is gold
+ * because gold is the site's reserved attention colour. Before moving it, read the
+ * claims rule in CLAUDE.md.
+ *
+ * WHY IT IS NOT THE STITCH IMAGE. The design export puts a raster screenshot here,
+ * loaded from a googleusercontent URL. That fails three ways: it is a third-party
+ * request the self-hosting rule forbids, the URL is temporary and will eventually
+ * return nothing, and text baked into a bitmap cannot be zoomed, selected, translated
+ * or read out. This is HTML and CSS, so every label is real text.
+ *
+ * WHAT IT SHOWS is the four steps beside it, in one picture: four client files at
+ * different points, the follow-up the system sent on its own, and the folder complete
+ * files move to. Three states, three colours, each meaning one thing —
+ *
+ *   green      complete, nothing left to do
+ *   gold       waiting on a person, per brand-tokens.css
+ *   terracotta the system is acting, unprompted
+ *
+ * The names are invented and the panel says so. Everything inside it stays large enough
+ * to actually read: the standing rule from CLAUDE.md is that a demonstration panel too
+ * small to read is not illustrating anything.
+ */
+
+const files = [
+  { name: "A. Mercer", detail: "12 of 12 received", state: "complete", label: "Complete" },
+  { name: "D. Okonjo", detail: "Waiting on T4A", state: "waiting", label: "With client" },
+  { name: "S. Lavoie", detail: "Scan unreadable — re-requested", state: "acting", label: "Following up" },
+  { name: "T. Byrne", detail: "9 of 12 received", state: "waiting", label: "With client" },
+];
+---
+
+<figure class="intake">
+  <div class="intake__stage">
+    <div class="intake__card">
+      <p class="intake__badge">Working system &middot; Sample data</p>
+
+      <p class="intake__title">Tax season &mdash; document intake</p>
+
+      <ul class="intake__files">
+        {
+          files.map((file) => (
+            <li class:list={["intake__file", `intake__file--${file.state}`]}>
+              <span class="intake__name">{file.name}</span>
+              <span class="intake__state">{file.label}</span>
+              <span class="intake__detail">{file.detail}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      {/* Step 3 made visible. The system is the one writing, and it says so. */}
+      <div class="intake__message">
+        <span class="intake__message-from">Sent automatically, in your firm&rsquo;s name</span>
+        <p class="intake__message-body">
+          &ldquo;The rental statement came through too dark to read. Could you send that
+          page again?&rdquo;
+        </p>
+      </div>
+
+      <div class="intake__folder">
+        <span class="intake__folder-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2.8 6.6a1.8 1.8 0 0 1 1.8-1.8h4l2 2.4h8.8a1.8 1.8 0 0 1 1.8 1.8v9.4a1.8 1.8 0 0 1-1.8 1.8H4.6a1.8 1.8 0 0 1-1.8-1.8z" />
+            <path d="m9.2 13.4 2.2 2.2 4.2-4.4" />
+          </svg>
+        </span>
+        <span class="intake__folder-label">Filing-ready folder</span>
+        <span class="intake__folder-note">Complete files move here, organized and named</span>
+      </div>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .intake {
+    margin: 0;
+  }
+
+  .intake__stage {
+    background: var(--ark-stage-green);
+    border-radius: var(--ark-radius-panel);
+    padding: 40px;
+  }
+
+  .intake__card {
+    position: relative;
+    background: var(--ark-white);
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius);
+    box-shadow: var(--ark-floating);
+    padding: 26px 24px 24px;
+  }
+
+  /* Pinned inside the panel, at every breakpoint. See the note at the top of this file
+   * before moving, shrinking or captioning it. */
+  .intake__badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding-inline: 12px;
+    border-radius: var(--ark-radius-pill);
+    background: var(--ark-gold-bg);
+    border: 1px solid var(--ark-gold-border);
+    color: var(--ark-gold-ink);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .intake__title {
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.3;
+    color: var(--ark-ink);
+    /* Clears the badge, which is absolutely positioned and so does not push it. */
+    padding-right: 11rem;
+  }
+
+  .intake__files {
+    margin-top: 16px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .intake__file {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 4px 10px;
+    padding: 10px 12px;
+    background: var(--ark-surface);
+    border: 1px solid var(--ark-hairline);
+    border-left: 3px solid var(--ark-hairline);
+    border-radius: var(--ark-radius-sm);
+  }
+
+  .intake__name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ark-ink);
+  }
+
+  .intake__detail {
+    grid-column: 1 / -1;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--ark-muted);
+  }
+
+  .intake__state {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: var(--ark-radius-pill);
+    padding: 3px 9px;
+    white-space: nowrap;
+  }
+
+  /* Complete. Nothing left to do. */
+  .intake__file--complete {
+    border-left-color: var(--ark-olive-2);
+  }
+
+  .intake__file--complete .intake__state {
+    background: var(--ark-green-soft);
+    color: var(--ark-olive);
+  }
+
+  /* Waiting on a person — gold, which brand-tokens.css reserves for exactly that and
+   * which is never a CTA colour. Here the person is the client rather than the firm,
+   * and the point of the picture is that the firm is not the one waiting. */
+  .intake__file--waiting {
+    border-left-color: var(--ark-gold);
+  }
+
+  .intake__file--waiting .intake__state {
+    background: var(--ark-gold-bg);
+    color: var(--ark-gold-ink);
+  }
+
+  /* The system acting without being asked. The one saturated accent in the panel. */
+  .intake__file--acting {
+    border-left-color: var(--ark-terracotta);
+  }
+
+  .intake__file--acting .intake__state {
+    background: rgba(168, 98, 62, 0.12);
+    color: var(--ark-terracotta-ink);
+  }
+
+  .intake__message {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border: 1px solid rgba(168, 98, 62, 0.28);
+    border-radius: var(--ark-radius-sm);
+    background: rgba(168, 98, 62, 0.05);
+  }
+
+  .intake__message-from {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ark-terracotta-ink);
+  }
+
+  .intake__message-body {
+    margin-top: 6px;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--ark-body-ink);
+  }
+
+  .intake__folder {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 11px;
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: var(--ark-radius-sm);
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+  }
+
+  .intake__folder-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .intake__folder-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .intake__folder-label {
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .intake__folder-note {
+    grid-column: 2;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--ark-on-dark-muted);
+  }
+
+  @media (max-width: 900px) {
+    .intake__stage {
+      padding: 14px;
+      border-radius: 20px;
+    }
+
+    .intake__card {
+      padding: 20px 14px 16px;
+    }
+
+    .intake__badge {
+      height: 24px;
+      padding-inline: 9px;
+      font-size: 0.5625rem;
+      letter-spacing: 0.03em;
+    }
+
+    .intake__title {
+      padding-right: 8.5rem;
+    }
+
+    .intake__file {
+      padding: 9px 10px;
+    }
+
+    .intake__message-body {
+      font-size: 0.78125rem;
+    }
+  }
+</style>

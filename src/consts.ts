@@ -37,9 +37,15 @@ export type CtaLocation =
   | "nav"
   /* /accounting. Prefixed so the two pages' CTAs never merge into one number — the
    * whole reason for naming them is to learn which block converts, and "hero" meaning
-   * two different heroes would destroy that. */
+   * two different heroes would destroy that.
+   *
+   * Five, matching the rebuilt page. `acc-how-it-runs` is gone with the section it
+   * named: the old three-step "how it runs" block is now a single discovery paragraph,
+   * so the label would have pointed at something that no longer exists. */
   | "acc-hero"
-  | "acc-how-it-runs"
+  | "acc-where"
+  | "acc-proof"
+  | "acc-discovery"
   | "acc-closing";
 
 export interface NavItem {

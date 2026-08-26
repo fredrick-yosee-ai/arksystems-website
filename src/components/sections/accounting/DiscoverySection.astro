@@ -1,0 +1,99 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+
+/*
+ * Section 6 — how it runs, and what it costs.
+ *
+ * ONE PARAGRAPH, ONE BUTTON. No numbered steps, no process diagram — the copy file's
+ * build note, and it is right: the previous build of this page ran a three-step priced
+ * ladder here (call, workshop at CAD $1,000, build from CAD $4,000), which turned the
+ * commercial moment into something to study. A reader who has come this far needs one
+ * sentence about what happens and a button, not a pricing table.
+ *
+ * That is also why the workshop no longer appears on this page at all. It was linked
+ * from two places in the old build; the approved copy sells a discovery and nothing
+ * else, and what gets recommended after the call is a decision made on the call.
+ *
+ * "FROM CAD $4,000" IS LOAD-BEARING AND IS NOT A TYPO. The copy file is explicit: the
+ * word "from" sets a floor without promising a ceiling, and that is precisely what
+ * allows this page to publish a figure while ArkSystems never publishes a payment
+ * schedule. "CAD $4,000" flat would be a different and worse claim, one the rest of the
+ * sentence would then have to walk back. Do not tidy it.
+ *
+ * This is the only price on the site outside the workshop page itself. The brand rule
+ * is value before cost, and the five sections above are what earn the right to it. Do
+ * not move it up the page.
+ *
+ * Centred, unlike every other section head here. It is a short block — heading,
+ * paragraph, button — and left-aligning three short elements in a 1240px container
+ * leaves two thirds of a full-width band empty, which reads as something failing to
+ * load rather than as space. The same treatment the homepage gives its two short
+ * centred blocks.
+ */
+---
+
+<section class="section section--cream discovery" id="how-it-runs">
+  <div class="container discovery__inner">
+    <h2 class="section__title discovery__title">
+      We run a discovery. You decide what happens after.
+    </h2>
+
+    <p class="discovery__body">
+      We start with a discovery: we sit with your team, understand how the work actually
+      moves, and draw up an implementation plan with a fixed price &mdash; from CAD
+      $4,000, depending on what your workflow involves. If the plan makes sense to you,
+      we build it. If it doesn&rsquo;t, you keep the plan and owe nothing.
+    </p>
+
+    <div class="discovery__cta">
+      <BookingButton location="acc-discovery" block>
+        Book your free 20-minute call
+      </BookingButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  .discovery__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .discovery__title {
+    max-width: 22ch;
+  }
+
+  /* One of the three places on the site where body copy is centred. It is four short
+   * sentences with no list to lose your place in, which is the test — centred prose is
+   * harder to read and the plain-language rule makes that cost higher here than usual. */
+  .discovery__body {
+    margin-top: 24px;
+    max-width: 62ch;
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .discovery__cta {
+    margin-top: 36px;
+  }
+
+  @media (max-width: 900px) {
+    /* Left-aligned on a phone. Centred it runs to eight lines at 390px, and the site's
+     * standing rule only allows centred prose for a genuinely short block — the reason
+     * being that centred text is harder to read, which costs more here than usual given
+     * the plain-language rule. The heading and the button stay centred. */
+    .discovery__body {
+      margin-top: 18px;
+      max-width: 42ch;
+      text-align: left;
+    }
+
+    .discovery__cta {
+      margin-top: 28px;
+      width: 100%;
+    }
+  }
+</style>
