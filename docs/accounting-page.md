@@ -10,9 +10,11 @@ third of what was live. The old file is in git history if it is ever needed.
 **Voice:** ArkSystems brand voice — the standing rules live in `CLAUDE.md`.
 **Design:** the Applied Intelligence system, in `src/styles/brand-tokens.css`.
 
-**Where the built page departs from this file, and why.** Four places, all recorded in
+**Where the built page departs from this file, and why.** Five places, all recorded in
 the component that carries them. Nothing else deviates.
 
+0. **Two FAQ questions are deleted**, leaving four of the six below — the Dext/Karbon one
+   and the British Columbia one. See section 7.
 1. **Every location line is deleted** — Fredrick's instruction of Aug 25 2026. Section 1's
    trust line loses "Metro Vancouver", section 8 loses its line under the CTA entirely,
    and section 7 loses "Do you work outside British Columbia?" *with its answer*, because
@@ -115,6 +117,12 @@ to hold.
 
 **Body**
 > These are the four we hear most often from practices.
+
+**Build note:** heading, then the body underneath it, and the heading gets the room to
+set on two lines rather than three. This was briefly built as two columns — heading left,
+body bottom-aligned on the right — and rejected: the heading sat too high and the single
+sentence on the right read as an orphan. The band is filled by the closing callout
+instead, which runs the full width of the cards in two columns.
 
 **Four blocks**
 
@@ -261,8 +269,13 @@ to hold.
 **We tried an AI tool and it wasn't impressive.**
 > Common, and not a reflection on your firm. General tools perform well on work with a determinate answer and poorly on work requiring judgment. We build only the first kind, and only for work that never required your judgment.
 
-**We already use Dext and Karbon. Why would we need this?**
-> Often you wouldn't, and we'll say so. Those products are good at what they do. What's usually worth building is the work between the products — the handoffs, the re-keying, the chasing, and the task one person performs every Friday that has never been written down.
+**~~We already use Dext and Karbon. Why would we need this?~~** — REMOVED, Fredrick's
+instruction of Aug 25 2026.
+
+Worth recording what it cost, so this stays a decision and not a drift: the answer opened
+"Often you wouldn't, and we'll say so", which was the only place on the page that argued
+against the sale, and the only place naming a product a reader may already be paying for.
+If the objection comes up on calls, this is where it used to be answered.
 
 **Who owns it when you're finished?**
 > You do. It operates on your accounts and the work remains your property. There's no ArkSystems subscription attached to it.

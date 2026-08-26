@@ -57,13 +57,14 @@ const blocks = [
         The problems are familiar. What&rsquo;s new is that AI can now solve them.
       </h2>
       {/*
-        The lede is one short sentence and the heading is two, so a stacked head leaves
-        most of a full-width band empty — which reads as something failing to load
-        rather than as space, the lesson from the homepage's section 2. Setting the
-        lede in the second column, bottom-aligned against the heading, turns that
-        emptiness into a deliberate caption. The media query below is the exact
-        complement of the centring rule in base.css, so a portrait tablet centres its
-        heading and is never also holding two columns.
+        Heading, then the lede underneath it. This was briefly built as two columns —
+        heading left, lede bottom-aligned on the right — to stop a left-aligned head
+        leaving a third of a full-width band empty. Fredrick's read of the built page,
+        Aug 25 2026: the heading sat too high and the single sentence on the right read
+        as an orphan rather than as a caption. It was the wrong fix for the right
+        problem. The band is filled by the closing callout below instead, which now runs
+        the full width of the cards, and the heading is allowed the room to set on two
+        lines instead of three.
       */}
       <p class="section__lede problem__lede">
         These are the four we hear most often from practices.
@@ -90,8 +91,10 @@ const blocks = [
       assuming. It is set apart on a terracotta rule so it is not read as a fifth card.
     */}
     <p class="problem__close">
-      Every one of these is now solvable with AI, inside the systems you already run.
-      <strong>
+      <span class="problem__close-lead">
+        Every one of these is now solvable with AI, inside the systems you already run.
+      </span>
+      <strong class="problem__close-point">
         The question is which one is costing your practice most &mdash; and that&rsquo;s
         what we establish first.
       </strong>
@@ -104,15 +107,27 @@ const blocks = [
     max-width: none;
   }
 
+  /* Two lines, not three. At 22ch the heading broke as "The problems are familiar. /
+   * What's new is that AI can / now solve them." — a three-line stack in the top-left
+   * corner of a full-width band, with the break falling mid-clause. 38ch puts the break
+   * at the sentence boundary, which is where this heading wants to break: the familiar
+   * problem on one line, what is new about it on the next. */
   .problem__title {
-    max-width: 22ch;
+    max-width: 38ch;
+  }
+
+  /* The lede sits under the heading at its own measure. It is one short sentence and it
+   * belongs to the heading, so it reads as a subheading rather than as a paragraph. */
+  .problem__lede {
+    margin-top: 18px;
+    max-width: 52ch;
   }
 
   .problem__cards {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--ark-grid-gutter);
-    margin-top: 56px;
+    margin-top: 44px;
   }
 
   .problem__card {
@@ -145,15 +160,28 @@ const blocks = [
     color: var(--ark-body-ink);
   }
 
+  /* The callout runs the full width of the cards above it, in two columns.
+   *
+   * Held to a 72ch box it stopped at 57% of the band and left a third of a full-width
+   * row empty directly under four cards that had just filled it — which reads as
+   * something failing to load rather than as space. Two columns use the width without
+   * setting a 92ch line, which would be unreadable: the diagnosis on the left, the
+   * question it raises on the right, each at its own measure.
+   *
+   * This is the block that fills the band. It is why the heading above it no longer has
+   * to. */
   .problem__close {
-    margin-top: 44px;
-    max-width: 72ch;
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 40px;
+    align-items: start;
     background: var(--ark-white);
     border: 1px solid var(--ark-hairline);
     border-left: 4px solid var(--ark-terracotta);
     border-radius: 0 var(--ark-radius) var(--ark-radius) 0;
     box-shadow: var(--ark-raised);
-    padding: 26px 30px;
+    padding: 26px 32px;
     font-size: var(--ark-body-lg);
     line-height: var(--ark-lh-body);
     color: var(--ark-body-ink);
@@ -161,23 +189,14 @@ const blocks = [
 
   /* The bold run takes the display ink as well as the weight. At 20px, weight alone
    * does not separate far enough from body ink to be worth doing. */
-  .problem__close strong {
+  .problem__close-point {
     font-weight: 600;
     color: var(--ark-ink);
   }
 
-  @media (min-width: 901px) and (orientation: landscape) {
-    .problem__head {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-      column-gap: 56px;
-      align-items: end;
-    }
-
-    .problem__lede {
-      margin-top: 0;
-      padding-bottom: 6px;
-      max-width: none;
+  @media (max-width: 1100px) {
+    .problem__close {
+      column-gap: 28px;
     }
   }
 
@@ -204,8 +223,14 @@ const blocks = [
 
     .problem__close {
       margin-top: 24px;
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 10px;
       padding: 20px 20px 20px 18px;
       font-size: 1.0625rem;
+    }
+
+    .problem__lede {
+      max-width: 40ch;
     }
   }
 </style>

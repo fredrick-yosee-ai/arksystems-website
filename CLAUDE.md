@@ -425,12 +425,52 @@ only. The copy file is the copy.**
 **Eyebrows appear on sections 1 and 5 only**, which is where the copy file specifies
 them. Stitch added four more, each restating the heading beneath it.
 
+**Section 2's head is one column, and its closing callout is what fills the band.** This
+is an amendment to the layout rule further up this file — the one that says a
+left-aligned head in a wide container leaves a third of the band empty and that section
+2's head should therefore be two columns. That was built here and Fredrick rejected it on
+sight: the heading sat too high and the single sentence bottom-aligned on the right read
+as an orphan rather than as a caption. **It was the wrong fix for the right problem.**
+What ships instead:
+
+- the heading is allowed 38ch, so it breaks at the sentence boundary and sets on **two**
+  lines rather than three stacked in a corner
+- the lede sits underneath it at 52ch, reading as a subheading
+- the **closing callout runs the full width of the cards, in two columns** — the
+  diagnosis left, the question it raises right. That is the block that fills the band, so
+  the heading no longer has to
+
+The homepage's section 2 still uses the two-column head and is unchanged. The rule is not
+wrong; it just is not the only way to answer it, and on this page it lost.
+
 **`.section--warm` was added to `base.css`.** An eight-section page runs out of landmarks
 across four bands and ends up with two adjacent sections sharing a colour. The value was
 already in `brand-tokens.css`.
 
 **`CtaLocation` gained `acc-where`, `acc-proof` and `acc-discovery` and lost
 `acc-how-it-runs`**, which named a section that no longer exists.
+
+## Decided Aug 25 2026 — section padding, and one thing that was tried and reverted
+
+**`--ark-section` is 88px, down from 112.** Fredrick's instruction. It is 48px less at
+every section boundary and about 400px off the length of an eight-section page. The
+sections with their own band padding came down with it: both heroes to 60/76, both closes
+to 92, the founder strip to 60, `/accounting`'s section 5 to 76 — it keeps its deliberate
+gap below the standard band, for the reason above. **`--ark-section-phone` is unchanged at
+64.** It was already at the tight end, and a phone has no spare width to make a band feel
+open.
+
+**REVERTED — one section, one screen, and the Bootstrap container.** Both were built, on
+instruction, and both came out on the page as a squeeze: giving every section
+`min-height: 100vh` forced the tall ones to be compressed to fit, and that compression is
+what did the damage — four cards jammed into one row, icons moved inline to save 100px, a
+stepper stripped of its labels, a demonstration panel with a row taken out of it. It was
+reverted whole on Fredrick's instruction the same day. **Do not rebuild it without a
+different approach**: the honest version of "one section, one screen" is less copy per
+section, not the same copy in less space. The commit is recoverable from the reflog.
+
+What survived from that attempt, because it was right on its own terms and not a squeeze:
+the FAQ removal, section 2's rebuilt head, and the section padding above.
 
 ## Standing instruction, Aug 25 2026 — no location lines
 
@@ -444,7 +484,13 @@ travel together — do not restore one alone:
 - `/accounting`'s close, under the CTA
 - `/accounting`'s FAQ question "Do you work outside British Columbia?", **removed with its
   answer** — the answer *was* the line, and a question with nothing behind it is worse
-  than no question. Five questions ship, not six
+  than no question
+
+A second FAQ question went at the same time, for a different reason: **"We already use
+Dext and Karbon. Why would we need this?"**, removed on instruction. Worth knowing what it
+cost — its answer opened "Often you wouldn't, and we'll say so", which was the only place
+on the page arguing against the sale, and the only place naming a product a reader may
+already be paying for. **Four questions ship, not six.**
 
 The homepage meta description lost the same sentence. **Two survivors, both flagged for
 Fredrick and both deliberate:** the title tags still read "…| Vancouver BC" and "…|

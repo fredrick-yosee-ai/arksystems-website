@@ -123,10 +123,13 @@
   --ark-gutter-phone: 18px;
   --ark-grid-gutter:  28px;   /* the 12-column gutter */
 
-  /* Section rhythm. The design system says 140/64; the reference build used 80 and
-     read cramped at the top of each section. 112 is the compromise that was actually
-     drawn — generous without pushing the CTA below three screens. */
-  --ark-section:       112px;
+  /* Section rhythm. The design system says 140/64; the reference build used 80 and read
+     cramped at the top of each section. 112 was the compromise that was drawn, and it
+     was too much on a built page — Fredrick's instruction of Aug 25 2026 brings the
+     desktop band down to 88, which is 48px less per section boundary and about 400px off
+     the length of an eight-section page. The phone value is unchanged: 64 was already
+     the tight end, and a phone has no spare width to make a band feel open. */
+  --ark-section:       88px;
   --ark-section-phone: 64px;
 
   /* ---- Elevation ----
