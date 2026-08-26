@@ -27,10 +27,13 @@ The page has exactly one job: get the visitor onto a 20-minute call.
    that shipped before it, and it carries three page rules of its own — no compliance
    content, document collection as one example rather than the offer, and the word
    "agent" nowhere. The old file is in git history
-5. **The built pages in `src/`** — for the nine homepage sections and the eight on
-   `/accounting`, this is the record of what was actually shipped, and the component
-   comments carry the reasoning
-6. `src/styles/brand-tokens.css` — every colour and type decision
+5. `docs/workshop-page.md` — the approved `/workshop` copy, supplied and built Aug 26
+   2026. It carries its own `[CONFIRM]` list of five things Fredrick has to answer before
+   the page is final, and two of them are real exposure rather than tidying
+6. **The built pages in `src/`** — for the nine homepage sections, the eight on
+   `/accounting` and the seven on `/workshop`, this is the record of what was actually
+   shipped, and the component comments carry the reasoning
+7. `src/styles/brand-tokens.css` — every colour and type decision
 
 Two sources that used to be listed here are gone, removed once the homepage was built:
 
@@ -240,8 +243,7 @@ pinned in `.nvmrc`.
 
 ## Still to build for release one
 
-- `/workshop` — minimal reference page, reachable from nav and footer. **Footer links to
-  it now and it 404s.**
+- ~~`/workshop`~~ — **built Aug 26 2026. See the section below.**
 - `/about` — **linked from nav and footer, 404s.**
 - **Privacy, Terms, Data Handling** — launch blockers, not polish. CASL needs a privacy
   basis, and the AI Opportunity Fit Form has had an open privacy-notice placeholder since
@@ -493,6 +495,132 @@ section, not the same copy in less space. The commit is recoverable from the ref
 What survived from that attempt, because it was right on its own terms and not a squeeze:
 the FAQ removal, section 2's rebuilt head, and the section padding above.
 
+## Built Aug 26 2026 — /workshop
+
+`docs/workshop-page.md` was supplied and the page built against it the same day. It had
+been a footer link to a 404 since the site shipped.
+
+**Who arrives here:** someone who has read another ArkSystems page, agrees with it, and
+cannot name a single problem to start with. Several candidates, no way to rank them. The
+page has to make choosing the workshop feel like the sensible move rather than an
+admission that they don't know their own business — which is the standing rule in a
+different setting: blame the work, never the owner.
+
+**The job it exists for** is answering the question the free call creates: why pay for a
+workshop when the call costs nothing? Because they do different jobs. Discovery examines
+one problem already identified; the workshop is for when nothing has been identified, or
+when there are six candidates and no way to rank them.
+
+**Seven sections, in `src/pages/workshop.astro`:**
+
+| # | Section | Component |
+|---|---------|-----------|
+| 1 | Hero | `sections/workshop/HeroSection.astro` + `hero/CandidateBoardPanel.astro` |
+| 2 | The right first step | `sections/workshop/RightFirstStepSection.astro` |
+| 3 | What happens on the day | `sections/workshop/OnTheDaySection.astro` |
+| 4 | What you leave with | `sections/workshop/LeaveWithSection.astro` + `leave-with/ShortlistPanel.astro` |
+| 5 | What it costs | `sections/workshop/WhatItCostsSection.astro` |
+| 6 | Before you book | `sections/workshop/FaqSection.astro` |
+| 7 | Close | `sections/workshop/CloseSection.astro` |
+
+**The page argues against its own sale in three places, and this is the thing most likely
+to be tidied away by a future edit.** Section 2's lede ("if you can already name the one
+thing you'd fix, you don't need a workshop"), the first FAQ answer ("if you can name your
+one problem, skip the workshop"), and the close ("we'll say so and go straight to
+discovery instead"). That concession is the evidence for the claim the page is actually
+making — that the ranking it sells is honest. Remove it and the page is a brochure.
+Weaken one and all three have to go, because they are the same promise made three times.
+
+**Four CTAs — `ws-hero`, `ws-day`, `ws-cost`, `ws-closing`. Sections 2, 4 and 6 carry
+none**, deliberately: 2 and 4 do recognition and delivery work, and 6 exists to remove
+objections rather than to ask. **Every button books the free 20-minute call, not the
+workshop.** The Cal.com event behind `BOOKING_URL` is the discovery call, so a button
+labelled "Book the workshop" would be false as well as off-message.
+
+**Two illustrations, and they are a pair.** The hero draws the reader's position — five
+candidate areas, five identical rows, five identical grey markers, nothing to choose
+between them. Section 4 draws the same five after the day: ranked, weighted against each
+other, one of them struck through and marked "advise against". The five names and their
+order in the source arrays are shared between the two files on purpose, so the reader
+recognises their own list. **Change one file and change the other.**
+
+**Neither panel carries a single figure, and neither carries the gold badge.** There are
+no delivered workshops to draw numbers from, and a number in an illustration is a claim
+whatever the copy around it says — so the hero's bars are all the same length and section
+4's carry relative weight only. Section 4's copy promises "an indicative figure" per
+candidate in the written document, which is exactly why none appears in the picture: the
+panel names the field ("Indicative figure", "Scope", "Reasoning") and never fills it.
+Both label pills are quiet and neutral rather than gold, because gold means a system that
+genuinely runs shown with sample data, and keeping that badge meaning one thing is what
+keeps it worth anything.
+
+**Section 3's scope paragraph is a callout, not body copy.** The copy file marks it "do
+not cut", and a paragraph a skimmer skips is cut in every way that matters. It is the
+boundary that protects the fee — a day covers one area, agreed before booking — and the
+reader who later disputes what the day covered is precisely the one who was skimming. It
+runs full width on a terracotta rule. Its FAQ half is "We're a larger business. Is one day
+enough?", and the two have to keep saying the same thing.
+
+**Section 5 publishes a price, and "from" is load-bearing on both figures.** "From CAD
+$1,000" for the workshop and "from CAD $4,000" for implementation. The value-before-cost
+rule is scoped to the homepage; this page has always been the exception that carries its
+own. What is still never published is the payment schedule. **The $4,000 figure also sits
+in `/accounting`'s section 6** — there is no shared constant for it because it is a
+sentence, not a token, so if one changes the other is wrong the same day.
+
+**Section 5's container is the standard width.** It was narrowed to 940px first, which
+read calmly alone and wrongly in sequence: every other section starts at the same left
+edge, and an inset one breaks the vertical line the eye follows down the page. The real
+problem — a left-aligned head leaving a third of a wide band empty — is answered by the
+two-column note row underneath, which runs full width and fills it. Same fix
+`/accounting`'s section 2 landed on.
+
+**Section 4's closing line takes no `ch` measure.** The border above it is what makes it
+read as a full-width closing statement rather than a fifth block, and the border is drawn
+on that element — so a measure stops the rule two-thirds across the container, ending
+under nothing. It was built at 62ch, seen, and removed.
+
+**Bands run white → cream → surface → white → warm → stage-green → olive.** That is the
+only order across seven sections where no two neighbours share a colour, and section 4's
+band is white so its stage-green panel reads against it.
+
+**Eight icons were added to `Icon.astro`** — `candidates`, `deferred`, `workflowMap`,
+`separate`, `rank`, `effort`, `recommend`, `adviseAgainst`. Two are reused rather than
+redrawn and both reuses carry the argument: `benchmark` sits on "nobody has measured what
+any of them cost" and `cost` sits, one section later, on "we put figures against each
+candidate". `rank` repeats inside the page, on "we rank them" and then on "a ranked
+shortlist" — the promise and the deliverable share a mark.
+
+**The panel tags use `--ark-muted`, not `--ark-muted-2`.** At 10px they are small text
+and need 4.5:1; `--ark-muted-2` measures 3.67 on white and fails. Found by measuring
+every text node on the page, not by eye.
+
+**Nav gained "The workshop"**, between Industries and About. The footer already linked it.
+
+**Not linked from the homepage or `/accounting`, by Fredrick's instruction of Aug 26
+2026.** The copy file asks for links from the homepage's method section and from every
+industry page's offer block. Neither is built — that is a later decision. `/accounting` in
+particular stopped selling the workshop on Aug 25, and its section 6 is one paragraph and
+one button.
+
+**Five things the copy file flags for confirmation, and they are Fredrick's to answer.**
+They are in its own `[CONFIRM]` section and the page ships as written because the copy is
+approved. Two are real exposure rather than tidying:
+
+1. **The deliverable.** Section 4 states the document carries an indicative figure per
+   candidate. That is the strongest reason to pay for a workshop rather than wait for
+   free discovery, and it is only true if that is genuinely what gets produced.
+2. **The credit window.** Section 5 states the credit with no expiry. An open-ended credit
+   is a liability that never closes. If a window applies it belongs in the proposal, not
+   on the page — and this section must not grow a caveat instead.
+3. **Delivery timing.** FAQ six says "shortly after the day". Honest as written because it
+   promises nothing specific. Do not invent a number: a stated turnaround is a delivery
+   timeline, which the claims standard treats the way it treats a result.
+4. **Whether the price varies by scope.** Section 5 says the fee follows scope. If it is
+   really a flat CAD $1,000 with "from" as cover, that section is inaccurate.
+5. **What counts as one area.** Without an internal definition, a client can reasonably
+   expect the day to cover everything they mention.
+
 ## Standing instruction, Aug 25 2026 — no location lines
 
 Fredrick's instruction: the line "Based in Metro Vancouver, working remotely across
@@ -513,11 +641,12 @@ cost — its answer opened "Often you wouldn't, and we'll say so", which was the
 on the page arguing against the sale, and the only place naming a product a reader may
 already be paying for. **Four questions ship, not six.**
 
-The homepage meta description lost the same sentence. **Two survivors, both flagged for
-Fredrick and both deliberate:** the title tags still read "…| Vancouver BC" and "…|
-ArkSystems Vancouver". They are search-targeting tokens rather than sentences on the
-page, and dropping a geographic signal from a title is an SEO decision, not a layout one.
-Say the word and they go too.
+The homepage meta description lost the same sentence. **Three survivors, and Fredrick
+confirmed them on Aug 26 2026:** the title tags read "…| Vancouver BC", "…| ArkSystems
+Vancouver" and "AI Opportunity Workshop | ArkSystems Vancouver". His instruction was to
+remove Vancouver everywhere except the metas, and a `<title>` counts as one — it is a
+search-targeting string rather than a sentence on a page, and the local queries are real.
+**No sentence on any page names a location. This is settled; do not re-open it.**
 
 ## Still open — do not guess these
 

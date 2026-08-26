@@ -1,0 +1,170 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+import CandidateBoardPanel from "./hero/CandidateBoardPanel.astro";
+
+/*
+ * Section 1 — the hero. Copy verbatim from docs/workshop-page.md.
+ *
+ * THE SUBHEAD IS SPLIT INTO TWO PARAGRAPHS at a sentence boundary — same words, same
+ * order. The approved subhead is two long sentences, the second carrying a three-part
+ * list, which at 390px is a wall of lede between the headline and the button. Both
+ * other heroes on the site are split the same way and for the same reason: the CTA has
+ * to stay above the fold on a phone.
+ *
+ * THE BUTTON BOOKS THE CALL, NOT THE WORKSHOP, and the line underneath says so. That is
+ * the page's central honesty: it sells a paid day and then sends you to a free call that
+ * may conclude you do not need it. Never relabel this button to "Book the workshop" —
+ * the Cal.com event behind it is the 20-minute discovery call, so the label would be
+ * false as well as off-message.
+ *
+ * The illustration is hero/CandidateBoardPanel.astro. It draws the reader's own
+ * position, and it is the first half of a pair completed in section 4.
+ */
+---
+
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <p class="eyebrow hero__eyebrow">The AI Opportunity Workshop</p>
+
+      <h1 class="hero__title">
+        One day, one area of your business. A ranked list of where AI pays.
+      </h1>
+
+      <p class="hero__subhead">
+        Most businesses don&rsquo;t have one AI problem. They have several candidates, no
+        way to rank them, and nobody with time to work it out.
+      </p>
+
+      <p class="hero__subhead hero__subhead--second">
+        The workshop is a day spent on one area of your operation &mdash; agreed before
+        it&rsquo;s booked &mdash; that ends the guessing: what&rsquo;s worth building, in
+        what order, and what each one is worth.
+      </p>
+
+      <div class="hero__cta">
+        <BookingButton location="ws-hero" block>
+          Book your free 20-minute call
+        </BookingButton>
+        <p class="hero__cta-note">
+          The call is free and decides whether a workshop is the right first step.
+          Sometimes it isn&rsquo;t.
+        </p>
+      </div>
+    </div>
+
+    <div class="hero__visual">
+      <CandidateBoardPanel />
+    </div>
+  </div>
+</section>
+
+<style>
+  /* White, so the stage-green panel beside it reads. The band ladder for this page runs
+   * white → cream → surface → white → warm → stage-green → olive, which is the only
+   * order across seven sections where no two neighbours share a colour. */
+  .hero {
+    background: var(--ark-white);
+    padding-block: 60px 76px;
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero__eyebrow {
+    display: block;
+    margin-bottom: 22px;
+  }
+
+  /* The measure sits on the element carrying the font-size, never on a wrapper — `ch`
+   * resolves against the element's own font-size, so on a wrapper it counts 16px
+   * characters and cramps a display heading to a third of its width. */
+  .hero__title {
+    font-size: var(--ark-h1);
+    line-height: var(--ark-lh-h1);
+    letter-spacing: -0.03em;
+    max-width: 16ch;
+  }
+
+  .hero__subhead {
+    margin-top: 24px;
+    max-width: 56ch;
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .hero__subhead--second {
+    margin-top: 14px;
+  }
+
+  .hero__cta {
+    margin-top: 34px;
+  }
+
+  .hero__cta-note {
+    margin-top: 14px;
+    font-size: var(--ark-small);
+    line-height: 1.55;
+    color: var(--ark-muted);
+    max-width: 48ch;
+  }
+
+  .hero__visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width: 1100px) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 44px;
+    }
+
+    .hero__visual {
+      max-width: 520px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      padding-block: 40px 52px;
+    }
+
+    .hero__eyebrow {
+      margin-bottom: 16px;
+    }
+
+    .hero__subhead {
+      margin-top: 18px;
+      max-width: 42ch;
+    }
+
+    .hero__cta {
+      margin-top: 26px;
+    }
+
+    .hero__inner {
+      gap: 32px;
+    }
+
+    .hero__visual {
+      max-width: none;
+    }
+  }
+
+  /* Phone and any portrait screen: the heading block centres, body prose keeps its left
+   * edge. Centred prose is harder to read, which matters more than usual on a page
+   * written for readers whose first language may not be English. */
+  @media (max-width: 900px), (orientation: portrait) {
+    .hero__title,
+    .hero__eyebrow {
+      text-align: center;
+      margin-inline: auto;
+    }
+  }
+</style>

@@ -46,7 +46,19 @@ export type CtaLocation =
   | "acc-where"
   | "acc-proof"
   | "acc-discovery"
-  | "acc-closing";
+  | "acc-closing"
+  /* /workshop. Four, matching where the approved copy puts a button: the hero, the end
+   * of "what happens on the day", the price section, and the close. Sections 2, 4 and 6
+   * carry none — 2 and 4 do recognition and delivery work, and 6 exists to remove
+   * objections rather than to ask.
+   *
+   * Every one of these still books the same free 20-minute call. The page sells the
+   * workshop; the button books the call that decides whether a workshop is the right
+   * first step at all. Do not point any of them at a different URL. */
+  | "ws-hero"
+  | "ws-day"
+  | "ws-cost"
+  | "ws-closing";
 
 export interface NavItem {
   label: string;
@@ -87,6 +99,11 @@ export const NAV_LINKS: readonly NavItem[] = [
   { label: "Where AI pays", href: "/#where-ai-pays" },
   { label: "How we find it", href: "/#how-we-find-it" },
   { label: "Industries", children: INDUSTRY_LINKS },
+  /* Added when /workshop shipped. The copy file's audience is a reader who has finished
+   * another page and still cannot name one problem to start with — which is a reader
+   * already in the nav, looking for somewhere to go. The footer alone would not have
+   * reached them. */
+  { label: "The workshop", href: "/workshop" },
   { label: "About", href: "/about" },
 ] as const;
 

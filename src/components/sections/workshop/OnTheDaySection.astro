@@ -1,0 +1,239 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+import Icon from "../../common/Icon.astro";
+
+/*
+ * Section 3 — what happens on the day. With section 4 this carries the argument, so it
+ * gets the most vertical space on the page.
+ *
+ * THE SCOPE PARAGRAPH IS A CALLOUT, NOT BODY COPY. The copy file marks it "do not cut",
+ * and a paragraph a reader skims is cut in every way that matters. It is the boundary
+ * that protects the fee: a day covers one area, agreed before booking, and a larger
+ * operation is told so on the call rather than halfway through. Set as a plain
+ * paragraph it sits between four blocks and a button and gets read by nobody who is
+ * skimming — which is precisely the reader who later disputes what the day covered.
+ * It runs the full width on a terracotta rule for that reason. Do not demote it.
+ *
+ * `cost` is reused from the homepage's section 2 against "we put figures against each
+ * candidate", one section after `benchmark` sat on "nobody has measured what any of
+ * them cost". Same mark, the absence and then the answer. See Icon.astro.
+ *
+ * THE THIRD BLOCK IS THE ONE THAT SELLS THE DAY and it is easy to weaken by accident.
+ * "Some candidates are AI problems. Others need a process change or better use of
+ * software you already license." A firm that will tell you the answer is not AI is a
+ * firm whose ranking is worth paying for. Do not turn it into a claim about AI's reach.
+ */
+
+const blocks = [
+  {
+    icon: "workflowMap",
+    title: "We map the work as it runs.",
+    body: "Who touches each process, how often, and where it waits. Delay accounts for most of the cost in most workflows and appears in nobody's budget.",
+  },
+  {
+    icon: "cost",
+    title: "We put figures against each candidate.",
+    body: "Built from your numbers, with every assumption stated openly so you can challenge it.",
+  },
+  {
+    icon: "separate",
+    title: "We test what AI actually does.",
+    body: "Some candidates are AI problems. Others need a process change or better use of software you already license. We separate them.",
+  },
+  {
+    icon: "rank",
+    title: "We rank them.",
+    body: "By what each is costing you now, against what it would take to fix.",
+  },
+] as const;
+---
+
+<section class="section section--surface day" id="on-the-day">
+  <div class="container">
+    <div class="section__head day__head">
+      <h2 class="section__title day__title">
+        A day with your team, on your workflows.
+      </h2>
+      <p class="section__lede">
+        We spend the day with the people who actually do the work, not only the people
+        who describe it. We follow real workflows end to end, establish where time and
+        money go, and test each candidate against what AI can genuinely do today.
+      </p>
+    </div>
+
+    {/* The scope boundary. See the note at the top of this file before changing how
+      * prominent this is. */}
+    <div class="day__scope">
+      <p class="day__scope-label">What a day covers</p>
+      <p class="day__scope-body">
+        A day covers one area of a business, not all of it. Before booking, we agree
+        which area and roughly how many workflows are in scope &mdash; client intake,
+        month-end, quoting, whatever is costing you most. A larger operation, or several
+        departments, needs more than a day, and we&rsquo;ll tell you that on the call
+        rather than halfway through.
+      </p>
+    </div>
+
+    <ul class="day__grid">
+      {
+        blocks.map((block) => (
+          <li class="day__item">
+            <span class="day__icon" aria-hidden="true">
+              <Icon name={block.icon} />
+            </span>
+            <h3 class="day__item-title">{block.title}</h3>
+            <p class="day__item-body">{block.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="day__cta">
+      <BookingButton location="ws-day" block>
+        Book your free 20-minute call
+      </BookingButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  .day__head {
+    max-width: none;
+  }
+
+  .day__title {
+    max-width: 26ch;
+  }
+
+  /* Full width of the container, on the terracotta rule the site uses for a line that
+   * is set apart from the blocks around it rather than being one of them. */
+  .day__scope {
+    display: grid;
+    grid-template-columns: minmax(0, 0.32fr) minmax(0, 1fr);
+    column-gap: 40px;
+    align-items: start;
+    margin-top: 48px;
+    padding: 26px 32px;
+    background: var(--ark-white);
+    border: 1px solid var(--ark-hairline);
+    border-left: 4px solid var(--ark-terracotta);
+    border-radius: 0 var(--ark-radius) var(--ark-radius) 0;
+  }
+
+  .day__scope-label {
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    color: var(--ark-ink);
+  }
+
+  .day__scope-body {
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .day__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ark-grid-gutter);
+    margin-top: 40px;
+  }
+
+  .day__item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--ark-white);
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius);
+    box-shadow: var(--ark-raised);
+    padding: 30px;
+  }
+
+  .day__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--ark-radius-pill);
+    background: var(--ark-green-soft);
+    color: var(--ark-olive);
+    margin-bottom: 2px;
+  }
+
+  .day__item-title {
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+  }
+
+  .day__item-body {
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .day__cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 52px;
+  }
+
+  @media (max-width: 900px) {
+    /* One column. A 21px display label above a six-line paragraph reads as a heading,
+     * which is what it is once it stops being a side label. */
+    .day__scope {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 10px;
+      margin-top: 32px;
+      padding: 20px 18px;
+    }
+
+    .day__scope-label {
+      font-size: 1.0625rem;
+    }
+
+    .day__scope-body {
+      font-size: 1rem;
+    }
+
+    .day__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .day__item {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      column-gap: 14px;
+      row-gap: 6px;
+      align-items: center;
+      padding: 18px 16px;
+    }
+
+    .day__icon {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 0;
+    }
+
+    .day__item-title {
+      font-size: 1.0625rem;
+    }
+
+    .day__item-body {
+      grid-column: 1 / -1;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+
+    .day__cta {
+      margin-top: 34px;
+    }
+  }
+</style>

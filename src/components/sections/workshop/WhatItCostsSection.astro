@@ -1,0 +1,130 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+
+/*
+ * Section 5 — what it costs.
+ *
+ * THE WORD "FROM" IS LOAD-BEARING ON BOTH FIGURES, and the copy file says so in as many
+ * words. It sets a floor without promising a ceiling, which is the only reason a number
+ * can be published here at all. "CAD $1,000" flat is a different and worse claim — it
+ * promises a price before anyone has seen the scope. Do not tidy "from" out of either
+ * sentence, and do not move the figures higher up the page.
+ *
+ * THIS PAGE IS ALLOWED A PRICE. The value-before-cost rule in CLAUDE.md is scoped to the
+ * homepage; the workshop page has always been the exception that carries its own. What
+ * is still never published is the payment schedule.
+ *
+ * THE CREDIT IS STATED, THE WINDOW IS NOT. "Half the workshop fee comes off the build
+ * price" is approved copy and ships as written. The copy file's own [CONFIRM] list flags
+ * that an open-ended credit is a liability that never closes — if a window is decided, it
+ * belongs in the proposal rather than on this page, and this section should not grow a
+ * caveat. Delete a line rather than caveat it; that rule applies here too.
+ *
+ * THE SECOND SUB-BODY POINTS AT /accounting's PRICE, and the two must agree. Both say
+ * implementation starts from CAD $4,000. If one changes, the other is wrong the same
+ * day — there is no shared constant for it because it is a sentence, not a token.
+ */
+---
+
+<section class="section section--warm cost" id="what-it-costs">
+  <div class="container cost__inner">
+    <div class="section__head cost__head">
+      <h2 class="section__title cost__title">
+        From CAD $1,000, half of it credited if you build.
+      </h2>
+      <p class="section__lede">
+        The fee follows the scope &mdash; how much of the operation we&rsquo;re examining
+        and how many workflows are involved. It&rsquo;s agreed before the day is booked
+        and doesn&rsquo;t change afterwards. If you go ahead with an implementation, half
+        the workshop fee comes off the build price.
+      </p>
+    </div>
+
+    <div class="cost__notes">
+      <p class="cost__note">
+        A single area is one day. A business large enough to need several areas examined
+        is a larger engagement, priced accordingly, and we&rsquo;ll say so before you
+        commit rather than after.
+      </p>
+      <p class="cost__note">
+        Implementation starts from CAD $4,000, depending on what the work involves &mdash;
+        which is precisely what the workshop establishes.
+      </p>
+    </div>
+
+    <div class="cost__cta">
+      <BookingButton location="ws-cost" block>
+        Book your free 20-minute call
+      </BookingButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* THE CONTAINER IS THE STANDARD WIDTH. It was narrowed to 940px first, which read
+   * calmly on its own and wrongly in sequence: every other section on the page starts at
+   * the same left edge, and an inset one breaks the vertical line the eye follows down
+   * the page. What answers the real problem — a left-aligned head leaving a third of a
+   * wide band empty — is the two-column note row below, which runs the full width and
+   * fills it. That is the same fix /accounting's section 2 landed on. */
+  .cost__head {
+    max-width: none;
+  }
+
+  .cost__title {
+    max-width: 24ch;
+  }
+
+  /* Two notes, side by side and separated by a rule rather than boxed. They are
+   * qualifications on the sentence above them, not two more things being offered —
+   * cards would give them the weight of an offer. */
+  .cost__notes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 40px;
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid var(--ark-hairline);
+  }
+
+  .cost__note {
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .cost__note + .cost__note {
+    padding-left: 40px;
+    border-left: 1px solid var(--ark-hairline);
+  }
+
+  .cost__cta {
+    margin-top: 40px;
+  }
+
+  @media (max-width: 900px) {
+    .cost__notes {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 18px;
+      margin-top: 28px;
+      padding-top: 22px;
+    }
+
+    /* Stacked, a left border reads as a quote mark on the second note rather than as a
+     * divider between two columns. */
+    .cost__note + .cost__note {
+      padding-left: 0;
+      padding-top: 18px;
+      border-left: 0;
+      border-top: 1px solid var(--ark-hairline);
+    }
+
+    .cost__note {
+      font-size: 1rem;
+    }
+
+    .cost__cta {
+      margin-top: 30px;
+    }
+  }
+</style>

@@ -73,6 +73,40 @@ const ICONS = {
 
   /* A calendar with a warning inside it. Deadline exposure, seen early. */
   deadline: `<rect x="3" y="4.8" width="18" height="16.2" rx="2.2"/><path d="M3 9.8h18"/><path d="M7.8 2.9v3.8M16.2 2.9v3.8"/><path d="M12 12.9v3.2M12 18.4h.01"/>`,
+
+  /* ---- /workshop ----
+   *
+   * Two icons are reused from the sets above rather than redrawn, and both reuses carry
+   * the page's argument. `benchmark` — the ruler — sits on "nobody has measured what any
+   * of them cost" in section 2, which is the same absence it was drawn for on the
+   * homepage. `cost` then sits on "we put figures against each candidate" in section 3:
+   * the same mark, one section later, against the thing that fixes it. `rank` repeats
+   * inside this page for the same reason, on "we rank them" and then on "a ranked
+   * shortlist" — the promise and the deliverable share a mark. */
+
+  /* Three empty checkboxes. Candidates, none of them chosen. */
+  candidates: `<rect x="2.9" y="4.2" width="4.4" height="4.4" rx="1.2"/><rect x="2.9" y="9.8" width="4.4" height="4.4" rx="1.2"/><rect x="2.9" y="15.4" width="4.4" height="4.4" rx="1.2"/><path d="M10.2 6.4h10.9M10.2 12h10.9M10.2 17.6h7.4"/>`,
+
+  /* A short list and a loop back round. It slips a quarter, and then another. */
+  deferred: `<path d="M3.2 5.2h11.6M3.2 10h8.4M3.2 14.8h6"/><path d="M20.2 15.4a4.8 4.8 0 1 1-1.4-3.4"/><path d="M20.4 9.6v3.2h-3.2"/>`,
+
+  /* Two boxes routed into a third. The work drawn as it actually runs. */
+  workflowMap: `<rect x="2.6" y="3.2" width="6.4" height="4.8" rx="1.6"/><rect x="2.6" y="16" width="6.4" height="4.8" rx="1.6"/><rect x="14.9" y="9.6" width="6.5" height="4.8" rx="1.6"/><path d="M9 5.6h3.4v6.4h2.5"/><path d="M9 18.4h3.4V12"/>`,
+
+  /* One path forking into two. AI problems here, process problems there. */
+  separate: `<path d="M2.6 12h4.6"/><path d="M7.2 12c3.3 0 3.3-6.1 6.6-6.1h4.2M7.2 12c3.3 0 3.3 6.1 6.6 6.1h4.2"/><path d="m16 3.5 2.4 2.4-2.4 2.4M16 15.7l2.4 2.4-2.4 2.4"/>`,
+
+  /* Bars in descending order, with the direction of the sort beside them. */
+  rank: `<path d="M3.2 5.4h13.4M3.2 12h9.4M3.2 18.6h5.6"/><path d="M20.4 4.6v14.8M17.7 16.7l2.7 2.7 2.7-2.7"/>`,
+
+  /* A box with its dimensions marked. What a build would take, sized. */
+  effort: `<rect x="3" y="6.8" width="12.2" height="10.6" rx="2"/><path d="M3 3.6h12.2M3 2.6v2M15.2 2.6v2"/><path d="M18.6 6.8v10.6M17.6 6.8h2M17.6 17.4h2"/>`,
+
+  /* A bookmark. The one candidate marked to build first. */
+  recommend: `<path d="M6.4 21V4.6a1.8 1.8 0 0 1 1.8-1.8h7.6a1.8 1.8 0 0 1 1.8 1.8V21l-5.6-3.9z"/><path d="M9.7 8h4.6M9.7 11.4h4.6"/>`,
+
+  /* A circle struck through. What we would tell you not to build. */
+  adviseAgainst: `<circle cx="12" cy="12" r="8.6"/><path d="m6.2 6.2 11.6 11.6"/>`,
 } as const;
 
 const { name, size = 22, class: className } = Astro.props;

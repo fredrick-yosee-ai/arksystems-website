@@ -1,0 +1,157 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE, BOOKING_URL } from "../consts";
+
+import HeroSection from "../components/sections/workshop/HeroSection.astro";
+import RightFirstStepSection from "../components/sections/workshop/RightFirstStepSection.astro";
+import OnTheDaySection from "../components/sections/workshop/OnTheDaySection.astro";
+import LeaveWithSection from "../components/sections/workshop/LeaveWithSection.astro";
+import WhatItCostsSection from "../components/sections/workshop/WhatItCostsSection.astro";
+import FaqSection from "../components/sections/workshop/FaqSection.astro";
+import CloseSection from "../components/sections/workshop/CloseSection.astro";
+
+/*
+ * /workshop — the AI Opportunity Workshop. Built Aug 26 2026 against the approved copy
+ * in docs/workshop-page.md. It had been a footer link to a 404 since the site shipped.
+ *
+ * WHO ARRIVES HERE: someone who has read another ArkSystems page, agrees with it, and
+ * cannot name a single problem to start with. They have several candidates and no way to
+ * rank them. The page has to make choosing the workshop feel like the sensible move
+ * rather than an admission that they don't know their own business — which is why not one
+ * line on it implies the reader is disorganised or behind. The standing rule holds here
+ * as everywhere: blame the work, never the owner.
+ *
+ * THE JOB THE PAGE EXISTS FOR is answering the question the free discovery call creates:
+ * why pay for a workshop when the call costs nothing? The answer, in section 6 and again
+ * in section 2 and again in the close, is that they do different jobs. Discovery examines
+ * one problem already identified. The workshop is for when nothing has been identified,
+ * or when there are six candidates and no way to rank them.
+ *
+ * THE PAGE ARGUES AGAINST ITS OWN SALE IN THREE PLACES, and this is the thing most
+ * likely to be tidied away by a future edit. Section 2's lede ("if you can already name
+ * the one thing you'd fix, you don't need a workshop"), the first FAQ answer, and the
+ * close all concede the case where the workshop is the wrong purchase. That concession is
+ * the evidence for the claim the page is actually making — that the ranking we produce is
+ * honest. Remove it and the page is a brochure.
+ *
+ * Seven sections, in the copy file's order:
+ *
+ *   1  Hero                the promise, and the free call
+ *   2  The right first step  who this is for — and who it isn't. No CTA
+ *   3  What happens on the day  the method. Carries the argument with 4
+ *   4  What you leave with  the deliverable. No CTA
+ *   5  What it costs       the only price section. "From" is load-bearing
+ *   6  Before you book     the objections
+ *   7  Close               the ask
+ *
+ * FOUR CTAs, all pointing at BOOKING_URL: hero, section 3, section 5, close. Labelled
+ * ws-hero / ws-day / ws-cost / ws-closing so this page's numbers never merge with the
+ * other two. Sections 2, 4 and 6 carry none, deliberately — 2 and 4 do recognition and
+ * delivery work, and 6 exists to remove objections rather than to ask.
+ *
+ * EVERY BUTTON BOOKS THE FREE CALL, NOT THE WORKSHOP. The Cal.com event behind
+ * BOOKING_URL is the 20-minute discovery call. A button labelled "Book the workshop"
+ * would be false as well as off-message.
+ *
+ * ONE EYEBROW, on the hero. The copy file specifies it there and nowhere else, and every
+ * other section's heading is already its own short name — an eyebrow above "Before you
+ * book" sets the phrase twice and has a screen reader announce it twice.
+ *
+ * NOT LINKED FROM THE HOMEPAGE OR /accounting, by Fredrick's instruction of Aug 26 2026.
+ * The copy file asks for links from the homepage's method section and from every
+ * industry page's offer block. Neither is built. /accounting in particular stopped
+ * selling the workshop on Aug 25 — section 6 there is one paragraph and one button, and
+ * what gets recommended is decided on the call. Nav and footer carry this page for now.
+ *
+ * TWO ILLUSTRATIONS, and they are a pair: the hero draws the reader's position (five
+ * candidates, identical rows, nothing to choose between them) and section 4 draws the
+ * same five after the day (ranked, weighted, one ruled out). Neither carries a single
+ * figure — there are no delivered workshops to draw numbers from, and a number in an
+ * illustration is a claim whatever the copy around it says. Neither carries the gold
+ * "Working system · Sample data" badge either; that badge means a system that genuinely
+ * runs, and keeping it meaning one thing is what keeps it worth anything.
+ *
+ * Schema: Service and FAQPage, as the copy file specifies. FAQPage is emitted by the FAQ
+ * component, next to the questions it describes, so the two cannot drift apart.
+ *
+ * LocalBusiness is NOT emitted here either, for the same reason as on /accounting: it
+ * needs a real street address and real hours, and inventing either would be a false claim
+ * on a page whose entire argument is that we do not do that.
+ *
+ * FIVE THINGS THE COPY FILE FLAGS FOR CONFIRMATION BEFORE THIS PAGE SHIPS — they are in
+ * its own [CONFIRM] section, they are Fredrick's to answer, and two of them are real
+ * exposure rather than tidying:
+ *
+ *   1. THE DELIVERABLE. Section 4 states the document carries an indicative figure per
+ *      candidate. That is the strongest reason to pay for a workshop rather than wait for
+ *      free discovery, and it is only true if that is genuinely what gets produced.
+ *   2. THE CREDIT WINDOW. Section 5 states the credit with no expiry. An open-ended
+ *      credit is a liability that never closes. If a window applies it belongs in the
+ *      proposal, not on the page.
+ *   3. DELIVERY TIMING. FAQ six says "shortly after the day". Honest as written because
+ *      it promises nothing specific. Replace it once a real commitment exists — and until
+ *      then do not invent a number, because a stated turnaround is a delivery timeline.
+ *   4. WHETHER THE PRICE VARIES BY SCOPE. Section 5 says the fee follows scope. If it is
+ *      really a flat CAD $1,000 with "from" as cover, that section is inaccurate.
+ *   5. WHAT COUNTS AS ONE AREA. Section 3's scope callout is the boundary that protects
+ *      the fee. Without an internal definition, a client can reasonably expect the day to
+ *      cover everything they mention.
+ */
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "AI Opportunity Workshop",
+  serviceType: "AI opportunity assessment workshop",
+  description:
+    "A day spent on one agreed area of a business, mapping how the work actually runs, putting figures against each candidate for AI, and producing a ranked shortlist with a written recommendation on what to build first — and what to build not at all.",
+  provider: {
+    "@type": "Organization",
+    name: SITE.name,
+    url: SITE.url,
+  },
+  areaServed: {
+    "@type": "AdministrativeArea",
+    name: "Canada",
+  },
+  url: `${SITE.url}/workshop`,
+  potentialAction: {
+    "@type": "ReserveAction",
+    name: "Book your free 20-minute call",
+    target: BOOKING_URL,
+  },
+};
+---
+
+{/*
+  Title and description are the approved strings from docs/workshop-page.md, used
+  character for character — the file counted them (52 and 146) and the pipe separator is
+  part of what it counted, which is why this goes through titleOverride rather than being
+  rebuilt from the site's em-dash pattern.
+
+  The title carries "Vancouver", which is now the third and last place on the site that
+  names the location. Fredrick's decision of Aug 26 2026, taken on the same reasoning as
+  the two existing ones: a title tag is a search-targeting string rather than a sentence
+  on a page, and the copy file's target queries are local. No sentence anywhere on this
+  page names a place.
+*/}
+<BaseLayout
+  title="AI Opportunity Workshop"
+  titleOverride="AI Opportunity Workshop | ArkSystems Vancouver"
+  description="One day on one area of your operation. Leave with a ranked shortlist of where AI pays, and what to build first. From CAD $1,000, half credited."
+>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(serviceSchema)}
+    is:inline
+  />
+
+  <HeroSection />
+  <RightFirstStepSection />
+  <OnTheDaySection />
+  <LeaveWithSection />
+  <WhatItCostsSection />
+  <FaqSection />
+  <CloseSection />
+</BaseLayout>

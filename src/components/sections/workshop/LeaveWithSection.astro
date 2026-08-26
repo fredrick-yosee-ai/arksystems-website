@@ -1,0 +1,252 @@
+---
+import Icon from "../../common/Icon.astro";
+import ShortlistPanel from "./leave-with/ShortlistPanel.astro";
+
+/*
+ * Section 4 — what you leave with. The delivery half of the argument.
+ *
+ * NO CTA. Sections 3 and 5 carry one on either side of it. This section's job is to
+ * make the deliverable concrete, and a button in the middle of a list of what you
+ * receive interrupts the only place on the page where the reader is being given
+ * something rather than asked for something.
+ *
+ * "YOURS TO USE, INCLUDING WITH SOMEBODY ELSE" IS NOT A THROWAWAY. It is the line that
+ * makes the document worth paying for: a recommendation you can only act on with the
+ * firm that wrote it is a sales document. The same commitment is repeated in the FAQ
+ * ("Do we have to implement with you?"). If one is ever softened, both have to be, and
+ * the page loses most of its credibility with them.
+ *
+ * THE CLOSING LINE RUNS FULL WIDTH under both columns. "If the answer is that nothing
+ * here is worth building yet, that's what the document says" is the strongest sentence
+ * in the section and it belongs across the container rather than in a 560px column
+ * where it wraps to three lines and reads as a footnote.
+ *
+ * DOM ORDER IS head, blocks, panel, close. On desktop the panel is grid-placed into the
+ * second column; on a phone that order puts the four blocks first and the picture of
+ * them directly underneath, which is the right way round here — unlike /accounting's
+ * build lab, where the panel is the persuasion and leads. Here the blocks are the
+ * deliverable and the panel confirms it.
+ *
+ * The panel is leave-with/ShortlistPanel.astro, the second half of the hero's pair.
+ *
+ * `rank` repeats from section 3's fourth block. There it is what we do; here it is what
+ * you get. Deliberate — see Icon.astro.
+ */
+
+const blocks = [
+  {
+    icon: "rank",
+    title: "A ranked shortlist.",
+    body: "Every candidate within the agreed scope, ordered by what it costs your business today.",
+  },
+  {
+    icon: "effort",
+    title: "What each would take.",
+    body: "Scope, and an indicative figure, so the shortlist is a decision rather than a wish list.",
+  },
+  {
+    icon: "recommend",
+    title: "A recommendation on what to build first.",
+    body: "With the reasoning, so you can disagree with it on the evidence.",
+  },
+  {
+    icon: "adviseAgainst",
+    title: "What we'd advise against.",
+    body: "Candidates that look attractive and aren't worth building, and why.",
+  },
+] as const;
+---
+
+<section class="section section--white leave" id="what-you-leave-with">
+  <div class="container leave__grid">
+    <div class="section__head leave__head">
+      <h2 class="section__title leave__title">
+        A document you can act on, whoever you act with.
+      </h2>
+      <p class="section__lede">
+        The workshop ends with a written recommendation. It&rsquo;s yours to keep and
+        yours to use &mdash; including with somebody else, if you&rsquo;d rather.
+      </p>
+    </div>
+
+    <ul class="leave__list">
+      {
+        blocks.map((block) => (
+          <li class="leave__item">
+            <span class="leave__icon" aria-hidden="true">
+              <Icon name={block.icon} />
+            </span>
+            <div>
+              <h3 class="leave__item-title">{block.title}</h3>
+              <p class="leave__item-body">{block.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="leave__panel">
+      <ShortlistPanel />
+    </div>
+
+    <p class="leave__close">
+      If the answer is that nothing here is worth building yet, that&rsquo;s what the
+      document says.
+    </p>
+  </div>
+</section>
+
+<style>
+  .leave__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 56px;
+    align-items: start;
+  }
+
+  .leave__head {
+    grid-column: 1;
+    grid-row: 1;
+    max-width: none;
+  }
+
+  .leave__list {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 36px;
+    display: grid;
+    gap: 22px;
+  }
+
+  /* Spans the head and the blocks, centred against them — not the closing line, which
+   * runs full width underneath both columns. NOT STICKY: /accounting's build lab panel
+   * shipped sticky and drifted 300px down its column as the reader scrolled, arriving
+   * below the very steps it illustrates. The rule that came out of it is in CLAUDE.md.
+   */
+  .leave__panel {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .leave__close {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-top: 44px;
+    padding-top: 28px;
+    border-top: 1px solid var(--ark-hairline);
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    color: var(--ark-ink);
+    /* No measure, deliberately. The border above this line is what makes it read as a
+     * full-width closing statement rather than a fifth block, and the border is drawn on
+     * this element — so a `ch` cap here stops the rule two-thirds of the way across the
+     * container, ending under nothing. The sentence is one line at container width. */
+    max-width: none;
+  }
+
+  .leave__title {
+    max-width: 22ch;
+  }
+
+  .leave__item {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    column-gap: 16px;
+    align-items: start;
+  }
+
+  .leave__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--ark-radius-pill);
+    background: var(--ark-green-soft);
+    color: var(--ark-olive);
+  }
+
+  .leave__item-title {
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    padding-top: 8px;
+  }
+
+  .leave__item-body {
+    margin-top: 6px;
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  @media (max-width: 1100px) {
+    .leave__grid {
+      column-gap: 36px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .leave__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* One column, in DOM order. Every explicit placement above has to be undone here or
+     * the items stack into the rows they were pinned to and leave gaps behind them. */
+    .leave__head,
+    .leave__list,
+    .leave__panel,
+    .leave__close {
+      grid-column: 1;
+      grid-row: auto;
+    }
+
+    .leave__list {
+      margin-top: 28px;
+      gap: 18px;
+    }
+
+    .leave__panel {
+      margin-top: 30px;
+    }
+
+    .leave__item {
+      grid-template-columns: 38px minmax(0, 1fr);
+      column-gap: 13px;
+    }
+
+    .leave__icon {
+      width: 38px;
+      height: 38px;
+    }
+
+    .leave__item-title {
+      font-size: 1.0625rem;
+      padding-top: 6px;
+    }
+
+    .leave__item-body {
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+
+    .leave__close {
+      margin-top: 32px;
+      padding-top: 24px;
+      max-width: 34ch;
+    }
+  }
+
+  /* The closing line is short and centres with the headings, matching base.css. Body
+   * prose in this section does not. */
+  @media (max-width: 900px), (orientation: portrait) {
+    .leave__close {
+      text-align: center;
+      margin-inline: auto;
+    }
+  }
+</style>

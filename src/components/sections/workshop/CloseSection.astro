@@ -1,0 +1,112 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+import { SITE } from "../../../consts";
+
+/*
+ * Section 7 — the close. On the dark olive band, matching both other pages: two pages on
+ * one site should not end differently, and the tagline has one established treatment —
+ * display face, on olive, below the CTA, as a sign-off and never as a heading.
+ *
+ * NO LOCATION LINE UNDER THE CTA. Fredrick's standing instruction of Aug 25 2026 takes
+ * "Based in Metro Vancouver, working remotely across Canada" and everything like it off
+ * the site. It was removed from five places at once and they travel together — do not
+ * add one back here.
+ *
+ * THE BODY CONCEDES THE SALE ONE LAST TIME. "If you already know your one problem, we'll
+ * say so and go straight to discovery instead" is the third place on the page arguing
+ * against the workshop, after section 2's lede and the first FAQ answer. On a close, of
+ * all places, that is deliberate: the page has just asked for money for a day, and the
+ * last thing it says is that it will tell you when not to spend it.
+ */
+---
+
+<section class="close on-dark">
+  <div class="container close__inner">
+    <h2 class="close__title">Stop ranking it in your head.</h2>
+
+    <p class="close__body">
+      Twenty minutes, at no cost, to work out whether a workshop is your right first
+      step. If you already know your one problem, we&rsquo;ll say so and go straight to
+      discovery instead.
+    </p>
+
+    <div class="close__cta">
+      <BookingButton location="ws-closing" variant="cream" block>
+        Book your free 20-minute call
+      </BookingButton>
+    </div>
+
+    <p class="close__tagline">{SITE.tagline}</p>
+  </div>
+</section>
+
+<style>
+  .close {
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+    padding-block: 92px;
+  }
+
+  .close__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .close__title {
+    color: var(--ark-on-dark);
+    font-size: 3.25rem;
+    line-height: 1.08;
+    letter-spacing: -0.026em;
+    max-width: 20ch;
+  }
+
+  .close__body {
+    margin-top: 26px;
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-on-dark-muted);
+    max-width: 58ch;
+  }
+
+  .close__cta {
+    margin-top: 38px;
+  }
+
+  .close__tagline {
+    margin-top: 60px;
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: 0.005em;
+    color: var(--ark-on-dark-eyebrow);
+  }
+
+  @media (max-width: 900px) {
+    .close {
+      padding-block: 62px;
+    }
+
+    .close__title {
+      font-size: var(--ark-h2);
+      line-height: var(--ark-lh-h2);
+      max-width: 18ch;
+    }
+
+    .close__body {
+      margin-top: 18px;
+      max-width: 36ch;
+    }
+
+    .close__cta {
+      margin-top: 28px;
+      width: 100%;
+    }
+
+    .close__tagline {
+      margin-top: 44px;
+      font-size: 1.5rem;
+    }
+  }
+</style>
