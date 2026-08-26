@@ -1,0 +1,270 @@
+---
+import Icon from "../../common/Icon.astro";
+
+/*
+ * Section 2 — why the first decision is the one that costs.
+ *
+ * THIS IS THE ARGUMENT OF THE PAGE, and the copy file says so in a build note: it must
+ * sit above the description of the day, and it must not be shortened into a list of
+ * features. The why comes before the what. Reverse this section and section 3 and the
+ * page becomes an agenda — a day's schedule offered to someone who has not yet accepted
+ * that the day is worth buying.
+ *
+ * WHAT IT HAS TO ESTABLISH, before anything else on the page can work: that identifying
+ * the right problem is itself the valuable work. Until that lands, a workshop reads as a
+ * fee charged before the real work starts. Once it lands, the workshop IS the work — the
+ * decision every dollar spent afterwards depends on. That is why the section closes on
+ * "what you're buying is the decision, made on evidence" rather than on a summary.
+ *
+ * "AI BUDGETS GO TO THE WRONG PLACE" IS A POSITION, NOT A CLAIM, and the copy file's
+ * claims section calls this out by name. It carries no figure and no attribution, which
+ * is exactly what keeps it inside the claims rules. DO NOT ADD A STATISTIC TO IT — not a
+ * percentage, not a survey, not "studies show". The moment it acquires a number it
+ * becomes a claim requiring a source, and there isn't one.
+ *
+ * BLAME THE WORK, NEVER THE OWNER. The body says almost no business has measured what
+ * its candidates cost, and all three blocks describe the situation rather than the
+ * reader: candidates that genuinely all look plausible, a cost nobody has had reason to
+ * measure, and a question — AI problem or process problem — that takes current knowledge
+ * to answer. Not indecision, not disorganisation.
+ *
+ * NO CTA. This section does the argument; section 3 asks. A button here interrupts the
+ * one stretch of the page where the reader is being persuaded rather than sold to.
+ *
+ * THE CONCESSION AT THE FOOT IS DELIBERATELY LIGHTER THAN THE LINE ABOVE IT, and the
+ * copy file specifies that weight. It is the first of three places the page argues
+ * against its own sale — the others are the first FAQ answer and the close. Set at the
+ * same weight as the closing line it reads as a retraction; set lighter, it reads as
+ * what it is, an honest aside from someone confident enough to make it.
+ *
+ * `benchmark` — the ruler — is reused from the homepage's section 2, where it was drawn
+ * for the same absence. `separate` is reused from section 3's third block one section
+ * below, where it sits on "we test what AI actually does": the question raised here and
+ * the work that answers it, sharing a mark. See Icon.astro.
+ */
+
+const blocks = [
+  {
+    icon: "candidates",
+    title: "A list is not a decision.",
+    body: "Quoting, onboarding, reporting, client questions, document handling — all plausible, none obviously first. Ranked by opinion, they produce the same discussion every quarter and no build.",
+  },
+  {
+    icon: "benchmark",
+    title: "Nothing has been measured.",
+    body: "What each candidate actually costs you — in time, delay, rework and capacity — is rarely known. Without those figures there's no basis for choosing, and no way to judge afterwards whether the build was worth what it cost.",
+  },
+  {
+    icon: "separate",
+    title: "Not every candidate is an AI problem.",
+    body: "Some need a process change, or better use of software you already license. Establishing which is which before a budget is committed is worth more than the day costs.",
+  },
+] as const;
+---
+
+<section class="section section--cream argument" id="problem-statement">
+  <div class="container">
+    <div class="section__head argument__head">
+      <h2 class="section__title argument__title">
+        Getting the problem statement right is the work.
+      </h2>
+      <p class="section__lede">
+        Almost every business can list things AI might improve. Very few can say which one
+        is costing them most, and almost none have measured it. That gap is where AI
+        budgets go to the wrong place &mdash; a system that works exactly as specified,
+        running on a process that was never the expensive one. The build is rarely the
+        risk. The problem statement is.
+      </p>
+    </div>
+
+    <ul class="argument__cards">
+      {
+        blocks.map((block) => (
+          <li class="card argument__card">
+            <span class="argument__icon" aria-hidden="true">
+              <Icon name={block.icon} />
+            </span>
+            <h3 class="argument__card-title">{block.title}</h3>
+            <p class="argument__card-body">{block.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    {/* The claim and the concession, side by side. See the note at the top of this file
+      * about why the second is set lighter than the first. */}
+    <div class="argument__close">
+      <p class="argument__close-line">
+        Finding the right problem, putting a figure against it, and knowing what AI can
+        genuinely do about it today &mdash; that&rsquo;s the work we do on the day. What
+        you&rsquo;re buying is the decision, made on evidence.
+      </p>
+      <p class="argument__concession">
+        If you can already name the one thing you&rsquo;d fix, you don&rsquo;t need a
+        workshop. Say so on the call and we&rsquo;ll go straight to discovery.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .argument__head {
+    max-width: none;
+  }
+
+  /* 38ch breaks the heading at the sentence rhythm rather than stacking it in a corner. */
+  .argument__title {
+    max-width: 38ch;
+  }
+
+  .argument__cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ark-grid-gutter);
+    margin-top: 52px;
+    align-items: stretch;
+  }
+
+  .argument__card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-top: 3px solid var(--ark-terracotta);
+    padding: 30px;
+  }
+
+  .argument__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--ark-radius-pill);
+    /* The accent at low opacity, so the well reads as terracotta's quiet register
+     * rather than as a second saturated mark competing with the rule above it. */
+    background: rgba(168, 98, 62, 0.12);
+    color: var(--ark-terracotta-ink);
+    margin-bottom: 2px;
+  }
+
+  .argument__card-title {
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+  }
+
+  .argument__card-body {
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  /* Runs the full width of the cards, in two columns — the claim left, the concession
+   * right. That is the block that fills the band, which is what lets the head stay one
+   * column. Same answer /accounting's section 2 landed on. */
+  .argument__close {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    column-gap: 40px;
+    align-items: start;
+    margin-top: 36px;
+    padding: 26px 32px;
+    border-left: 4px solid var(--ark-terracotta);
+    border-radius: 0 var(--ark-radius) var(--ark-radius) 0;
+    background: var(--ark-white);
+  }
+
+  .argument__close-line {
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    color: var(--ark-ink);
+  }
+
+  /* Lighter than the line beside it, by instruction. At the same weight it reads as a
+   * retraction of the claim; lighter, it reads as an aside from someone confident
+   * enough to make it. */
+  .argument__concession {
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-muted);
+    padding-left: 40px;
+    border-left: 1px solid var(--ark-hairline);
+  }
+
+  @media (max-width: 1100px) {
+    .argument__cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Three into two columns leaves the third alone on its row. Across both, it reads as
+     * the third of a set rather than as an afterthought. */
+    .argument__card:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Phone: rows, not cards. The terracotta rule moves from the top edge to the left
+   * edge, which keeps the three reading as one set — the eye follows a single vertical
+   * line down the column instead of three separate announcements. */
+  @media (max-width: 900px) {
+    .argument__cards {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .argument__card,
+    .argument__card:last-child {
+      grid-column: 1;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      column-gap: 14px;
+      row-gap: 6px;
+      align-items: center;
+      padding: 18px 18px 18px 16px;
+      border-top: 1px solid var(--ark-hairline);
+      border-left: 3px solid var(--ark-terracotta);
+      border-radius: 0 var(--ark-radius) var(--ark-radius) 0;
+    }
+
+    .argument__icon {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 0;
+    }
+
+    .argument__card-title {
+      font-size: 1.0625rem;
+    }
+
+    .argument__card-body {
+      grid-column: 1 / -1;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+
+    .argument__close {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 16px;
+      margin-top: 24px;
+      padding: 20px 18px;
+    }
+
+    .argument__close-line {
+      font-size: 1.0625rem;
+    }
+
+    /* Stacked, a left border reads as a quote mark on the concession rather than as a
+     * divider between two columns. */
+    .argument__concession {
+      padding-left: 0;
+      padding-top: 16px;
+      border-left: 0;
+      border-top: 1px solid var(--ark-hairline);
+      font-size: 1rem;
+    }
+  }
+</style>

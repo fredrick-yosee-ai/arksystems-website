@@ -1,15 +1,33 @@
 <!--
   ARKSYSTEMS — /workshop, approved copy.
-  Supplied by Fredrick Aug 26 2026 and built the same day. Below the rule, this file is
-  the copy exactly as it was supplied; nothing in it has been edited.
+
+  REPLACED IN FULL Aug 26 2026, hours after the first version was built, and the page was
+  reworked against it the same day. Below the rule, this file is the copy exactly as
+  supplied; nothing in it has been edited. The previous version is in git history.
+
+  WHAT CHANGED, AND WHY IT WAS NOT A RESTYLE. The first copy described the workshop. This
+  one argues for it. Section 2 was rewritten end to end — it used to say who the workshop
+  is for ("this is for the list, not the single problem"), and now it says why the first
+  decision is the one that costs ("getting the problem statement right is the work").
+  That is a different and much harder job, and it is the job the page now leads with:
+  until a reader accepts that identifying the right problem IS the valuable work, a
+  workshop reads as a fee charged before the real work starts.
+
+  Section 2 also gained two blocks it did not have — a closing line ("what you're buying
+  is the decision, made on evidence") and a lighter concession beneath it — and its third
+  block changed subject entirely, from "it never reaches the top of the list" to "not
+  every candidate is an AI problem". The hero H1 and subhead, the close heading, the meta
+  description and one FAQ answer changed with it. Sections 3, 4 and 5 are untouched.
 
   WHERE THE BUILD DEPARTS FROM THIS FILE. Six departures, all recorded here rather than
   argued in the components:
 
-  1. THE HERO SUBHEAD IS SPLIT INTO TWO PARAGRAPHS at the sentence boundary — same words,
-     same order, nothing added or removed. As one block it is nine lines of lede at 390px
-     and pushes the CTA under the fold. Split, the button sits at 557–610px against an
-     844px fold. Both other heroes on the site are split for the same reason.
+  1. THE HERO SUBHEAD IS SPLIT INTO TWO PARAGRAPHS at a sentence boundary — same words,
+     same order, nothing added or removed. As one block it is a wall of lede at 390px and
+     pushes the CTA under the fold. The split falls after "It's which problem you point AI
+     at", which is also where it wants to fall on meaning: those two sentences are the
+     thesis and everything after them is the offer. Measured after: the button sits at
+     545–598px against an 844px fold.
 
   2. SECTION 3'S SCOPE PARAGRAPH IS A CALLOUT, not body copy. The file marks it "do not
      cut", and a paragraph a skimmer skips is cut in every way that matters. It is the
@@ -33,9 +51,13 @@
      the location — Fredrick's decision of Aug 26 2026, on the same reasoning as the
      other two: a title tag is a search-targeting string, not a sentence on a page.
 
-  6. SECTIONS CARRY ids FOR ANCHORING — right-first-step, on-the-day,
+  6. SECTIONS CARRY ids FOR ANCHORING — problem-statement, on-the-day,
      what-you-leave-with, what-it-costs, before-you-book. Not in the file; needed so the
      nav and any future link can reach a section rather than the top of the page.
+
+  THE CLAIMS NOTE ON SECTION 2 IS A BUILD CONSTRAINT, not commentary. "AI budgets go to
+  the wrong place" is a position, not a claim about any client: no figure, no attribution,
+  which is exactly what keeps it inside the claims rules. DO NOT ADD A STATISTIC TO IT.
 
   THE [CONFIRM] SECTION AT THE FOOT IS OPEN AND IS FREDRICK'S TO ANSWER. Two of the five
   are real exposure rather than tidying: section 4 promises an indicative figure per
@@ -62,9 +84,13 @@
 
 ## What this page has to do
 
-A visitor arrives here for one reason: they know AI matters, they have more than one candidate, and they cannot rank them. The page has to make choosing the workshop feel like the sensible move rather than an admission that they don't know their own business.
+A visitor arrives here knowing AI matters and unable to say where it belongs in their own operation. They have candidates, not a decision.
 
-It also has to answer the question the free discovery call creates: **why pay for a workshop when the call costs nothing?** The answer is that they do different jobs. Discovery examines one problem already identified. The workshop is for when nothing has been identified yet, or when there are six candidates and no way to rank them.
+The page has one job before any other: **establish that identifying the right problem is itself the valuable work.** Until that lands, a workshop reads as a fee charged before the real work starts. Once it lands, the workshop is the work — the decision that every dollar spent afterwards depends on.
+
+The second job is answering the question the free call creates: **why pay for this when the call costs nothing?** Because they do different jobs. Discovery examines one problem already identified. The workshop is for when nothing has been identified, or when there are several candidates and no basis to rank them.
+
+**Build note — order matters.** The why comes before the what. Section 2 argues the value of the decision; section 3 describes the day. Reversing them turns the page into an agenda.
 
 ---
 
@@ -73,14 +99,15 @@ It also has to answer the question the free discovery call creates: **why pay fo
 **Title tag** (52 chars)
 > AI Opportunity Workshop | ArkSystems Vancouver
 
-**Meta description** (146 chars)
-> One day on one area of your operation. Leave with a ranked shortlist of where AI pays, and what to build first. From CAD $1,000, half credited.
+**Meta description** (149 chars)
+> Not sure where AI fits your business? One day on one area of your operation, ending with a ranked shortlist and what to build first. From CAD $1,000.
 
 **Target queries**
 
 - `AI workshop for business`
 - `AI opportunity assessment`
 - `where to start with AI small business`
+- `how to identify AI use cases`
 - `AI readiness workshop Canada`
 
 **Schema:** `Service` (name: AI Opportunity Workshop, provider ArkSystems, areaServed Canada), `FAQPage` on section 6.
@@ -95,34 +122,42 @@ It also has to answer the question the free discovery call creates: **why pay fo
 > The AI Opportunity Workshop
 
 **H1**
-> One day, one area of your business. A ranked list of where AI pays.
+> Before you build AI, find out where it actually pays.
 
 **Subhead**
-> Most businesses don't have one AI problem. They have several candidates, no way to rank them, and nobody with time to work it out. The workshop is a day spent on one area of your operation — agreed before it's booked — that ends the guessing: what's worth building, in what order, and what each one is worth.
+> The expensive decision in an AI project isn't which tool. It's which problem you point AI at. Most businesses have several candidates, no figures behind any of them, and no way to rank them. The workshop is a day spent establishing that ranking on one agreed area of your operation — what's worth building, what it's worth, and what to build first.
 
 **CTA**
 > Book your free 20-minute call
 
 **Line under CTA**
-> The call is free and decides whether a workshop is the right first step. Sometimes it isn't.
+> The call is free and decides whether a workshop is your right first step. Sometimes it isn't.
 
 ---
 
-## Section 2 — When a workshop is the right first step
+## Section 2 — Why the first decision is the one that costs
+
+**Build note:** this is the argument of the page. It must sit above the description of the day, and it must not be shortened into a list of features.
 
 **H2**
-> This is for the list, not the single problem.
+> Getting the problem statement right is the work.
 
 **Body**
-> If you can already name the one thing you'd fix, you don't need a workshop. Say so on the call and we'll go straight to discovery. The workshop exists for the more common position: several candidates, no ranking, and no capacity to establish which one matters.
+> Almost every business can list things AI might improve. Very few can say which one is costing them most, and almost none have measured it. That gap is where AI budgets go to the wrong place — a system that works exactly as specified, running on a process that was never the expensive one. The build is rarely the risk. The problem statement is.
 
 **Three blocks**
 
-> **You have candidates, not a decision.** Quoting, onboarding, reporting, client questions, document handling — all plausible, none obviously first.
+> **A list is not a decision.** Quoting, onboarding, reporting, client questions, document handling — all plausible, none obviously first. Ranked by opinion, they produce the same discussion every quarter and no build.
 
-> **Nobody has measured what any of them cost.** Without that, ranking them is opinion. Every internal discussion ends where it started.
+> **Nothing has been measured.** What each candidate actually costs you — in time, delay, rework and capacity — is rarely known. Without those figures there's no basis for choosing, and no way to judge afterwards whether the build was worth what it cost.
 
-> **It never reaches the top of the list.** There's no deadline forcing it, so it loses to work that has one — every quarter, indefinitely.
+> **Not every candidate is an AI problem.** Some need a process change, or better use of software you already license. Establishing which is which before a budget is committed is worth more than the day costs.
+
+**Closing line**
+> Finding the right problem, putting a figure against it, and knowing what AI can genuinely do about it today — that's the work we do on the day. What you're buying is the decision, made on evidence.
+
+**Line, lighter weight**
+> If you can already name the one thing you'd fix, you don't need a workshop. Say so on the call and we'll go straight to discovery.
 
 ---
 
@@ -203,6 +238,9 @@ It also has to answer the question the free discovery call creates: **why pay fo
 **Why would I pay for this when the call is free?**
 > They do different jobs. The call, and the discovery that follows it, examines one problem you've already identified. The workshop is for when nothing has been identified yet, or when there are several candidates and no way to rank them. If you can name your one problem, skip the workshop — we'll tell you so on the call.
 
+**Can't we work out our own priorities internally?**
+> Some businesses can, and should. It takes someone with time to measure what each candidate costs, and current knowledge of what AI does well and where it still fails. Where that combination exists in-house, use it. Where it doesn't, the ranking stays a matter of opinion and the decision keeps getting deferred.
+
 **What if the workshop concludes we shouldn't build anything?**
 > Then that's the recommendation, in writing, with the reasoning. Knowing that a job isn't worth automating is worth more than discovering it after paying for a build.
 
@@ -223,7 +261,7 @@ It also has to answer the question the free discovery call creates: **why pay fo
 ## Section 7 — Close
 
 **H2**
-> Stop ranking it in your head.
+> Decide it on evidence.
 
 **Body**
 > Twenty minutes, at no cost, to work out whether a workshop is your right first step. If you already know your one problem, we'll say so and go straight to discovery instead.
@@ -241,6 +279,8 @@ It also has to answer the question the free discovery call creates: **why pay fo
 Nothing on this page describes a result achieved for a client, because there are none yet. Every statement describes what the workshop does and what the client receives.
 
 **Never claimed:** hours saved, ROI figures, client outcomes, completed workshops, guarantees, or a specific number of opportunities that will be found.
+
+**Note on section 2.** "AI budgets go to the wrong place" is a position, not a claim about any client. It carries no figure and no attribution, which is what keeps it inside the claims rules. Do not let a build add a statistic to it.
 
 ---
 

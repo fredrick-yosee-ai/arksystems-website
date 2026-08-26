@@ -2,7 +2,7 @@
 import { SITE } from "../../../consts";
 
 /*
- * Section 6 — before you book. Six questions, verbatim from docs/workshop-page.md.
+ * Section 6 — before you book. Seven questions, verbatim from docs/workshop-page.md.
  *
  * THE FIRST QUESTION IS THE PAGE'S REASON TO EXIST. "Why would I pay for this when the
  * call is free?" is the objection the free discovery call creates, and the answer has to
@@ -11,12 +11,18 @@ import { SITE } from "../../../consts";
  * purpose: section 2's lede, this answer, and the close. Weaken all three and the
  * ranking the page is selling stops being credible.
  *
- * THE THIRD ANSWER IS THE OTHER ONE THAT MATTERS. "Often not, and we'd rather say so
+ * THE SECOND ANSWER TELLS A READER TO DO IT THEMSELVES, and that is the point of it.
+ * "Some businesses can, and should… where that combination exists in-house, use it." It
+ * is the second of the places this page argues against its own sale, and the only one
+ * that names a genuine alternative rather than a smaller version of the same purchase.
+ * Do not qualify it into a reason to buy anyway.
+ *
+ * THE FOURTH ANSWER IS THE OTHER ONE THAT MATTERS. "Often not, and we'd rather say so
  * before you book" is what protects a larger business from buying a day that cannot
  * cover them — and it protects the fee at the same time. It is the FAQ half of section
  * 3's scope callout; the two say the same thing and both have to.
  *
- * ANSWER SIX IS DELIBERATELY VAGUE and it is the copy file's own [CONFIRM] item, not an
+ * THE LAST ANSWER IS DELIBERATELY VAGUE and it is the copy file's own [CONFIRM] item, not an
  * oversight: "shortly after the day" stands in for a real commitment that has not been
  * decided. It is honest as written because it promises nothing specific. The moment a
  * number is agreed, this is where it goes — and until then, do not invent one. A stated
@@ -35,6 +41,10 @@ const faqs = [
   {
     q: "Why would I pay for this when the call is free?",
     a: "They do different jobs. The call, and the discovery that follows it, examines one problem you've already identified. The workshop is for when nothing has been identified yet, or when there are several candidates and no way to rank them. If you can name your one problem, skip the workshop — we'll tell you so on the call.",
+  },
+  {
+    q: "Can't we work out our own priorities internally?",
+    a: "Some businesses can, and should. It takes someone with time to measure what each candidate costs, and current knowledge of what AI does well and where it still fails. Where that combination exists in-house, use it. Where it doesn't, the ranking stays a matter of opinion and the decision keeps getting deferred.",
   },
   {
     q: "What if the workshop concludes we shouldn't build anything?",

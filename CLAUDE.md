@@ -27,9 +27,11 @@ The page has exactly one job: get the visitor onto a 20-minute call.
    that shipped before it, and it carries three page rules of its own — no compliance
    content, document collection as one example rather than the offer, and the word
    "agent" nowhere. The old file is in git history
-5. `docs/workshop-page.md` — the approved `/workshop` copy, supplied and built Aug 26
-   2026. It carries its own `[CONFIRM]` list of five things Fredrick has to answer before
-   the page is final, and two of them are real exposure rather than tidying
+5. `docs/workshop-page.md` — the approved `/workshop` copy. **Replaced in full on Aug 26
+   2026, hours after the first version was built**, and the page reworked against it the
+   same day. The first copy described the workshop; this one argues for it. It carries its
+   own `[CONFIRM]` list of five things Fredrick has to answer before the page is final,
+   and two of them are real exposure rather than tidying. The old file is in git history
 6. **The built pages in `src/`** — for the nine homepage sections, the eight on
    `/accounting` and the seven on `/workshop`, this is the record of what was actually
    shipped, and the component comments carry the reasoning
@@ -500,6 +502,13 @@ the FAQ removal, section 2's rebuilt head, and the section padding above.
 `docs/workshop-page.md` was supplied and the page built against it the same day. It had
 been a footer link to a 404 since the site shipped.
 
+**Then the copy file was replaced in full, hours later, and the page reworked against it.**
+The first version described the workshop; this one argues for it. Section 2 was rewritten
+end to end, its third block changed subject, and it gained a closing line and a concession
+it did not have. The hero H1 and subhead, the close heading, the meta description and the
+FAQ (six questions became seven) changed with it. Sections 3, 4 and 5 were untouched, as
+were both illustrations. What follows describes the reworked page.
+
 **Who arrives here:** someone who has read another ArkSystems page, agrees with it, and
 cannot name a single problem to start with. Several candidates, no way to rank them. The
 page has to make choosing the workshop feel like the sensible move rather than an
@@ -516,20 +525,44 @@ when there are six candidates and no way to rank them.
 | # | Section | Component |
 |---|---------|-----------|
 | 1 | Hero | `sections/workshop/HeroSection.astro` + `hero/CandidateBoardPanel.astro` |
-| 2 | The right first step | `sections/workshop/RightFirstStepSection.astro` |
+| 2 | The problem statement | `sections/workshop/ProblemStatementSection.astro` |
 | 3 | What happens on the day | `sections/workshop/OnTheDaySection.astro` |
 | 4 | What you leave with | `sections/workshop/LeaveWithSection.astro` + `leave-with/ShortlistPanel.astro` |
 | 5 | What it costs | `sections/workshop/WhatItCostsSection.astro` |
-| 6 | Before you book | `sections/workshop/FaqSection.astro` |
+| 6 | Before you book | `sections/workshop/FaqSection.astro` — **seven** questions |
 | 7 | Close | `sections/workshop/CloseSection.astro` |
 
-**The page argues against its own sale in three places, and this is the thing most likely
-to be tidied away by a future edit.** Section 2's lede ("if you can already name the one
-thing you'd fix, you don't need a workshop"), the first FAQ answer ("if you can name your
-one problem, skip the workshop"), and the close ("we'll say so and go straight to
-discovery instead"). That concession is the evidence for the claim the page is actually
-making — that the ranking it sells is honest. Remove it and the page is a brochure.
-Weaken one and all three have to go, because they are the same promise made three times.
+**Section 2 is the argument, and the copy file makes its position a build note: the why
+comes before the what.** Section 2 argues the value of the decision; section 3 describes
+the day. Reversing them turns the page into an agenda — a schedule offered to someone who
+has not yet accepted that the day is worth buying. The section has one thing to establish
+before anything else on the page can work: **that identifying the right problem is itself
+the valuable work.** Until that lands, a workshop reads as a fee charged before the real
+work starts. Once it lands, the workshop *is* the work. That is why the section closes on
+"what you're buying is the decision, made on evidence" rather than on a summary, and why
+the copy file forbids shortening it into a list of features.
+
+**"AI budgets go to the wrong place" in section 2 is a position, not a claim, and the copy
+file names it in the claims section.** It carries no figure and no attribution, which is
+exactly what keeps it inside the claims rules. **Do not add a statistic to it** — no
+percentage, no survey, no "studies show". The moment it acquires a number it becomes a
+claim needing a source, and there isn't one.
+
+**Section 2's closing block is two parts at deliberately different weights.** The claim
+("finding the right problem… what you're buying is the decision, made on evidence") sets
+in the display face; the concession beside it ("if you can already name the one thing
+you'd fix, you don't need a workshop") is lighter body, by instruction. At equal weight
+the second reads as a retraction of the first. Lighter, it reads as what it is — an aside
+from someone confident enough to make it.
+
+**The page argues against its own sale in four places, and this is the thing most likely
+to be tidied away by a future edit.** Section 2's closing concession, the first FAQ answer
+("if you can name your one problem, skip the workshop"), the second FAQ answer ("some
+businesses can, and should… where that combination exists in-house, use it"), and the
+close. That concession is the evidence for the claim the page is actually making — that
+the ranking it sells is honest. Remove it and the page is a brochure. The second FAQ
+answer is the only one naming a genuine alternative rather than a smaller version of the
+same purchase; do not qualify it into a reason to buy anyway.
 
 **Four CTAs — `ws-hero`, `ws-day`, `ws-cost`, `ws-closing`. Sections 2, 4 and 6 carry
 none**, deliberately: 2 and 4 do recognition and delivery work, and 6 exists to remove
@@ -584,12 +617,15 @@ under nothing. It was built at 62ch, seen, and removed.
 only order across seven sections where no two neighbours share a colour, and section 4's
 band is white so its stage-green panel reads against it.
 
-**Eight icons were added to `Icon.astro`** — `candidates`, `deferred`, `workflowMap`,
-`separate`, `rank`, `effort`, `recommend`, `adviseAgainst`. Two are reused rather than
-redrawn and both reuses carry the argument: `benchmark` sits on "nobody has measured what
-any of them cost" and `cost` sits, one section later, on "we put figures against each
-candidate". `rank` repeats inside the page, on "we rank them" and then on "a ranked
-shortlist" — the promise and the deliverable share a mark.
+**Seven icons were added to `Icon.astro`** — `candidates`, `workflowMap`, `separate`,
+`rank`, `effort`, `recommend`, `adviseAgainst`. Two are reused from the older sets rather
+than redrawn, and both reuses carry the argument: `benchmark` sits on "nothing has been
+measured" and `cost` sits, one section later, on "we put figures against each candidate".
+Two more repeat inside the page across a section break — `separate` on "not every
+candidate is an AI problem" and again on "we test what AI actually does", the question and
+the work that answers it; `rank` on "we rank them" and again on "a ranked shortlist", the
+promise and the deliverable. An eighth, `deferred`, was drawn and then removed with the
+block it belonged to when the copy was replaced. It is in git history.
 
 **The panel tags use `--ark-muted`, not `--ark-muted-2`.** At 10px they are small text
 and need 4.5:1; `--ark-muted-2` measures 3.67 on white and fails. Found by measuring

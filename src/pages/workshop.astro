@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { SITE, BOOKING_URL } from "../consts";
 
 import HeroSection from "../components/sections/workshop/HeroSection.astro";
-import RightFirstStepSection from "../components/sections/workshop/RightFirstStepSection.astro";
+import ProblemStatementSection from "../components/sections/workshop/ProblemStatementSection.astro";
 import OnTheDaySection from "../components/sections/workshop/OnTheDaySection.astro";
 import LeaveWithSection from "../components/sections/workshop/LeaveWithSection.astro";
 import WhatItCostsSection from "../components/sections/workshop/WhatItCostsSection.astro";
@@ -14,6 +14,12 @@ import CloseSection from "../components/sections/workshop/CloseSection.astro";
  * /workshop — the AI Opportunity Workshop. Built Aug 26 2026 against the approved copy
  * in docs/workshop-page.md. It had been a footer link to a 404 since the site shipped.
  *
+ * REWORKED THE SAME DAY against a replaced copy file. The first version described the
+ * workshop; this one argues for it. Section 2 was rewritten end to end — it used to say
+ * who the workshop is for, and now it says why the first decision is the one that costs,
+ * which is a different and much harder job. The hero, the close heading, the meta
+ * description and one FAQ answer changed with it. See CLAUDE.md for what moved and why.
+ *
  * WHO ARRIVES HERE: someone who has read another ArkSystems page, agrees with it, and
  * cannot name a single problem to start with. They have several candidates and no way to
  * rank them. The page has to make choosing the workshop feel like the sensible move
@@ -21,24 +27,34 @@ import CloseSection from "../components/sections/workshop/CloseSection.astro";
  * line on it implies the reader is disorganised or behind. The standing rule holds here
  * as everywhere: blame the work, never the owner.
  *
- * THE JOB THE PAGE EXISTS FOR is answering the question the free discovery call creates:
- * why pay for a workshop when the call costs nothing? The answer, in section 6 and again
- * in section 2 and again in the close, is that they do different jobs. Discovery examines
- * one problem already identified. The workshop is for when nothing has been identified,
- * or when there are six candidates and no way to rank them.
+ * THE FIRST JOB, BEFORE ANY OTHER, is establishing that identifying the right problem is
+ * itself the valuable work. Until that lands, a workshop reads as a fee charged before
+ * the real work starts. Once it lands, the workshop IS the work — the decision every
+ * dollar spent afterwards depends on. Section 2 does that job and nothing else does.
  *
- * THE PAGE ARGUES AGAINST ITS OWN SALE IN THREE PLACES, and this is the thing most
- * likely to be tidied away by a future edit. Section 2's lede ("if you can already name
- * the one thing you'd fix, you don't need a workshop"), the first FAQ answer, and the
- * close all concede the case where the workshop is the wrong purchase. That concession is
- * the evidence for the claim the page is actually making — that the ranking we produce is
- * honest. Remove it and the page is a brochure.
+ * THE SECOND JOB is answering the question the free call creates: why pay for this when
+ * the call costs nothing? The answer, in section 6 and again in section 2 and again in
+ * the close, is that they do different jobs. Discovery examines one problem already
+ * identified. The workshop is for when nothing has been identified, or when there are
+ * several candidates and no basis to rank them.
+ *
+ * ORDER MATTERS, AND THE COPY FILE MAKES IT A BUILD NOTE: the why comes before the what.
+ * Section 2 argues the value of the decision; section 3 describes the day. Reversing them
+ * turns the page into an agenda — a schedule offered to someone who has not yet accepted
+ * that the day is worth buying.
+ *
+ * THE PAGE ARGUES AGAINST ITS OWN SALE IN FOUR PLACES, and this is the thing most likely
+ * to be tidied away by a future edit. Section 2's closing concession ("if you can already
+ * name the one thing you'd fix, you don't need a workshop"), the first FAQ answer, the
+ * second FAQ answer ("some businesses can, and should… use it"), and the close. That
+ * concession is the evidence for the claim the page is actually making — that the ranking
+ * we produce is honest. Remove it and the page is a brochure.
  *
  * Seven sections, in the copy file's order:
  *
- *   1  Hero                the promise, and the free call
- *   2  The right first step  who this is for — and who it isn't. No CTA
- *   3  What happens on the day  the method. Carries the argument with 4
+ *   1  Hero                the thesis: the expensive decision is which problem, not which tool
+ *   2  The problem statement  THE ARGUMENT. Why the first decision is the one that costs. No CTA
+ *   3  What happens on the day  the method
  *   4  What you leave with  the deliverable. No CTA
  *   5  What it costs       the only price section. "From" is load-bearing
  *   6  Before you book     the objections
@@ -52,6 +68,12 @@ import CloseSection from "../components/sections/workshop/CloseSection.astro";
  * EVERY BUTTON BOOKS THE FREE CALL, NOT THE WORKSHOP. The Cal.com event behind
  * BOOKING_URL is the 20-minute discovery call. A button labelled "Book the workshop"
  * would be false as well as off-message.
+ *
+ * "AI BUDGETS GO TO THE WRONG PLACE" IN SECTION 2 IS A POSITION, NOT A CLAIM, and the
+ * copy file's claims section names it. It carries no figure and no attribution, which is
+ * what keeps it inside the claims rules. DO NOT ADD A STATISTIC TO IT — no percentage, no
+ * survey, no "studies show". The moment it acquires a number it becomes a claim needing a
+ * source, and there isn't one.
  *
  * ONE EYEBROW, on the hero. The copy file specifies it there and nowhere else, and every
  * other section's heading is already its own short name — an eyebrow above "Before you
@@ -104,7 +126,7 @@ const serviceSchema = {
   name: "AI Opportunity Workshop",
   serviceType: "AI opportunity assessment workshop",
   description:
-    "A day spent on one agreed area of a business, mapping how the work actually runs, putting figures against each candidate for AI, and producing a ranked shortlist with a written recommendation on what to build first — and what to build not at all.",
+    "A day spent on one agreed area of a business, establishing which problem is worth pointing AI at: mapping how the work actually runs, putting figures against each candidate, separating the AI problems from the process problems, and producing a ranked shortlist with a written recommendation on what to build first — and what to build not at all.",
   provider: {
     "@type": "Organization",
     name: SITE.name,
@@ -138,7 +160,7 @@ const serviceSchema = {
 <BaseLayout
   title="AI Opportunity Workshop"
   titleOverride="AI Opportunity Workshop | ArkSystems Vancouver"
-  description="One day on one area of your operation. Leave with a ranked shortlist of where AI pays, and what to build first. From CAD $1,000, half credited."
+  description="Not sure where AI fits your business? One day on one area of your operation, ending with a ranked shortlist and what to build first. From CAD $1,000."
 >
   <script
     slot="head"
@@ -148,7 +170,7 @@ const serviceSchema = {
   />
 
   <HeroSection />
-  <RightFirstStepSection />
+  <ProblemStatementSection />
   <OnTheDaySection />
   <LeaveWithSection />
   <WhatItCostsSection />
