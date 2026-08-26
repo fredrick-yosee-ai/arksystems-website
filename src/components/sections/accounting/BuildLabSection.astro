@@ -146,13 +146,22 @@ const steps = [
   }
 
   /* The panel spans the head and the steps, and centres against them. Not the foot —
-   * the foot runs full width underneath both columns now, see below. */
+   * the foot runs full width underneath both columns now, see below.
+   *
+   * NOT STICKY. It was `position: sticky; top: 104px`, and on a section this short that
+   * only ever did damage: measured at 1280px wide, the panel drifted 308px down the
+   * column as you scrolled — from 4343 to 4651 — and its bottom edge ended up at 5345,
+   * past the steps it is meant to sit beside (5152) and hanging over the full-width foot.
+   * The reader arrives at the four steps and the illustration explaining them has floated
+   * off below, leaving the top of the right column empty.
+   *
+   * Sticky earns its keep when a short reference has to stay put beside a long scroll.
+   * Here the copy column is 924px against a 694px panel, so there is nothing to follow —
+   * the two are on screen together the whole time. Do not put it back. */
   .lab__panel {
     grid-column: 2;
     grid-row: 1 / span 2;
     align-self: center;
-    position: sticky;
-    top: 104px;
   }
 
   .lab__steps {
@@ -333,7 +342,6 @@ const steps = [
     }
 
     .lab__panel {
-      position: static;
       margin-top: 28px;
     }
 
