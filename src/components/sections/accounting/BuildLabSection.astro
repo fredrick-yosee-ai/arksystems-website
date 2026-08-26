@@ -124,8 +124,13 @@ const steps = [
    * evidence for a case already made, not the case itself. Measured after the change —
    * 1219px against section 3's 1240 and section 2's 1155. If a future edit adds a block
    * here, check that number again rather than assuming it still holds. */
+  /* A shorter band than the site's 88px, deliberately. The copy file's build note is
+   * that this section is not the tallest on the page — 3 and 4 carry the argument, and a
+   * demonstration given before the argument is a product demo. Measured after the
+   * full-width foot went in: 1178px against section 3's 1192. Re-measure if a block is
+   * ever added here. */
   .lab {
-    padding-block: 76px;
+    padding-block: 72px;
   }
 
   .lab__grid {
@@ -140,10 +145,11 @@ const steps = [
     grid-row: 1;
   }
 
-  /* The panel spans all three rows of the copy column and centres against them. */
+  /* The panel spans the head and the steps, and centres against them. Not the foot —
+   * the foot runs full width underneath both columns now, see below. */
   .lab__panel {
     grid-column: 2;
-    grid-row: 1 / span 3;
+    grid-row: 1 / span 2;
     align-self: center;
     position: sticky;
     top: 104px;
@@ -155,18 +161,28 @@ const steps = [
     margin-top: 32px;
   }
 
-  /* The foot runs as two columns of its own, which is the load-bearing part of keeping
-   * this section shorter than 3 and 4 — see the note above the section rule. Stacked, it
-   * is four blocks and 322px; paired, it is 145px and reads better, because the closing
-   * line and the button belong together and the two supporting paragraphs belong
-   * together. */
+  /* The foot runs the FULL width of the container, under both columns.
+   *
+   * It was two columns inside the copy column, which meant a 21px display line, a
+   * paragraph and a button sharing 614px — about 290px each. Everything in it wrapped:
+   * the closing line took three lines, the paragraph took six, and the button, being a
+   * stretched grid item, spread to fill its column and broke its own label in half. It
+   * read as squashed because it was.
+   *
+   * Across the container each half is roughly 600px and nothing has to wrap to fit. It
+   * also costs no height — the panel beside the steps was already taller than the copy
+   * column, so this row lands in space the section was leaving empty anyway. The
+   * hairline above it is what stops a full-width row reading as a continuation of the
+   * steps column. */
   .lab__foot {
-    grid-column: 1;
+    grid-column: 1 / -1;
     grid-row: 3;
-    margin-top: 28px;
+    margin-top: 32px;
+    padding-top: 26px;
+    border-top: 1px solid var(--ark-hairline);
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 32px;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    column-gap: 56px;
     align-items: start;
   }
 
@@ -175,16 +191,17 @@ const steps = [
     grid-row: 1;
   }
 
+  /* `justify-self: start` is not optional. A grid item stretches to its column by
+   * default, and a stretched button spreads to 600px and wraps its label. */
   .lab__foot :global(.booking-button) {
     grid-column: 1;
     grid-row: 2;
-    align-self: end;
     justify-self: start;
-    margin-top: 22px;
+    margin-top: 24px;
   }
 
-  /* Spans both foot rows so the tall paragraph sits beside the closing line AND the
-   * button rather than forcing a third row underneath them. */
+  /* Spans both foot rows so the paragraph sits beside the closing line AND the button
+   * rather than forcing a third row underneath them. */
   .lab__means {
     grid-column: 2;
     grid-row: 1 / span 2;
@@ -274,7 +291,7 @@ const steps = [
     font-size: var(--ark-body);
     line-height: var(--ark-lh-body);
     color: var(--ark-body-ink);
-    max-width: 54ch;
+    max-width: 62ch;
   }
 
   .lab__one-of {
@@ -346,9 +363,13 @@ const steps = [
     }
 
     /* One column again. Every explicit placement in the foot has to be undone here too,
-     * or the four blocks stack into the rows they were pinned to and leave gaps. */
+     * or the blocks stack into the rows they were pinned to and leave gaps. The hairline
+     * goes with it: stacked, the foot already follows the panel and the steps in a
+     * single column, so a rule across it separates nothing. */
     .lab__foot {
       margin-top: 32px;
+      padding-top: 0;
+      border-top: 0;
       grid-template-columns: minmax(0, 1fr);
       column-gap: 0;
     }
@@ -362,6 +383,7 @@ const steps = [
 
     .lab__means {
       margin-top: 14px;
+      max-width: 54ch;
     }
 
     .lab__close {

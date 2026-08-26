@@ -389,11 +389,21 @@ had no equivalent in the new copy; what survives of two of them lives in FAQ ans
 `common/Caption.astro` still exists but is now referenced by nothing — it was built for
 the sourced figures the compliance rule removed.
 
+**Section 5's foot runs the full width of the container, under both columns.** It was
+two columns inside the copy column, which put a 21px display line, a paragraph and a
+button into about 290px each: the closing line took three lines, the paragraph took six,
+and the button — a stretched grid item — spread to fill its column and broke its own
+label in half. Across the container each half is roughly 600px and nothing wraps to fit.
+**`justify-self: start` on that button is not optional**; without it a grid item stretches
+to its column and the squashing comes straight back. The row costs no height, because the
+panel beside the steps was already taller than the copy column.
+
 **Section 5 must not be the tallest section on the page.** The copy file says so, and it
 is a real measurement, not a feeling: 3 and 4 carry the argument, and a demonstration
-given before the argument is a product demo. The first build of it came out at 1444px
-against section 3's 1240. It ships at 1219px, held there by a two-column foot and a 96px
-band rather than 112. **Check the number again if a block is ever added to it.**
+given before the argument is a product demo. It ships at 1178px against section 3's 1192,
+held there by the full-width foot above and a 72px band rather than the site's 88.
+**Re-measure if a block is ever added to it** — the margin is 14px and the failure is
+silent, because a section that outgrows its neighbour just scrolls and looks normal.
 
 **The demonstration panel's badge is the most load-bearing element on the page.** The
 copy file calls its build note "the most important instruction in this file": "Working
