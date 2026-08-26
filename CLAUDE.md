@@ -398,6 +398,17 @@ label in half. Across the container each half is roughly 600px and nothing wraps
 to its column and the squashing comes straight back. The row costs no height, because the
 panel beside the steps was already taller than the copy column.
 
+**Section 5's demonstration panel is not sticky, and must not be made sticky again.** It
+shipped as `position: sticky; top: 104px`, which on a section this short only did damage:
+measured at 1280px wide the panel drifted 308px down its column as the reader scrolled,
+and its bottom edge finished past the steps it is meant to sit beside, hanging over the
+full-width foot. Arriving at the four steps, you found the illustration that explains them
+had floated off below, with the top of the right column empty. Sticky is for a short
+reference beside a long scroll; here the copy column is 924px against a 694px panel and
+the two are on screen together throughout, so there is nothing to follow. `align-self:
+center` stays — that part was right. Removing it changed no heights, because sticky never
+affected layout.
+
 **Section 5 must not be the tallest section on the page.** The copy file says so, and it
 is a real measurement, not a feeling: 3 and 4 carry the argument, and a demonstration
 given before the argument is a product demo. It ships at 1178px against section 3's 1192,
