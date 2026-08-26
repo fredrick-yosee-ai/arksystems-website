@@ -721,6 +721,30 @@ is the only image. That means every section has to fill its band without artwork
 why 1, 2 and 6 run two-column heads, 4 gives the pull quote its own column, and 5 runs a
 2×2.
 
+**The hero's two columns end on the same line, and getting there took two attempts.**
+The first build put the subhead in `grid-row: 1 / span 2`, which anchored it to the
+EYEBROW rather than the headline: measured at 1440, the subhead started at 147 against the
+headline's 185, so the supporting text began 38px above the thing it supports — and the
+columns finished 107px apart, leaving a hole under the right one that read as content
+failing to load. What ships puts the subhead in row 2 only, beside the headline and never
+beside the eyebrow, with `align-self: end` landing its last line on the headline's last
+line (measured delta: 0). **The remaining space is at the TOP of the right column, and
+that is the point** — a headline that dominates with a paragraph anchored under it reads
+as a deliberate stagger; the reverse reads as a shortfall. **The terracotta rule above the
+subhead is not decoration**: without it the right column starts in mid-air. It also lands
+flush with the eyebrow's baseline, which is what ties the two columns together.
+
+**The hero runs 96/108 padding, deeper than the other three heroes' 60/76.** They each
+carry an illustration that gives them height; this one is a headline and a paragraph, and
+at the shared padding it measured 405px — the shortest section on the site, which is the
+wrong thing for a hero to be. The space is the presence.
+
+**A centred headline wants its subhead block centred too, with the text inside still
+left.** That is what `base.css` does for `.section__head .section__lede`, and this hero
+now matches it at tablet-portrait widths. **The heroes on `/` and `/accounting` use their
+own subhead class and do not** — both sit left-flush under a centred headline at 768.
+Pre-existing and flagged rather than changed, since each is a shipped page.
+
 **Section 4's pull quote takes a column, it does not sit under the prose.** The first build
 flowed three paragraphs across two CSS columns; three does not divide by two, so the left
 column ended a paragraph short and the quote sat under a visible hole. Split by content

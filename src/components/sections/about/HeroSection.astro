@@ -52,7 +52,11 @@
    * two neighbours sharing a colour. */
   .hero {
     background: var(--ark-white);
-    padding-block: 76px 88px;
+    /* Deeper than the other three heroes, which run 60/76. They each carry an
+     * illustration that gives them height on its own; this one is a headline and a
+     * paragraph, and at the shared padding it measured 405px — the shortest section on
+     * the site, which is the wrong thing for a hero to be. The space is the presence. */
+    padding-block: 96px 108px;
   }
 
   .hero__eyebrow {
@@ -81,12 +85,29 @@
   /* Two columns: heading left, subhead right, running to the same right edge. The exact
    * complement of the centring rule in base.css — a portrait tablet centres its heading
    * and must not also be holding two columns. */
+  /* THE TWO COLUMNS END TOGETHER, and getting there took two attempts worth recording.
+   *
+   * First build put the subhead in `grid-row: 1 / span 2`, which anchored it to the
+   * EYEBROW rather than to the headline: measured at 1440, the subhead started at 147
+   * and the headline at 185, so the supporting text began 38px above the thing it
+   * supports. Worse, the two columns finished 107px apart — subhead bottom 279 against
+   * headline bottom 386 — which left a hole under the right column that read as content
+   * failing to load.
+   *
+   * What ships: the subhead sits in row 2 only, beside the headline and never beside the
+   * eyebrow, and `align-self: end` lands its last line on the headline's last line. The
+   * space that remains is at the TOP of the right column, above the subhead, which is a
+   * deliberate stagger rather than a shortfall — a reader sees a headline that dominates
+   * and a paragraph anchored under it, not a column that ran out.
+   *
+   * The terracotta rule above the subhead is what makes the stagger legible. Without it
+   * the right column starts in mid-air; with it, the block has a top edge and the empty
+   * space above reads as chosen. */
   @media (min-width: 901px) and (orientation: landscape) {
     .hero__head {
       display: grid;
-      grid-template-columns: minmax(0, 1.06fr) minmax(0, 1fr);
-      column-gap: 56px;
-      align-items: start;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      column-gap: 64px;
     }
 
     .hero__eyebrow {
@@ -101,26 +122,37 @@
 
     .hero__subhead {
       grid-column: 2;
-      grid-row: 1 / span 2;
-      /* No top margin — it sits beside the heading, not under it. The 2px nudge puts its
-       * first line on the heading's first baseline rather than its cap height. */
-      margin-top: 2px;
+      grid-row: 2;
+      align-self: end;
+      margin-top: 0;
+      padding-top: 26px;
+      border-top: 3px solid var(--ark-terracotta);
       max-width: none;
     }
   }
 
   @media (max-width: 900px) {
     .hero {
-      padding-block: 48px 56px;
+      padding-block: 52px 60px;
     }
 
     .hero__eyebrow {
       margin-bottom: 16px;
     }
 
+    /* The BLOCK centres, the TEXT inside it stays left. That is what base.css does for
+     * `.section__head .section__lede`, and it is the right treatment: centred prose is
+     * harder to read, but a left-flush 44ch block under a centred headline reads as a
+     * misalignment. Visible at tablet-portrait widths; at 390 the block is already wider
+     * than the column so the auto margin changes nothing.
+     *
+     * The heroes on / and /accounting use a custom subhead class too and do NOT do this,
+     * so they sit left-flush under a centred headline at 768. Pre-existing, flagged to
+     * Fredrick rather than changed here — it is a shipped page each time. */
     .hero__subhead {
       margin-top: 18px;
       max-width: 44ch;
+      margin-inline: auto;
     }
   }
 
