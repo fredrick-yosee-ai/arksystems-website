@@ -31,7 +31,9 @@ import { SITE } from "../../../consts";
       </BookingButton>
     </div>
 
-    <p class="closing__note">Based in Metro Vancouver, working remotely across Canada.</p>
+    {/* The approved copy sets "Based in Metro Vancouver, working remotely across
+        Canada." here. Removed on Fredrick's instruction of Aug 25 2026, along with every
+        line like it elsewhere on the site. The CTA is followed directly by the tagline. */}
 
     <p class="closing__tagline">{SITE.tagline}</p>
   </div>
@@ -69,12 +71,6 @@ import { SITE } from "../../../consts";
 
   .closing__cta {
     margin-top: 38px;
-  }
-
-  .closing__note {
-    margin-top: 18px;
-    font-size: var(--ark-small);
-    color: var(--ark-on-dark-muted);
   }
 
   .closing__tagline {
