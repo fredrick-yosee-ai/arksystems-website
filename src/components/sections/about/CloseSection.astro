@@ -1,0 +1,120 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+import { SITE } from "../../../consts";
+
+/*
+ * Section 7 — the close. The only CTA on the page, by instruction: the hero deliberately
+ * carries none, because a reader who opens About is verifying rather than deciding.
+ * By the time they reach here they have their answer, and this is the first and only
+ * point at which asking is not an interruption.
+ *
+ * On the dark olive band, matching the other three pages. Two pages on one site should
+ * not end differently, and the tagline has one established treatment: display face, on
+ * olive, below the CTA, as a sign-off and never as a heading.
+ *
+ * NO LOCATION LINE UNDER THE CTA. Fredrick's instruction of Aug 25 2026 removed exactly
+ * that from the homepage close and /accounting's close. It never existed here and must
+ * not appear.
+ *
+ * THE HEADING PROMISES A TWENTY-MINUTE TEST, NOT A SALE — "enough to find out whether
+ * we're useful to you", with the body offering to tell you it isn't worth building. That
+ * is the same concession the other pages make and it belongs on this one most of all,
+ * since credibility is the only thing About is selling.
+ */
+---
+
+<section class="close on-dark">
+  <div class="container close__inner">
+    <h2 class="close__title">
+      Twenty minutes is enough to find out whether we&rsquo;re useful to you.
+    </h2>
+
+    <p class="close__body">
+      Bring the process costing you the most. We&rsquo;ll tell you whether AI solves it,
+      roughly what solving it would be worth, and whether it&rsquo;s worth building at
+      this point in your business.
+    </p>
+
+    <div class="close__cta">
+      <BookingButton location="about-closing" variant="cream" block>
+        Book your free 20-minute call
+      </BookingButton>
+    </div>
+
+    <p class="close__tagline">{SITE.tagline}</p>
+  </div>
+</section>
+
+<style>
+  .close {
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+    padding-block: 92px;
+  }
+
+  .close__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Smaller than the other three closes. Their headings are four or five words; this one
+   * is twelve, and at 3.25rem it sets on four lines and reads as a paragraph in display
+   * type rather than as a sign-off. */
+  .close__title {
+    color: var(--ark-on-dark);
+    font-size: 2.75rem;
+    line-height: 1.12;
+    letter-spacing: -0.022em;
+    max-width: 24ch;
+  }
+
+  .close__body {
+    margin-top: 26px;
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-on-dark-muted);
+    max-width: 58ch;
+  }
+
+  .close__cta {
+    margin-top: 38px;
+  }
+
+  .close__tagline {
+    margin-top: 60px;
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: 0.005em;
+    color: var(--ark-on-dark-eyebrow);
+  }
+
+  @media (max-width: 900px) {
+    .close {
+      padding-block: 62px;
+    }
+
+    .close__title {
+      font-size: var(--ark-h2);
+      line-height: var(--ark-lh-h2);
+      max-width: 20ch;
+    }
+
+    .close__body {
+      margin-top: 18px;
+      max-width: 36ch;
+    }
+
+    .close__cta {
+      margin-top: 28px;
+      width: 100%;
+    }
+
+    .close__tagline {
+      margin-top: 44px;
+      font-size: 1.5rem;
+    }
+  }
+</style>

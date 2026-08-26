@@ -32,10 +32,12 @@ The page has exactly one job: get the visitor onto a 20-minute call.
    same day. The first copy described the workshop; this one argues for it. It carries its
    own `[CONFIRM]` list of five things Fredrick has to answer before the page is final,
    and two of them are real exposure rather than tidying. The old file is in git history
-6. **The built pages in `src/`** — for the nine homepage sections, the eight on
-   `/accounting` and the seven on `/workshop`, this is the record of what was actually
-   shipped, and the component comments carry the reasoning
-7. `src/styles/brand-tokens.css` — every colour and type decision
+6. `docs/about-page.md` — the approved `/about` copy, supplied and built Aug 26 2026.
+   It carries its own `[CONFIRM]` list; two of the four are already closed
+7. **The built pages in `src/`** — for the nine homepage sections, the eight on
+   `/accounting`, the seven on `/workshop` and the seven on `/about`, this is the record
+   of what was actually shipped, and the component comments carry the reasoning
+8. `src/styles/brand-tokens.css` — every colour and type decision
 
 Two sources that used to be listed here are gone, removed once the homepage was built:
 
@@ -246,7 +248,7 @@ pinned in `.nvmrc`.
 ## Still to build for release one
 
 - ~~`/workshop`~~ — **built Aug 26 2026. See the section below.**
-- `/about` — **linked from nav and footer, 404s.**
+- ~~`/about`~~ — **built Aug 26 2026. See the section below.**
 - **Privacy, Terms, Data Handling** — launch blockers, not polish. CASL needs a privacy
   basis, and the AI Opportunity Fit Form has had an open privacy-notice placeholder since
   July. **All three are linked from the live footer and 404 today**, and the live FAQ
@@ -656,6 +658,115 @@ approved. Two are real exposure rather than tidying:
    really a flat CAD $1,000 with "from" as cover, that section is inaccurate.
 5. **What counts as one area.** Without an internal definition, a client can reasonably
    expect the day to cover everything they mention.
+
+## Built Aug 26 2026 — /about
+
+`docs/about-page.md` supplied and built the same day. It had been a 404 behind the nav
+and footer "About" links since the site shipped.
+
+**About is not a biography.** It is the page a reader opens when they are close to booking
+and want to know whether the firm behind the argument is credible. The copy file gives it
+three questions and tells it to stop: what is this firm, who am I actually dealing with,
+and how do they decide what to build. Anything not serving one of those three does not
+belong on it.
+
+**The one rule for this page: it speaks as "we" throughout, and Fredrick is named once, in
+the third person, written *about* rather than *by*.** That single choice is what makes the
+page read as a company with a founder rather than a person with a website. It is also the
+thing most likely to drift in an edit — section 3's second paragraph attracts an "I" more
+than anything else on the site. It has none.
+
+**Seven sections, in `src/pages/about.astro`:**
+
+| # | Section | Component |
+|---|---------|-----------|
+| 1 | Hero | `sections/about/HeroSection.astro` — **no CTA** |
+| 2 | Why we exist | `sections/about/WhyWeExistSection.astro` |
+| 3 | Who you're working with | `sections/about/FounderSection.astro` |
+| 4 | How we decide | `sections/about/HowWeDecideSection.astro` |
+| 5 | What we don't do | `sections/about/BoundariesSection.astro` |
+| 6 | Who we work with | `sections/about/WhoWeWorkWithSection.astro` |
+| 7 | Close | `sections/about/CloseSection.astro` |
+
+**One CTA on the whole page, in the close, labelled `about-closing`.** The hero carries
+none by instruction: a reader who opens About is verifying, not deciding, and a button at
+the top interrupts exactly what they came to do. **If a second CTA ever appears on this
+page, something has gone wrong with it.**
+
+**"Metro Vancouver" was removed from all three visible places the approved copy puts it**
+— the hero subhead, section 3's fourth chip, and section 6's location paragraph. Fredrick's
+decision of Aug 26 2026, taken when the page was planned and he was shown that this copy
+restored what the Aug 25 instruction had removed. The **title and meta description keep
+it**, same call as the other two pages. Section 6's paragraph **went whole rather than
+half-kept**, because trimming it would leave a sentence whose subject had been deleted —
+on site relative to what? **One consequence: the on-site-in-the-Lower-Mainland offer
+existed only in that paragraph and is now published nowhere on the site.**
+
+**Section 3 is the long version of the homepage founder strip.** The two share their
+heading, body paragraph and chips word for word — `sections/home/FounderStripSection.astro`
+is the condensed one. **They have to stay in sync**: a change to the years, the products
+or the chips is wrong on the other page the same day, and there is no shared constant
+because it is prose, not data.
+
+**"A guess with an invoice attached" in section 2 is a phrase that was cut from the
+homepage on Aug 25**, where it closed section 2's lede and landed as a diagnosis of the
+reader's own spending. It is deliberate here and was flagged before the build: the section
+is titled "why ArkSystems exists", the subject is AI investment in general, and nobody is
+being told their spending failed. **Do not delete it as a duplicate of the homepage fix.**
+
+**No illustrations, no stepper, no process diagram anywhere on this page** — the copy file
+makes it a build note, and it is right twice over: a staged treatment makes the engagement
+feel long, and `/accounting` and `/workshop` both already carry one. The founder portrait
+is the only image. That means every section has to fill its band without artwork, which is
+why 1, 2 and 6 run two-column heads, 4 gives the pull quote its own column, and 5 runs a
+2×2.
+
+**Section 4's pull quote takes a column, it does not sit under the prose.** The first build
+flowed three paragraphs across two CSS columns; three does not divide by two, so the left
+column ended a paragraph short and the quote sat under a visible hole. Split by content
+type instead — all the prose one side, the quote the other — which is the site's standing
+rule for a two-column section.
+
+**Section 5's four blocks carry no icons**, and that is deliberate. An icon against "We
+don't sell a platform" has to illustrate a negative, and a drawn negative reads as a shrug
+or as the thing being denied. They are rules and they get a rule: terracotta on the left
+edge, text only.
+
+**`assets/fred.jpg` is 520×650, not square.** `object-fit: cover` trims equal strips off
+the top and bottom and centres what is left; measured on the built page, the face lands
+centred. `FounderStripSection.astro` on the homepage carries an older comment claiming the
+source is square and must be 1:1 — **that comment is wrong and always was**. A replacement
+portrait with the subject off-centre vertically will crop badly and no CSS will fix it.
+
+**A section that puts body copy inside a `.section__head` under any class other than
+`.section__lede` must set `text-align: left` for itself on phone.** `base.css` centres
+everything in a `.section__head` under `(max-width: 900px), (orientation: portrait)` and
+un-centres exactly one thing: `.section__head .section__lede`. Section 2 has two
+paragraphs, so they live in a wrapper under their own class — and they shipped centred
+until it was caught on the built page. Centred prose is harder to read, which matters more
+than usual given the plain-language rule.
+
+**Schema: `AboutPage` and `Organization`, with a `founder` node.** The copy file asks for
+the Organization block to live here specifically, because this is the page search engines
+should read as the entity definition. The homepage's own Organization node stays — they
+are per-page nodes describing one entity, not a conflict. **`sameAs` is still absent** on
+both; the LinkedIn URL is not in the repo and a guessed profile URL is a claim about
+identity. **`LocalBusiness` is not emitted here least of all** — emitting a postal address
+in the markup on the one page that just had its location line removed would be incoherent
+as well as invented.
+
+**Links out to `/workshop`** (section 4, on "a workshop that ranks them first") **and to
+`/accounting`** (section 6, on "there's a page for that"), both as the copy file's SEO
+section asks. This does not conflict with the Aug 26 instruction against linking the
+workshop from the homepage and industry pages — `/about` is neither.
+
+**Two `[CONFIRM]` items are closed, two are Fredrick's.** Closed: the founder portrait
+exists and was already live; the on-site radius is moot by removal. Open: the team
+language — "we" and "the people who build your system" while naming one founder, which is
+defensible as written either way — and whether FoodyGuru and YoseeAI are still safe to
+name. Both are already true of the live homepage, so this page adds no new exposure on
+either. **"Founded and shipped" is deliberately unarguable and must not be inflated** —
+anything stronger invites a question the page cannot answer.
 
 ## Standing instruction, Aug 25 2026 — no location lines
 

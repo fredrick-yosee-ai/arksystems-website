@@ -1,0 +1,137 @@
+---
+/*
+ * Section 1 — the hero. Copy verbatim from docs/about-page.md, with one deletion
+ * recorded below.
+ *
+ * NO CTA HERE, AND THE COPY FILE MAKES IT A BUILD NOTE. A reader who opens About is
+ * verifying, not deciding — they have heard the name or read a page and want to know
+ * whether the firm behind the argument is real. A button at the top interrupts exactly
+ * the thing they came to do. The page closes with one, and that is the only one.
+ *
+ * NO ILLUSTRATION EITHER. The founder portrait in section 3 is the only image on this
+ * page, by instruction, so the head carries the band on its own: heading left, subhead
+ * right, both running to the container edges. That is the homepage section 2 pattern and
+ * it exists for this exact problem — a left-aligned head in a 1240px container leaves a
+ * third of the band empty, and empty space on a full-width band reads as something
+ * failing to load rather than as air.
+ *
+ * "IN METRO VANCOUVER" IS DELETED FROM THE SUBHEAD. Approved: "ArkSystems is an AI
+ * consulting firm in Metro Vancouver." Fredrick's instruction of Aug 25 2026 takes the
+ * location line and everything like it off the site, confirmed again on Aug 26 when this
+ * page was planned: metas keep Vancouver, the visible page does not. Two other places on
+ * this page lost the same thing — section 3's fourth chip and section 6's location
+ * paragraph, which went whole rather than half-kept. They travel together. Do not
+ * restore one alone, here or on the four other pages it was removed from.
+ *
+ * THE TITLE AND META DESCRIPTION KEEP IT, deliberately. See the note in about.astro.
+ */
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="hero__head">
+      <p class="eyebrow hero__eyebrow">About ArkSystems</p>
+
+      <h1 class="hero__title">
+        We establish where AI produces a return. Then we build it.
+      </h1>
+
+      <p class="hero__subhead">
+        ArkSystems is an AI consulting firm. We work with businesses and professional
+        practices that accept AI matters and need someone to establish where it belongs in
+        their own operation, what capturing it is worth, and whether the build is
+        justified at all.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* White, so the cream band below it lands as a change. The ladder for this page runs
+   * white → cream → surface → white → warm → stage-green → olive: seven sections and no
+   * two neighbours sharing a colour. */
+  .hero {
+    background: var(--ark-white);
+    padding-block: 76px 88px;
+  }
+
+  .hero__eyebrow {
+    display: block;
+    margin-bottom: 22px;
+  }
+
+  /* The measure sits on the element carrying the font-size, never on a wrapper — `ch`
+   * resolves against the element's own font-size, so on a wrapper it counts 16px
+   * characters and cramps a display heading to a third of its width. */
+  .hero__title {
+    font-size: var(--ark-h1);
+    line-height: var(--ark-lh-h1);
+    letter-spacing: -0.03em;
+    max-width: 17ch;
+  }
+
+  .hero__subhead {
+    margin-top: 24px;
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+    max-width: 62ch;
+  }
+
+  /* Two columns: heading left, subhead right, running to the same right edge. The exact
+   * complement of the centring rule in base.css — a portrait tablet centres its heading
+   * and must not also be holding two columns. */
+  @media (min-width: 901px) and (orientation: landscape) {
+    .hero__head {
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(0, 1fr);
+      column-gap: 56px;
+      align-items: start;
+    }
+
+    .hero__eyebrow {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .hero__title {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .hero__subhead {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      /* No top margin — it sits beside the heading, not under it. The 2px nudge puts its
+       * first line on the heading's first baseline rather than its cap height. */
+      margin-top: 2px;
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      padding-block: 48px 56px;
+    }
+
+    .hero__eyebrow {
+      margin-bottom: 16px;
+    }
+
+    .hero__subhead {
+      margin-top: 18px;
+      max-width: 44ch;
+    }
+  }
+
+  /* Phone and any portrait screen: the heading block centres, body prose keeps its left
+   * edge. Centred prose is harder to read, which matters more than usual on a page
+   * written for readers whose first language may not be English. */
+  @media (max-width: 900px), (orientation: portrait) {
+    .hero__title,
+    .hero__eyebrow {
+      text-align: center;
+      margin-inline: auto;
+    }
+  }
+</style>

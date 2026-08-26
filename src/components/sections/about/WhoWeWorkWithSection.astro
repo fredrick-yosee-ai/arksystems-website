@@ -1,0 +1,93 @@
+---
+/*
+ * Section 6 — who we work with.
+ *
+ * THE LOCATION PARAGRAPH IS DELETED IN FULL. Approved copy sets a second body block
+ * here: "Based in Metro Vancouver. We work remotely across Canada, and on site within
+ * the Lower Mainland where the work benefits from it." Fredrick's instruction of Aug 25
+ * 2026 takes the location line and everything like it off the visible site, confirmed
+ * again on Aug 26 when this page was planned.
+ *
+ * It went WHOLE rather than half-kept, and that is the same call made on /accounting's
+ * FAQ: the paragraph was about where we are, so trimming it to "we work remotely across
+ * Canada, and on site where the work benefits from it" would leave a sentence whose
+ * subject had been removed — on site relative to what? A question with nothing behind it
+ * is worse than no question. One consequence worth knowing: the on-site-in-the-Lower-
+ * Mainland offer existed only in that paragraph and is now published nowhere.
+ *
+ * Two other places on this page lost the same thing — the hero subhead and section 3's
+ * fourth chip. They travel together with the four other removals on the homepage and
+ * /accounting. Do not restore one alone.
+ *
+ * THE LINK TO /accounting is the one the copy file's SEO section asks for, carried on
+ * "there's a page for that" — which is the sentence that already points at it, so the
+ * link goes where the reader is looking rather than being appended.
+ *
+ * "THE WORK GENERALIZES FURTHER THAN ONE SECTOR, BECAUSE THE PATTERN DOES" is the line
+ * that stops this page reading as an accounting firm's supplier. Keep it last.
+ */
+---
+
+<section class="section section--stage who" id="who-we-work-with">
+  <div class="container">
+    <div class="section__head who__head">
+      <h2 class="section__title who__title">
+        Small and mid-sized businesses, and professional practices.
+      </h2>
+      <p class="section__lede who__lede">
+        Businesses large enough that administrative work has become a real cost, and small
+        enough that nobody has a department to hand it to. Accounting and bookkeeping
+        practices are the sector we&rsquo;ve built for most deliberately, and
+        <a href="/accounting">there&rsquo;s a page for that</a>. The work generalizes
+        further than one sector, because the pattern does.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .who__head {
+    max-width: none;
+  }
+
+  .who__title {
+    max-width: 26ch;
+  }
+
+  .who__lede a {
+    color: var(--ark-terracotta-ink);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  /* Two columns: heading left, the paragraph right, running to the same right edge. With
+   * the location paragraph removed this section is a heading and one paragraph, which
+   * stacked would leave most of the band empty. */
+  @media (min-width: 901px) and (orientation: landscape) {
+    .who__head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      column-gap: 56px;
+      align-items: start;
+    }
+
+    .who__title {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .who__lede {
+      grid-column: 2;
+      grid-row: 1;
+      /* Beside the heading, not under it. */
+      margin-top: 2px;
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .who__lede {
+      max-width: 44ch;
+    }
+  }
+</style>

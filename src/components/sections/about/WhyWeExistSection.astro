@@ -1,0 +1,127 @@
+---
+/*
+ * Section 2 — why ArkSystems exists. Copy verbatim from docs/about-page.md.
+ *
+ * "THE TOOLS AREN'T THE CONSTRAINT" AND THE CLOSING LINE ARE POSITIONS, NOT CLAIMS, and
+ * the copy file's claims section says so. Neither carries a figure or an attribution,
+ * which is what keeps them inside the claims rules and what gives the page a point of
+ * view at all. Do not add a statistic to either.
+ *
+ * "A GUESS WITH AN INVOICE ATTACHED" WAS CUT FROM THE HOMEPAGE AND IS DELIBERATE HERE.
+ * On Aug 25 2026 the homepage's section 2 lede closed on that phrase and Fredrick
+ * replaced it: on that page it landed as a diagnosis of the reader's own spending, in
+ * the second section, before they had agreed to anything — which put them on the
+ * defensive exactly where the page needed agreement. Here it does a different job. The
+ * section is titled "why ArkSystems exists", the subject is AI investment in general
+ * rather than this reader's, and nobody is being told their spending failed. It was
+ * flagged to Fredrick before this page was built and kept on his approval. If it ever
+ * reads as an accusation again, it goes — but do not delete it as a duplicate of the
+ * homepage fix, because it is not one.
+ *
+ * TWO COLUMNS, NO ILLUSTRATION. Same reason as the hero: the founder portrait is the
+ * only image on this page, so the head has to carry the band by itself.
+ */
+---
+
+<section class="section section--cream why" id="why-we-exist">
+  <div class="container">
+    <div class="section__head why__head">
+      <h2 class="section__title why__title">The tools aren&rsquo;t the constraint.</h2>
+
+      <div class="why__body">
+        <p class="why__para">
+          AI capability is now available to any business that wants it, at a price that no
+          longer decides anything. The constraint is that most businesses can&rsquo;t
+          identify where AI produces a return in their own operation, what that return is
+          worth, or what capturing it would cost. Without those three figures, an AI
+          investment is a guess with an invoice attached.
+        </p>
+
+        <p class="why__para why__para--second">
+          ArkSystems exists to establish those three figures and to build what follows
+          from them. The order is deliberate: assessment first, business case second,
+          build only if the case holds.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .why__head {
+    max-width: none;
+  }
+
+  /* Short enough to set on one line above 900px, which is what lets the two paragraphs
+   * beside it run the full depth of the band. */
+  .why__title {
+    max-width: 24ch;
+  }
+
+  .why__para {
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+    max-width: 62ch;
+  }
+
+  .why__para--second {
+    margin-top: 18px;
+  }
+
+  .why__body {
+    margin-top: 24px;
+  }
+
+  /* The exact complement of the centring rule in base.css. */
+  @media (min-width: 901px) and (orientation: landscape) {
+    .why__head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      column-gap: 56px;
+      align-items: start;
+    }
+
+    .why__title {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .why__body {
+      grid-column: 2;
+      grid-row: 1;
+      /* Beside the heading, not under it. The 2px nudge puts the first line on the
+       * heading's first baseline rather than its cap height. */
+      margin-top: 2px;
+    }
+
+    .why__para {
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .why__body {
+      margin-top: 18px;
+    }
+
+    /* `text-align: left` IS REQUIRED, and its absence was a real bug caught on the built
+     * page. base.css centres everything inside a `.section__head` on phone and portrait,
+     * and un-centres exactly one thing: `.section__head .section__lede`. These paragraphs
+     * are not that class — they are two paragraphs in a wrapper, because this section has
+     * two — so they inherited the centring and stayed centred. Centred prose is harder to
+     * read, which matters more than usual on a page written for readers whose first
+     * language may not be English. Any section that puts body copy in a `.section__head`
+     * under a class other than `.section__lede` has to do this for itself. */
+    .why__para {
+      text-align: left;
+      margin-inline: auto;
+      font-size: 1.0625rem;
+      max-width: 44ch;
+    }
+
+    .why__para--second {
+      margin-top: 14px;
+    }
+  }
+</style>

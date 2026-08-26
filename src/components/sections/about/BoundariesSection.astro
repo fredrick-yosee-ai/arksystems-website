@@ -1,0 +1,126 @@
+---
+/*
+ * Section 5 — what we don't do.
+ *
+ * NO ICONS ON THESE FOUR, unlike every other card set on the site. An icon against "We
+ * don't sell a platform" has to illustrate a negative, and a drawn negative reads as a
+ * shrug or, worse, as the thing being denied. The four are rules, and a rule wants a
+ * rule: terracotta on the left edge, the bolded claim, the explanation under it. It also
+ * suits the page — this is the one page with no illustration except the portrait, and
+ * adding an icon set here would be the only decorative thing on it.
+ *
+ * THE FOURTH IS A COMMITMENT, NOT A DISCLAIMER. "We don't publish client names or
+ * results without permission" is the standing claims rule stated as a promise to the
+ * reader rather than as a policy about us. It is also the honest answer to the question
+ * this page raises by having no client names on it, which is why it belongs here and not
+ * in a footer.
+ *
+ * ALL FOUR ARE FACTS ABOUT THE OFFER, so none of them needs a caveat and none has one.
+ * If a future edit finds itself adding "generally" or "in most cases" to any of these,
+ * the sentence is no longer true and should be deleted rather than qualified.
+ */
+
+const boundaries = [
+  {
+    title: "We don't sell a platform.",
+    body: "There is no ArkSystems subscription and no system that holds your records. What we build operates on accounts you already own, which means there is nothing to migrate away from if you stop working with us.",
+  },
+  {
+    title: "We don't replace your process.",
+    body: "Your workflow stays as it is. AI runs the steps inside it that never required a qualified person, and stops at the ones that do.",
+  },
+  {
+    title: "We don't make your decisions.",
+    body: "Nothing we build decides anything you haven't already decided. It applies rules you set, records what it did and why, and stops where your rules stop.",
+  },
+  {
+    title: "We don't publish client names or results without permission.",
+    body: "No logos, no figures, no attributed quotes taken from a project that hasn't been agreed for publication.",
+  },
+] as const;
+---
+
+<section class="section section--warm bounds" id="what-we-dont-do">
+  <div class="container">
+    <div class="section__head bounds__head">
+      <h2 class="section__title bounds__title">
+        The boundaries are as useful as the capability.
+      </h2>
+    </div>
+
+    <ul class="bounds__grid">
+      {
+        boundaries.map((item) => (
+          <li class="bounds__item">
+            <h3 class="bounds__item-title">{item.title}</h3>
+            <p class="bounds__item-body">{item.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .bounds__head {
+    max-width: none;
+  }
+
+  .bounds__title {
+    max-width: 28ch;
+  }
+
+  .bounds__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ark-grid-gutter);
+    margin-top: 48px;
+  }
+
+  /* A rule for a rule. No icon — see the note at the top of this file. */
+  .bounds__item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--ark-white);
+    border: 1px solid var(--ark-hairline);
+    border-left: 4px solid var(--ark-terracotta);
+    border-radius: 0 var(--ark-radius) var(--ark-radius) 0;
+    box-shadow: var(--ark-raised);
+    padding: 28px 30px;
+  }
+
+  .bounds__item-title {
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+  }
+
+  .bounds__item-body {
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  @media (max-width: 900px) {
+    .bounds__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .bounds__item {
+      padding: 18px 18px 18px 16px;
+      gap: 6px;
+    }
+
+    .bounds__item-title {
+      font-size: 1.0625rem;
+    }
+
+    .bounds__item-body {
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+  }
+</style>

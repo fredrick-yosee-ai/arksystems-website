@@ -58,7 +58,12 @@ export type CtaLocation =
   | "ws-hero"
   | "ws-day"
   | "ws-cost"
-  | "ws-closing";
+  | "ws-closing"
+  /* /about. Exactly one, in the close. The hero carries no button by instruction — a
+   * reader who opens About is verifying, not deciding, and a CTA at the top interrupts
+   * the thing they came to do. If a second ever appears on that page, something has gone
+   * wrong with it. */
+  | "about-closing";
 
 export interface NavItem {
   label: string;

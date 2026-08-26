@@ -1,0 +1,173 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../consts";
+
+import HeroSection from "../components/sections/about/HeroSection.astro";
+import WhyWeExistSection from "../components/sections/about/WhyWeExistSection.astro";
+import FounderSection from "../components/sections/about/FounderSection.astro";
+import HowWeDecideSection from "../components/sections/about/HowWeDecideSection.astro";
+import BoundariesSection from "../components/sections/about/BoundariesSection.astro";
+import WhoWeWorkWithSection from "../components/sections/about/WhoWeWorkWithSection.astro";
+import CloseSection from "../components/sections/about/CloseSection.astro";
+
+/*
+ * /about — built Aug 26 2026 against the approved copy in docs/about-page.md. It had
+ * been a 404 behind the nav and footer "About" links since the site shipped.
+ *
+ * ABOUT IS NOT A BIOGRAPHY. It is the page a reader opens when they are close to booking
+ * and want to know whether the firm behind the argument is credible. The copy file gives
+ * it three questions to answer, and then to stop:
+ *
+ *   1. What is this firm?            An AI consulting firm — assess, quantify, build.
+ *   2. Who am I dealing with?        The founder, directly, with a verifiable record.
+ *   3. How do they decide what to build?  Assessment first, and a stated willingness to
+ *                                    recommend nothing.
+ *
+ * Anything that does not serve one of those three does not belong here.
+ *
+ * THE ONE RULE FOR THIS PAGE: it speaks as "we" throughout, and Fredrick is named once,
+ * in the third person, written ABOUT rather than BY. That single choice is what makes the
+ * page read as a company with a founder rather than a person with a website, and it is
+ * the thing most likely to drift during an edit — section 3's second paragraph attracts
+ * an "I" more than anything else on the site. It has none. Keep it that way.
+ *
+ * Seven sections, in the copy file's order:
+ *
+ *   1  Hero                 what the firm is. NO CTA, by instruction
+ *   2  Why we exist         the position: the tools aren't the constraint
+ *   3  Who you're working with  the founder, and the portrait. No portrait, no section
+ *   4  How we decide        prose and a pull quote. No steps, no diagram
+ *   5  What we don't do     four boundaries
+ *   6  Who we work with     the fit, and the link to /accounting
+ *   7  Close                the only CTA on the page
+ *
+ * ONE CTA, IN THE CLOSE, labelled about-closing. The hero deliberately carries none: a
+ * reader who opens About is verifying, not deciding, and a button at the top interrupts
+ * exactly what they came to do. If a second CTA ever appears on this page, something has
+ * gone wrong with it.
+ *
+ * NO ILLUSTRATIONS. The founder portrait in section 3 is the only image, by instruction,
+ * and there is no stepper or process diagram anywhere — a staged treatment makes the
+ * engagement feel long and duplicates what /accounting and /workshop already do. Every
+ * section therefore has to carry its own band without artwork, which is why 1, 2 and 6
+ * run two-column heads, 4 leans on a full-width pull quote, and 5 runs a 2x2.
+ *
+ * "METRO VANCOUVER" IS REMOVED FROM ALL THREE VISIBLE PLACES the approved copy puts it —
+ * the hero subhead, section 3's fourth chip, and section 6's location paragraph, which
+ * went whole rather than half-kept. Fredrick's instruction of Aug 25 2026 takes the
+ * location line and everything like it off the visible site; he confirmed it again on
+ * Aug 26 when this page was planned, having been shown that this copy restored it. The
+ * TITLE AND META DESCRIPTION KEEP IT, which is the same call made for the other two
+ * pages: a title tag is a search-targeting string rather than a sentence on a page, and
+ * "AI consultant Metro Vancouver" is one of this page's four target queries.
+ *
+ * One consequence worth knowing: the on-site-in-the-Lower-Mainland offer existed only in
+ * section 6's deleted paragraph and is now published nowhere on the site.
+ *
+ * SECTION 3 IS THE LONG VERSION OF THE HOMEPAGE FOUNDER STRIP and the two share their
+ * heading, body paragraph and chips word for word. THEY HAVE TO STAY IN SYNC — a change
+ * to the years, the products or the chips here is wrong on the homepage the same day,
+ * and there is no shared constant because it is prose, not data.
+ *
+ * "A GUESS WITH AN INVOICE ATTACHED" in section 2 is a phrase Fredrick cut from the
+ * homepage on Aug 25. It is deliberate here and was flagged before this page was built —
+ * see the note in WhyWeExistSection.astro for why the two uses are different. Do not
+ * delete it as a duplicate of the homepage fix.
+ *
+ * Schema: AboutPage and Organization. The copy file asks for the Organization block to
+ * live here specifically, because this is the page search engines should read as the
+ * entity definition. The homepage's own Organization node stays where it is — they are
+ * per-page nodes describing the same entity, not a conflict.
+ *
+ * sameAs IS STILL ABSENT. The copy file elsewhere specifies LinkedIn; the URL is not in
+ * the repo and a guessed profile URL is worse than none, because it is a claim about
+ * identity. Add the real one to the founder node and the organization node together when
+ * it is supplied.
+ *
+ * LocalBusiness is NOT emitted, here least of all. It needs a real street address and
+ * real hours, and this page has just had its location line removed — emitting a postal
+ * address in the markup while declining to print it on the page would be incoherent as
+ * well as invented.
+ *
+ * FOUR THINGS THE COPY FILE FLAGS FOR CONFIRMATION. Two are closed, two are Fredrick's:
+ *
+ *   1. FOUNDER PORTRAIT — CLOSED. assets/fred.jpg, already live on the homepage.
+ *   2. ON-SITE RADIUS — CLOSED, by removal. The paragraph that carried it is gone.
+ *   3. TEAM LANGUAGE. The page says "the people who build your system" and "we"
+ *      throughout while naming one founder. Defensible as written whether or not anyone
+ *      else works on delivery; flagged so the plural is a choice rather than an accident.
+ *   4. FoodyGuru AND YoseeAI. Both are already named on the homepage, so this page adds
+ *      no new exposure — but confirm neither has a live state that contradicts "founded
+ *      and shipped", which is the deliberately unarguable phrasing and must not be
+ *      inflated.
+ */
+
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "About ArkSystems",
+  url: `${SITE.url}/about`,
+  description:
+    "ArkSystems is an AI consulting firm. We establish where AI produces a return in a business, what it is worth, and whether the build is justified — then build it.",
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE.name,
+  url: SITE.url,
+  description:
+    "AI consulting firm. We establish where AI produces a return in a business, quantify it, and build it. Assessment first, business case second, build only if the case holds.",
+  founder: {
+    "@type": "Person",
+    name: "Fredrick",
+    jobTitle: "Founder",
+  },
+  areaServed: {
+    "@type": "AdministrativeArea",
+    name: "Canada",
+  },
+  /* sameAs is specified in the copy files as pointing at LinkedIn. The URL is not in the
+   * repo, and a guessed profile URL is worse than none — it is a claim about identity.
+   * Add the real one here and to the founder node above at the same time. */
+};
+---
+
+{/*
+  Title and description are the approved strings from docs/about-page.md, used character
+  for character — the file counted them (49 and 147) and the separator is part of what it
+  counted, which is why this goes through titleOverride rather than being rebuilt from
+  the site's em-dash pattern.
+
+  BOTH KEEP "Vancouver" while the visible page does not, and that is deliberate rather
+  than an oversight — Fredrick's decision of Aug 26 2026, the same call made for the
+  other two pages. A title tag and a meta description are search-targeting strings, and
+  two of this page's four target queries name the location. No sentence rendered on the
+  page names a place.
+*/}
+<BaseLayout
+  title="About ArkSystems"
+  titleOverride="About ArkSystems | AI Consulting, Vancouver"
+  description="ArkSystems is an AI consulting firm in Metro Vancouver. We establish where AI produces a return in your operation, what it's worth, and then build it."
+>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(aboutSchema)}
+    is:inline
+  />
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(organizationSchema)}
+    is:inline
+  />
+
+  <HeroSection />
+  <WhyWeExistSection />
+  <FounderSection />
+  <HowWeDecideSection />
+  <BoundariesSection />
+  <WhoWeWorkWithSection />
+  <CloseSection />
+</BaseLayout>

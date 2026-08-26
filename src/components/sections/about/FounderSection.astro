@@ -1,0 +1,175 @@
+---
+import { Image } from "astro:assets";
+import fredPortrait from "../../../../assets/fred.jpg";
+
+/*
+ * Section 3 — who you're working with. The section this page cannot ship without.
+ *
+ * THE PORTRAIT IS NOT DECORATION AND THE COPY FILE SAYS SO: an unverifiable claim about
+ * a named person, with no face attached, reads worse than no section at all. It is the
+ * only image on the whole page. If the image ever fails to resolve, fix the image —
+ * do not ship the section without it.
+ *
+ * THIS IS THE LONG VERSION OF THE HOMEPAGE FOUNDER STRIP, and the two share their
+ * heading, their body paragraph and their chips word for word. sections/home/
+ * FounderStripSection.astro is the condensed one — it drops the second paragraph
+ * because the homepage runs a tight argument that a full founder section would
+ * interrupt. THEY HAVE TO STAY IN SYNC: a change to the years, the products or the
+ * chips here is wrong on the homepage the same day, and there is no shared constant
+ * because it is prose, not data.
+ *
+ * THREE CHIPS, NOT FOUR. Approved copy sets "15+ years engineering · Two products
+ * founded and shipped · Metro Vancouver · Founder-led delivery". Fredrick's instruction
+ * of Aug 25 2026 removes the location and everything like it from the visible site,
+ * confirmed again on Aug 26 when this page was planned. The homepage strip lost the same
+ * chip on the same instruction. Two other places on this page lost the same thing — the
+ * hero subhead and section 6's location paragraph. Do not restore one alone.
+ *
+ * VOICE: written ABOUT Fredrick, never by him, and this is the one rule the copy file
+ * gives for the whole page. "We" throughout, Fredrick named once in the third person.
+ * That single choice is what makes the page read as a company with a founder rather than
+ * a person with a website. It must not drift into first person — not here, and not in
+ * the second paragraph, which is the one most likely to attract an "I".
+ *
+ * "FOUNDED AND SHIPPED" IS DELIBERATE AND MUST NOT BE INFLATED. The copy file calls it
+ * unarguable, and anything stronger — "built and scaled", "grew", "successful" — invites
+ * a question this page cannot answer. Both products are already named on the homepage,
+ * so naming them here is not new exposure.
+ */
+
+const chips = [
+  "15+ years engineering",
+  "Two products founded and shipped",
+  "Founder-led delivery",
+];
+---
+
+<section class="section section--surface founder" id="who-youre-working-with">
+  <div class="container founder__inner">
+    {/* Cropped to a circle by `object-fit: cover`, which is doing real work here:
+        assets/fred.jpg is 520x650, not square, so cover trims equal strips off the top
+        and bottom and centres what is left. Measured on the built page — the face lands
+        centred. A replacement portrait with the subject off-centre vertically will crop
+        badly and the CSS cannot fix it; crop the source instead.
+
+        The homepage's FounderStripSection carries an older version of this note claiming
+        the source is square and must be 1:1. It is not, and never was. */}
+    <Image
+      src={fredPortrait}
+      alt="Fredrick, founder of ArkSystems"
+      widths={[220, 440]}
+      sizes="(max-width: 900px) 140px, 220px"
+      class="founder__portrait"
+    />
+
+    <div class="founder__copy">
+      <h2 class="section__title founder__title">
+        You work directly with the people who build your system.
+      </h2>
+
+      <p class="founder__body">
+        ArkSystems is led by its founder, Fredrick, who spent more than fifteen years in
+        software engineering, solution architecture, systems integration and cloud
+        infrastructure, and who founded and shipped two technology products, FoodyGuru
+        and YoseeAI.
+      </p>
+
+      <p class="founder__body founder__body--second">
+        That matters to you in two ways. You deal with the people building the thing
+        &mdash; there is no account manager, and no junior consultant taking over once the
+        work is sold. And the parts that usually get skipped are the parts we&rsquo;ve had
+        to care about: what a system costs to run, whether it stays up, and whether anyone
+        actually uses it a month later.
+      </p>
+
+      <ul class="founder__chips">
+        {chips.map((chip) => <li class="founder__chip">{chip}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .founder__inner {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  .founder__portrait {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 6px solid var(--ark-white);
+    box-shadow: var(--ark-raised);
+  }
+
+  .founder__title {
+    max-width: 24ch;
+  }
+
+  .founder__body {
+    margin-top: 22px;
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+    max-width: 66ch;
+  }
+
+  .founder__body--second {
+    margin-top: 16px;
+  }
+
+  .founder__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 26px;
+  }
+
+  .founder__chip {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--ark-olive);
+    background: var(--ark-green-soft);
+    border-radius: var(--ark-radius-pill);
+    padding: 5px 14px;
+  }
+
+  @media (max-width: 900px) {
+    /* Portrait above, centred. At 390px a 140px circle beside text leaves the text about
+     * 190px wide, which wraps the heading to six lines. */
+    .founder__inner {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: 24px;
+      text-align: center;
+    }
+
+    .founder__portrait {
+      width: 140px;
+      height: 140px;
+      border-width: 5px;
+    }
+
+    .founder__title {
+      max-width: 20ch;
+      margin-inline: auto;
+    }
+
+    /* Prose keeps its left edge even though the block centres — same rule as everywhere
+     * else on the site. */
+    .founder__body {
+      text-align: left;
+      max-width: 42ch;
+      margin-inline: auto;
+      font-size: 1rem;
+    }
+
+    .founder__chips {
+      justify-content: center;
+    }
+  }
+</style>

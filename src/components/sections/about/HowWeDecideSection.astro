@@ -1,0 +1,158 @@
+---
+/*
+ * Section 4 — how we decide what to build.
+ *
+ * NO NUMBERED STEPS AND NO PROCESS DIAGRAM, ANYWHERE ON THIS PAGE. The copy file makes
+ * it a build note and gives two reasons, both right: a staged treatment makes the
+ * engagement feel long, and it duplicates what the industry pages already do —
+ * /accounting and /workshop both carry a stepper, and this page is not a third pitch.
+ * So this is three paragraphs of prose and a pull quote, and the temptation to number
+ * "assessment first, business case second, build only if the case holds" into a 1-2-3
+ * should be resisted. It is a sentence. It reads as one.
+ *
+ * THE PULL QUOTE CARRIES THE BAND. With no illustration and no stepper, the section is
+ * otherwise a heading and three paragraphs, which on a 1240px container is a column of
+ * prose with a third of the band empty beside it. The quote runs the full width, set
+ * large on a terracotta rule, and it is also the most quotable line on the site — "we
+ * would rather tell you not to build something than sell you something that isn't worth
+ * the money" is a position, not a claim, and it is what the whole page is evidence for.
+ *
+ * THE THIRD PARAGRAPH CARRIES THE LINK TO /workshop that the copy file's SEO section
+ * asks for, on the words "a workshop that ranks them first". That is the natural anchor:
+ * it is the sentence describing the thing, so the link goes where a reader would look
+ * for it rather than being bolted on at the end.
+ *
+ * "SOME AREN'T WORTH FIXING AT THIS SIZE OF BUSINESS, AND SAYING SO IS PART OF THE WORK
+ * RATHER THAN A FAILURE OF IT" is the sentence the pull quote is built on, and it must
+ * not be softened into a hedge. Blame the work, never the owner: it says the fix isn't
+ * worth it at this size, not that the business is too small to deserve one.
+ */
+---
+
+<section class="section section--white decide" id="how-we-decide">
+  <div class="container">
+    <div class="section__head decide__head">
+      <h2 class="section__title decide__title">
+        Assessment first. Business case second. Build only if the case holds.
+      </h2>
+    </div>
+
+    <div class="decide__grid">
+      <div class="decide__body">
+      <p class="decide__para">
+        We start by examining how the work actually moves &mdash; with the people who
+        perform it, not only the people who describe it. We establish where time and money
+        go, put figures against each candidate using your numbers, and state every
+        assumption openly so you can challenge it.
+      </p>
+
+      <p class="decide__para">
+        Then we test each candidate against what AI genuinely does today. Some are AI
+        problems. Some need a change to the order the work happens in. Some need better
+        use of software you already license. Some aren&rsquo;t worth fixing at this size
+        of business, and saying so is part of the work rather than a failure of it.
+      </p>
+
+      <p class="decide__para">
+        If the case holds, we build it, on accounts you own, and hand it back operating.
+        If you can&rsquo;t yet name the one process to examine, we run
+        <a href="/workshop">a workshop that ranks them first</a> &mdash; a day on one
+        agreed area of your operation.
+      </p>
+      </div>
+
+      <blockquote class="decide__quote">
+        <p>
+          We would rather tell you not to build something than sell you something that
+          isn&rsquo;t worth the money.
+        </p>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<style>
+  .decide__head {
+    max-width: none;
+  }
+
+  .decide__title {
+    max-width: 26ch;
+  }
+
+  /* SPLIT BY CONTENT TYPE — all the prose in one column, the quote in the other. That is
+   * the site's standing rule for a two-column section and it is the second thing tried
+   * here. The first was `columns: 2` across the three paragraphs, which does not divide:
+   * three paragraphs into two columns is 1 + 2, so the left column ended a full paragraph
+   * short and the quote sat under a visible hole. Flowing text across columns also makes
+   * the reader travel to the bottom of the band and back up again, for no gain.
+   *
+   * The quote earns the right-hand column because with no illustration anywhere on this
+   * page it is the only thing that can fill one. */
+  .decide__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+    column-gap: 56px;
+    align-items: center;
+    margin-top: 40px;
+  }
+
+  .decide__para {
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+    max-width: 62ch;
+  }
+
+  .decide__para + .decide__para {
+    margin-top: 18px;
+  }
+
+  .decide__para a {
+    color: var(--ark-terracotta-ink);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  /* The band-filler. See the note at the top of this file. */
+  .decide__quote {
+    padding: 22px 0 22px 32px;
+    border-left: 4px solid var(--ark-terracotta);
+  }
+
+  .decide__quote p {
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 1.22;
+    letter-spacing: -0.018em;
+    color: var(--ark-ink);
+    max-width: 26ch;
+  }
+
+  @media (max-width: 900px) {
+    /* One column, in DOM order: the prose, then the quote it earns. */
+    .decide__grid {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 28px;
+      margin-top: 26px;
+    }
+
+    .decide__para {
+      font-size: 1rem;
+    }
+
+    .decide__para + .decide__para {
+      margin-top: 14px;
+    }
+
+    .decide__quote {
+      padding: 16px 0 16px 18px;
+    }
+
+    .decide__quote p {
+      font-size: 1.375rem;
+      max-width: 22ch;
+    }
+  }
+</style>
