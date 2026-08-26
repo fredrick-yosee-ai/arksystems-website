@@ -751,14 +751,35 @@ column ended a paragraph short and the quote sat under a visible hole. Split by 
 type instead — all the prose one side, the quote the other — which is the site's standing
 rule for a two-column section.
 
+**Section 2 carries the page's one panel, and it must stay empty.** It shipped first as a
+heading and two paragraphs, and Fredrick read the built page and said it looked like
+something that could be removed. He was right about the symptom: section 2 makes the
+page's only abstract claim — that three figures are missing — and an abstract claim in
+prose is the easiest thing on a page to skip. `why-we-exist/ThreeFiguresPanel.astro` draws
+those three questions with nothing in the answer slots. **Filling them would not merely be
+an invented claim, it would destroy the point** — the picture only means something while
+it is blank, which makes it the one panel on the site that can never acquire sample data
+behind a badge. It is **not** the process diagram or numbered steps the copy file forbids:
+three questions in a list have no order, no arrow and no stage. If a future edit numbers
+them 1-2-3 or draws a flow between them, it has broken the rule. The founder portrait is
+still the only *image* on the page; this is text and CSS. **The restraint everywhere else
+on this page is deliberate — do not read this panel as licence to decorate the rest.**
+
+**`object-position: 50% 15%` on the portrait is doing real work.** `assets/fred.jpg` is a
+half-body shot with the face in the upper half — eyes at roughly y=210 of 650. `cover` in
+a square box trims 130 source pixels of height, and at the default 50% it takes 65 from
+each end, landing the eyes 28% down the circle with the entire lower half suit and tie.
+The face sits high and the crop reads as a mistake. At 15% the eyes land near 37%. **The
+number is tied to this photograph** — a replacement needs it re-measured, or better, needs
+cropping square before it is committed.
+
 **Section 5's four blocks carry no icons**, and that is deliberate. An icon against "We
 don't sell a platform" has to illustrate a negative, and a drawn negative reads as a shrug
 or as the thing being denied. They are rules and they get a rule: terracotta on the left
 edge, text only.
 
 **`assets/fred.jpg` is 520×650, not square.** `object-fit: cover` trims equal strips off
-the top and bottom and centres what is left; measured on the built page, the face lands
-centred. `FounderStripSection.astro` on the homepage carries an older comment claiming the
+the top and bottom; see the `object-position` note above for why centring them was wrong. `FounderStripSection.astro` on the homepage carries an older comment claiming the
 source is square and must be 1:1 — **that comment is wrong and always was**. A replacement
 portrait with the subject off-centre vertically will crop badly and no CSS will fix it.
 

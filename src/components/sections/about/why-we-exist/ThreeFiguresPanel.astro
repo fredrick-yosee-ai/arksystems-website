@@ -1,0 +1,194 @@
+---
+/*
+ * The illustration for section 2 — the three figures, shown as three figures nobody has.
+ *
+ * WHAT IT DRAWS, AND WHY IT IS EMPTY. The section says the constraint is that most
+ * businesses cannot identify where AI produces a return, what that return is worth, or
+ * what capturing it would cost. So this is those three questions with nothing in the
+ * answer slots. The blank is the whole content: a reader who glances at it sees three
+ * unanswered questions and has understood the section without reading it.
+ *
+ * IT IS THEREFORE THE ONE PANEL ON THE SITE THAT CANNOT ACQUIRE NUMBERS. Every other
+ * demonstration panel could in principle hold sample data behind a badge. Filling these
+ * slots would not just be an invented claim, it would destroy the point — the picture
+ * only means something while it is empty. Do not "finish" it.
+ *
+ * IT IS NOT A PROCESS DIAGRAM AND NOT NUMBERED STEPS, which the copy file forbids
+ * anywhere on this page for two good reasons: a staged treatment makes the engagement
+ * feel long, and /accounting and /workshop both already carry one. Three questions in a
+ * list is not a process — there is no order, no arrow, and no stage. If a future edit
+ * numbers these 1-2-3 or draws a flow between them, it has broken the rule.
+ *
+ * ON "THE ONLY IMAGE ON THE PAGE". The copy file says the founder portrait is the only
+ * image, and it still is — this is text and CSS, no photograph and no artwork. It was
+ * added on Fredrick's instruction of Aug 26 2026, after he read the built page and found
+ * section 2 weak enough to look removable. The restraint elsewhere on the page is
+ * deliberate and should stay: this is the one section that earns a visual, because it is
+ * the one carrying an abstract claim about three things that do not exist.
+ */
+
+const figures = [
+  { label: "Where AI pays", note: "In your operation, not in general" },
+  { label: "What it's worth", note: "Against your own numbers" },
+  { label: "What it costs", note: "To capture, and to keep running" },
+];
+---
+
+<figure class="figures">
+  <div class="figures__stage">
+    <div class="figures__card">
+      <p class="figures__label">Before assessment</p>
+
+      <p class="figures__title">The three figures</p>
+
+      <ul class="figures__list">
+        {
+          figures.map((f) => (
+            <li class="figures__row">
+              <span class="figures__text">
+                <span class="figures__name">{f.label}</span>
+                <span class="figures__note">{f.note}</span>
+              </span>
+              {/* The empty slot. See the note at the top of this file before filling it. */}
+              <span class="figures__slot" aria-hidden="true">&mdash;</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="figures__foot">Assessment establishes all three.</p>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .figures {
+    margin: 0;
+    width: 100%;
+  }
+
+  .figures__stage {
+    background: var(--ark-stage-green);
+    border-radius: var(--ark-radius-panel);
+    padding: 36px;
+  }
+
+  .figures__card {
+    background: var(--ark-white);
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius);
+    box-shadow: var(--ark-floating);
+    padding: 24px;
+  }
+
+  /* Quiet and neutral. Not the gold badge — that one means a system that genuinely runs,
+   * shown with sample data, and keeping it meaning one thing is what keeps it worth
+   * anything. Nothing here runs and nothing here is a figure. */
+  .figures__label {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding-inline: 11px;
+    border-radius: var(--ark-radius-pill);
+    background: var(--ark-surface);
+    border: 1px solid var(--ark-hairline);
+    color: var(--ark-muted);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .figures__title {
+    margin-top: 14px;
+    font-family: var(--ark-font-display);
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.3;
+    color: var(--ark-ink);
+  }
+
+  .figures__list {
+    margin-top: 16px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .figures__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 84px;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 14px;
+    background: var(--ark-surface);
+    border: 1px solid var(--ark-hairline);
+    border-left: 3px solid var(--ark-terracotta);
+    border-radius: var(--ark-radius-sm);
+  }
+
+  .figures__text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .figures__name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ark-ink);
+  }
+
+  .figures__note {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--ark-muted);
+  }
+
+  /* Dashed, because a solid box reads as a field waiting to be typed into and a dashed
+   * one reads as a value that is missing. */
+  .figures__slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    /* `--ark-muted-2` on both, and each is at its own threshold: the dashed border is a
+     * non-text UI mark and needs 3:1, which it clears at 3.67 on white. The dash itself is
+     * TEXT and needs 4.5, which the same colour fails — so it takes `--ark-muted`.
+     * Measured, not guessed; the first build had the dash at 3.67 and it failed the
+     * audit. It still reads as a placeholder because the dashed box does that work. */
+    border: 1px dashed var(--ark-muted-2);
+    border-radius: var(--ark-radius-sm);
+    background: var(--ark-white);
+    color: var(--ark-muted);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .figures__foot {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--ark-hairline);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--ark-muted);
+  }
+
+  @media (max-width: 900px) {
+    .figures__stage {
+      padding: 14px;
+      border-radius: 20px;
+    }
+
+    .figures__card {
+      padding: 18px 14px;
+    }
+
+    .figures__row {
+      grid-template-columns: minmax(0, 1fr) 70px;
+      padding: 11px 12px;
+      gap: 10px;
+    }
+  }
+</style>

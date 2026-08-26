@@ -1,4 +1,6 @@
 ---
+import ThreeFiguresPanel from "./why-we-exist/ThreeFiguresPanel.astro";
+
 /*
  * Section 2 — why ArkSystems exists. Copy verbatim from docs/about-page.md.
  *
@@ -18,17 +20,30 @@
  * reads as an accusation again, it goes — but do not delete it as a duplicate of the
  * homepage fix, because it is not one.
  *
- * TWO COLUMNS, NO ILLUSTRATION. Same reason as the hero: the founder portrait is the
- * only image on this page, so the head has to carry the band by itself.
+ * IT NOW CARRIES A PANEL, and the reason is worth recording. Built first as a heading
+ * and two paragraphs across a two-column head, it was the weakest band on the page —
+ * Fredrick read it and said it looked like something that could be removed. He was right
+ * about the symptom: this section makes the page's only abstract claim, that three
+ * figures are missing, and abstract claims in prose are the easiest thing on a page to
+ * skip. The panel is those three figures with nothing in them, which is the argument made
+ * visible rather than asserted.
+ *
+ * THE LAYOUT IS SPLIT BY CONTENT TYPE — all the prose in column one, the panel in column
+ * two — which is the site's standing rule for a two-column section. The heading moved
+ * into the prose column with the paragraphs; it is no longer a two-column head.
+ *
+ * See why-we-exist/ThreeFiguresPanel.astro for why the panel must stay empty, and why it
+ * is not the process diagram the copy file forbids.
  */
 ---
 
 <section class="section section--cream why" id="why-we-exist">
   <div class="container">
-    <div class="section__head why__head">
-      <h2 class="section__title why__title">The tools aren&rsquo;t the constraint.</h2>
+    <div class="why__grid">
+      <div class="why__copy">
+        <h2 class="section__title why__title">The tools aren&rsquo;t the constraint.</h2>
 
-      <div class="why__body">
+        <div class="why__body">
         <p class="why__para">
           AI capability is now available to any business that wants it, at a price that no
           longer decides anything. The constraint is that most businesses can&rsquo;t
@@ -42,20 +57,26 @@
           from them. The order is deliberate: assessment first, business case second,
           build only if the case holds.
         </p>
+        </div>
+      </div>
+
+      <div class="why__panel">
+        <ThreeFiguresPanel />
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .why__head {
-    max-width: none;
+  .why__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    column-gap: 64px;
+    align-items: center;
   }
 
-  /* Short enough to set on one line above 900px, which is what lets the two paragraphs
-   * beside it run the full depth of the band. */
   .why__title {
-    max-width: 24ch;
+    max-width: 18ch;
   }
 
   .why__para {
@@ -73,46 +94,41 @@
     margin-top: 24px;
   }
 
-  /* The exact complement of the centring rule in base.css. */
-  @media (min-width: 901px) and (orientation: landscape) {
-    .why__head {
-      display: grid;
-      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-      column-gap: 56px;
-      align-items: start;
-    }
-
+  /* The heading centres on phone and in portrait, matching every other heading on the
+   * site. It used to get this free from `.section__head` in base.css; that wrapper is
+   * gone, so it is set here. */
+  @media (max-width: 900px), (orientation: portrait) {
     .why__title {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    .why__body {
-      grid-column: 2;
-      grid-row: 1;
-      /* Beside the heading, not under it. The 2px nudge puts the first line on the
-       * heading's first baseline rather than its cap height. */
-      margin-top: 2px;
-    }
-
-    .why__para {
-      max-width: none;
+      text-align: center;
+      margin-inline: auto;
+      max-width: 20ch;
     }
   }
 
   @media (max-width: 900px) {
+    /* One column, in DOM order: the argument, then the picture of it. */
+    .why__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .why__panel {
+      margin-top: 30px;
+    }
+
     .why__body {
       margin-top: 18px;
     }
 
-    /* `text-align: left` IS REQUIRED, and its absence was a real bug caught on the built
-     * page. base.css centres everything inside a `.section__head` on phone and portrait,
-     * and un-centres exactly one thing: `.section__head .section__lede`. These paragraphs
-     * are not that class — they are two paragraphs in a wrapper, because this section has
-     * two — so they inherited the centring and stayed centred. Centred prose is harder to
-     * read, which matters more than usual on a page written for readers whose first
-     * language may not be English. Any section that puts body copy in a `.section__head`
-     * under a class other than `.section__lede` has to do this for itself. */
+    /* The block centres under the centred heading; the text inside stays left. Centred
+     * prose is harder to read, which matters more than usual on a page written for
+     * readers whose first language may not be English.
+     *
+     * This was a real bug once: while the heading and paragraphs shared a `.section__head`
+     * wrapper, base.css centred everything in it and un-centred exactly one class,
+     * `.section__lede`. These paragraphs are not that class, so they inherited the
+     * centring and shipped centred. The wrapper is gone now, but the rule stays explicit —
+     * any section putting body copy under a class other than `.section__lede` has to set
+     * this for itself. */
     .why__para {
       text-align: left;
       margin-inline: auto;

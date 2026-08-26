@@ -97,11 +97,25 @@ const chips = [
     align-items: start;
   }
 
+  /* `object-position` IS DOING REAL WORK — do not drop it back to the default.
+   *
+   * assets/fred.jpg is 520x650, a half-body shot with the face in the upper half: eyes at
+   * roughly y=210 of 650, chin at 320. `object-fit: cover` in a square box scales to
+   * width and trims 130 source pixels off the height, and at the default 50% it takes 65
+   * from each end — which lands the eyes 28% down the circle and fills the whole lower
+   * half with suit and tie. The face sits high and the crop reads as a mistake.
+   *
+   * At 15% only ~20px comes off the top, so the eyes land near 37% and the head is
+   * centred in the circle the way a portrait should be.
+   *
+   * The number is tied to THIS photograph. A replacement portrait needs it re-measured,
+   * or better, needs cropping to a square before it is committed. */
   .founder__portrait {
     width: 220px;
     height: 220px;
     border-radius: 50%;
     object-fit: cover;
+    object-position: 50% 15%;
     border: 6px solid var(--ark-white);
     box-shadow: var(--ark-raised);
   }
@@ -152,6 +166,8 @@ const chips = [
       width: 140px;
       height: 140px;
       border-width: 5px;
+      /* object-position is a percentage of the trimmed remainder, so it carries over
+       * unchanged at any box size. Nothing to restate here. */
     }
 
     .founder__title {

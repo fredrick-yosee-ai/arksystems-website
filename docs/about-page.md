@@ -52,6 +52,19 @@
      negative reads as a shrug or as the thing being denied. They are rules, and they get
      a rule: terracotta on the left edge, text only.
 
+  6. SECTION 2 GAINED A PANEL, on Fredrick's instruction of Aug 26 2026 after he read the
+     built page and found the section weak enough to look removable. He was right about
+     the symptom: it makes the page's only abstract claim — that three figures are missing
+     — and an abstract claim in prose is the easiest thing on a page to skip. The panel is
+     those three figures with nothing in the answer slots.
+
+     IT MUST STAY EMPTY. Filling the slots would not merely be an invented claim, it would
+     destroy the point: the picture only means something while it is blank. It is also not
+     the process diagram or the numbered steps this file forbids — three questions in a
+     list have no order, no arrow and no stage. And the founder portrait is still the only
+     IMAGE on the page; the panel is text and CSS. The restraint elsewhere is deliberate
+     and should stay.
+
   SECTION 3 IS THE LONG VERSION OF THE HOMEPAGE FOUNDER STRIP and the two share their
   heading, body paragraph and chips word for word. THEY HAVE TO STAY IN SYNC — a change
   to the years, the products or the chips here is wrong on the homepage the same day, and
