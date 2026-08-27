@@ -253,8 +253,8 @@ pinned in `.nvmrc`.
   BRANCH, not merged.**
   See the section below. They exist as routes now, but nothing is live: the three copy files
   Fredrick supplied all head themselves "Do not publish as written", and the standing rule
-  that a Canadian privacy practitioner has to see them first is unchanged. One fact inside
-  the page copy is still unknown and is not guessed — Fredrick's surname.
+  that a Canadian privacy practitioner has to see them first is unchanged. Every fact inside
+  the page copy is now confirmed; the review is the only thing outstanding.
 - **All three are linked from the live footer and 404 today**, and that is still true —
   merging the branch is the single change that closes the last three 404s on the site. CASL
   needs a privacy basis, and the AI Opportunity
@@ -893,22 +893,29 @@ review. Do not publish as written"*, and Fredrick's decision when they were plan
 build and hold. The footer links all three and all three still 404 in production.
 **Merging the branch is the single change that closes the last three footer 404s.**
 
-**Two defences, and neither is the hold.** All three pages set `noindex`, and
+**There is no draft notice on these pages.** One was built — a gold callout shown while any
+fact was still unknown — and it came out on Fredrick's instruction once the last fact
+landed. Worth being explicit about what that did and did not change: **it was never the
+safeguard.** What it did was make the state visible to anyone who opened a page early, and
+with it gone **there is no on-page indication that these have not been reviewed.** If they
+are ever merged before the practitioner sees them, nothing on the page will say so.
+
+**Two defences, and neither is the hold either.** All three pages set `noindex`, and
 `astro.config.mjs` filters all three out of the sitemap — a sitemap entry and a `noindex`
 tag are contradictory signals about the same URL, and sending both is how a page nobody
 meant to publish turns up in a search result anyway. **When the review clears, the filter
 and all three `noindex` flags come off in the same change.** A page reachable from the
 footer is public whether or not a crawler indexes it; the branch is the hold.
 
-**Facts live as `null` in `src/lib/legal.ts`** and render through `legal/Pending.astro` as
-a visible marked blank rather than a silent gap. **A plausible invention is worse than an
-obvious blank on these three pages**, because a blank is visible and an invented
-incorporation jurisdiction is not. Fill a value in `legal.ts` and every instance renders as
-ordinary text; the "Draft, under review" banner disappears on its own when the last one
-lands, rather than needing to be remembered.
+**Facts live in `src/lib/legal.ts`** and render through `legal/Pending.astro`, which shows
+a `null` as a visible marked blank rather than a silent gap. **A plausible invention is
+worse than an obvious blank on these three pages**, because a blank is visible and an
+invented incorporation jurisdiction is not. **Every fact is now filled**, so nothing renders
+as a placeholder; the mechanism stays because the values are worth holding in one
+documented place, and because nulling one puts its blank straight back on the page.
 
-**Five of the six were answered by Fredrick on Aug 26 2026, and three of them by deleting
-rather than filling.** That is this page's own rule applied to itself — where a practice is
+**All six were answered by Fredrick on Aug 26 2026, and three of them by deleting rather
+than filling.** That is these pages' own rule applied to themselves — where a practice is
 not settled, the line comes out rather than being softened:
 
 | Fact | Answer |
@@ -918,7 +925,7 @@ not settled, the line comes out rather than being softened:
 | Payment provider | **None.** No third-party processor is in the path, so the row came out of both provider tables. A stronger position, not a gap — one fewer provider holding client information |
 | Password manager | **Not named**, so its row came out — **and the sentence claiming credentials are held in one came out with it.** Half a claim is worse than neither: the page would have been describing tooling it could not name |
 | Backup window | **No separate backups** beyond what Google Workspace holds natively, so the bullet came out |
-| Fredrick's surname | **Still open.** The only remaining blank, on `/privacy` section 11 |
+| Privacy Officer | **Fredrick Cyril.** PIPEDA wants a named individual; `/privacy` section 11 |
 
 **Two consequences worth knowing, both flagged at the time:**
 

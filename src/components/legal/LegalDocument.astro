@@ -25,8 +25,17 @@
  * One column, and no sidebar table of contents. A legal document cross-references itself
  * by section number ("the address in section 11"), which a two-column layout breaks, and a
  * fourteen-item sidebar is more furniture than the reference carries.
+ *
+ * THERE IS NO DRAFT NOTICE ON THESE PAGES. One was built here — a gold callout above the
+ * body, shown while any fact in PENDING was still null — and it was removed on Fredrick's
+ * instruction of Aug 26 2026 once the last fact landed. Worth being explicit about what
+ * that did and did not change: **it was never the safeguard.** All three pages are held on
+ * an unmerged branch, set `noindex`, and are filtered out of the sitemap. The branch is the
+ * hold. What the notice did was make the state visible to anyone who opened a page early,
+ * and with it gone there is no on-page indication that these have not been reviewed by a
+ * Canadian privacy practitioner. If they are ever merged before that review, nothing on
+ * the page will say so.
  */
-import { HAS_PENDING } from "../../lib/legal";
 
 interface Props {
   title: string;
@@ -41,25 +50,6 @@ const { title, dateline } = Astro.props;
   <div class="doc__col">
     <h1 class="doc__title">{title}</h1>
     {dateline && <p class="doc__dateline">{dateline}</p>}
-
-    {
-      /*
-       * The review notice. Not a disclaimer bolted onto a finished page — it is the
-       * accurate description of what these documents currently are. It renders only while
-       * a fact in PENDING is still null, so it clears itself when the last value lands
-       * rather than having to be remembered and removed.
-       *
-       * It does NOT substitute for the practitioner review. All three pages are held on a
-       * branch for that; this is what makes the state visible if one is opened early.
-       */
-      HAS_PENDING && (
-        <p class="doc__notice" role="note">
-          <strong>Draft, under review.</strong> This document is not final. Facts marked
-          below are still being confirmed, and it has not yet been reviewed by a Canadian
-          privacy practitioner. Do not rely on it.
-        </p>
-      )
-    }
 
     <div class="doc__body">
       <slot />
@@ -117,20 +107,6 @@ const { title, dateline } = Astro.props;
     font-size: var(--ark-small);
     color: var(--ark-muted);
     text-align: center;
-  }
-
-  .doc__notice {
-    margin-top: 32px;
-    padding: 16px 20px;
-    border: 1px solid var(--ark-gold-border);
-    border-radius: var(--ark-radius-sm);
-    background: var(--ark-gold-bg);
-    font-size: var(--ark-small);
-    line-height: 1.6;
-  }
-
-  .doc__notice strong {
-    color: var(--ark-ink);
   }
 
   .doc__body {

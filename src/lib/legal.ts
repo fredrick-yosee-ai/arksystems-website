@@ -11,8 +11,15 @@
  * rather than a silent gap, so an unfilled fact cannot slip past a read-through. Fill one
  * in and it renders as ordinary text with no other change needed.
  *
- * All three pages are held on a branch until a Canadian privacy practitioner has read
- * them — see the header comment on each page — so these blanks are not live anywhere.
+ * EVERY FACT IS FILLED AS OF AUG 26 2026, so nothing renders as a placeholder today. The
+ * mechanism stays because these values are still worth holding in one place — each is
+ * documented with where it appears, so a change is one edit rather than a search — and
+ * because nulling one puts its marked blank straight back on the page.
+ *
+ * All three pages are still held on a branch until a Canadian privacy practitioner has
+ * read them. THE BRANCH IS THE HOLD. There is no longer an on-page draft notice; it was
+ * removed on Fredrick's instruction once the last fact landed, and it was never the
+ * safeguard.
  *
  * TWO PROVIDER ENTRIES WERE REMOVED RATHER THAN FILLED, on Fredrick's answers of Aug 26
  * 2026, and both are recorded here because a later reader will otherwise wonder where they
@@ -52,14 +59,13 @@ export interface PendingFacts {
 export const PENDING: PendingFacts = {
   /* Confirmed by Fredrick, Aug 26 2026. */
   incorporatedIn: "British Columbia",
-  privacyOfficerSurname: null,
+  /* Confirmed by Fredrick, Aug 26 2026. PIPEDA wants the Privacy Officer to be a named
+   * individual, and this was the last unknown fact on any of the three pages. */
+  privacyOfficerSurname: "Cyril",
   /* Confirmed by Fredrick, Aug 26 2026. Stated as a commitment a client can hold us to,
    * so it is the window we would always meet rather than a best case. */
   accessRemovalWindow: "five business days",
 };
-
-/** True while any fact is still missing. All three pages use it to show the review banner. */
-export const HAS_PENDING = Object.values(PENDING).some((v) => v === null);
 
 /**
  * The effective date, written once. It appears in the dateline on /privacy and /terms and
