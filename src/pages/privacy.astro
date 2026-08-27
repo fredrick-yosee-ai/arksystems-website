@@ -42,9 +42,17 @@
  *    describes what merely opening a page sends them. Both are true and only one was in
  *    the draft.
  *
- * 4. SIX FACTS ARE NOT YET KNOWN and none is guessed — see src/lib/legal.ts. Two of them
- *    land on this page: the jurisdiction of incorporation and the Privacy Officer's
- *    surname, plus the payment provider row in section 5.
+ * 4. THE PRIVACY OFFICER'S SURNAME IS STILL UNKNOWN and is not guessed — see
+ *    src/lib/legal.ts. It is the last blank on any of the three pages, and it renders as a
+ *    marked placeholder in section 11 rather than as a silent gap. The jurisdiction of
+ *    incorporation was confirmed as British Columbia on Aug 26 2026.
+ *
+ *    SECTION 5 HAS NO PAYMENT PROVIDER ROW, and that is an answer rather than an omission:
+ *    there is no third-party payment processor in the path. Invoicing is still described in
+ *    section 3, and the records it produces are covered by the Google Workspace row and the
+ *    six-year retention rule in section 7. If a processor is ever introduced, this table
+ *    needs a row the same day — the copy file's own note is that a missing row is how a
+ *    policy goes quietly inaccurate.
  *
  * SECTION NUMBERING IS LOAD-BEARING. The document cross-references itself by number
  * ("the address in section 11", "the table in section 5"). Sections 2 and 3 lost content
@@ -240,15 +248,6 @@ const description =
             <td>Cal.com</td>
             <td>Call booking, and the booking script on every page</td>
             <td>United States</td>
-          </tr>
-          <tr>
-            <td>
-              <Pending value={PENDING.paymentProvider} label="payment provider" />
-            </td>
-            <td>Invoicing and payment</td>
-            <td>
-              <Pending value={PENDING.paymentProviderRegion} label="region" />
-            </td>
           </tr>
         </tbody>
       </table>

@@ -33,9 +33,23 @@
  *    under the standing instruction of Aug 25 2026; the entity stays. Same call as
  *    /privacy, taken at the same time.
  *
- * 2. FOUR FACTS ARE NOT YET KNOWN and none is guessed — see src/lib/legal.ts. This page
- *    carries all four: the password manager and the payment provider in the provider
- *    table, the access-removal window, and the backup window.
+ * 2. THREE FACTS WERE ANSWERED BY DELETION, not by filling, on Fredrick's answers of Aug
+ *    26 2026. That is this page's own rule applied to itself — where a practice is not
+ *    settled, the line comes out rather than being softened:
+ *
+ *    - NO PAYMENT PROVIDER ROW. There is no third-party processor in the path. A stronger
+ *      position than a filled row, not a gap.
+ *    - NO PASSWORD MANAGER ROW, and no sentence claiming credentials are held in one. See
+ *      the note at that paragraph for why half of it could not stay.
+ *    - NO BACKUP BULLET. There are no separate backups beyond what Google Workspace holds
+ *      natively, so the 90-day deletion commitment stands on its own. The copy file paired
+ *      the two deliberately because they run in sequence; with nothing to pair, the claim
+ *      is stronger — and worth the practitioner checking against Google Workspace's own
+ *      trash and admin-recovery behaviour, which is not the same as nothing.
+ *
+ *    The access-removal window is confirmed at five business days. THIS PAGE NOW CARRIES NO
+ *    BLANKS. The one remaining across all three is the Privacy Officer's surname, on
+ *    /privacy.
  *
  * WHAT THIS PAGE MUST NEVER CLAIM, from the copy file's own list. Each is a rule, not a
  * preference:
@@ -67,13 +81,19 @@
  * PUBLISH — it is quotable, and it is the one line on the site most likely to be read
  * back to us.
  *
- * The two 90-day windows run in sequence, not together: a file deleted on day 90 can
- * still sit in a backup taken before that, so the honest outside figure is 180 days. The
- * page states the deletion commitment and names the backup schedule separately, which is
- * accurate. DO NOT MERGE THEM INTO ONE NUMBER.
+ * The copy file paired the 90-day deletion window with a backup window because the two run
+ * in sequence — a file deleted on day 90 can still sit in a backup taken before it, so
+ * merging them into one number would understate the outside figure. THAT PAIRING IS GONE
+ * BECAUSE THE BACKUPS ARE, not because the two were merged. If separate backups are ever
+ * introduced, the second figure comes back as its own line and is never folded into the
+ * first.
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LegalDocument from "../components/legal/LegalDocument.astro";
+/* The access-removal window is confirmed, so this renders as ordinary text today.
+ * It stays routed through Pending rather than inlined: the value is a tracked fact,
+ * and if it is ever set back to null the marked blank returns on its own instead of
+ * the page quietly losing a number. */
 import Pending from "../components/legal/Pending.astro";
 import { PENDING, LEGAL_ENTITY, LEGAL_EMAIL } from "../lib/legal";
 
@@ -162,9 +182,23 @@ const description =
       without asking us.
     </p>
 
+    {/* The approved copy has a second sentence here: "Credentials are held in a password
+      * manager, never in documents, email or chat." IT IS CUT ON PURPOSE, by Fredrick's
+      * instruction of Aug 26 2026 — first not to name a password manager, then to remove
+      * the sentence rather than keep half of it.
+      *
+      * That is this page's own rule applied to itself: every measure stated here must be
+      * one that is in place today, and where a practice is not yet settled the line comes
+      * out rather than being softened. A page that describes tooling it cannot name reads
+      * as evasion to exactly the reader who came here to be reassured.
+      *
+      * ONE CONSEQUENCE: the page no longer says anything about where credentials are held.
+      * A practice running a vendor assessment asks that question directly, and it now gets
+      * answered on the call instead. If a password manager is adopted and named later, the
+      * sentence and its provider-table row come back together — one without the other is
+      * what was wrong here in the first place. */}
     <p>
       Multi-factor authentication is used on every account that reaches client information.
-      Credentials are held in a password manager, never in documents, email or chat.
     </p>
 
     <p>
@@ -244,24 +278,6 @@ const description =
             <td>Call booking</td>
             <td>United States</td>
           </tr>
-          <tr>
-            <td>
-              <Pending value={PENDING.passwordManager} label="password manager" />
-            </td>
-            <td>Credential storage</td>
-            <td>
-              <Pending value={PENDING.passwordManagerRegion} label="region" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <Pending value={PENDING.paymentProvider} label="payment provider" />
-            </td>
-            <td>Invoicing</td>
-            <td>
-              <Pending value={PENDING.paymentProviderRegion} label="region" />
-            </td>
-          </tr>
         </tbody>
       </table>
     </div>
@@ -303,11 +319,6 @@ const description =
       </li>
       <li>
         <span class="doc-term">Credentials and access</span> &mdash; removed at close, as above
-      </li>
-      <li>
-        <span class="doc-term">Backups</span> &mdash; copies in routine backups age out on the
-        backup schedule rather than being deleted individually, which is{" "}
-        <Pending value={PENDING.backupWindow} label="backup window" />
       </li>
     </ul>
 

@@ -253,8 +253,8 @@ pinned in `.nvmrc`.
   BRANCH, not merged.**
   See the section below. They exist as routes now, but nothing is live: the three copy files
   Fredrick supplied all head themselves "Do not publish as written", and the standing rule
-  that a Canadian privacy practitioner has to see them first is unchanged. Six facts inside
-  the page copy are still unknown and none is guessed.
+  that a Canadian privacy practitioner has to see them first is unchanged. One fact inside
+  the page copy is still unknown and is not guessed — Fredrick's surname.
 - **All three are linked from the live footer and 404 today**, and that is still true —
   merging the branch is the single change that closes the last three 404s on the site. CASL
   needs a privacy basis, and the AI Opportunity
@@ -900,14 +900,37 @@ meant to publish turns up in a search result anyway. **When the review clears, t
 and all three `noindex` flags come off in the same change.** A page reachable from the
 footer is public whether or not a crawler indexes it; the branch is the hold.
 
-**Six facts are unknown and none is guessed** — they live as `null` in `src/lib/legal.ts`
-and render through `legal/Pending.astro` as a visible marked blank rather than a silent
-gap. Jurisdiction of incorporation, Fredrick's surname, the payment provider and its
-region, the password manager and its region, the access-removal window, the backup window.
-**A plausible invention is worse than an obvious blank on these two pages**, because a
-blank is visible and an invented incorporation jurisdiction is not. Fill a value in
-`legal.ts` and every instance renders as ordinary text; the "Draft, under review" banner
-disappears on its own when the last one lands, rather than needing to be remembered.
+**Facts live as `null` in `src/lib/legal.ts`** and render through `legal/Pending.astro` as
+a visible marked blank rather than a silent gap. **A plausible invention is worse than an
+obvious blank on these three pages**, because a blank is visible and an invented
+incorporation jurisdiction is not. Fill a value in `legal.ts` and every instance renders as
+ordinary text; the "Draft, under review" banner disappears on its own when the last one
+lands, rather than needing to be remembered.
+
+**Five of the six were answered by Fredrick on Aug 26 2026, and three of them by deleting
+rather than filling.** That is this page's own rule applied to itself — where a practice is
+not settled, the line comes out rather than being softened:
+
+| Fact | Answer |
+|---|---|
+| Jurisdiction of incorporation | **British Columbia.** Renders on `/privacy` and `/terms` |
+| Access-removal window | **Five business days.** A commitment a client can hold us to, so it is the window we would always meet rather than a best case |
+| Payment provider | **None.** No third-party processor is in the path, so the row came out of both provider tables. A stronger position, not a gap — one fewer provider holding client information |
+| Password manager | **Not named**, so its row came out — **and the sentence claiming credentials are held in one came out with it.** Half a claim is worse than neither: the page would have been describing tooling it could not name |
+| Backup window | **No separate backups** beyond what Google Workspace holds natively, so the bullet came out |
+| Fredrick's surname | **Still open.** The only remaining blank, on `/privacy` section 11 |
+
+**Two consequences worth knowing, both flagged at the time:**
+
+- **The page no longer says where credentials are held, only where they are not.** A
+  practice running a vendor assessment asks that directly, and it now gets answered on the
+  call. If a password manager is adopted, **the sentence and its table row come back
+  together** — one without the other is what was wrong in the first place.
+- **The 90-day deletion commitment now stands alone.** The copy file paired it with a
+  backup window deliberately, because the two run in sequence and merging them understates
+  the outside figure. With no backup bullet there is nothing to pair, which is a stronger
+  claim — **worth the practitioner confirming against Google Workspace's own trash and
+  admin-recovery behaviour**, which is not the same as nothing.
 
 **Four departures from the approved copy on `/privacy`, two on `/data-handling`**, each
 recorded in full in the page's own header comment. The two that matter:

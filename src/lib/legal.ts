@@ -1,56 +1,70 @@
 /**
  * The facts the legal pages are still waiting on.
  *
- * Every value here appears inside published page copy on /privacy or /data-handling.
- * They are `null` because they are not known, and **nothing here may be guessed**. A
- * made-up incorporation jurisdiction, surname or payment provider is a false statement
- * on the two pages that exist precisely to be accurate — worse than an obvious blank,
- * because a blank is visible and a plausible invention is not.
+ * Every value here appears inside published page copy on /privacy, /data-handling or
+ * /terms. A `null` means the fact is not known, and **nothing here may be guessed**. A
+ * made-up incorporation jurisdiction or surname is a false statement on the three pages
+ * that exist precisely to be accurate — and worse than an obvious blank, because a blank
+ * is visible and a plausible invention is not.
  *
  * While a value is null the page renders a marked placeholder (see `Pending.astro`)
- * rather than a silent gap, so an unfilled fact cannot slip past a read-through. Fill
- * one in and it renders as ordinary text with no other change needed.
+ * rather than a silent gap, so an unfilled fact cannot slip past a read-through. Fill one
+ * in and it renders as ordinary text with no other change needed.
  *
- * Both pages are held on a branch until a Canadian privacy practitioner has read them —
- * see the header comment on each page — so these blanks are not live anywhere.
+ * All three pages are held on a branch until a Canadian privacy practitioner has read
+ * them — see the header comment on each page — so these blanks are not live anywhere.
+ *
+ * TWO PROVIDER ENTRIES WERE REMOVED RATHER THAN FILLED, on Fredrick's answers of Aug 26
+ * 2026, and both are recorded here because a later reader will otherwise wonder where they
+ * went:
+ *
+ * - **Payment provider.** There is no third-party payment processor. Invoicing runs
+ *   without one, so the row came out of the tables on both /privacy and /data-handling
+ *   instead of being filled. That is a genuinely stronger position, not a gap — one fewer
+ *   provider holding client information, and one fewer name on the cross-border paragraph.
+ *   Invoicing itself is still described in /privacy section 3, and the records it produces
+ *   are covered by the Google Workspace row and the six-year retention rule.
+ * - **Password manager.** Not named for now, by instruction, so its row came out of
+ *   /data-handling's table — and then the sentence claiming credentials are held in one
+ *   came out with it, on a second instruction. A claim about a practice cannot outlive the
+ *   naming of the tool, and half of it is worse than neither: the page would have been
+ *   describing tooling it could not name. See that page's header for the consequence.
+ *
+ * If either is introduced later, it needs a row back AND the surrounding prose re-read.
+ *
+ * A THIRD FACT WAS REMOVED THE SAME WAY: the backup window. There are no separate backups
+ * beyond what Google Workspace holds natively, so the bullet came out of /data-handling
+ * rather than taking a number. The 90-day deletion commitment now stands on its own — the
+ * copy file paired the two deliberately, because they run in sequence and merging them
+ * would understate the outside figure. WITH NO BACKUP BULLET THERE IS NOTHING TO PAIR,
+ * which is a stronger claim and worth the practitioner confirming against Google
+ * Workspace's own trash and admin-recovery behaviour.
  */
 export interface PendingFacts {
-  /** FoodyGuru Inc.'s jurisdiction of incorporation. /privacy opening. */
+  /** FoodyGuru Inc.'s jurisdiction of incorporation. Opening of /privacy and /terms. */
   incorporatedIn: string | null;
   /** Fredrick's surname. /privacy section 11 — the Privacy Officer must be a named individual. */
   privacyOfficerSurname: string | null;
-  /** Invoicing and payment provider. Provider tables on BOTH pages. */
-  paymentProvider: string | null;
-  /** Where the payment provider processes data. Same tables. */
-  paymentProviderRegion: string | null;
-  /** Credential store. /data-handling provider table. */
-  passwordManager: string | null;
-  /** Where the password manager processes data. Same table. */
-  passwordManagerRegion: string | null;
   /** How long after an engagement closes we confirm access removal. /data-handling. */
   accessRemovalWindow: string | null;
-  /** How long copies persist in routine backups before ageing out. /data-handling. */
-  backupWindow: string | null;
 }
 
 export const PENDING: PendingFacts = {
-  incorporatedIn: null,
+  /* Confirmed by Fredrick, Aug 26 2026. */
+  incorporatedIn: "British Columbia",
   privacyOfficerSurname: null,
-  paymentProvider: null,
-  paymentProviderRegion: null,
-  passwordManager: null,
-  passwordManagerRegion: null,
-  accessRemovalWindow: null,
-  backupWindow: null,
+  /* Confirmed by Fredrick, Aug 26 2026. Stated as a commitment a client can hold us to,
+   * so it is the window we would always meet rather than a best case. */
+  accessRemovalWindow: "five business days",
 };
 
-/** True while any fact is still missing. Both pages use it to show the review banner. */
+/** True while any fact is still missing. All three pages use it to show the review banner. */
 export const HAS_PENDING = Object.values(PENDING).some((v) => v === null);
 
 /**
- * The effective date, written once. It appears in the dateline on both pages and in
- * /privacy section 12, which points back at it — if the two ever disagree the page is
- * telling the reader to check something that is wrong.
+ * The effective date, written once. It appears in the dateline on /privacy and /terms and
+ * in /privacy section 12 and /terms section 13, both of which point back at it — if the
+ * two ever disagree the page is telling the reader to check something that is wrong.
  */
 export const LEGAL_EFFECTIVE_DATE = "26 August 2026";
 
