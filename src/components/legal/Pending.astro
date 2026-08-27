@@ -1,0 +1,59 @@
+---
+/**
+ * A fact the legal pages are still waiting on, rendered visibly rather than silently.
+ *
+ * The alternative — leaving the sentence out until the value arrives — is worse on these
+ * two pages specifically. A provider table with a row missing reads as complete, and the
+ * privacy draft's own build note says a missing row is how a policy goes quietly
+ * inaccurate. A marked blank cannot be mistaken for a finished page.
+ *
+ * It is deliberately loud. These pages are held on a branch until a practitioner has read
+ * them, so nothing here is live; if one of these ever renders in production, something
+ * has gone wrong with that hold and it should be impossible to miss.
+ *
+ * Values live in one place: PENDING in src/lib/legal.ts. Fill one in there and every
+ * instance renders as ordinary text.
+ */
+interface Props {
+  /** The resolved value, or null while it is unknown. */
+  value: string | null;
+  /** What is missing, for the placeholder text. Lower case, no brackets. */
+  label: string;
+}
+
+const { value, label } = Astro.props;
+---
+
+{
+  value ? (
+    <>{value}</>
+  ) : (
+    <span class="pending" title={`Waiting on: ${label}`}>
+      <span class="pending__mark" aria-hidden="true">
+        ?
+      </span>
+      to confirm: {label}
+    </span>
+  )
+}
+
+<style>
+  .pending {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 1px 9px 2px;
+    border: 1px dashed var(--ark-terracotta);
+    border-radius: var(--ark-radius-pill);
+    /* Text, so the ink shade rather than the raw hex — the raw one fails AA at body
+     * sizes on all four backgrounds the site uses. */
+    color: var(--ark-terracotta-ink);
+    font-size: 0.9375em;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .pending__mark {
+    font-weight: 700;
+  }
+</style>

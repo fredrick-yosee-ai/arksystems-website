@@ -1,0 +1,389 @@
+---
+/**
+ * /privacy — Privacy Policy.
+ *
+ * Built Aug 26 2026 from docs/legal/privacy.md, which Fredrick supplied the same day.
+ *
+ * HELD ON A BRANCH. NOT FOR MERGE UNTIL A CANADIAN PRIVACY PRACTITIONER HAS READ IT.
+ * The copy file's own header says "Draft for legal review. Do not publish as written",
+ * and that is Fredrick's decision of Aug 26 2026 when the page was planned. `noindex` is
+ * set as a second line of defence, not as the hold itself — a page reachable from the
+ * footer is public whether or not search engines index it. Remove `noindex` in the same
+ * change that clears the review, never before.
+ *
+ * FOUR DEPARTURES FROM THE APPROVED COPY, all decided by Fredrick on Aug 26 2026 when
+ * the page was planned. Nothing else was touched.
+ *
+ * 1. NO LOCATION LINE. The draft prints "based in Metro Vancouver, British Columbia,
+ *    Canada" in the opening and again in section 11. Both are gone under the standing
+ *    instruction of Aug 25 2026 that no sentence on any page names a location. Fredrick
+ *    was shown that a privacy policy is arguably the exception — PIPEDA wants an
+ *    identifiable contact, and a policy that names no jurisdiction is weaker as a legal
+ *    document — and chose to apply the rule literally, email only. ONE CONSEQUENCE WORTH
+ *    KNOWING: the entity's jurisdiction is now stated nowhere on the site, and a larger
+ *    prospect running a vendor assessment may ask for it directly.
+ *
+ * 2. SECTIONS 2, 3, 4 AND 5 DESCRIBE THE SITE AS IT ACTUALLY IS. The draft was written
+ *    against a build spec — cookie banner, Google Consent Mode v2, GA4, Meta Pixel,
+ *    LinkedIn Insight Tag, Google Ads — none of which exists. Publishing "we use Google
+ *    Analytics, Meta, LinkedIn" while none of it is installed is a false statement on a
+ *    privacy page, so the copy states what is true today and says plainly what happens
+ *    if that changes. MEASURED IN THE BROWSER RATHER THAN ASSUMED, on the built page:
+ *    `document.cookie` empty, localStorage and sessionStorage empty, exactly two resource
+ *    hosts (our own and app.cal.com), one third-party script (app.cal.com/embed/embed.js),
+ *    fonts served from our own domain. RE-MEASURE BEFORE EVERY RELEASE — the moment a tag
+ *    is added this section is inaccurate, and it is the kind of inaccuracy nobody notices.
+ *    The cookie-banner spec in the copy file remains the plan; it is a separate job.
+ *
+ * 3. CAL.COM IS NAMED IN SECTION 2, not only in section 1. BaseLayout's own comment
+ *    requires it: embed.js loads from app.cal.com on every page view, before anyone
+ *    clicks anything, so it is not merely a booking provider — it receives a request from
+ *    every visitor to every page. Section 1 describes what booking sends them; section 2
+ *    describes what merely opening a page sends them. Both are true and only one was in
+ *    the draft.
+ *
+ * 4. SIX FACTS ARE NOT YET KNOWN and none is guessed — see src/lib/legal.ts. Two of them
+ *    land on this page: the jurisdiction of incorporation and the Privacy Officer's
+ *    surname, plus the payment provider row in section 5.
+ *
+ * SECTION NUMBERING IS LOAD-BEARING. The document cross-references itself by number
+ * ("the address in section 11", "the table in section 5"). Sections 2 and 3 lost content
+ * to departure 2 but kept their numbers for that reason. Renumbering means re-reading
+ * every cross-reference.
+ *
+ * ONE THING FREDRICK HAS TO VERIFY BEYOND THE BLANKS: the copy file's build note on
+ * section 8 says every safeguard listed must be one that is actually in place, and to
+ * delete any line that is not rather than treat it as an aspiration. They ship as
+ * written because the copy is approved. An unmet security claim in a privacy policy is a
+ * worse exposure than a shorter list.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LegalDocument from "../components/legal/LegalDocument.astro";
+import Pending from "../components/legal/Pending.astro";
+import {
+  PENDING,
+  LEGAL_EFFECTIVE_DATE,
+  LEGAL_ENTITY,
+  LEGAL_EMAIL,
+} from "../lib/legal";
+
+const description =
+  "How ArkSystems collects, uses and protects personal information — what we collect, why, who processes it, and how to access or correct it.";
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description={description}
+  noindex
+>
+  <LegalDocument
+    eyebrow="Legal"
+    title="Privacy Policy"
+    dateline={`Effective ${LEGAL_EFFECTIVE_DATE}. Last updated ${LEGAL_EFFECTIVE_DATE}.`}
+    standfirst="This policy explains what personal information we collect through arksystems.ca and in the course of our work, why we collect it, who processes it on our behalf, and how you can access or correct it. It applies to this website and to our dealings with clients and prospective clients."
+  >
+    <p>
+      ArkSystems is operated by {LEGAL_ENTITY}, a company incorporated in{" "}
+      <Pending value={PENDING.incorporatedIn} label="jurisdiction of incorporation" />. In
+      this policy, &ldquo;we&rdquo; and &ldquo;us&rdquo; mean {LEGAL_ENTITY} operating as
+      ArkSystems.
+    </p>
+
+    <h2 id="information-you-give-us">1. Information you give us</h2>
+
+    <p>
+      <span class="doc-term">When you email us.</span> Your email address, your name if you
+      give it, and whatever you write. We use it to answer you.
+    </p>
+
+    <p>
+      <span class="doc-term">When you book a call.</span> Your name, email address, the time
+      you select, and anything you enter in the booking notes. This is collected through
+      Cal.com, our booking provider, and is used to hold the appointment and prepare for the
+      conversation.
+    </p>
+
+    <p>
+      <span class="doc-term">When you complete one of our forms.</span> Our qualification and
+      workshop preparation forms ask about your business, your processes, the software you
+      use and the people involved. We use that information to determine whether we can help
+      you, and to prepare properly if we can. These forms are hosted on Google Workspace.
+    </p>
+
+    <p>
+      <span class="doc-term">When you become a client.</span> In the course of an engagement
+      we may be given access to business information, systems and documents, and &mdash;
+      depending on the work &mdash; to records that contain personal information about your
+      own clients, customers or staff. What we do with that access, and what we keep
+      afterwards, is set out on our <a href="/data-handling">Data Handling page</a> and
+      governed by our engagement agreement.
+    </p>
+
+    <h2 id="collected-automatically">2. Information collected automatically</h2>
+
+    <p>
+      <span class="doc-term">Server logs.</span> Our website is hosted by Netlify. Their
+      servers record standard technical information about requests, including IP address,
+      browser type and the pages requested. This is a normal function of web hosting and is
+      used for delivery, security and troubleshooting. It happens on every visit, because
+      without it the site cannot be served to you.
+    </p>
+
+    <p>
+      <span class="doc-term">Booking.</span> Our booking tool is provided by Cal.com, and the
+      script that opens it loads from Cal.com&rsquo;s servers whenever you open a page on
+      this site. That means Cal.com receives the same standard technical information
+      described above from every page you open here, whether or not you book anything. What
+      booking a call sends them is described in section 1.
+    </p>
+
+    <p>
+      <span class="doc-term">Analytics and advertising &mdash; we don&rsquo;t use them.</span>
+      There is no analytics service on this website, no advertising or tracking pixel, and we
+      set no cookies of our own. Our fonts are served from our own domain rather than from a
+      font provider. Cal.com, named above, is the only third party that receives anything
+      when you open a page.
+    </p>
+
+    <p>
+      If we introduce analytics or advertising, this section and the table in section 5 will
+      say so, we will ask for your consent before anything loads, and the effective date at
+      the top of this page will show when it changed.
+    </p>
+
+    <h2 id="why-we-collect-it">3. Why we collect it</h2>
+
+    <p>We collect personal information for these purposes and no others:</p>
+
+    <ul>
+      <li>To answer enquiries and correspond with you</li>
+      <li>To schedule and prepare for calls and meetings</li>
+      <li>
+        To assess whether our services suit your business, and to scope, price and deliver
+        work
+      </li>
+      <li>To perform our contract with you, including invoicing and record-keeping</li>
+      <li>To meet legal, tax and accounting obligations</li>
+    </ul>
+
+    <p>
+      We do not sell personal information. We do not rent, trade or otherwise disclose it for
+      anyone else&rsquo;s marketing purposes.
+    </p>
+
+    <h2 id="consent">4. Consent</h2>
+
+    <p>
+      <span class="doc-term">You give consent by providing your information.</span> When you
+      email us, book a call or complete a form, you consent to us using that information for
+      the purpose it was given.
+    </p>
+
+    <p>
+      <span class="doc-term">Cookies.</span> We set no cookies of our own, and no analytics or
+      advertising cookies are set on this site. If that changes, we will ask you before
+      anything loads and give you a way to withdraw that consent at any time.
+    </p>
+
+    <p>
+      <span class="doc-term">Commercial email.</span> We may send you commercial electronic
+      messages where Canada&rsquo;s Anti-Spam Legislation permits it &mdash; for example,
+      where you have asked to hear from us, or where an existing business relationship
+      applies. Every such message identifies us, gives our contact information, and includes a
+      way to unsubscribe that works. If you unsubscribe, we keep a record of that request so
+      we do not contact you again.
+    </p>
+
+    <p>
+      <span class="doc-term">You can withdraw consent at any time</span>, subject to legal and
+      contractual restrictions and reasonable notice. Write to us at the address in section
+      11. Withdrawing consent may mean we can no longer provide a service.
+    </p>
+
+    <h2 id="service-providers">5. Service providers, and where your information is processed</h2>
+
+    <p>
+      We use a small number of third-party providers to operate. Each processes information
+      only for the purpose we engage it for.
+    </p>
+
+    <div class="doc-table">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Provider</th>
+            <th scope="col">What it does</th>
+            <th scope="col">Where it processes data</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Netlify</td>
+            <td>Website hosting and delivery</td>
+            <td>United States</td>
+          </tr>
+          <tr>
+            <td>Google Workspace (Google LLC)</td>
+            <td>Email, documents, forms, and our prospect records</td>
+            <td>United States</td>
+          </tr>
+          <tr>
+            <td>Cal.com</td>
+            <td>Call booking, and the booking script on every page</td>
+            <td>United States</td>
+          </tr>
+          <tr>
+            <td>
+              <Pending value={PENDING.paymentProvider} label="payment provider" />
+            </td>
+            <td>Invoicing and payment</td>
+            <td>
+              <Pending value={PENDING.paymentProviderRegion} label="region" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      <span class="doc-term">
+        These providers store and process information outside Canada, principally in the
+        United States.
+      </span>{" "}
+      While personal information is held in another country, it is subject to that
+      country&rsquo;s laws and may be accessible to that country&rsquo;s courts, law
+      enforcement and national security authorities under those laws. We use providers we
+      consider reputable and require them to protect information to a comparable standard, but
+      we cannot exclude that access.
+    </p>
+
+    <p>
+      If your business cannot accept processing outside Canada, tell us before an engagement
+      begins. It affects which tools we can use to deliver the work, and it is a normal thing
+      to require.
+    </p>
+
+    <h2 id="what-we-do-not-do">6. What we do not do</h2>
+
+    <p>We do not sell, rent or trade personal information.</p>
+
+    <p>
+      We do not add you to a marketing list because you emailed us, booked a call, or
+      downloaded something.
+    </p>
+
+    <p>
+      We do not use your business information, your documents, or anything we see during an
+      engagement to train AI models.
+    </p>
+
+    <p>
+      Where a build uses third-party AI providers, we name them &mdash; and the tier &mdash;
+      in writing before anything is connected, together with what their terms say about how
+      inputs are handled. Their terms are theirs, and they change; what we commit to is that
+      you see them before you decide, not afterwards.
+    </p>
+
+    <h2 id="how-long-we-keep-it">7. How long we keep it</h2>
+
+    <p>
+      <span class="doc-term">Enquiries that don&rsquo;t become work.</span> Emails, booking
+      records and prospect notes are kept while there is a live conversation, and for 24
+      months after the last contact. Then they are deleted.
+    </p>
+
+    <p>
+      <span class="doc-term">Client records.</span> Contracts, statements of work, proposals,
+      requirements documents, workshop documents and invoices are kept for the length of the
+      relationship and for six years after the end of the tax year they relate to, because
+      Canadian tax law requires business records to be retained for that period.
+    </p>
+
+    <p>
+      <span class="doc-term">Your operational data &mdash; we don&rsquo;t keep it.</span>{" "}
+      Anything given to us to examine, test with or build against is working material, not a
+      record. It is deleted within 90 days of the engagement closing. We do not retain client
+      operational data after an implementation. Nothing of yours sits on our systems once the
+      work is done.
+    </p>
+
+    <p>
+      <span class="doc-term">Unsubscribe records</span> are kept indefinitely, because that is
+      what makes an unsubscribe permanent.
+    </p>
+
+    <h2 id="safeguards">8. Safeguards</h2>
+
+    <p>
+      We protect personal information with measures appropriate to how sensitive it is: access
+      limited to those who need it, multi-factor authentication on accounts that hold client
+      information, encryption in transit, and removal of access when an engagement ends.
+    </p>
+
+    <p>
+      No system is perfectly secure, and we do not claim otherwise. If a breach occurs that
+      creates a real risk of significant harm, we will notify affected individuals and the
+      Office of the Privacy Commissioner of Canada as the law requires.
+    </p>
+
+    <h2 id="your-rights">9. Your rights</h2>
+
+    <p>
+      You can ask us what personal information we hold about you, ask for a copy, and ask us to
+      correct anything inaccurate. Write to the address in section 11.
+    </p>
+
+    <p>
+      We will respond within 30 days. If we need longer, we will tell you why and when to
+      expect a response. If we cannot give you access, we will explain the reason.
+    </p>
+
+    <p>
+      If you are not satisfied with how we have handled your information, you may complain to
+      the Office of the Privacy Commissioner of Canada at{" "}
+      <a href="https://priv.gc.ca" rel="noopener">priv.gc.ca</a>, or to the Office of the
+      Information and Privacy Commissioner for British Columbia at{" "}
+      <a href="https://oipc.bc.ca" rel="noopener">oipc.bc.ca</a>.
+    </p>
+
+    <h2 id="children">10. Children</h2>
+
+    <p>
+      This website is intended for businesses. We do not knowingly collect personal
+      information from anyone under the age of majority.
+    </p>
+
+    <h2 id="contact">11. Contact</h2>
+
+    <p>Questions about this policy, or requests for access or correction:</p>
+
+    <div class="doc-contact">
+      <p>
+        <span class="doc-term">
+          Fredrick <Pending value={PENDING.privacyOfficerSurname} label="surname" />, Privacy
+          Officer
+        </span>
+      </p>
+      <p>ArkSystems, operated by {LEGAL_ENTITY}</p>
+      {/* Plain text, not a mailto: link. CLAUDE.md records that no mailto: remains
+        * anywhere on the site and that it must not be reintroduced. A displayed,
+        * monitored address is still an accessible contact route, which is what PIPEDA
+        * asks for — the requirement is that someone can reach you, not that a click
+        * opens a mail client. */}
+      <p>{LEGAL_EMAIL}</p>
+    </div>
+
+    <p>
+      We do not publish a mailing address. A monitored email address is the contact route, and
+      we will supply anything further on request.
+    </p>
+
+    <h2 id="changes">12. Changes to this policy</h2>
+
+    <p>
+      We update this policy when what we do changes. The effective date at the top shows when
+      it last changed. Material changes affecting existing clients will be communicated
+      directly rather than by quietly editing this page.
+    </p>
+  </LegalDocument>
+</BaseLayout>

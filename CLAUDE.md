@@ -249,13 +249,17 @@ pinned in `.nvmrc`.
 
 - ~~`/workshop`~~ — **built Aug 26 2026. See the section below.**
 - ~~`/about`~~ — **built Aug 26 2026. See the section below.**
-- **Privacy, Terms, Data Handling** — launch blockers, not polish. CASL needs a privacy
-  basis, and the AI Opportunity Fit Form has had an open privacy-notice placeholder since
-  July. **All three are linked from the live footer and 404 today**, and the live FAQ
-  answer to "What happens to my data?" ends by pointing at the data handling page.
-  Unreviewed drafts are in `docs/legal/`. They are drafts, not pages: they must not be
-  turned into routes until Fredrick has done a factual review and a Canadian privacy
-  practitioner has seen them.
+- **Privacy and Data Handling** — **built Aug 26 2026 and HELD ON A BRANCH, not merged.**
+  See the section below. They exist as routes now, but nothing is live: the two copy files
+  Fredrick supplied both head themselves "Do not publish as written", and the standing rule
+  that a Canadian privacy practitioner has to see them first is unchanged. Six facts inside
+  the page copy are still unknown and none is guessed.
+- **Terms** — still a launch blocker and still nothing but an unreviewed draft in
+  `docs/legal/terms.md`. No approved copy has been supplied for it.
+- **All three are linked from the live footer and 404 today**, and that is still true —
+  merging the branch is what changes it. CASL needs a privacy basis, and the AI Opportunity
+  Fit Form has had an open privacy-notice placeholder since July; closing that placeholder
+  is Fredrick's action on the day `/privacy` goes live, not a repo change.
 
 `/accounting` is built and rebuilt — see below. All cold outbound points there, never at
 the homepage.
@@ -877,6 +881,94 @@ art 562×546, hero 824), 1000 landscape stacked and left-aligned throughout with
 illustration centred, 768 unchanged, 390 with the hero CTA at 502–555 and the stage still
 edge to edge. `documentElement.scrollWidth` equals the viewport at every width on both
 pages.
+
+## Built Aug 26 2026 — /privacy and /data-handling, HELD ON A BRANCH
+
+`docs/legal/privacy.md` and `docs/legal/data-handling.md` were supplied by Fredrick on
+Aug 26 2026, replacing the unreviewed Aug 24 drafts of the same names. Both pages were
+built against them the same day, on `feat/legal-pages`.
+
+**Nothing is merged and nothing is live.** Both copy files head themselves *"Draft for
+review. Do not publish as written"*, and Fredrick's decision when the page was planned was
+to build and hold. The footer still links three legal pages and all three still 404.
+**`/terms` has no approved copy at all** and is not built.
+
+**Two defences, and neither is the hold.** Both pages set `noindex`, and `astro.config.mjs`
+filters both out of the sitemap — a sitemap entry and a `noindex` tag are contradictory
+signals about the same URL, and sending both is how a page nobody meant to publish turns up
+in a search result anyway. **When the review clears, the filter and both `noindex` flags
+come off in the same change.** A page reachable from the footer is public whether or not a
+crawler indexes it; the branch is the hold.
+
+**Six facts are unknown and none is guessed** — they live as `null` in `src/lib/legal.ts`
+and render through `legal/Pending.astro` as a visible marked blank rather than a silent
+gap. Jurisdiction of incorporation, Fredrick's surname, the payment provider and its
+region, the password manager and its region, the access-removal window, the backup window.
+**A plausible invention is worse than an obvious blank on these two pages**, because a
+blank is visible and an invented incorporation jurisdiction is not. Fill a value in
+`legal.ts` and every instance renders as ordinary text; the "Draft, under review" banner
+disappears on its own when the last one lands, rather than needing to be remembered.
+
+**Four departures from the approved copy on `/privacy`, two on `/data-handling`**, each
+recorded in full in the page's own header comment. The two that matter:
+
+- **No location lines.** Both drafts print "Metro Vancouver, British Columbia, Canada" in
+  their entity and contact blocks. Fredrick was shown that a privacy policy is arguably the
+  one legitimate exception — PIPEDA wants an identifiable contact, and a policy naming no
+  jurisdiction is weaker as a legal document — and chose to apply the Aug 25 rule literally.
+  Email only. **One consequence: the entity's jurisdiction is now published nowhere on the
+  site**, and a larger prospect running a vendor assessment may ask for it directly.
+- **`/privacy` sections 2 to 5 describe the site as it actually is.** The draft was written
+  against a build spec — cookie banner, Google Consent Mode v2, GA4, Meta Pixel, LinkedIn
+  Insight Tag, Google Ads — none of which exists. Publishing "we use Google Analytics, Meta,
+  LinkedIn" while none is installed is a false statement on a privacy page. **Measured in
+  the browser rather than assumed:** `document.cookie` empty, localStorage and
+  sessionStorage empty, exactly two resource hosts (ours and `app.cal.com`), one third-party
+  script, fonts served from our own domain. **Re-measure before every release** — the moment
+  a tag is added that section is inaccurate, and it is the kind of inaccuracy nobody
+  notices. The cookie-banner spec in the copy file remains the plan and is a separate job;
+  it also settles the open analytics-provider question when it lands.
+
+**Cal.com is named in `/privacy` section 2, not only section 1.** `BaseLayout`'s own comment
+requires it: `embed.js` loads from `app.cal.com` on every page view, before anyone clicks
+anything. Section 1 says what booking sends them; section 2 says what merely opening a page
+sends them. Only the first was in the draft.
+
+**Section numbering on `/privacy` is load-bearing.** The document cross-references itself by
+number — "the address in section 11", "the table in section 5". Sections 2 and 3 lost
+content to the departure above and **kept their numbers for that reason.** Renumbering means
+re-reading every cross-reference.
+
+**No `mailto:` on either page.** The standing rule is that none remains anywhere on the
+site. A displayed, monitored address is still an accessible contact route, which is what
+PIPEDA asks for — the requirement is that someone can reach you, not that a click opens a
+mail client.
+
+**Two things Fredrick has to verify beyond the six blanks**, both flagged in the page
+headers. The safeguards list in `/privacy` section 8 — the copy file's own note says every
+measure listed must actually be in place and that an unmet security claim is a worse
+exposure than a shorter list. And `/data-handling`'s retention commitment, *"we do not
+retain client operational data after an implementation"*, which is the strongest and most
+quotable line on the site and has to hold literally.
+
+**`/data-handling` carries a never-claim list** that is not style guidance: no
+certifications (no SOC 2, no ISO 27001 — the same invented claim a design tool tried to put
+on `/accounting`), no guarantee of security, no insurance claim until a policy is bound, no
+blanket no-training promise, no client names. All five are in the page header.
+
+**The shell is `components/legal/LegalDocument.astro` — one column, deliberately.** "Basic
+designs" by instruction, and it is the right answer rather than a concession: the site's
+section machinery exists to carry an argument down a marketing page, and none of it helps
+someone who opened a privacy policy to find one paragraph. A legal document is also read in
+order and cross-references itself by section number, which a two-column layout breaks.
+Tables scroll inside their own `overflow-x: auto` box with `max-width: 100%` on the
+scroller — measured at 390, the table is 521px inside a 354px box and
+`documentElement.scrollWidth` stays at 390.
+
+**The document column centres as a block in portrait, text still left**, the same rule the
+four heroes follow. Measured at 768 before the fix: title centred at 193–575, body flush
+left at 18–626 with 124px of empty band down its right side. The notice callout takes the
+same 72ch measure at the same font-size so the two share a text column exactly.
 
 ## Standing instruction, Aug 25 2026 — no location lines
 

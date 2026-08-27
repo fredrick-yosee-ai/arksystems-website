@@ -1,0 +1,370 @@
+---
+/**
+ * /data-handling — How we handle your data.
+ *
+ * Built Aug 26 2026 from docs/legal/data-handling.md, which Fredrick supplied the same
+ * day.
+ *
+ * HELD ON A BRANCH, alongside /privacy. NOT FOR MERGE UNTIL REVIEWED. The copy file's
+ * own header says "Draft for review. Do not publish as written". This page is less
+ * lawyer-dependent than /privacy, but it is MORE exposed in a different way: it makes
+ * factual commitments about how the work is actually done, and a client who was told
+ * something here and finds otherwise mid-engagement has a specific, quotable sentence.
+ * `noindex` is set as a second line of defence, not as the hold.
+ *
+ * WHAT THIS PAGE IS FOR, and why it is not a duplicate of /privacy: privacy covers
+ * personal information collected through the website. This page covers the thing a
+ * prospective client actually worries about — what happens when ArkSystems is given
+ * access to their systems and, in some engagements, to records belonging to their own
+ * clients. The /accounting FAQ answers that in three sentences and links here for the
+ * rest. THAT DIVISION IS DELIBERATE and holds the /accounting page rule in place: the
+ * industry page stays a builder's page with no compliance framing, and the detail lives
+ * on a page the cautious reader chooses to open.
+ *
+ * THE RULE FOR THIS PAGE: every measure stated here must be one that is in place today.
+ * Where a practice is not yet real, CUT THE LINE RATHER THAN SOFTENING IT. A hedged
+ * commitment on this page is worse than no commitment, because it reads as evasion to
+ * exactly the reader who came here to be reassured.
+ *
+ * TWO DEPARTURES FROM THE APPROVED COPY, both decided by Fredrick on Aug 26 2026:
+ *
+ * 1. NO LOCATION LINE. The draft closes the Questions block with "ArkSystems is operated
+ *    by FoodyGuru Inc., Metro Vancouver, British Columbia, Canada". The location is gone
+ *    under the standing instruction of Aug 25 2026; the entity stays. Same call as
+ *    /privacy, taken at the same time.
+ *
+ * 2. FOUR FACTS ARE NOT YET KNOWN and none is guessed — see src/lib/legal.ts. This page
+ *    carries all four: the password manager and the payment provider in the provider
+ *    table, the access-removal window, and the backup window.
+ *
+ * WHAT THIS PAGE MUST NEVER CLAIM, from the copy file's own list. Each is a rule, not a
+ * preference:
+ *
+ * - NO CERTIFICATIONS. No SOC 2, no ISO 27001, no compliance standard ArkSystems does
+ *   not hold. This is the single highest-risk claim available on a page like this, it is
+ *   trivially checkable, and claiming it would destroy exactly the trust the page exists
+ *   to earn. Note that "SOC2 compliant infrastructure" is one of the three claims a
+ *   design tool invented for /accounting and that was caught before it shipped.
+ * - NO GUARANTEE OF SECURITY. "We do not claim that no incident can occur" is deliberate
+ *   and stays.
+ * - NO INSURANCE CLAIM unless the policy is bound. Professional liability and cyber cover
+ *   are both listed as unevaluated, so neither is mentioned. If either is bound later it
+ *   is a genuine advantage on this page — but only then.
+ * - NO BLANKET NO-TRAINING PROMISE. Removed from the copy on Aug 26 2026 and it must not
+ *   come back. Whether a provider trains on inputs depends on that provider's terms and
+ *   tier, both of which change without notice, and a commitment ArkSystems cannot enforce
+ *   is the worst kind to publish here. What the page commits to instead is disclosure:
+ *   which providers, which tier, what their terms say, before connection. If a specific
+ *   build genuinely runs on a no-training tier, say so IN THAT ENGAGEMENT'S DOCUMENTS,
+ *   where it is a checkable statement about a named provider — never as a site-wide rule.
+ * - NO CLIENT NAMES OR EXAMPLES, here as everywhere.
+ *
+ * THE RETENTION SECTION IS THE STRONGEST THING ON THE PAGE and it came from Fredrick:
+ * no client operational data is retained after implementation. Most firms in this space
+ * cannot say it, because their product holds the data. It is stated first and in the
+ * shortest sentence available, because a practice deciding whether to let an outside firm
+ * near their client files is asking precisely this. VERIFY IT HOLDS LITERALLY BEFORE
+ * PUBLISH — it is quotable, and it is the one line on the site most likely to be read
+ * back to us.
+ *
+ * The two 90-day windows run in sequence, not together: a file deleted on day 90 can
+ * still sit in a backup taken before that, so the honest outside figure is 180 days. The
+ * page states the deletion commitment and names the backup schedule separately, which is
+ * accurate. DO NOT MERGE THEM INTO ONE NUMBER.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LegalDocument from "../components/legal/LegalDocument.astro";
+import Pending from "../components/legal/Pending.astro";
+import { PENDING, LEGAL_ENTITY, LEGAL_EMAIL } from "../lib/legal";
+
+const description =
+  "What ArkSystems gets access to during an engagement, which tools it passes through, what we keep afterwards, and what we don't keep at all.";
+---
+
+<BaseLayout title="How we handle your data" description={description} noindex>
+  <LegalDocument
+    eyebrow="Legal"
+    title="How we handle your data"
+    standfirst="Before an engagement starts, you should know exactly what we get access to, what we do with it, which tools it passes through, and what happens when the work ends. This page sets that out. If your firm has requirements of its own, tell us before we begin &mdash; it changes how we build, and that is a normal thing to specify."
+  >
+    <h2 id="principles">The principles</h2>
+
+    <p>Four commitments that hold across every engagement.</p>
+
+    <div class="doc-block">
+      <p>
+        <span class="doc-term">It stays in your systems.</span> What we build operates on
+        accounts you own. ArkSystems does not run a platform that holds your records, and
+        there is nothing of yours to retrieve or migrate if you stop working with us.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <p>
+        <span class="doc-term">We take the least access that does the job.</span> Read-only
+        where reading is enough. Scoped to the workflow, not the organization. If a step
+        needs broader access, we ask for it specifically and say why.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <p>
+        <span class="doc-term">Every tool in the path is named before it is connected.</span>
+        You see the list &mdash; hosting, models, storage, anything the information passes
+        through &mdash; in writing, before anything is switched on. Nothing gets added
+        mid-engagement without telling you.
+      </p>
+    </div>
+
+    <div class="doc-block">
+      <p>
+        <span class="doc-term">You set the boundary between automatic and reviewed.</span>
+        Which steps run without a person, and which stop for one, is your decision. We build
+        to it and we record what the system did at each step, so the record exists whether or
+        not anyone asks for it.
+      </p>
+    </div>
+
+    <h2 id="what-we-access">What we access, stage by stage</h2>
+
+    <p>
+      <span class="doc-term">The 20-minute call.</span> Nothing. You describe the problem, we
+      ask questions. No access, no documents, no credentials.
+    </p>
+
+    <p>
+      <span class="doc-term">Discovery and the workshop.</span> Conversations, process
+      walkthroughs, and figures about how the work runs &mdash; volumes, timings, who does
+      what. Where we need to see a real example, we ask for a redacted one, and we work from
+      screen-shares in preference to copies. We do not need your client records to establish
+      where the cost sits.
+    </p>
+
+    <p>
+      <span class="doc-term">Implementation.</span> Access to the systems the work touches,
+      granted through your own administration and using accounts issued to us &mdash; never
+      shared passwords, and never credentials sent by email. Access is scoped to what the
+      build requires and no more.
+    </p>
+
+    <p>
+      <span class="doc-term">Testing.</span> Synthetic or redacted data wherever the test can
+      be run with it. Where a test genuinely requires live records, we agree that
+      specifically, in advance, and limit it to what the test needs.
+    </p>
+
+    <p>
+      <span class="doc-term">Once it&rsquo;s running.</span> The system touches whatever the
+      workflow touches &mdash; and that is defined in writing before it&rsquo;s built, not
+      discovered afterwards.
+    </p>
+
+    <h2 id="access">Access, and how it ends</h2>
+
+    <p>
+      Access is issued by you, through your own systems, so you can see it and remove it
+      without asking us.
+    </p>
+
+    <p>
+      Multi-factor authentication is used on every account that reaches client information.
+      Credentials are held in a password manager, never in documents, email or chat.
+    </p>
+
+    <p>
+      <span class="doc-term">When an engagement ends, access ends.</span> We ask you to remove
+      our accounts and we confirm removal on our side within{" "}
+      <Pending value={PENDING.accessRemovalWindow} label="access-removal window" />. If you
+      want that earlier, or immediately, say so &mdash; it is your access to withdraw at any
+      point and you do not need a reason.
+    </p>
+
+    <h2 id="ai-models">AI models specifically</h2>
+
+    <p>This is the part clients ask about most, so it is stated plainly.</p>
+
+    <p>
+      <span class="doc-term">Which providers.</span> There is no fixed list, because the
+      answer is partly yours. Which models a build uses depends on what the work needs and on
+      what your firm will accept &mdash; some practices have already approved a provider, some
+      rule one out, some require processing to stay in a particular region. We propose what
+      fits, you decide, and the providers and tiers are named in your engagement documents
+      before anything is connected.
+    </p>
+
+    <p>
+      <span class="doc-term">What each provider does with your inputs.</span> Providers differ,
+      and their terms change. Before anything is connected, we tell you which providers your
+      build uses, which tier, and what their terms say about how inputs are handled &mdash;
+      including whether they are used for model training. You decide with that in front of you
+      rather than afterwards.
+    </p>
+
+    <p>
+      <span class="doc-term">Retention at the provider.</span> Providers may retain inputs
+      briefly for abuse monitoring under their own terms. Those terms are named to you rather
+      than summarized by us, so you can read them yourself.
+    </p>
+
+    <p>
+      <span class="doc-term">What we keep out of models.</span> We design so that information a
+      model does not need to do the job does not reach it. Where a step can run on a reference
+      rather than the underlying record, it runs on the reference.
+    </p>
+
+    <p>
+      <span class="doc-term">Where the processing happens.</span> Most major model providers
+      process in the United States. If your firm requires processing to stay in Canada, tell us
+      before the design is fixed &mdash; it constrains which providers can be used and it is
+      far cheaper to know at the start than to rebuild.
+    </p>
+
+    <h2 id="where-processed">Where information is processed</h2>
+
+    <p>ArkSystems&rsquo; own operations run on:</p>
+
+    <div class="doc-table">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Provider</th>
+            <th scope="col">Purpose</th>
+            <th scope="col">Region</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Google Workspace</td>
+            <td>Email, documents, forms, and our client and prospect records</td>
+            <td>United States</td>
+          </tr>
+          <tr>
+            <td>Netlify</td>
+            <td>Website hosting</td>
+            <td>United States</td>
+          </tr>
+          <tr>
+            <td>Cal.com</td>
+            <td>Call booking</td>
+            <td>United States</td>
+          </tr>
+          <tr>
+            <td>
+              <Pending value={PENDING.passwordManager} label="password manager" />
+            </td>
+            <td>Credential storage</td>
+            <td>
+              <Pending value={PENDING.passwordManagerRegion} label="region" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Pending value={PENDING.paymentProvider} label="payment provider" />
+            </td>
+            <td>Invoicing</td>
+            <td>
+              <Pending value={PENDING.paymentProviderRegion} label="region" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      <span class="doc-term">AI providers are not on this list, deliberately.</span> They are
+      chosen per engagement rather than fixed in advance, for the reasons above, and every
+      provider inside a delivered system is named &mdash; with its tier and its region &mdash;
+      in that engagement&rsquo;s documents before anything is connected.
+    </p>
+
+    <h2 id="what-we-keep">What we keep after the work ends</h2>
+
+    <p>
+      <span class="doc-term">
+        We do not keep your operational data. Not during the engagement beyond what the work
+        requires, and not after it.
+      </span>
+    </p>
+
+    <p>
+      Anything you give us to examine, test with or build against is working material, not a
+      record. It is deleted within 90 days of the engagement closing, and nothing of yours
+      remains on our systems once the work is done. The system we built runs on your accounts,
+      holding your data, where it always was.
+    </p>
+
+    <p>What we do keep is the paperwork of the engagement:</p>
+
+    <ul>
+      <li>
+        <span class="doc-term">
+          Contracts, proposals, statements of work, requirements documents, the workshop
+          document and invoices
+        </span>{" "}
+        &mdash; kept for the length of the relationship and for six years after the end of the
+        tax year they relate to, because Canadian tax law requires business records to be
+        retained for that period
+      </li>
+      <li>
+        <span class="doc-term">Credentials and access</span> &mdash; removed at close, as above
+      </li>
+      <li>
+        <span class="doc-term">Backups</span> &mdash; copies in routine backups age out on the
+        backup schedule rather than being deleted individually, which is{" "}
+        <Pending value={PENDING.backupWindow} label="backup window" />
+      </li>
+    </ul>
+
+    <p>
+      You can ask us to delete your business data earlier than the schedule above, and we will
+      confirm in writing when it is done.
+    </p>
+
+    <h2 id="if-something-goes-wrong">If something goes wrong</h2>
+
+    <p>
+      If a security incident affects your information, we tell you &mdash; promptly, with what
+      we know at the time, rather than after an internal investigation concludes. We work with
+      you to establish what was affected, and we support whatever notification your own
+      obligations require.
+    </p>
+
+    <p>
+      We do not claim that no incident can occur. What we commit to is that you hear about it
+      from us, early.
+    </p>
+
+    <h2 id="your-responsibility">What stays your responsibility</h2>
+
+    <p>
+      You remain responsible for your clients&rsquo; information and for your own professional
+      and regulatory obligations. We build to the boundaries you set; we do not determine what
+      those boundaries should be, and nothing on this page is advice about your obligations.
+    </p>
+
+    <p>
+      If your professional body, your insurer or a client contract imposes requirements on how
+      information is handled or where it is processed, tell us at the start. Requirements are a
+      design input. Discovered late, they are a rebuild.
+    </p>
+
+    <h2 id="questions">Questions</h2>
+
+    <p>
+      If your firm has a security questionnaire, a vendor assessment or a data-processing
+      agreement, send it before we start rather than after. We would rather answer it properly
+      than discover halfway through that we cannot.
+    </p>
+
+    <div class="doc-contact">
+      {/* Plain text, not a mailto: link — see the note on /privacy section 11. */}
+      <p>{LEGAL_EMAIL}</p>
+      <p>ArkSystems is operated by {LEGAL_ENTITY}.</p>
+    </div>
+
+    <p>
+      Personal information collected through this website is covered separately, on our{" "}
+      <a href="/privacy">Privacy Policy</a>.
+    </p>
+  </LegalDocument>
+</BaseLayout>
