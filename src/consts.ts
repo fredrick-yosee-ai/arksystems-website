@@ -12,6 +12,41 @@ export const BOOKING_URL =
 /** Cal.com link identifier, for the embed's popup mode. */
 export const BOOKING_CAL_LINK = "fredrick-arksystems/ark-discovery-call";
 
+/**
+ * Measurement identifiers.
+ *
+ * They live here, next to BOOKING_URL, for the same reason it does: one place to change,
+ * and a change is a commit rather than an edit in somebody's hosting dashboard. They are
+ * not secrets — every one of them is readable in the page source of any site that uses
+ * them, which is how the providers are designed to work — so an environment variable
+ * would buy nothing and would move the value somewhere the repository cannot see it.
+ *
+ * NOTHING HERE LOADS ON ITS OWN. An identifier being present is not a tag being live:
+ * the registry in `src/lib/tags.ts` decides what may load, and the consent gate decides
+ * when. Adding a value below has no effect until an entry there is enabled.
+ */
+export const MEASUREMENT = {
+  /** Google Analytics 4 web stream. Enabled. */
+  ga4: "G-5EWZJJKM71",
+
+  /** Microsoft Clarity project. Enabled. */
+  clarity: "y9521c6e00",
+
+  /** Meta Pixel. Enabled. */
+  metaPixel: "3519939178174832",
+
+  /* The two deferred slots. They are EMPTY ON PURPOSE and the site builds without them
+   * — that is the test of whether a disabled tag is genuinely inert. Their loaders are
+   * written out in full in the registry and guard on an empty value, so switching either
+   * one on is a string here and a boolean there, with no change to the consent gate and
+   * no re-verification of it. That is the whole reason the slots exist. */
+
+  /** LinkedIn Insight Tag partner ID. Deferred — see the registry. */
+  linkedInPartnerId: "",
+  /** Google Ads conversion ID, the AW- prefixed one. Deferred — see the registry. */
+  googleAds: "",
+} as const;
+
 export const SITE = {
   name: "ArkSystems",
   tagline: "Think AI, Think Ark.",
@@ -21,9 +56,18 @@ export const SITE = {
 } as const;
 
 /**
- * Analytics event names for CTA clicks. Naming them is what makes it possible to learn
- * which block does the conversion work. The provider is still unchosen — see CLAUDE.md
- * — so nothing is wired up yet; these are the agreed names for when it is.
+ * Analytics labels for CTA clicks. Naming them is what makes it possible to learn which
+ * block does the conversion work.
+ *
+ * LIVE SINCE THE ANALYTICS RELEASE OF AUG 27 2026. `BookingButton.astro` renders each of
+ * these as `data-cta`, and `lib/analytics.ts` sends the one that was clicked to GA4 as
+ * the `cta_location` parameter of a `cta_click` event. Nothing else about the click is
+ * sent, and nothing derived from the visitor ever will be.
+ *
+ * THEY ARE PARAMETER VALUES, NOT GA4 EVENT NAMES, and the hyphens are why: a GA4 event
+ * name may not contain one. Fifteen event names would have meant inventing fifteen new
+ * spellings that do not match the ones below, which would make this list stop being the
+ * record of what the site's own buttons are called. See the note in `lib/analytics.ts`.
  *
  * The homepage names come from the approved copy, which specifies `cta_hero`,
  * `cta_where`, `cta_proof` and `cta_close`. They replace the previous set — "demo" and

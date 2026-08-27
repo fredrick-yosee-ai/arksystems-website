@@ -111,6 +111,22 @@ const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
               </li>
             ))
           }
+          <li>
+            {/*
+              Withdrawal, on every page. Given the banner is accept-only, this link IS
+              the decline — it is the only route back out of a choice, which is why the
+              banner's own approved copy names it and why it cannot be moved somewhere
+              less findable than the footer.
+
+              A <button>, not an <a>, because it opens a panel rather than going
+              anywhere. It is styled as the links around it because the visitor reading
+              this column is looking for a list of links and should not have to notice
+              the difference.
+            */}
+            <button type="button" class="footer__link footer__link--button" data-cookie-settings>
+              Cookie settings
+            </button>
+          </li>
         </ul>
       </div>
     </nav>
@@ -190,6 +206,17 @@ const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
     line-height: 1.45;
     text-decoration: none;
     color: var(--ark-charcoal);
+  }
+
+  /* The Cookie settings control is a button, so it needs the browser's own button
+   * styling removed before .footer__link can take effect on it. */
+  .footer__link--button {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
   }
 
   .footer__link:hover {

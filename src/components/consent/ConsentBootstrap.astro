@@ -1,0 +1,83 @@
+---
+/**
+ * Google Consent Mode v2 defaults. THIS RUNS FIRST, IN THE HEAD, BEFORE ANYTHING ELSE.
+ *
+ * It is inline and it has no imports for one reason: it has to have already executed
+ * before any tag could possibly be in a position to read consent. A bundled module is
+ * fetched, and anything fetched is a race. There is no race worth having here — if the
+ * defaults land late, a tag reads "no signal" instead of "denied", and the difference
+ * between those two is the whole point of Consent Mode.
+ *
+ * THE THREE ADVERTISING SIGNALS DEFAULT TO DENIED — `ad_storage`, `ad_user_data`,
+ * `ad_personalization`. Nothing advertising-related is granted on a first visit.
+ *
+ * `analytics_storage` DEFAULTS TO GRANTED, and that is not a mistake to be tidied.
+ * Fredrick's instruction of 27 August 2026: analytics is treated as necessary, loads on
+ * the first page view before any interaction, and cannot be switched off. The signal has
+ * to match what actually happens — a denied default here with Google Analytics loading
+ * anyway would be a page telling Google one thing and doing another, which is worse than
+ * either position taken honestly. See the note on CONSENT_CATEGORIES in lib/consent.ts
+ * for what that decision cost elsewhere.
+ *
+ * A RETURNING VISITOR'S GRANT IS APPLIED HERE TOO, not later in the gate. Consent Mode
+ * wants the update as early as it can get it, and reading one localStorage key is cheap
+ * enough to do in the head. The gate re-reads the same key when it runs; the two agree
+ * because the key and the version stamp are injected from the same module both use.
+ *
+ * MICROSOFT CLARITY IS NOT REPRESENTED HERE AND THAT IS DELIBERATE. Clarity is gated by
+ * not loading its script at all, rather than by loading it and asking it to behave.
+ * Simpler, and stronger: a script that is absent cannot record.
+ *
+ * Cal.com is also absent from this file, and that is a decision rather than an
+ * oversight. The booking embed sits outside the consent gate entirely — it loads for
+ * every visitor because booking a call is what this site is for, and the visitor asked
+ * for it. It is not analytics, not advertising and not recording. What IS gated is the
+ * conversion event a completed booking fires. See BaseLayout.
+ */
+import { CONSENT_STORAGE_KEY, CONSENT_COPY_VERSION } from "../../lib/consent";
+---
+
+<script
+  is:inline
+  define:vars={{ key: CONSENT_STORAGE_KEY, version: CONSENT_COPY_VERSION }}
+>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+  window.gtag = gtag;
+
+  gtag("consent", "default", {
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    analytics_storage: "granted",
+  });
+
+  /* A stored choice, applied before anything can look. Guarded throughout: localStorage
+   * throws rather than returning null in some privacy modes, and a browser that will
+   * not let us remember the choice must still get the denied defaults above rather than
+   * an exception that stops the rest of the head. */
+  try {
+    var raw = window.localStorage.getItem(key);
+    if (raw) {
+      var stored = JSON.parse(raw);
+      /* A record stamped with older banner copy is not consent to the copy showing
+       * today, so it is ignored here exactly as the gate ignores it. */
+      if (stored && stored.v === version && stored.c) {
+        var advertising = stored.c.advertising === true ? "granted" : "denied";
+        /* analytics_storage is not read from the record. It is locked on, so a stored
+         * false — from an older record or a hand-edited entry — must not downgrade it. */
+        gtag("consent", "update", {
+          analytics_storage: "granted",
+          ad_storage: advertising,
+          ad_user_data: advertising,
+          ad_personalization: advertising,
+        });
+      }
+    }
+  } catch (e) {
+    /* Unreadable or unparseable storage means no current consent, which is already the
+     * state set above. Nothing to do, and nothing worth telling the visitor. */
+  }
+</script>

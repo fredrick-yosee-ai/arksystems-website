@@ -1,0 +1,142 @@
+---
+/**
+ * The consent surface, and the one place the banner, the panel and the gate are wired
+ * together. Rendered once by BaseLayout, so every page gets exactly one of each.
+ *
+ * The script below is a bundled module, not an inline one. That is the opposite of
+ * `ConsentBootstrap.astro` and both are deliberate: the Consent Mode DEFAULTS have to
+ * beat every other script on the page, so they are inline in the head with no imports;
+ * the gate does not, because nothing can load until it runs — a deferred module that
+ * arrives late delays a tag, which is the harmless direction. Being a module is what
+ * lets it share `consent.ts` and `tags.ts` with the rest of the site rather than
+ * restating the storage key and the category list in a second dialect.
+ */
+import ConsentBanner from "./ConsentBanner.astro";
+import CookieSettings from "./CookieSettings.astro";
+---
+
+<ConsentBanner />
+<CookieSettings />
+
+<script>
+  import {
+    CONSENT_CATEGORIES,
+    CONSENT_BASELINE,
+    CONSENT_GRANTED,
+    readConsent,
+    writeConsent,
+    type ConsentState,
+  } from "../../lib/consent";
+  import { applyConsent } from "../../lib/consent-gate";
+  import { initBookingConversion, initCtaTracking } from "../../lib/analytics";
+
+  const banner = document.getElementById("ark-consent-banner");
+  const panel = document.getElementById("ark-cookie-panel") as HTMLDialogElement | null;
+  const form = panel?.querySelector<HTMLFormElement>("[data-cookie-form]");
+
+  /*
+   * The stored choice, or nothing. `readConsent` returns null for a record stamped with
+   * older banner copy as well as for an absent one, so a copy change re-prompts without
+   * anything here having to know that happened.
+   */
+  const stored = readConsent();
+
+  /*
+   * APPLY BEFORE SHOWING ANYTHING. On a first visit this hands the gate the baseline,
+   * which loads the locked categories and nothing else — the same code path the panel
+   * and the Accept button use. One path means one thing to verify.
+   *
+   * SINCE 27 AUG 2026 THE BASELINE IS NOT EMPTY: analytics is locked on, so Google
+   * Analytics loads here, on a first visit, before the banner has been answered. That is
+   * Fredrick's instruction and it is deliberate. Advertising and session recording still
+   * load for nobody until Accept.
+   */
+  applyConsent(stored ? stored.c : CONSENT_BASELINE);
+
+  if (!stored) banner?.removeAttribute("hidden");
+
+  /*
+   * Both bindings are attached unconditionally, on every page view, whatever the consent
+   * state is. That is not a leak: neither one SENDS anything without checking consent at
+   * the moment it fires — see `analytics.ts` — and attaching them up front is what makes
+   * a visitor who accepts part-way down a page measurable from that point rather than
+   * from their next navigation.
+   *
+   * The booking listener is attached here rather than beside the Cal.com embed in
+   * BaseLayout because it needs the consent state, and because it must run after the
+   * embed's own inline script has created `window.Cal`. This module is deferred and that
+   * script is inline, so that ordering is guaranteed rather than hoped for.
+   */
+  initCtaTracking();
+  initBookingConversion();
+
+  /* --- Accept ------------------------------------------------------------ */
+
+  document
+    .querySelector<HTMLButtonElement>("[data-consent-accept]")
+    ?.addEventListener("click", () => {
+      commit(CONSENT_GRANTED);
+    });
+
+  /* --- Cookie settings, from the footer or from the banner's own copy ----- */
+
+  document.querySelectorAll<HTMLElement>("[data-cookie-settings]").forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      /* Reflect what is actually in force, every time it opens. Reading the stored
+       * record instead would show a stale panel to a visitor who changed something and
+       * reopened it without reloading. */
+      const state = readConsent()?.c ?? CONSENT_BASELINE;
+
+      for (const category of CONSENT_CATEGORIES) {
+        const input = form?.querySelector<HTMLInputElement>(
+          `[data-consent-category="${category.id}"]`,
+        );
+        if (input) input.checked = state[category.id];
+      }
+
+      /* showModal, not show: it is what gives this Escape, a focus trap, focus restored
+       * to whatever opened it, and inertness behind. All four correct, none written by
+       * hand, none able to drift. */
+      panel?.showModal();
+    });
+  });
+
+  /*
+   * Save on close, and ONLY on save.
+   *
+   * `returnValue` is the value of the submit button that closed the dialog; Escape
+   * leaves it empty. That distinction is load-bearing rather than tidy: a visitor who
+   * opened this, turned something off, then pressed Escape has changed their mind about
+   * the panel, not consented to what the checkboxes happen to show. Writing that state
+   * would be reading a cancel as an agreement.
+   */
+  panel?.addEventListener("close", () => {
+    if (panel.returnValue !== "save") return;
+
+    const state = { ...CONSENT_BASELINE } as ConsentState;
+    for (const category of CONSENT_CATEGORIES) {
+      /* A locked row is rendered disabled, and a disabled control is not something to
+       * read a preference from. The baseline already has it on. */
+      if (category.locked) continue;
+
+      const input = form?.querySelector<HTMLInputElement>(
+        `[data-consent-category="${category.id}"]`,
+      );
+      state[category.id] = input?.checked === true;
+    }
+
+    commit(state);
+  });
+
+  /**
+   * Record a choice and act on it, in that order.
+   *
+   * The banner is hidden either way, including when everything was saved off. The
+   * visitor has answered; continuing to ask would be asking until they say yes.
+   */
+  function commit(state: ConsentState) {
+    writeConsent(state);
+    applyConsent(state);
+    banner?.setAttribute("hidden", "");
+  }
+</script>

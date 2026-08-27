@@ -1,0 +1,187 @@
+---
+/**
+ * The consent banner. First visit, every page, nothing loading behind it.
+ *
+ * THE COPY BELOW IS THE APPROVED 27 AUGUST 2026 TEXT WITH ONE SENTENCE CHANGED, AND THE
+ * CHANGE WAS FORCED RATHER THAN CHOSEN. The approved version ends "You can turn them off
+ * at any time in Cookie settings". Later the same day Fredrick instructed that analytics
+ * be always on and not switchable, which made that sentence false about one of the three
+ * categories it covers. A banner cannot say a thing the site does not do, so the close
+ * now names the two categories that can actually be turned off, and adds a short line
+ * saying analytics is always on. Everything else — the opening, the purposes, all five
+ * provider names, the Privacy Policy reference — is untouched.
+ *
+ * CONSENT_COPY_VERSION WAS BUMPED IN THE SAME CHANGE, so every record stored against the
+ * earlier wording is treated as stale and those visitors are asked again. That is the
+ * mechanism working: a stored record is agreement to a specific sentence, and this is a
+ * different sentence.
+ *
+ * THIS COPY NEEDS RE-APPROVAL. It was edited under instruction, not signed off as
+ * written. Beyond that, DO NOT EDIT IT — not to tighten it, not to remove the two
+ * providers it names that are not loading in this release, not for house style.
+ *
+ * IT NAMES FIVE PROVIDERS AND THREE ARE LOADING. LinkedIn and Google Ads are built as
+ * inert slots in this release. Naming them here is deliberate and it is the safe
+ * direction: a banner that over-discloses asks for more than it takes, and the day
+ * either slot is switched on, no visitor has to be re-prompted. Under-disclosing is the
+ * failure that matters, and this cannot do it.
+ *
+ * ACCEPT-ONLY: one button, no decline. For advertising and session recording, declining
+ * is not absent — it is the default, and it is what happens for a visitor who ignores
+ * this entirely. Neither loads until the button is pressed. That is why the Cookie
+ * settings panel is not optional: it is the whole of the withdrawal mechanism, and the
+ * banner points at it in its own copy.
+ *
+ * ANALYTICS IS THE EXCEPTION AND THE BANNER SAYS SO. It has already loaded by the time
+ * this is on screen. Pressing Accept does not start it and ignoring this does not stop
+ * it, which is precisely why the copy states it plainly instead of leaving the reader to
+ * infer it from a panel they may never open.
+ *
+ * IT IS NOT A MODAL, and that is a decision. It does not trap focus and it does not
+ * cover the page, because nothing behind it is loading and there is nothing to protect
+ * the visitor from. A visitor who wants to read the site and never answer this can Tab
+ * straight past it and will be tracked by nothing. A modal would be theatre — it would
+ * imply the site is withholding something until they agree, which it is not.
+ */
+---
+
+<div
+  class="consent-banner"
+  id="ark-consent-banner"
+  role="region"
+  aria-label="Cookies"
+  hidden
+>
+  <div class="consent-banner__inner">
+    <div class="consent-banner__copy">
+      <p class="consent-banner__title">We use cookies.</p>
+      <p class="consent-banner__text">
+        We use cookies for analytics, advertising and session recording &mdash; Google
+        Analytics, Meta, LinkedIn, Google Ads and Microsoft Clarity &mdash; to understand
+        how the site is used and to measure our advertising. Analytics is always on. See our <a
+          href="/privacy"
+          class="consent-banner__link">Privacy Policy</a
+        >. You can turn advertising and session recording off at any time in <button
+          type="button"
+          class="consent-banner__link consent-banner__link--button"
+          data-cookie-settings>Cookie settings</button
+        >.
+      </p>
+    </div>
+
+    <button type="button" class="consent-banner__accept" data-consent-accept>
+      Accept
+    </button>
+  </div>
+</div>
+
+<style>
+  /*
+   * Pinned to the bottom, above everything. It is a functional element: one surface, one
+   * hairline, one shadow, no illustration and no colour it does not need. The page's own
+   * card treatment, not a new one.
+   */
+  .consent-banner {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 200;
+    background: var(--ark-white);
+    border-top: 1px solid var(--ark-hairline);
+    box-shadow: var(--ark-floating);
+  }
+
+  .consent-banner[hidden] {
+    display: none;
+  }
+
+  .consent-banner__inner {
+    width: 100%;
+    max-width: calc(1264px + var(--ark-gutter) * 2);
+    margin-inline: auto;
+    padding: 20px var(--ark-gutter);
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .consent-banner__title {
+    font-weight: 700;
+    color: var(--ark-ink);
+  }
+
+  /*
+   * The measure sits on the element carrying the font-size, never on a wrapper — `ch`
+   * resolves against the element's own size, and on a wrapper it would count 16px
+   * characters and cramp this to a fraction of its width.
+   */
+  .consent-banner__text {
+    max-width: 96ch;
+    margin-top: 4px;
+    font-size: var(--ark-small);
+    line-height: 1.55;
+    color: var(--ark-body-ink);
+  }
+
+  .consent-banner__link {
+    color: var(--ark-olive);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  /* "Cookie settings" opens a panel, so it is a button. It is set to read as the link
+   * beside it because the sentence treats them as the same kind of thing. */
+  .consent-banner__link--button {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* `primary` fill, 10px radius, label size — the design system's button, unchanged. */
+  .consent-banner__accept {
+    flex: none;
+    padding: 15px 40px;
+    border: 1px solid transparent;
+    border-radius: var(--ark-radius-sm);
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+    font-family: var(--ark-font-body);
+    font-size: var(--ark-label);
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+
+  .consent-banner__accept:hover {
+    background: #2c401f;
+  }
+
+  /* base.css carries no site-wide focus ring — only the skip link has one — so every
+   * control in this release draws its own. A consent banner that cannot be operated
+   * visibly by keyboard is a consent banner that does not work. */
+  .consent-banner :focus-visible {
+    outline: 2px solid var(--ark-olive);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  @media (max-width: 900px) {
+    .consent-banner__inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+      padding: 18px var(--ark-gutter-phone);
+    }
+
+    /* Full width on a phone, where a button sized to its label reads as an aside. */
+    .consent-banner__accept {
+      width: 100%;
+      padding: 15px 22px;
+    }
+  }
+</style>

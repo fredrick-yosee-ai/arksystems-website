@@ -23,17 +23,27 @@
  *    KNOWING: the entity's jurisdiction is now stated nowhere on the site, and a larger
  *    prospect running a vendor assessment may ask for it directly.
  *
- * 2. SECTIONS 2, 3, 4 AND 5 DESCRIBE THE SITE AS IT ACTUALLY IS. The draft was written
- *    against a build spec — cookie banner, Google Consent Mode v2, GA4, Meta Pixel,
- *    LinkedIn Insight Tag, Google Ads — none of which exists. Publishing "we use Google
- *    Analytics, Meta, LinkedIn" while none of it is installed is a false statement on a
- *    privacy page, so the copy states what is true today and says plainly what happens
- *    if that changes. MEASURED IN THE BROWSER RATHER THAN ASSUMED, on the built page:
- *    `document.cookie` empty, localStorage and sessionStorage empty, exactly two resource
- *    hosts (our own and app.cal.com), one third-party script (app.cal.com/embed/embed.js),
- *    fonts served from our own domain. RE-MEASURE BEFORE EVERY RELEASE — the moment a tag
- *    is added this section is inaccurate, and it is the kind of inaccuracy nobody notices.
- *    The cookie-banner spec in the copy file remains the plan; it is a separate job.
+ * 2. SECTIONS 2, 4, 5 AND 7 DESCRIBE THE SITE AS IT ACTUALLY IS, AND THEY WERE REWRITTEN
+ *    ON AUG 27 2026 WHEN THAT STOPPED BEING "NOTHING". The Aug 26 version said there was
+ *    no analytics service, no advertising or tracking pixel, and no cookies of our own.
+ *    That was measured and true on the day. The analytics release made every word of it
+ *    false in one deploy, which is exactly the failure mode the original note warned
+ *    about: the kind of inaccuracy nobody notices, because nothing on the page looks
+ *    broken.
+ *
+ *    WHAT THE PAGE NOW SAYS, and it has to keep matching the build:
+ *      - Google Analytics loads on every page for every visitor and CANNOT be switched
+ *        off on this site. Stated plainly, with the two things a visitor can actually do
+ *        about it, because a policy that describes a control the site does not offer is
+ *        worse than one that admits there is none
+ *      - Meta Pixel and Microsoft Clarity load only after Accept, and are withdrawable
+ *      - LinkedIn and Google Ads are named on the banner and are NOT installed. The page
+ *        says so in as many words. The banner names five providers and three of them run;
+ *        leaving that unexplained would read as either sloppiness or over-collection
+ *      - What Clarity captures, and that typed text is masked and the Cal.com booker sits
+ *        in a frame recording cannot see into
+ *
+ *    RE-MEASURE BEFORE EVERY RELEASE. The rule has not changed, only what it measures.
  *
  * 3. CAL.COM IS NAMED IN SECTION 2, not only in section 1. BaseLayout's own comment
  *    requires it: embed.js loads from app.cal.com on every page view, before anyone
@@ -42,10 +52,14 @@
  *    describes what merely opening a page sends them. Both are true and only one was in
  *    the draft.
  *
- * 4. THE PRIVACY OFFICER'S SURNAME IS STILL UNKNOWN and is not guessed — see
- *    src/lib/legal.ts. It is the last blank on any of the three pages, and it renders as a
- *    marked placeholder in section 11 rather than as a silent gap. The jurisdiction of
- *    incorporation was confirmed as British Columbia on Aug 26 2026.
+ * 4. ONE MARKED BLANK, AND IT IS THE REASON THIS BRANCH IS NOT READY TO PUSH:
+ *    MICROSOFT CLARITY'S PROCESSING REGION, in the section 5 table. The build brief is
+ *    explicit that it must be confirmed from Clarity's own terms at signup and NOT assumed
+ *    to match the other providers. Every other row on that table reads United States, and
+ *    writing the same here because it looks likely is precisely the plausible invention
+ *    src/lib/legal.ts exists to prevent — a wrong retention period is a mistake, a wrong
+ *    cross-border processing region is a false disclosure. It renders as a visible marked
+ *    blank until Fredrick supplies it.
  *
  *    SECTION 5 HAS NO PAYMENT PROVIDER ROW, and that is an answer rather than an omission:
  *    there is no third-party payment processor in the path. Invoicing is still described in
@@ -55,9 +69,10 @@
  *    policy goes quietly inaccurate.
  *
  * SECTION NUMBERING IS LOAD-BEARING. The document cross-references itself by number
- * ("the address in section 11", "the table in section 5"). Sections 2 and 3 lost content
- * to departure 2 but kept their numbers for that reason. Renumbering means re-reading
- * every cross-reference.
+ * ("the address in section 11", "the table in section 5", and since Aug 27 "see section 2
+ * for what stops them"). Sections 2 and 3 lost content to departure 2 and kept their
+ * numbers for that reason; section 2 then gained content back on Aug 27 and kept them
+ * again. Renumbering means re-reading every cross-reference.
  *
  * ONE THING FREDRICK HAS TO VERIFY BEYOND THE BLANKS: the copy file's build note on
  * section 8 says every safeguard listed must be one that is actually in place, and to
@@ -155,17 +170,44 @@ const description =
     </p>
 
     <p>
-      <span class="doc-term">Analytics and advertising &mdash; we don&rsquo;t use them.</span>
-      There is no analytics service on this website, no advertising or tracking pixel, and we
-      set no cookies of our own. Our fonts are served from our own domain rather than from a
-      font provider. Cal.com, named above, is the only third party that receives anything
-      when you open a page.
+      <span class="doc-term">Analytics.</span> We use Google Analytics to count visits and to
+      see which pages are read and which buttons are used. It loads on every page, for every
+      visitor, and it is not something you can switch off on this site. It sets cookies that
+      give your browser an identifier, so that repeat visits are recognised as the same
+      browser. It tells us how the site performs. We do not use it to identify you, and we do
+      not send it your name, your email address, or anything you type. If you would rather it
+      did not run, your browser&rsquo;s own privacy settings will stop it, as will
+      Google&rsquo;s opt-out browser add-on.
     </p>
 
     <p>
-      If we introduce analytics or advertising, this section and the table in section 5 will
-      say so, we will ask for your consent before anything loads, and the effective date at
-      the top of this page will show when it changed.
+      <span class="doc-term">Advertising and session recording &mdash; only if you agree.</span>{" "}
+      We use the Meta Pixel to measure our advertising, and Microsoft Clarity to record how
+      pages are scrolled and clicked so that we can see where the site is confusing. Neither
+      of them loads until you press Accept on the cookie notice. If you never answer it,
+      neither one runs. You can turn both off again at any time in Cookie settings, and the
+      cookies they have already set are deleted when you do.
+    </p>
+
+    <p>
+      <span class="doc-term">What session recording captures.</span> Microsoft Clarity records
+      mouse movement, scrolling and clicks. Text typed into input boxes is masked and is never
+      recorded. The booking form is provided by Cal.com inside a separate frame, which session
+      recording cannot see into.
+    </p>
+
+    <p>
+      <span class="doc-term">Named on the notice, but not running.</span> Our cookie notice
+      also names LinkedIn and Google Ads. Neither is installed on this site today. They are
+      named because we expect to use them to measure advertising, and we would rather tell you
+      before than afterwards. If either one starts running, it will run under the advertising
+      setting you have already chosen, and it will be named here as well.
+    </p>
+
+    <p>
+      <span class="doc-term">Your fonts and your choice.</span> Our fonts are served from our
+      own domain rather than from a font provider. Your answer to the cookie notice is stored
+      in your own browser and nowhere else; we keep no record of it on our systems.
     </p>
 
     <h2 id="why-we-collect-it">3. Why we collect it</h2>
@@ -197,9 +239,11 @@ const description =
     </p>
 
     <p>
-      <span class="doc-term">Cookies.</span> We set no cookies of our own, and no analytics or
-      advertising cookies are set on this site. If that changes, we will ask you before
-      anything loads and give you a way to withdraw that consent at any time.
+      <span class="doc-term">Cookies.</span> Analytics cookies are set on every visit, and they
+      are not covered by the choice we ask you for &mdash; see section 2 for what stops them.
+      Advertising and session recording cookies are set only after you press Accept on the
+      cookie notice. You can withdraw that at any time in Cookie settings, and the cookies
+      already set for those two purposes are deleted when you do.
     </p>
 
     <p>
@@ -249,6 +293,23 @@ const description =
             <td>Call booking, and the booking script on every page</td>
             <td>United States</td>
           </tr>
+          <tr>
+            <td>Google LLC</td>
+            <td>Website analytics &mdash; Google Analytics, on every page</td>
+            <td>United States</td>
+          </tr>
+          <tr>
+            <td>Meta Platforms</td>
+            <td>Advertising measurement &mdash; only if you agree</td>
+            <td>United States</td>
+          </tr>
+          <tr>
+            <td>Microsoft</td>
+            <td>Session recording &mdash; Microsoft Clarity, only if you agree</td>
+            <td>
+              <Pending value={PENDING.clarityRegion} label="Clarity processing region" />
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -263,6 +324,12 @@ const description =
       enforcement and national security authorities under those laws. We use providers we
       consider reputable and require them to protect information to a comparable standard, but
       we cannot exclude that access.
+    </p>
+
+    <p>
+      <span class="doc-term">How long session recordings are kept.</span> Microsoft Clarity
+      keeps an ordinary recording for 30 days. A recording we mark as a favourite is kept for
+      up to nine months.
     </p>
 
     <p>
@@ -313,6 +380,11 @@ const description =
       record. It is deleted within 90 days of the engagement closing. We do not retain client
       operational data after an implementation. Nothing of yours sits on our systems once the
       work is done.
+    </p>
+
+    <p>
+      <span class="doc-term">Website analytics.</span> Google Analytics keeps the visit records
+      it collects for 14 months. Session recordings are covered in section 5.
     </p>
 
     <p>

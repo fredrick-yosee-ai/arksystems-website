@@ -1,4 +1,6 @@
 ---
+import ConsentBootstrap from "../components/consent/ConsentBootstrap.astro";
+import ConsentManager from "../components/consent/ConsentManager.astro";
 import SiteHeader from "../components/layout/SiteHeader.astro";
 import SiteFooter from "../components/layout/SiteFooter.astro";
 import { SITE } from "../consts";
@@ -37,6 +39,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {/*
+      Google Consent Mode v2 defaults, denied. FIRST IN THE HEAD, AND IT MUST STAY
+      FIRST — the defaults have to be in place before anything could read them, and
+      "before" here means before any other script tag in the document, not merely
+      before the tags we happen to load ourselves.
+    */}
+    <ConsentBootstrap />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="canonical" href={canonical.href} />
@@ -76,6 +86,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url);
     </main>
 
     <SiteFooter />
+
+    {/*
+      The consent banner, the Cookie settings panel, and the gate that loads tags.
+
+      Placed after the footer so the first thing in the document order is the page, not
+      the cookie notice — a keyboard or screen-reader visitor reaches the content first
+      and the banner when they get to the end of it. Nothing is loading behind it, so
+      there is no reason to put it in their way.
+    */}
+    <ConsentManager />
 
     {/*
       Cal.com embed. This upgrades every `[data-cal-link]` element into a popup so the

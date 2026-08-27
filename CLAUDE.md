@@ -1061,6 +1061,162 @@ either size threshold, no `mailto:` anywhere in `dist`, `noindex` on all three, 
 and title sharing a centre line at 390 / 768 / 1440, and no horizontal overflow at any of
 them.
 
+## Built Aug 27 2026 — analytics, consent and conversion
+
+Built from `claude-code-brief-analytics-consent.md` v2.0. **On a branch, not pushed.**
+
+**The rule the whole release exists for:** tags and banner ship in the same deploy, or
+neither ships. There is no partial push. The Privacy page describes what loads; the
+moment a tag ships without a working banner, the page describes a mechanism that does
+not exist.
+
+**Architecture, settled in the brief and not reopened:** direct gtag, no Tag Manager;
+hand-rolled consent in the repo, no third-party consent product; GA4, Microsoft Clarity,
+Meta Pixel; LinkedIn and Google Ads as inert slots; accept-only banner; three categories.
+
+**Six files, and the split between them is the design:**
+
+| File | Job |
+|---|---|
+| `lib/consent.ts` | Categories, the stored record, staleness. What consent *means* |
+| `lib/tags.ts` | The registry. One entry per tag, four members each |
+| `lib/consent-gate.ts` | Joins them. Four lines of decision and no knowledge of its own |
+| `lib/analytics.ts` | CTA events and the booking conversion |
+| `consent/ConsentBootstrap.astro` | Consent Mode defaults, inline, first in `<head>` |
+| `consent/ConsentManager.astro` | Banner + panel + the wiring |
+
+**Adding a sixth tag must be one registry entry plus an identifier in `consts.ts`, with
+no change to the gate.** If adding one requires editing `consent-gate.ts`, the entry is
+wrong, not the gate. That is the whole point of the registry and it is the thing most
+likely to be eroded by a hurried addition.
+
+**`load()` and `clear()` must both be idempotent, and each tag owns its own `injected`
+flag in a closure.** That is what lets the gate carry no bookkeeping: it calls `load()`
+for every granted category and `clear()` for every denied one, every time, and cannot
+disagree with itself about what it already did. The flag is also what makes a re-grant a
+*resume* rather than a duplicate page view — GA4 clears Google's `ga-disable` flag, Meta
+calls `consent grant`, neither re-initialises.
+
+**`clear()` is not a formality and its limit is real.** It revokes at the provider, sets
+whatever disable flag exists, and deletes first-party cookies across every domain variant
+— a cookie is name AND domain AND path, and analytics tags set theirs on the registrable
+domain with a leading dot, which the naive one-line deletion misses. What no page can do
+is unload a script already executed; it is gone on the next navigation because the gate
+never loads it again. Third-party cookies on `clarity.ms` and `linkedin.com` are not ours
+to delete. All of this is stated in the file rather than left for someone to discover.
+
+**The `<noscript>` Meta pixel is deliberately not built.** Meta's standard snippet ships
+an `<img>` that fires the moment the document parses. There is no way to gate an image in
+markup — it would put a request to Meta on the page of someone who has consented to
+nothing, which is the one thing this release exists to prevent. Its only purpose is
+counting visitors with JavaScript disabled, who cannot be shown a banner either.
+
+**Advanced matching is off in code as well as in Events Manager**: `fbq('init', id)` with
+the ID alone. A second argument is how it is turned on, and it sends hashed email
+addresses. Do not add one.
+
+**Clarity is gated by absence, not by a signal.** It takes no part in Consent Mode. Before
+consent its script is not on the page, and a script never fetched cannot record.
+
+### The booking conversion
+
+`Cal("on", { action: "bookingSuccessfulV2" })`, attached in `ConsentManager` rather than
+beside the embed, because it needs consent state and must run after the embed's inline
+script has made `window.Cal`. The module is deferred and that script is inline, so the
+order is guaranteed rather than hoped for.
+
+**THE CALLBACK TAKES NO ARGUMENT AND THAT IS THE POINT.** Cal.com's payload carries the
+booking UID, title, times, event type and video URL, and **the title normally contains the
+attendee's name**. The callback cannot read the payload by accident. Both events —
+`booking_completed` to GA4 and `Schedule` to Meta — are sent with no parameters at all.
+
+**Four known limits, all accepted, none of them bugs:** no fire on the `<a href>` fallback
+(that booking happens on cal.com), none for a visitor who never accepted, none on
+reschedule (a Cal.com issue), and the event name is versioned and has changed once — check
+the current name before concluding the listener is broken. The first two undercount, which
+is the safe direction. **Cal.com's dashboard stays the source of truth for how many calls
+were booked**; GA4 and Meta answer which traffic produced them. The numbers will not match.
+
+### CTA events — one event name, fifteen parameter values
+
+`cta_click` with `cta_location`. **The fifteen labels are parameter values, not GA4 event
+names, and the hyphens are why** — a GA4 event name cannot contain one, so fifteen event
+names would have meant inventing fifteen spellings that do not match `CtaLocation` in
+`consts.ts`, and that list would stop being the record of what the site's own buttons are
+called. Binding is delegated on `[data-cta]`, which `BookingButton.astro` already rendered
+on every instance — so a new CTA is counted the moment it is added, and a CTA cannot be
+added *without* a label because the component requires the prop.
+
+**It costs one piece of GA4 account setup:** `cta_location` must be registered as a custom
+dimension before it appears in reports. It shows in DebugView immediately without that.
+
+### Analytics is locked on — Fredrick's instruction, Aug 27 2026
+
+Given twice and confirmed against the consequence: **analytics is treated as necessary, it
+loads on the first page view before any interaction, and it cannot be switched off.**
+`analytics_storage` therefore defaults to `granted`; the three advertising signals still
+default to denied.
+
+**What that cost, recorded so it is not re-litigated or quietly undone:**
+
+- **The approved banner copy had to be edited**, which the brief's section 5.3 otherwise
+  forbids. The close now names the two categories that can actually be turned off and adds
+  "Analytics is always on." Everything else — opening, purposes, all five provider names,
+  the Privacy Policy reference — is untouched. **This copy has not been re-approved.**
+- **`CONSENT_COPY_VERSION` was bumped to `2026-08-27.2`** in the same change, so every
+  record stored against the earlier wording is stale and those visitors are asked again.
+  That is the mechanism working as designed.
+- **`/privacy` sections 2, 4, 5 and 7 were rewritten.** The Aug 26 version said there was
+  no analytics service and no cookies of our own — measured and true that day, and false
+  in one deploy. See the page header.
+- **The panel still shows the Analytics row**, locked, disabled, marked "Always on". **Do
+  not remove it to tidy the panel down to two working toggles** — a category that loads
+  without asking and is disclosed nowhere is the failure this release exists to prevent.
+
+**`withLocked()` in `consent.ts` is the single enforcement point.** Every state reaching
+the gate passes through it — panel, Accept button, storage, baseline — so a stored `false`
+from an older record or a hand-edited localStorage entry cannot switch analytics off.
+Verified by tampering with storage and reloading.
+
+**`disabled`, not `readonly`, on the locked control.** `readonly` does nothing to a
+checkbox — it is the one input type the attribute does not apply to, which is a quiet way
+to ship a control that looks fixed and is not.
+
+**One consequence, flagged at the time and still open:** GA4 sets a persistent identifier
+on visitors who have agreed to nothing. That is the item a Canadian privacy practitioner
+is most likely to raise, and those three pages are still awaiting that review.
+
+### Verified locally, and what was not
+
+Run against `astro preview` on the built output, not the dev server — **Vite served stale
+component CSS after an edit and the "Always on" pill appeared unstyled in the browser while
+being correct in `dist`.** Verify visual work against the build.
+
+Passing: nothing but Cal.com and GA4 before Accept, with Meta and Clarity absent from the
+DOM and `ad_*` denied; all four signals flip on Accept and the consent key is written with
+state, timestamp and version; the two inert slots make no request; CTA events carry exactly
+one parameter, confirmed on the wire as `en=cta_click&ep.cta_location=proof`; each toggle
+isolates correctly and deletes only its own cookies; consent persists across navigation with
+one `config` and one `page_view`, no re-prompt, no double firing; every domain observed has
+a row in the `/privacy` table; 390 / 768 / 1440 with `documentElement.scrollWidth` equal to
+the viewport at each; **the hero CTA still measures 502–555 at 390×844 and the banner sits
+below it at 584**, so the above-the-fold rule survives; visible 2px olive focus ring on
+keyboard focus.
+
+**Not verified, and not marked passed:** Escape-to-close and Enter-to-activate. Trusted key
+events reach the right target — confirmed, `isTrusted: true` — but the browser's native
+default actions do not run under this automation, so a native `<dialog>` opened with
+`showModal()` stayed open on Escape and a focused `<button>` did not activate on Enter.
+Both behaviours are the browser's, not code in this repo, and `:modal` was confirmed true.
+**They need one pass in a real browser.** Also outstanding: Meta Pixel Helper, the Clarity
+dashboard and its masking check, and a real test booking.
+
+**One marked blank, and it is what stops this branch shipping: Microsoft Clarity's
+processing region** in `/privacy` section 5. The brief is explicit that it must be
+confirmed from Clarity's own terms at signup and not assumed to match the others. Every
+other row reads United States and writing the same here because it looks likely is exactly
+the plausible invention `lib/legal.ts` exists to prevent.
+
 ## Standing instruction, Aug 25 2026 — no location lines
 
 Fredrick's instruction: the line "Based in Metro Vancouver, working remotely across

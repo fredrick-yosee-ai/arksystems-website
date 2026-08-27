@@ -1,0 +1,265 @@
+---
+/**
+ * The Cookie settings panel. Reachable from the footer of every page, and from the
+ * banner's own copy.
+ *
+ * GIVEN ACCEPT-ONLY, THIS IS THE MOST IMPORTANT THING IN THE RELEASE. The banner has no
+ * decline button, so this panel is the entire withdrawal mechanism. It is not optional
+ * and it is not a stub: turning a toggle off has to take effect immediately — consent
+ * signals back to denied, the provider told, and the cookies already set deleted. A
+ * panel that saves a preference and changes nothing until the next visit would make the
+ * banner's own promise ("you can turn them off at any time") untrue.
+ *
+ * SESSION RECORDING IS ITS OWN TOGGLE AND IS NEVER FOLDED INTO ANALYTICS. A visitor who
+ * agreed to being counted has not agreed to being recorded. Anyone tidying three
+ * toggles into two should read that sentence again.
+ *
+ * ANALYTICS IS SHOWN, LOCKED, AND MARKED "Always on" — Fredrick's instruction of 27
+ * August 2026. It is the one row the visitor cannot change, which is exactly why it must
+ * still be on the list: a category that loads without asking and is disclosed nowhere is
+ * the failure this whole release exists to prevent. Rendering it as a disabled control
+ * with its own label is the honest version of a decision already taken. DO NOT REMOVE
+ * THE ROW to tidy the panel down to two working toggles.
+ *
+ * It is a native <dialog>, opened with showModal(). That is what gives it Escape, a
+ * focus trap, focus restored to whatever opened it, and inertness of the page behind —
+ * all four correct, none of them hand-written, none of them able to drift. This one IS
+ * modal, unlike the banner: it is a settings surface the visitor deliberately opened,
+ * and there is nothing behind it they are part-way through.
+ */
+import { CONSENT_CATEGORIES } from "../../lib/consent";
+---
+
+<dialog class="cookie-panel" id="ark-cookie-panel" aria-labelledby="ark-cookie-panel-title">
+  <form method="dialog" class="cookie-panel__form" data-cookie-form>
+    <h2 class="cookie-panel__title" id="ark-cookie-panel-title">Cookie settings</h2>
+
+    <p class="cookie-panel__lede">
+      Advertising and session recording are yours to turn off, and it takes effect
+      immediately: the cookies already set are deleted and nothing further is collected
+      for that purpose. Analytics is always on.
+    </p>
+
+    <ul class="cookie-panel__list">
+      {
+        CONSENT_CATEGORIES.map((category) => (
+          <li class="cookie-panel__item">
+            <label class="cookie-panel__row">
+              {/* A locked row is checked and disabled. `disabled` rather than readonly,
+                  because readonly does nothing to a checkbox — it is the one input type
+                  the attribute does not apply to, which is a quiet way to ship a control
+                  that looks fixed and is not. */}
+              <input
+                type="checkbox"
+                class="cookie-panel__toggle"
+                name={category.id}
+                data-consent-category={category.id}
+                checked={category.locked}
+                disabled={category.locked}
+              />
+              <span class="cookie-panel__label">{category.label}</span>
+              {category.locked && <span class="cookie-panel__always">Always on</span>}
+            </label>
+            <p class="cookie-panel__description">{category.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="cookie-panel__actions">
+      {/* `value` is read by the dialog's returnValue, which is how the script tells a
+          save from an Escape press or a click on Close. Escape must never be read as a
+          save: a visitor who opened this, turned something off and then pressed Escape
+          has not consented to anything, and writing their half-finished state would be
+          the wrong reading of a cancel. */}
+      <button type="submit" class="cookie-panel__save" value="save">Save</button>
+      <button type="submit" class="cookie-panel__cancel" value="cancel">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<style>
+  .cookie-panel {
+    width: min(560px, calc(100vw - 36px));
+    max-height: calc(100vh - 72px);
+    padding: 0;
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius);
+    background: var(--ark-white);
+    color: var(--ark-body-ink);
+    box-shadow: var(--ark-floating);
+  }
+
+  .cookie-panel::backdrop {
+    background: rgba(34, 58, 26, 0.42);
+  }
+
+  .cookie-panel__form {
+    padding: 32px;
+  }
+
+  .cookie-panel__title {
+    font-family: var(--ark-font-display);
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    color: var(--ark-ink);
+  }
+
+  .cookie-panel__lede {
+    max-width: 56ch;
+    margin-top: 10px;
+    font-size: var(--ark-small);
+    line-height: 1.55;
+  }
+
+  .cookie-panel__item {
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid var(--ark-hairline);
+  }
+
+  .cookie-panel__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+
+  /*
+   * A real checkbox, restyled — not a div pretending to be one. It keeps the native
+   * role, the native keyboard behaviour and the native announcement, which is the whole
+   * argument against building a switch out of markup.
+   */
+  .cookie-panel__toggle {
+    flex: none;
+    appearance: none;
+    width: 44px;
+    height: 26px;
+    margin: 0;
+    padding: 3px;
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius-pill);
+    background: var(--ark-stage-warm);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .cookie-panel__toggle::after {
+    content: "";
+    display: block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--ark-white);
+    box-shadow: var(--ark-raised);
+    transition: transform 0.15s ease;
+  }
+
+  .cookie-panel__toggle:checked {
+    background: var(--ark-olive);
+    border-color: var(--ark-olive);
+  }
+
+  .cookie-panel__toggle:checked::after {
+    transform: translateX(18px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cookie-panel__toggle,
+    .cookie-panel__toggle::after {
+      transition: none;
+    }
+  }
+
+  .cookie-panel__label {
+    font-size: var(--ark-label);
+    font-weight: 600;
+    color: var(--ark-ink);
+  }
+
+  /*
+   * The "Always on" marker. Terracotta INK, not the raw brand hex — this is text at 12px
+   * and the issued hex fails AA for small text on every background the site uses. The
+   * rule is in brand-tokens.css and it has no exceptions.
+   */
+  .cookie-panel__always {
+    padding: 3px 10px 4px;
+    border: 1px solid var(--ark-terracotta);
+    border-radius: var(--ark-radius-pill);
+    color: var(--ark-terracotta-ink);
+    font-size: var(--ark-eyebrow);
+    font-weight: 700;
+    letter-spacing: var(--ark-eyebrow-tracking);
+    text-transform: uppercase;
+  }
+
+  /* A locked control still has to read as a control, not as something broken. Dimmed
+   * enough to say "not yours to change", solid enough to say "and it is on". */
+  .cookie-panel__toggle:disabled {
+    cursor: default;
+    opacity: 0.55;
+  }
+
+  .cookie-panel__row:has(.cookie-panel__toggle:disabled) {
+    cursor: default;
+  }
+
+  .cookie-panel__description {
+    max-width: 60ch;
+    margin-top: 8px;
+    font-size: var(--ark-small);
+    line-height: 1.55;
+  }
+
+  .cookie-panel__actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .cookie-panel__save,
+  .cookie-panel__cancel {
+    padding: 14px 30px;
+    border-radius: var(--ark-radius-sm);
+    font-family: var(--ark-font-body);
+    font-size: var(--ark-label);
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+  }
+
+  .cookie-panel__save {
+    border: 1px solid transparent;
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+  }
+
+  .cookie-panel__save:hover {
+    background: #2c401f;
+  }
+
+  .cookie-panel__cancel {
+    border: 1px solid var(--ark-hairline);
+    background: var(--ark-white);
+    color: var(--ark-ink);
+  }
+
+  .cookie-panel__cancel:hover {
+    background: var(--ark-stage-warm);
+  }
+
+  .cookie-panel :focus-visible {
+    outline: 2px solid var(--ark-olive);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .cookie-panel__form {
+      padding: 24px 20px;
+    }
+
+    .cookie-panel__actions {
+      flex-direction: column;
+    }
+  }
+</style>

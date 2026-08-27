@@ -11,7 +11,9 @@
  * rather than a silent gap, so an unfilled fact cannot slip past a read-through. Fill one
  * in and it renders as ordinary text with no other change needed.
  *
- * EVERY FACT IS FILLED AS OF AUG 26 2026, so nothing renders as a placeholder today. The
+ * EVERY FACT WAS FILLED AS OF AUG 26 2026. One was ADDED on Aug 27 2026 with the analytics
+ * release — `clarityRegion` — and it is unfilled, so /privacy section 5 renders one marked
+ * blank today. That blank is the reason the analytics branch is not ready to push. The
  * mechanism stays because these values are still worth holding in one place — each is
  * documented with where it appears, so a change is one edit rather than a search — and
  * because nulling one puts its marked blank straight back on the page.
@@ -54,6 +56,18 @@ export interface PendingFacts {
   privacyOfficerSurname: string | null;
   /** How long after an engagement closes we confirm access removal. /data-handling. */
   accessRemovalWindow: string | null;
+  /**
+   * Where Microsoft Clarity processes session recordings. /privacy section 5.
+   *
+   * THE ONLY BLANK ON ANY OF THE THREE PAGES, and it is deliberately not filled by
+   * inference. The build brief's instruction is explicit: confirm Clarity's processing
+   * region from its own terms at signup, and DO NOT ASSUME IT MATCHES THE OTHERS. Every
+   * other provider on that table is United States; writing the same here because it
+   * looks likely would be exactly the plausible invention this file exists to prevent —
+   * and unlike a wrong retention period, a wrong processing region is a cross-border
+   * disclosure that is simply false.
+   */
+  clarityRegion: string | null;
 }
 
 export const PENDING: PendingFacts = {
@@ -65,6 +79,9 @@ export const PENDING: PendingFacts = {
   /* Confirmed by Fredrick, Aug 26 2026. Stated as a commitment a client can hold us to,
    * so it is the window we would always meet rather than a best case. */
   accessRemovalWindow: "five business days",
+  /* NOT YET CONFIRMED. Fredrick to read Clarity's terms and supply the region. Until he
+   * does, /privacy section 5 shows a marked blank rather than a guess — see above. */
+  clarityRegion: null,
 };
 
 /**
