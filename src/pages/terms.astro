@@ -1,0 +1,251 @@
+---
+/**
+ * /terms — Terms of Use.
+ *
+ * Built Aug 26 2026 from docs/legal/terms.md, which Fredrick supplied the same day. It
+ * replaces the unreviewed Aug 24 draft of the same name.
+ *
+ * HELD ON A BRANCH with /privacy and /data-handling. NOT FOR MERGE UNTIL COUNSEL HAS READ
+ * IT. The copy file heads itself "Draft for legal review. Do not publish as written".
+ * `noindex` is set and the page is filtered out of the sitemap, but neither is the hold —
+ * a page reachable from the footer is public whether or not a crawler indexes it.
+ *
+ * WHAT THIS PAGE IS, AND IS NOT. These are terms for using the website. They are NOT the
+ * client contract. The engagement agreement governs paid work and takes precedence
+ * wherever the two touch — section 10 says so explicitly, and THAT SECTION IS WHY THIS
+ * PAGE IS SAFE TO PUBLISH BEFORE THE ENGAGEMENT AGREEMENT IS FINISHED. If section 10 is
+ * ever trimmed as boilerplate, that stops being true.
+ *
+ * SECTION 3 IS THE COMMERCIALLY IMPORTANT ONE and it must not be trimmed either. The site
+ * publishes two figures — from CAD $1,000 on /workshop and from CAD $4,000 on /workshop
+ * and /accounting. Section 3 is what keeps a published figure from being treated as an
+ * offer capable of acceptance. Most small-firm website terms do not need it; this one
+ * does.
+ *
+ * SECTION 3 AND THE PRICING COPY HAVE TO STAY IN STEP. If a page ever drops the word
+ * "from", publishes a payment schedule, or names a figure for a specific deliverable, this
+ * section stops covering it. "From" is load-bearing on the pricing pages for a commercial
+ * reason and load-bearing here for a legal one.
+ *
+ * TWO DEPARTURES FROM THE APPROVED COPY, both matching the calls taken on /privacy and
+ * /data-handling on Aug 26 2026:
+ *
+ * 1. NO LOCATION LINE. The draft prints "based in Metro Vancouver, British Columbia,
+ *    Canada" in the opening and again in the section 14 contact block. Both are gone under
+ *    the standing instruction of Aug 25 2026.
+ *
+ *    SECTION 12 IS NOT AN EXCEPTION TO THAT AND MUST NOT BE STRIPPED WITH IT. "Governed by
+ *    the laws of the Province of British Columbia" is a choice-of-law clause, not a
+ *    sentence about where the business sits. Removing it would not tidy a location line;
+ *    it would delete the governing law and leave the document without one, which is a
+ *    different and much worse thing. The no-location rule is about how the site describes
+ *    itself to a reader. This names the law that applies.
+ *
+ * 2. NO mailto:. Section 14 shows the address as text, per the standing rule that no
+ *    mailto: remains anywhere on the site.
+ *
+ * ONE BLANK, and it is not guessed: the jurisdiction of incorporation, shared with
+ * /privacy through PENDING in src/lib/legal.ts. Everything else this page's [CONFIRM] list
+ * raises is a question for counsel rather than a hole in the copy — whether a liability
+ * cap belongs in section 9 or only in the engagement agreement, whether disputes should
+ * match the engagement agreement's mechanism rather than section 12's BC courts, and
+ * whether BC's Business Practices and Consumer Protection Act is confirmed not to apply to
+ * business-to-business work. NONE of those changes what is on the page today; all three
+ * change what counsel may ask for.
+ *
+ * THE REGISTER IS DELIBERATE. Sections 1 to 4 are written in plain English because the
+ * same reader who reads /accounting reads this, and a page that suddenly sounds like a
+ * different company undoes the work every other page does. Where counsel genuinely
+ * requires particular wording, take counsel's wording. Where they do not, keep the plain
+ * version.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LegalDocument from "../components/legal/LegalDocument.astro";
+import Pending from "../components/legal/Pending.astro";
+import {
+  PENDING,
+  LEGAL_EFFECTIVE_DATE,
+  LEGAL_ENTITY,
+  LEGAL_EMAIL,
+} from "../lib/legal";
+
+const description =
+  "The terms that govern use of arksystems.ca — what the site is, what published prices mean, and how these terms sit alongside an engagement agreement.";
+---
+
+<BaseLayout title="Terms of Use" description={description} noindex>
+  <LegalDocument
+    title="Terms of Use"
+    dateline={`Effective ${LEGAL_EFFECTIVE_DATE}. Last updated ${LEGAL_EFFECTIVE_DATE}.`}
+  >
+    <p>
+      These terms govern your use of arksystems.ca. By using this website you accept them. If
+      you do not accept them, please do not use the site.
+    </p>
+
+    <p>
+      ArkSystems is operated by {LEGAL_ENTITY}, a company incorporated in{" "}
+      <Pending value={PENDING.incorporatedIn} label="jurisdiction of incorporation" />. In
+      these terms, &ldquo;ArkSystems&rdquo;, &ldquo;we&rdquo; and &ldquo;us&rdquo; mean{" "}
+      {LEGAL_ENTITY} operating as ArkSystems. &ldquo;You&rdquo; means the person or business
+      using the site.
+    </p>
+
+    <h2 id="what-this-website-is">1. What this website is</h2>
+
+    <p>
+      This website describes what ArkSystems does and how we work. It is provided for
+      information.
+    </p>
+
+    <p>
+      Nothing on this site is professional advice. We are not accountants, lawyers, tax
+      advisers or auditors, we hold no professional designation, and nothing here should be
+      relied on as advice about your own business, your finances, your tax position or your
+      legal obligations. Decisions about your business remain yours, and where they require
+      professional advice you should obtain it from a qualified professional.
+    </p>
+
+    <h2 id="no-guarantee">2. No guarantee of outcome</h2>
+
+    <p>
+      We describe what AI systems do and what an engagement involves. We do not promise a
+      particular result, a saving, a return, or a level of performance in your business, and
+      nothing on this site should be read as such a promise.
+    </p>
+
+    <p>
+      Where an engagement is agreed, what we commit to is set out in the engagement agreement
+      for that work, and only there.
+    </p>
+
+    <h2 id="prices">3. Prices shown on this site</h2>
+
+    <p>
+      Any figure published on this site is a starting point, not a quotation and not an offer
+      capable of acceptance.
+    </p>
+
+    <p>
+      &ldquo;From CAD $1,000&rdquo; and &ldquo;from CAD $4,000&rdquo; mean the minimum at
+      which that kind of work begins. What a specific piece of work costs depends on its
+      scope, and is quoted to you in writing after we understand what is involved. A price
+      becomes binding only when it appears in a written agreement signed by both of us.
+    </p>
+
+    <p>All figures are in Canadian dollars and exclude applicable taxes.</p>
+
+    <h2 id="booking">4. Booking a call</h2>
+
+    <p>
+      Booking a call through this site reserves time in a calendar. It creates no contract, no
+      obligation on either of us, and no commitment to buy or to sell anything. Either of us
+      may cancel or reschedule.
+    </p>
+
+    <h2 id="our-content">5. Our content</h2>
+
+    <p>
+      Everything on this site &mdash; text, images, illustrations, layout, the ArkSystems
+      name, logo and tagline &mdash; belongs to ArkSystems or is used with permission, and is
+      protected by copyright and trade-mark law.
+    </p>
+
+    <p>
+      You may read it, print it, and share links to it. You may not republish it, sell it, or
+      use it as your own material, and you may not use the ArkSystems name, logo or tagline
+      without our written permission.
+    </p>
+
+    <p>
+      Ownership of anything produced during a paid engagement &mdash; a workshop document, a
+      specification, a built system &mdash; is dealt with in the engagement agreement, not
+      here.
+    </p>
+
+    <h2 id="acceptable-use">6. Acceptable use</h2>
+
+    <p>Please do not:</p>
+
+    <ul>
+      <li>Use the site for anything unlawful</li>
+      <li>Attempt to gain unauthorized access to the site or anything connected to it</li>
+      <li>Interfere with the site&rsquo;s operation or its availability to others</li>
+      <li>
+        Collect information from the site by automated means for commercial purposes,
+        including scraping content or harvesting contact details for outreach
+      </li>
+      <li>
+        Misrepresent yourself, or imply an association with ArkSystems that does not exist
+      </li>
+    </ul>
+
+    <h2 id="links">7. Links to other sites</h2>
+
+    <p>
+      This site links to third-party services, including our booking provider. Following a
+      link takes you to a service we do not control and that has its own terms and privacy
+      practices. We are not responsible for those services or their content.
+    </p>
+
+    <h2 id="availability">8. Availability</h2>
+
+    <p>
+      We aim to keep the site available and accurate, but we do not promise that it will be
+      uninterrupted, error-free, or current at every moment. We may change, suspend or
+      withdraw any part of it without notice.
+    </p>
+
+    <h2 id="liability">9. Limitation of liability</h2>
+
+    <p>
+      To the fullest extent permitted by law, ArkSystems is not liable for any loss or damage
+      arising from your use of this website, or from reliance on anything published on it,
+      including lost profits, lost business, lost data or indirect or consequential loss.
+    </p>
+
+    <p>
+      Nothing in these terms limits liability that cannot be limited by law, including
+      liability for fraud, or rights you may have under applicable consumer protection
+      legislation.
+    </p>
+
+    <h2 id="conflict">10. If these terms conflict with an agreement between us</h2>
+
+    <p>
+      If you are a client and we have a signed engagement agreement, statement of work or
+      equivalent, that document governs the work and takes precedence over these terms
+      wherever they differ. These terms cover your use of the website only.
+    </p>
+
+    <h2 id="privacy">11. Privacy</h2>
+
+    <p>
+      How we handle personal information is set out in our <a href="/privacy">Privacy Policy</a>,
+      which forms part of these terms.
+    </p>
+
+    <h2 id="governing-law">12. Governing law</h2>
+
+    <p>
+      These terms are governed by the laws of the Province of British Columbia and the federal
+      laws of Canada that apply there. Any dispute is subject to the exclusive jurisdiction of
+      the courts of British Columbia.
+    </p>
+
+    <h2 id="changes">13. Changes to these terms</h2>
+
+    <p>
+      We may update these terms. The effective date at the top shows when they last changed,
+      and the version in force is the one published when you use the site.
+    </p>
+
+    <h2 id="contact">14. Contact</h2>
+
+    <div class="doc-contact">
+      <p>ArkSystems, operated by {LEGAL_ENTITY}</p>
+      {/* Plain text, not a mailto: link — see the note on /privacy section 11. */}
+      <p>{LEGAL_EMAIL}</p>
+    </div>
+  </LegalDocument>
+</BaseLayout>

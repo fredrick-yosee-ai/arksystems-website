@@ -1,64 +1,66 @@
 ---
 /**
- * The shell both legal pages sit in: a header band, then one measured prose column.
+ * The shell all three legal pages sit in.
  *
- * "Basic designs", by instruction, and that is the right answer rather than a concession.
- * These are documents. The site's section machinery — alternating bands, two-column
- * heads, illustration panels, steppers — exists to carry an argument down a marketing
- * page, and none of it helps a reader who has opened a privacy policy to find one
- * paragraph. What they need is a measure they can read, headings they can scan, and
- * tables that do not run off the screen.
+ * REBUILT Aug 26 2026 to the conventional legal-page pattern, on Fredrick's instruction
+ * and against meshroad.com/privacy-policy as the reference. The first version borrowed
+ * the marketing site's furniture — a cream header band, an eyebrow, terracotta section
+ * rules, callout cards, a left-flush column. That was the wrong instinct. A policy page is
+ * not a section of the argument, and dressing it like one makes it look like it is selling
+ * something, which is the opposite of what these three exist to do.
  *
- * One column, not two. A legal document is read in order and cross-references itself by
- * section number ("the address in section 11"), which a two-column layout breaks.
+ * What the reference actually does, measured at 1440 rather than eyeballed: a centred
+ * 816px column, a 32px centred title, 18px body, and section headings set at body size in
+ * bold. No bands, no rules, no cards, no eyebrow. Everything here follows that shape. The
+ * colours and both typefaces stay ours — that is the whole of the brand on these pages,
+ * and it is enough.
+ *
+ * THE COLUMN IS CENTRED AT EVERY WIDTH, not only in portrait. That is the deliberate
+ * difference between this and every other page on the site: the marketing pages start at a
+ * shared left edge because the eye follows a vertical line down a scroll, and an inset
+ * section breaks it. A document has no such line to hold — it is one column read top to
+ * bottom, and the convention every reader already knows is that it sits in the middle of
+ * the page.
+ *
+ * One column, and no sidebar table of contents. A legal document cross-references itself
+ * by section number ("the address in section 11"), which a two-column layout breaks, and a
+ * fourteen-item sidebar is more furniture than the reference carries.
  */
 import { HAS_PENDING } from "../../lib/legal";
 
 interface Props {
-  eyebrow: string;
   title: string;
-  /** Rendered under the title, before the standfirst. */
+  /** Rendered under the title. Omitted on a page with no effective date. */
   dateline?: string;
-  standfirst: string;
 }
 
-const { eyebrow, title, dateline, standfirst } = Astro.props;
+const { title, dateline } = Astro.props;
 ---
 
-<section class="lede section--cream">
-  <div class="container lede__inner">
-    <p class="eyebrow lede__eyebrow">{eyebrow}</p>
-    <h1 class="lede__title">{title}</h1>
-    {dateline && <p class="lede__dateline">{dateline}</p>}
-    <p class="lede__standfirst" set:html={standfirst} />
-  </div>
-</section>
+<section class="doc">
+  <div class="doc__col">
+    <h1 class="doc__title">{title}</h1>
+    {dateline && <p class="doc__dateline">{dateline}</p>}
 
-{
-  /*
-   * The review notice. It is not decoration and it is not a disclaimer bolted onto a
-   * finished page — it is the accurate description of what this document currently is.
-   * It renders only while a fact in PENDING is still null, so it disappears on its own
-   * once the page is complete rather than needing to be remembered and removed.
-   *
-   * This does not substitute for the practitioner review. The pages are held on a branch
-   * for that; the banner is what makes the state visible if one is ever opened early.
-   */
-  HAS_PENDING && (
-    <div class="section--surface notice-band">
-      <div class="container">
-        <p class="notice" role="note">
+    {
+      /*
+       * The review notice. Not a disclaimer bolted onto a finished page — it is the
+       * accurate description of what these documents currently are. It renders only while
+       * a fact in PENDING is still null, so it clears itself when the last value lands
+       * rather than having to be remembered and removed.
+       *
+       * It does NOT substitute for the practitioner review. All three pages are held on a
+       * branch for that; this is what makes the state visible if one is opened early.
+       */
+      HAS_PENDING && (
+        <p class="doc__notice" role="note">
           <strong>Draft, under review.</strong> This document is not final. Facts marked
           below are still being confirmed, and it has not yet been reviewed by a Canadian
           privacy practitioner. Do not rely on it.
         </p>
-      </div>
-    </div>
-  )
-}
+      )
+    }
 
-<section class="doc section--surface">
-  <div class="container">
     <div class="doc__body">
       <slot />
     </div>
@@ -66,84 +68,90 @@ const { eyebrow, title, dateline, standfirst } = Astro.props;
 </section>
 
 <style>
-  .lede {
-    padding-block: 76px 60px;
+  .doc {
+    /* The page's own background, not a band. There is one surface on this page. */
+    background: var(--ark-surface);
+    padding-block: 72px 104px;
   }
 
-  .lede__eyebrow {
-    color: var(--ark-terracotta-ink);
+  /*
+   * The measure sits on the column, and the column carries the body font-size, so `ch`
+   * counts actual body characters. On a wrapper with a different size it would count 16px
+   * ones — the mistake this repo records elsewhere.
+   *
+   * MEASURED, not guessed. `ch` is the width of a zero, which in Source Sans 3 at 17px is
+   * 8.45px against an average lowercase character of 7.93px — so a `ch` measure gives more
+   * characters per line than its number suggests, and the number alone tells you nothing.
+   * At 83ch the text column runs 665px and sets 84 actual characters per line, against the
+   * reference's roughly 96. Wider than the classic 60-75, deliberately: a policy page is
+   * scanned for one clause as often as it is read through, and the reference's roominess
+   * is part of the convention Fredrick pointed at. Narrower than the reference, also
+   * deliberately, because 96 is past the point where the eye loses the line return.
+   */
+  .doc__col {
+    width: 100%;
+    max-width: 83ch;
+    margin-inline: auto;
+    padding-inline: var(--ark-gutter-phone);
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
   }
 
-  .lede__title {
-    margin-top: 18px;
-    font-size: var(--ark-h2);
-    line-height: var(--ark-lh-h2);
-    letter-spacing: -0.025em;
+  /*
+   * Centred, and deliberately modest — 2rem against the site's 2.875rem h2. A display
+   * heading at marketing scale on a policy page reads as a landing page, which is the
+   * exact impression these three must not give.
+   */
+  .doc__title {
+    font-family: var(--ark-font-display);
+    font-size: 2rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
     color: var(--ark-ink);
-    /* On the element carrying the font-size, never a wrapper — `ch` resolves against the
-     * element's own size, so on a wrapper it counts 16px characters. */
-    max-width: 24ch;
+    text-align: center;
   }
 
-  .lede__dateline {
-    margin-top: 16px;
+  .doc__dateline {
+    margin-top: 12px;
     font-size: var(--ark-small);
     color: var(--ark-muted);
+    text-align: center;
   }
 
-  .lede__standfirst {
-    margin-top: 20px;
-    font-size: var(--ark-body-lg);
-    line-height: var(--ark-lh-body);
-    color: var(--ark-body-ink);
-    max-width: 62ch;
-  }
-
-  .notice-band {
-    padding-top: 28px;
-  }
-
-  .notice {
-    padding: 18px 22px;
-    border-left: 4px solid var(--ark-terracotta);
-    border-radius: 0 var(--ark-radius) var(--ark-radius) 0;
+  .doc__notice {
+    margin-top: 32px;
+    padding: 16px 20px;
+    border: 1px solid var(--ark-gold-border);
+    border-radius: var(--ark-radius-sm);
     background: var(--ark-gold-bg);
-    font-size: var(--ark-body);
-    line-height: var(--ark-lh-body);
-    color: var(--ark-body-ink);
-    /* Same measure as .doc__body, at the same font-size, so the two share a text column
-     * and the notice reads as a callout on the document rather than as a wider thing
-     * sitting above it. Its box is ~48px broader because of the padding and rule, which
-     * is what makes it a callout. */
-    max-width: 72ch;
+    font-size: var(--ark-small);
+    line-height: 1.6;
   }
 
-  .notice strong {
+  .doc__notice strong {
     color: var(--ark-ink);
   }
 
-  .doc {
-    padding-block: 44px 96px;
-  }
-
-  /* One measure for the whole document. 72ch on the element that carries the body size,
-   * so it is 72 actual characters of body copy rather than 72 of something else. */
   .doc__body {
-    font-size: var(--ark-body);
-    line-height: var(--ark-lh-body);
-    color: var(--ark-body-ink);
-    max-width: 72ch;
+    margin-top: 40px;
   }
 
   /* Everything below styles slotted markup, so it has to be :global — Astro's scoping
    * attribute lands on this component's own elements, not on the page's. */
+
+  /*
+   * Section headings. Bold, near body scale, in the body face. The reference sets them as
+   * plain bold run-ins, and the effect is that they organise the document without
+   * interrupting it. Ours take the display ink and a little more size so that fourteen
+   * numbered sections stay scannable, and nothing more. NO RULE ABOVE THEM: a drawn line
+   * every few paragraphs turns a document back into a series of panels.
+   */
   .doc__body :global(h2) {
-    margin-top: 56px;
-    padding-top: 22px;
-    border-top: 2px solid var(--ark-terracotta);
-    font-size: 1.5rem;
-    line-height: 1.3;
-    letter-spacing: -0.015em;
+    margin-top: 44px;
+    font-size: 1.125rem;
+    line-height: 1.45;
+    font-weight: 700;
     color: var(--ark-ink);
   }
 
@@ -152,28 +160,25 @@ const { eyebrow, title, dateline, standfirst } = Astro.props;
   }
 
   .doc__body :global(h3) {
-    margin-top: 34px;
-    font-size: var(--ark-h3);
-    line-height: var(--ark-lh-h3);
+    margin-top: 30px;
+    font-size: var(--ark-body);
+    line-height: 1.5;
+    font-weight: 700;
     color: var(--ark-ink);
   }
 
   .doc__body :global(p) {
-    margin-top: 16px;
+    margin-top: 15px;
   }
 
   .doc__body :global(ul) {
-    margin-top: 16px;
+    margin-top: 15px;
     padding-left: 22px;
     list-style: disc;
   }
 
   .doc__body :global(li) {
-    margin-top: 8px;
-  }
-
-  .doc__body :global(li::marker) {
-    color: var(--ark-terracotta);
+    margin-top: 7px;
   }
 
   .doc__body :global(a) {
@@ -181,24 +186,24 @@ const { eyebrow, title, dateline, standfirst } = Astro.props;
     text-underline-offset: 3px;
   }
 
-  .doc__body :global(strong) {
+  /* The run-in bold the copy uses throughout ("**Server logs.** Our website is hosted
+   * by…"), and any other emphasis, set the same way. */
+  .doc__body :global(strong),
+  .doc__body :global(.doc-term) {
     color: var(--ark-ink);
-    font-weight: 600;
+    font-weight: 700;
   }
 
   /*
-   * A table has to scroll inside its own box, and the box has to be the thing that is
-   * constrained — a wide child still widens documentElement.scrollWidth, and iOS Safari
-   * answers that by widening the layout viewport, which scrolls the whole page sideways
-   * into blank space. `max-width: 100%` on the scroller is what stops that.
+   * A table scrolls inside its own box, and the box is the constrained one — a wide child
+   * still widens documentElement.scrollWidth, and iOS Safari answers that by widening the
+   * layout viewport, which scrolls the whole page sideways into blank space.
+   * `max-width: 100%` on the scroller is what stops it.
    */
   .doc__body :global(.doc-table) {
     max-width: 100%;
-    margin-top: 24px;
+    margin-top: 20px;
     overflow-x: auto;
-    border: 1px solid var(--ark-hairline);
-    border-radius: var(--ark-radius);
-    background: var(--ark-white);
   }
 
   .doc__body :global(table) {
@@ -210,108 +215,44 @@ const { eyebrow, title, dateline, standfirst } = Astro.props;
 
   .doc__body :global(th),
   .doc__body :global(td) {
-    padding: 13px 18px;
+    padding: 11px 18px 11px 0;
     text-align: left;
     vertical-align: top;
     border-bottom: 1px solid var(--ark-hairline);
   }
 
   .doc__body :global(th) {
-    font-weight: 600;
+    font-weight: 700;
     color: var(--ark-ink);
     white-space: nowrap;
+    border-bottom-color: var(--ark-muted-2);
   }
 
-  .doc__body :global(tbody tr:last-child td) {
-    border-bottom: 0;
-  }
-
-  /* A defined term at the head of its own paragraph — the pattern the copy uses
-   * throughout ("**Server logs.** Our website is hosted by…"). */
-  .doc__body :global(.doc-term) {
-    color: var(--ark-ink);
-    font-weight: 600;
-  }
-
-  /* The short blocks the copy sets apart from the prose around them: the four principles
-   * on /data-handling, and the stage-by-stage list. */
-  .doc__body :global(.doc-block) {
-    margin-top: 18px;
-    padding: 18px 22px;
-    border-left: 3px solid var(--ark-terracotta);
-    border-radius: 0 var(--ark-radius) var(--ark-radius) 0;
-    background: var(--ark-white);
-  }
-
-  .doc__body :global(.doc-block p) {
-    margin-top: 0;
-  }
-
+  /* Contact details at the end of each document. Plain lines, tight, the way an address
+   * block is set — not a card. */
   .doc__body :global(.doc-contact) {
-    margin-top: 24px;
-    padding: 22px 26px;
-    border: 1px solid var(--ark-hairline);
-    border-radius: var(--ark-radius);
-    background: var(--ark-white);
+    margin-top: 15px;
   }
 
   .doc__body :global(.doc-contact p) {
-    margin-top: 4px;
-  }
-
-  .doc__body :global(.doc-contact p:first-child) {
-    margin-top: 0;
+    margin-top: 2px;
   }
 
   @media (max-width: 900px) {
-    .lede {
-      padding-block: 52px 44px;
-    }
-
-    .lede__title {
-      max-width: 20ch;
-    }
-
     .doc {
-      padding-block: 36px 72px;
+      padding-block: 48px 72px;
+    }
+
+    .doc__title {
+      font-size: 1.75rem;
+    }
+
+    .doc__body {
+      margin-top: 32px;
     }
 
     .doc__body :global(h2) {
-      margin-top: 44px;
-      font-size: 1.3125rem;
-    }
-  }
-
-  /* Headings and the eyebrow centre on phone and in portrait, as everywhere on the site.
-   * The prose does not — centred prose is harder to read, which matters more than usual
-   * given the plain-language rule, and matters most of all in a document somebody is
-   * reading to find one specific sentence. */
-  @media (max-width: 900px), (orientation: portrait) {
-    .lede__eyebrow,
-    .lede__title {
-      text-align: center;
-      margin-inline: auto;
-    }
-
-    .lede__dateline {
-      text-align: center;
-    }
-
-    .lede__standfirst {
-      margin-inline: auto;
-    }
-
-    /* The document column centres as one block, text still left — the same rule the four
-     * heroes follow, and for the same reason: a left-flush column under a centred title
-     * reads as a misalignment. Measured at 768 before this: title centred at 193-575,
-     * body flush left at 18-626 with 124px of empty band down its right side.
-     *
-     * The whole column moves together, headings and tables included, so the h2 rules stay
-     * flush with the prose they head. At 390 the column already fills the container and
-     * this changes nothing. */
-    .doc__body,
-    .notice {
-      margin-inline: auto;
+      margin-top: 36px;
     }
   }
 </style>

@@ -82,48 +82,44 @@ const description =
 ---
 
 <BaseLayout title="How we handle your data" description={description} noindex>
-  <LegalDocument
-    eyebrow="Legal"
-    title="How we handle your data"
-    standfirst="Before an engagement starts, you should know exactly what we get access to, what we do with it, which tools it passes through, and what happens when the work ends. This page sets that out. If your firm has requirements of its own, tell us before we begin &mdash; it changes how we build, and that is a normal thing to specify."
-  >
+  <LegalDocument title="How we handle your data">
+    {/* The opening is body copy, not a styled standfirst — see the note on /privacy. */}
+    <p>
+      Before an engagement starts, you should know exactly what we get access to, what we do
+      with it, which tools it passes through, and what happens when the work ends. This page
+      sets that out. If your firm has requirements of its own, tell us before we begin
+      &mdash; it changes how we build, and that is a normal thing to specify.
+    </p>
+
     <h2 id="principles">The principles</h2>
 
     <p>Four commitments that hold across every engagement.</p>
 
-    <div class="doc-block">
-      <p>
+    <p>
         <span class="doc-term">It stays in your systems.</span> What we build operates on
         accounts you own. ArkSystems does not run a platform that holds your records, and
         there is nothing of yours to retrieve or migrate if you stop working with us.
-      </p>
-    </div>
+    </p>
 
-    <div class="doc-block">
-      <p>
+    <p>
         <span class="doc-term">We take the least access that does the job.</span> Read-only
         where reading is enough. Scoped to the workflow, not the organization. If a step
         needs broader access, we ask for it specifically and say why.
-      </p>
-    </div>
+    </p>
 
-    <div class="doc-block">
-      <p>
+    <p>
         <span class="doc-term">Every tool in the path is named before it is connected.</span>
         You see the list &mdash; hosting, models, storage, anything the information passes
         through &mdash; in writing, before anything is switched on. Nothing gets added
         mid-engagement without telling you.
-      </p>
-    </div>
+    </p>
 
-    <div class="doc-block">
-      <p>
+    <p>
         <span class="doc-term">You set the boundary between automatic and reviewed.</span>
         Which steps run without a person, and which stop for one, is your decision. We build
         to it and we record what the system did at each step, so the record exists whether or
         not anyone asks for it.
-      </p>
-    </div>
+    </p>
 
     <h2 id="what-we-access">What we access, stage by stage</h2>
 

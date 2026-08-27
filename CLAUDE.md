@@ -249,15 +249,15 @@ pinned in `.nvmrc`.
 
 - ~~`/workshop`~~ — **built Aug 26 2026. See the section below.**
 - ~~`/about`~~ — **built Aug 26 2026. See the section below.**
-- **Privacy and Data Handling** — **built Aug 26 2026 and HELD ON A BRANCH, not merged.**
-  See the section below. They exist as routes now, but nothing is live: the two copy files
-  Fredrick supplied both head themselves "Do not publish as written", and the standing rule
+- **Privacy, Data Handling and Terms** — **all three built Aug 26 2026 and HELD ON A
+  BRANCH, not merged.**
+  See the section below. They exist as routes now, but nothing is live: the three copy files
+  Fredrick supplied all head themselves "Do not publish as written", and the standing rule
   that a Canadian privacy practitioner has to see them first is unchanged. Six facts inside
   the page copy are still unknown and none is guessed.
-- **Terms** — still a launch blocker and still nothing but an unreviewed draft in
-  `docs/legal/terms.md`. No approved copy has been supplied for it.
 - **All three are linked from the live footer and 404 today**, and that is still true —
-  merging the branch is what changes it. CASL needs a privacy basis, and the AI Opportunity
+  merging the branch is the single change that closes the last three 404s on the site. CASL
+  needs a privacy basis, and the AI Opportunity
   Fit Form has had an open privacy-notice placeholder since July; closing that placeholder
   is Fredrick's action on the day `/privacy` goes live, not a repo change.
 
@@ -882,23 +882,23 @@ illustration centred, 768 unchanged, 390 with the hero CTA at 502–555 and the 
 edge to edge. `documentElement.scrollWidth` equals the viewport at every width on both
 pages.
 
-## Built Aug 26 2026 — /privacy and /data-handling, HELD ON A BRANCH
+## Built Aug 26 2026 — /privacy, /data-handling and /terms, HELD ON A BRANCH
 
-`docs/legal/privacy.md` and `docs/legal/data-handling.md` were supplied by Fredrick on
-Aug 26 2026, replacing the unreviewed Aug 24 drafts of the same names. Both pages were
-built against them the same day, on `feat/legal-pages`.
+`docs/legal/privacy.md`, `docs/legal/data-handling.md` and `docs/legal/terms.md` were all
+supplied by Fredrick on Aug 26 2026, replacing the unreviewed Aug 24 drafts of the same
+names. All three pages were built against them the same day, on `feat/legal-pages`.
 
-**Nothing is merged and nothing is live.** Both copy files head themselves *"Draft for
-review. Do not publish as written"*, and Fredrick's decision when the page was planned was
-to build and hold. The footer still links three legal pages and all three still 404.
-**`/terms` has no approved copy at all** and is not built.
+**Nothing is merged and nothing is live.** All three copy files head themselves *"Draft for
+review. Do not publish as written"*, and Fredrick's decision when they were planned was to
+build and hold. The footer links all three and all three still 404 in production.
+**Merging the branch is the single change that closes the last three footer 404s.**
 
-**Two defences, and neither is the hold.** Both pages set `noindex`, and `astro.config.mjs`
-filters both out of the sitemap — a sitemap entry and a `noindex` tag are contradictory
-signals about the same URL, and sending both is how a page nobody meant to publish turns up
-in a search result anyway. **When the review clears, the filter and both `noindex` flags
-come off in the same change.** A page reachable from the footer is public whether or not a
-crawler indexes it; the branch is the hold.
+**Two defences, and neither is the hold.** All three pages set `noindex`, and
+`astro.config.mjs` filters all three out of the sitemap — a sitemap entry and a `noindex`
+tag are contradictory signals about the same URL, and sending both is how a page nobody
+meant to publish turns up in a search result anyway. **When the review clears, the filter
+and all three `noindex` flags come off in the same change.** A page reachable from the
+footer is public whether or not a crawler indexes it; the branch is the hold.
 
 **Six facts are unknown and none is guessed** — they live as `null` in `src/lib/legal.ts`
 and render through `legal/Pending.astro` as a visible marked blank rather than a silent
@@ -956,19 +956,80 @@ certifications (no SOC 2, no ISO 27001 — the same invented claim a design tool
 on `/accounting`), no guarantee of security, no insurance claim until a policy is bound, no
 blanket no-training promise, no client names. All five are in the page header.
 
-**The shell is `components/legal/LegalDocument.astro` — one column, deliberately.** "Basic
-designs" by instruction, and it is the right answer rather than a concession: the site's
-section machinery exists to carry an argument down a marketing page, and none of it helps
-someone who opened a privacy policy to find one paragraph. A legal document is also read in
-order and cross-references itself by section number, which a two-column layout breaks.
-Tables scroll inside their own `overflow-x: auto` box with `max-width: 100%` on the
-scroller — measured at 390, the table is 521px inside a 354px box and
-`documentElement.scrollWidth` stays at 390.
+### /terms specifically
 
-**The document column centres as a block in portrait, text still left**, the same rule the
-four heroes follow. Measured at 768 before the fix: title centred at 193–575, body flush
-left at 18–626 with 124px of empty band down its right side. The notice callout takes the
-same 72ch measure at the same font-size so the two share a text column exactly.
+**Section 10 is why this page can ship before the engagement agreement exists.** It says a
+signed engagement agreement takes precedence over these terms wherever the two differ, so
+publishing now creates no conflict with whatever that document eventually says. **If
+section 10 is ever trimmed as boilerplate, that stops being true.**
+
+**Section 3 is the commercially important one and must not be trimmed either.** The site
+publishes two figures — from CAD $1,000 on `/workshop`, from CAD $4,000 on `/workshop` and
+`/accounting`. Section 3 is what keeps a published figure from being treated as an offer
+capable of acceptance. Most small-firm website terms do not need it; this one does.
+**Section 3 and the pricing copy have to stay in step** — if a page ever drops the word
+"from", publishes a payment schedule, or names a figure for a specific deliverable, this
+section stops covering it. "From" is load-bearing on the pricing pages for a commercial
+reason and load-bearing here for a legal one.
+
+**Section 12's governing-law clause is NOT a location line and must not be stripped as
+one.** "Governed by the laws of the Province of British Columbia" names the law that
+applies; it is not a sentence about where the business sits. Removing it would not tidy a
+location line, it would delete the governing law and leave the document without one. The
+no-location rule is about how the site describes itself to a reader. Verified on the built
+page: the governing-law clause is present and "Metro Vancouver" appears nowhere in any of
+the three.
+
+**Everything else `/terms` raises is a question for counsel, not a hole in the copy** —
+whether a liability cap belongs in section 9 or only in the engagement agreement, whether
+disputes should match the engagement agreement's mechanism rather than section 12's BC
+courts, and whether BC's *Business Practices and Consumer Protection Act* is confirmed not
+to apply to business-to-business work. None changes what is on the page today.
+
+### The design — rebuilt the same day, and this is the version that stands
+
+**The first build dressed these pages like sections of the marketing site** — a cream
+header band, an eyebrow, terracotta rules above every heading, callout cards, a left-flush
+column. Fredrick rejected it and pointed at `meshroad.com/privacy-policy` as the pattern he
+wanted: **a regular legal page, with our colours and our two typefaces and nothing else
+borrowed.** He was right, and the reason is worth keeping. A policy page is not a section of
+the argument, and dressing it like one makes it look like it is selling something — the
+exact opposite of what these three exist to do.
+
+What the reference actually does, **measured at 1440 rather than eyeballed**: a centred
+816px column, a 32px centred title, 18px body, section headings set at body size in bold.
+No bands, no rules, no cards, no eyebrow. `components/legal/LegalDocument.astro` follows
+that shape.
+
+**The column is centred at every width, not only in portrait.** That is the deliberate
+difference between these pages and every other page on the site. The marketing pages start
+at a shared left edge because the eye follows a vertical line down a scroll and an inset
+section breaks it — the reason `/workshop`'s section 5 was widened back to the standard
+container. A document has no such line to hold: it is one column read top to bottom, and
+the convention every reader already knows is that it sits in the middle of the page.
+
+**The measure is 83ch and the number alone tells you nothing.** `ch` is the width of a
+zero, which in Source Sans 3 at 17px is 8.45px against an average lowercase character of
+7.93px — so a `ch` measure always yields more characters per line than its number suggests.
+Measured on the built page: 83ch gives a 665px text column setting **84 actual characters
+per line**, against the reference's roughly 96. Wider than the classic 60–75 deliberately,
+because a policy page is scanned for one clause as often as it is read through; narrower
+than the reference deliberately, because 96 is past where the eye loses the line return.
+
+**One column, and no sidebar table of contents.** A legal document cross-references itself
+by section number, which a two-column layout breaks, and a fourteen-item sidebar is more
+furniture than the reference carries.
+
+**Tables scroll inside their own `overflow-x: auto` box with `max-width: 100%` on the
+scroller.** Measured at 390: a 473px table inside a 354px box, with
+`documentElement.scrollWidth` still exactly 390 on all three pages. The table's own children
+report as past the viewport edge and that is correct — the scroller clips them.
+
+**Verified on all three pages after the rebuild:** one `h1` each, correct heading order
+(12 sections on `/privacy`, 9 on `/data-handling`, 14 on `/terms`), no contrast failures at
+either size threshold, no `mailto:` anywhere in `dist`, `noindex` on all three, the column
+and title sharing a centre line at 390 / 768 / 1440, and no horizontal overflow at any of
+them.
 
 ## Standing instruction, Aug 25 2026 — no location lines
 

@@ -13,7 +13,7 @@ export default defineConfig({
     mdx(),
     sitemap({
       /*
-       * Keep the legal drafts out of the sitemap.
+       * Keep all three legal drafts out of the sitemap.
        *
        * They already set `noindex` in the page head, but a sitemap entry and a noindex
        * tag are contradictory signals about the same URL — one asks a crawler to index
@@ -26,7 +26,9 @@ export default defineConfig({
        * without the other leaves the site telling crawlers two different things.
        */
       filter: (page) =>
-        !page.endsWith("/privacy/") && !page.endsWith("/data-handling/"),
+        !page.endsWith("/privacy/") &&
+        !page.endsWith("/data-handling/") &&
+        !page.endsWith("/terms/"),
     }),
   ],
 });

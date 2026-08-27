@@ -77,11 +77,20 @@ const description =
   noindex
 >
   <LegalDocument
-    eyebrow="Legal"
     title="Privacy Policy"
     dateline={`Effective ${LEGAL_EFFECTIVE_DATE}. Last updated ${LEGAL_EFFECTIVE_DATE}.`}
-    standfirst="This policy explains what personal information we collect through arksystems.ca and in the course of our work, why we collect it, who processes it on our behalf, and how you can access or correct it. It applies to this website and to our dealings with clients and prospective clients."
   >
+    {/* The opening is body copy, not a styled standfirst. It carried its own larger size
+      * and its own class in the first build; on the plain pattern the document simply
+      * starts, which is what the reference does and what every policy page a reader has
+      * seen before does. */}
+    <p>
+      This policy explains what personal information we collect through arksystems.ca and in
+      the course of our work, why we collect it, who processes it on our behalf, and how you
+      can access or correct it. It applies to this website and to our dealings with clients
+      and prospective clients.
+    </p>
+
     <p>
       ArkSystems is operated by {LEGAL_ENTITY}, a company incorporated in{" "}
       <Pending value={PENDING.incorporatedIn} label="jurisdiction of incorporation" />. In
