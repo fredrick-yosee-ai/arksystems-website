@@ -160,8 +160,18 @@ const trustItems = [
       gap: 44px;
     }
 
+    /* The cap centres in the column rather than sitting against its left edge, which is
+     * what the base rule's `justify-content: center` always intended — that only ever
+     * centred the panel INSIDE this box, and stacked, the box itself was 520px hard left
+     * in an 848px column. Measured at 1024 portrait: 88-608, off centre by 164.
+     *
+     * `width: 100%` is load-bearing beside the auto margins. An auto inline margin on a
+     * grid item beats `justify-self: stretch`, so without it the box falls back to its
+     * shrink-to-fit width instead of filling up to the cap. */
     .hero__visual {
+      width: 100%;
       max-width: 520px;
+      margin-inline: auto;
     }
   }
 
@@ -212,6 +222,27 @@ const trustItems = [
     .hero__subhead,
     .hero__cta-note {
       margin-inline: auto;
+    }
+
+    /* The button is the one thing here that is not a block of text, so an auto margin
+     * does nothing for it — its row already spans the column. It centres by flex.
+     * Measured at 1024 portrait before this: a 391px button hard left at 88, under a
+     * headline and two paragraphs that were all centred.
+     *
+     * This sits in the PORTRAIT query rather than with the 1100 stack above, and the
+     * difference is real: between 901 and 1100 in landscape the hero stacks but nothing
+     * centres, and a centred button under left-aligned copy would be the same fault this
+     * rule exists to fix, pointing the other way. Below 900 the button is full width
+     * anyway and this changes nothing.
+     *
+     * Column flex, not `justify-content: center` — this wrapper holds the button AND the
+     * note beneath it, unlike the homepage's, where the note is a sibling. A row put them
+     * side by side: measured at 1024 portrait, the note landed at 541-875, 196px right of
+     * centre, beside a button still hard left. */
+    .hero__cta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .hero__trust {

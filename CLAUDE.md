@@ -843,6 +843,41 @@ three, `/about`'s two-column hero (bottomDelta still 0, hero still 445px), and
 `documentElement.scrollWidth` at every width. At 390 the blocks are already wider than
 the column, so the auto margin changes nothing there.
 
+**The homepage hero now stacks at 1100, not 900**, matching `/accounting`. Between those
+two widths the copy column is about 410px — narrow enough that the portrait rule centres
+its text inside a column standing beside an illustration, which reads as neither a centred
+hero nor a two-column one.
+
+Three things that fell out of it, and each is a trap worth knowing:
+
+- **`width: 100%` is load-bearing next to `margin-inline: auto` on a grid item.** An auto
+  inline margin beats `justify-self: stretch`, so the box drops to shrink-to-fit — and an
+  inlined hero SVG has had its intrinsic width stripped, so there is nothing sensible to
+  shrink to. Measured without it: a 356px stage holding a 300px illustration, centred in
+  an 848px column. The same fix was needed on `/accounting`'s `.hero__visual`, which had
+  been sitting 520px hard left in that column since it shipped — its base
+  `justify-content: center` only ever centred the panel *inside* the box, never the box.
+- **The stage cap is 620px and it is a measurement, not a taste.** At 1440 the stage
+  renders at 618 with the desktop SVG at 562 inside it, so stacked the artwork comes out
+  the size it already ships at and the label-readability rule further up this file is
+  untouched. The cap sits on the FIGURE, not the stage: the caption is right-aligned to
+  the artwork, so on the stage alone it would run the full container and end nowhere near
+  the picture it labels. The desktop variant stays on screen down to 900 — the mobile
+  emblem is drawn for a phone and looks sparse across a tablet.
+- **Both hero CTAs centre by flex, in the PORTRAIT query, not with the 1100 stack.** A
+  button is not a block of text, so an auto margin does nothing for it. The query matters:
+  between 901 and 1100 in landscape the hero stacks but nothing centres, and a centred
+  button under left-aligned copy is the same fault pointing the other way. On
+  `/accounting` it has to be `flex-direction: column`, because that wrapper holds the
+  button *and* the note, unlike the homepage's where the note is a sibling — a row put
+  them side by side, note 196px right of centre beside a button still hard left.
+
+Re-measured after all of it: 1440 byte-for-byte unchanged (inner 688, copy and figure 618,
+art 562×546, hero 824), 1000 landscape stacked and left-aligned throughout with only the
+illustration centred, 768 unchanged, 390 with the hero CTA at 502–555 and the stage still
+edge to edge. `documentElement.scrollWidth` equals the viewport at every width on both
+pages.
+
 ## Standing instruction, Aug 25 2026 — no location lines
 
 Fredrick's instruction: the line "Based in Metro Vancouver, working remotely across

@@ -229,6 +229,55 @@ const heroMobile = inlineSvg(heroMobileRaw, {
     .hero__trust {
       margin-inline: auto;
     }
+
+    /* The button is the one thing here that is not a block of text, so an auto margin
+     * does nothing for it — its row already spans the column. It centres by flex.
+     *
+     * This sits in the PORTRAIT query rather than with the 1100 stack above, and the
+     * difference is real: between 901 and 1100 in landscape the hero stacks but nothing
+     * centres, and a centred button under left-aligned copy would be the same fault this
+     * rule exists to fix, pointing the other way. Below 900 the button is full width
+     * anyway and this changes nothing. */
+    .hero__cta {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  /* Stack at 1100, not at 900. Between those two widths the copy column is around 410px
+   * — narrow enough that the portrait rule above centres its text inside a column beside
+   * an illustration, which reads as neither a centred hero nor a two-column one. Same
+   * breakpoint /accounting stacks at, for the same reason.
+   *
+   * The stage is capped so the artwork does not inflate to the full container once it
+   * has one to itself. 620px is not a guess: measured at 1440 the stage renders at 618
+   * and the desktop SVG inside it at 562, so stacked it comes out the size it already
+   * ships at, and the label readability that governs this file is unchanged. The
+   * desktop variant stays on screen down to 900 — the mobile emblem is drawn for a phone
+   * and would look sparse across a tablet.
+   *
+   * The caption is right-aligned to the artwork, so the cap has to sit on the FIGURE
+   * rather than on the stage. On the stage alone the caption would run to the full
+   * container width and end nowhere near the picture it labels. */
+  @media (max-width: 1100px) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 44px;
+    }
+
+    /* Copy first, illustration after the CTA.
+     *
+     * `width: 100%` is load-bearing next to the auto margins. An auto inline margin on a
+     * grid item beats `justify-self: stretch`, so the box drops to its shrink-to-fit
+     * width — and the inlined SVG has had its intrinsic width stripped, so there is
+     * nothing sensible to shrink to. Measured without it: a 356px stage holding a 300px
+     * illustration, centred in an 848px column. */
+    .hero__figure {
+      order: 2;
+      width: 100%;
+      max-width: 620px;
+      margin-inline: auto;
+    }
   }
 
   /* The phone illustration is deliberately compact. An earlier version was 1418px tall,
@@ -240,13 +289,14 @@ const heroMobile = inlineSvg(heroMobileRaw, {
     }
 
     .hero__inner {
-      grid-template-columns: minmax(0, 1fr);
       gap: 34px;
     }
 
-    /* Copy first, illustration after the CTA. */
+    /* The stage runs edge to edge again below 900 — the cap above is for the tablet
+     * range, where a full-width illustration would tower over the copy. The mobile
+     * artwork inside it is capped at its own 354px and centred, further down. */
     .hero__figure {
-      order: 2;
+      max-width: none;
     }
 
     .hero__eyebrow {
