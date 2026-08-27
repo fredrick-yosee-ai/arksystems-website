@@ -140,29 +140,33 @@
       margin-bottom: 16px;
     }
 
-    /* The BLOCK centres, the TEXT inside it stays left. That is what base.css does for
-     * `.section__head .section__lede`, and it is the right treatment: centred prose is
-     * harder to read, but a left-flush 44ch block under a centred headline reads as a
-     * misalignment. Visible at tablet-portrait widths; at 390 the block is already wider
-     * than the column so the auto margin changes nothing.
-     *
-     * The heroes on / and /accounting use a custom subhead class too and do NOT do this,
-     * so they sit left-flush under a centred headline at 768. Pre-existing, flagged to
-     * Fredrick rather than changed here — it is a shipped page each time. */
     .hero__subhead {
       margin-top: 18px;
       max-width: 44ch;
-      margin-inline: auto;
     }
   }
 
-  /* Phone and any portrait screen: the heading block centres, body prose keeps its left
-   * edge. Centred prose is harder to read, which matters more than usual on a page
-   * written for readers whose first language may not be English. */
+  /* Phone and any portrait screen: the heading BLOCK centres, and the text inside the
+   * subhead stays left. Centred prose is harder to read, which matters more than usual on
+   * a page written for readers whose first language may not be English — but a left-flush
+   * block under a centred headline reads as a misalignment, so the box centres even
+   * though its text does not. That is what base.css does for
+   * `.section__head .section__lede`, and all four heroes now match it.
+   *
+   * The subhead's auto margin belongs HERE rather than in the `(max-width: 900px)` block
+   * it shipped in, in the same query that centres the headline — the two can then never
+   * disagree. In the old place a 1024-wide portrait tablet centred the headline and left
+   * the 62ch subhead flush left beneath it, the exact fault this rule exists to prevent.
+   * At 390 the block is already wider than the column, so the auto margin changes
+   * nothing there. */
   @media (max-width: 900px), (orientation: portrait) {
     .hero__title,
     .hero__eyebrow {
       text-align: center;
+      margin-inline: auto;
+    }
+
+    .hero__subhead {
       margin-inline: auto;
     }
   }

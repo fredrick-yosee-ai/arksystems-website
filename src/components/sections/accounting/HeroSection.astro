@@ -192,13 +192,25 @@ const trustItems = [
     }
   }
 
-  /* Phone and any portrait screen: the heading block and the trust line centre. Body
-   * prose keeps its left edge — centred prose is harder to read, which matters more
-   * here than usual given the plain-language rule. */
+  /* Phone and any portrait screen: the heading BLOCK centres, and the text inside the
+   * body paragraphs stays left. Centred prose is harder to read, which matters more
+   * here than usual given the plain-language rule — but a left-flush block under a
+   * centred headline reads as a misalignment, so the box centres even though its text
+   * does not. That is what base.css does for `.section__head .section__lede`, and all
+   * four heroes now match it.
+   *
+   * The subhead and the CTA note were the ones missing it. Measured at 768: the headline
+   * centred at 212-556 with both subhead paragraphs left-flush at 18-373 underneath, and
+   * the trust line centred again below them. Centred, left, centred down one column. */
   @media (max-width: 900px), (orientation: portrait) {
     .hero__title,
     .hero__eyebrow {
       text-align: center;
+      margin-inline: auto;
+    }
+
+    .hero__subhead,
+    .hero__cta-note {
       margin-inline: auto;
     }
 

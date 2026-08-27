@@ -202,9 +202,17 @@ const heroMobile = inlineSvg(heroMobileRaw, {
     display: none;
   }
 
-  /* Phone and any portrait screen: centre the heading block. The body paragraphs keep
-   * their left edge — centred prose is harder to read, which matters more than usual on
-   * a page written for readers whose first language may not be English. */
+  /* Phone and any portrait screen: the heading BLOCK centres, and the text inside the
+   * body paragraphs stays left. Centred prose is harder to read, which matters more than
+   * usual on a page written for readers whose first language may not be English — but a
+   * left-flush block under a centred headline reads as a misalignment, so the box centres
+   * even though its text does not. That is what base.css does for
+   * `.section__head .section__lede`, and all four heroes now match it.
+   *
+   * `.hero__title` needs the auto margin as well as `text-align: center`. It carries a
+   * 15ch measure, so without it the title box sat hard left and centred its lines inside
+   * its own left-hand third: measured at 768 the headline ran 18–384 while the subhead
+   * beneath it ran 215–553. Two centred blocks on two different centre lines. */
   @media (max-width: 900px), (orientation: portrait) {
     .hero__eyebrow {
       justify-content: center;
@@ -215,6 +223,7 @@ const heroMobile = inlineSvg(heroMobileRaw, {
       text-align: center;
     }
 
+    .hero__title,
     .hero__subhead,
     .hero__cta-note,
     .hero__trust {

@@ -740,10 +740,8 @@ at the shared padding it measured 405px — the shortest section on the site, wh
 wrong thing for a hero to be. The space is the presence.
 
 **A centred headline wants its subhead block centred too, with the text inside still
-left.** That is what `base.css` does for `.section__head .section__lede`, and this hero
-now matches it at tablet-portrait widths. **The heroes on `/` and `/accounting` use their
-own subhead class and do not** — both sit left-flush under a centred headline at 768.
-Pre-existing and flagged rather than changed, since each is a shipped page.
+left.** That is what `base.css` does for `.section__head .section__lede`. It was built
+here first and **all four heroes now match it** — see the section below.
 
 **Section 4's pull quote takes a column, it does not sit under the prose.** The first build
 flowed three paragraphs across two CSS columns; three does not divide by two, so the left
@@ -812,6 +810,38 @@ defensible as written either way — and whether FoodyGuru and YoseeAI are still
 name. Both are already true of the live homepage, so this page adds no new exposure on
 either. **"Founded and shipped" is deliberately unarguable and must not be inflated** —
 anything stronger invites a question the page cannot answer.
+
+## Fixed Aug 26 2026 — hero alignment in portrait, all four heroes
+
+Every hero now obeys one rule at `(max-width: 900px), (orientation: portrait)`: **the
+block centres, the text inside it does not.** Built on `/about` first, then applied to
+the two shipped pages it had been flagged against. Measured after the fix, every hero
+element on all three pages centres on the viewport centre line — offset 0 at 768, and at
+1024 portrait.
+
+What was actually wrong, and they were two different faults:
+
+- **`/` had a left-flush headline.** `.hero__title` got `text-align: center` and no
+  `margin-inline: auto`, so a box carrying a 15ch measure sat hard left and centred its
+  lines inside its own left-hand third. Measured at 768: headline 18–384 against a
+  subhead at 215–553 — two centred blocks on two different centre lines, and the headline
+  is the biggest thing on the screen. The subhead was already right.
+- **`/accounting` had left-flush body.** The mirror image: the headline centred at
+  212–556 with both subhead paragraphs and the CTA note flush left at 18 beneath it, and
+  the trust line centred again below those. Centred, left, centred, down one column.
+
+**The auto margin belongs in the same media query that centres the headline**, so the two
+can never disagree. `/about` shipped with its subhead's auto margin in the `(max-width:
+900px)` block instead, one query narrower than the rule that centres its title — which
+left a 1024-wide portrait tablet centring the headline and setting the 62ch subhead flush
+left underneath, the exact fault the rule exists to prevent. Moved, and that is the only
+change `/about` needed.
+
+Unaffected, and checked rather than assumed: 390 (the homepage hero CTA still measures
+503–556, which is the above-the-fold number this file records), 1440 landscape on all
+three, `/about`'s two-column hero (bottomDelta still 0, hero still 445px), and
+`documentElement.scrollWidth` at every width. At 390 the blocks are already wider than
+the column, so the auto margin changes nothing there.
 
 ## Standing instruction, Aug 25 2026 — no location lines
 
