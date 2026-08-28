@@ -1211,11 +1211,26 @@ Both behaviours are the browser's, not code in this repo, and `:modal` was confi
 **They need one pass in a real browser.** Also outstanding: Meta Pixel Helper, the Clarity
 dashboard and its masking check, and a real test booking.
 
-**One marked blank, and it is what stops this branch shipping: Microsoft Clarity's
-processing region** in `/privacy` section 5. The brief is explicit that it must be
-confirmed from Clarity's own terms at signup and not assumed to match the others. Every
-other row reads United States and writing the same here because it looks likely is exactly
-the plausible invention `lib/legal.ts` exists to prevent.
+**Microsoft Clarity's row was checked on Aug 28 2026, and the check is worth keeping.**
+The brief said confirm the processing region from Clarity's terms and do not assume it
+matches the others. It was right to. **Microsoft publishes no region for Clarity** — its
+FAQ asks "Where is my data stored?" and answers "Your data is stored in the Microsoft
+Azure cloud service", with no country and no data-centre commitment. The only jurisdiction
+the document names is Microsoft Corporation "(in the United States)", as the US affiliate
+EU customers' data reaches under SCCs; we contract with that entity directly. The row
+therefore reads United States as **the contracting entity's jurisdiction, not a
+data-residency guarantee** — Microsoft could serve Clarity from another Azure region
+without contradicting anything it has published. Know that difference before repeating the
+row to a client. The cross-border paragraph under the table is what actually carries this,
+and it holds whichever region it turns out to be.
+
+**The Clarity retention sentence was wrong on first write and was corrected from the same
+source.** It said only favourites are kept past 30 days. Microsoft's own wording: "Favorite
+recordings **and randomly selected sample of recordings** are retained for up to 9 months."
+The nine-month tail is not something we choose, and copy implying it was understated it on
+the one page that must not. Heat maps, also nine months, were added at the same time. **The
+brief's own summary of Clarity retention was the source of the error** — worth remembering
+that a build brief is a summary, and the provider's documentation is the record.
 
 ## Standing instruction, Aug 25 2026 — no location lines
 

@@ -12,8 +12,10 @@
  * in and it renders as ordinary text with no other change needed.
  *
  * EVERY FACT WAS FILLED AS OF AUG 26 2026. One was ADDED on Aug 27 2026 with the analytics
- * release — `clarityRegion` — and it is unfilled, so /privacy section 5 renders one marked
- * blank today. That blank is the reason the analytics branch is not ready to push. The
+ * release — `clarityRegion` — and answered on Aug 28 2026. NOTHING RENDERS AS A
+ * PLACEHOLDER TODAY. That entry's comment records what was actually checked and what the
+ * value does and does not claim; it is the one fact here that is an inference from a
+ * contracting relationship rather than something a provider states outright. The
  * mechanism stays because these values are still worth holding in one place — each is
  * documented with where it appears, so a change is one edit rather than a search — and
  * because nulling one puts its marked blank straight back on the page.
@@ -79,9 +81,21 @@ export const PENDING: PendingFacts = {
   /* Confirmed by Fredrick, Aug 26 2026. Stated as a commitment a client can hold us to,
    * so it is the window we would always meet rather than a best case. */
   accessRemovalWindow: "five business days",
-  /* NOT YET CONFIRMED. Fredrick to read Clarity's terms and supply the region. Until he
-   * does, /privacy section 5 shows a marked blank rather than a guess — see above. */
-  clarityRegion: null,
+  /* Fredrick's decision of Aug 28 2026, taken after the check below rather than instead
+   * of it. MICROSOFT PUBLISHES NO REGION FOR CLARITY: its own FAQ asks "Where is my data
+   * stored?" and answers "Your data is stored in the Microsoft Azure cloud service" — no
+   * country, no data-centre commitment. The only jurisdiction the document names is in a
+   * different answer, where EU customers contract with Microsoft Ireland which holds SCCs
+   * with Microsoft Corporation "(in the United States)". We are not an EU customer, so we
+   * contract with that US entity directly, and that is what this row describes.
+   *
+   * SO THIS IS THE CONTRACTING ENTITY'S JURISDICTION, NOT A DATA-RESIDENCY GUARANTEE, and
+   * the difference is worth knowing before anyone repeats it in an answer to a client.
+   * Microsoft could serve Clarity from another Azure region without contradicting
+   * anything it has published. The cross-border paragraph under the table is what carries
+   * the weight here — it already says information is held outside Canada and subject to
+   * the laws where it sits, which is true regardless of which Azure region that is. */
+  clarityRegion: "United States",
 };
 
 /**

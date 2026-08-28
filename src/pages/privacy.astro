@@ -52,14 +52,22 @@
  *    describes what merely opening a page sends them. Both are true and only one was in
  *    the draft.
  *
- * 4. ONE MARKED BLANK, AND IT IS THE REASON THIS BRANCH IS NOT READY TO PUSH:
- *    MICROSOFT CLARITY'S PROCESSING REGION, in the section 5 table. The build brief is
- *    explicit that it must be confirmed from Clarity's own terms at signup and NOT assumed
- *    to match the other providers. Every other row on that table reads United States, and
- *    writing the same here because it looks likely is precisely the plausible invention
- *    src/lib/legal.ts exists to prevent — a wrong retention period is a mistake, a wrong
- *    cross-border processing region is a false disclosure. It renders as a visible marked
- *    blank until Fredrick supplies it.
+ * 4. MICROSOFT CLARITY'S ROW WAS CHECKED, NOT ASSUMED, and the check is the point.
+ *    Microsoft publishes NO processing region for Clarity: its FAQ asks "Where is my data
+ *    stored?" and answers "Your data is stored in the Microsoft Azure cloud service". The
+ *    only jurisdiction it names is Microsoft Corporation "(in the United States)", as the
+ *    US affiliate that EU customers' data reaches under SCCs. We contract with that entity
+ *    directly. The row therefore states the contracting entity's jurisdiction rather than a
+ *    data-residency guarantee — see the note in src/lib/legal.ts before repeating it to a
+ *    client, because Microsoft could serve Clarity from another Azure region without
+ *    contradicting anything it has published. The cross-border paragraph below the table is
+ *    what actually protects this, and it is true whichever region it is.
+ *
+ *    THE RETENTION SENTENCE WAS WRONG AND WAS CORRECTED FROM THE SAME SOURCE. It said only
+ *    favourites are kept beyond 30 days. Microsoft's FAQ: "Favorite recordings AND RANDOMLY
+ *    SELECTED SAMPLE of recordings are retained for up to 9 months." The nine-month tail is
+ *    not something we choose, and copy implying it was would have understated it on the one
+ *    page that must not. Heat maps, also nine months, were added at the same time.
  *
  *    SECTION 5 HAS NO PAYMENT PROVIDER ROW, and that is an answer rather than an omission:
  *    there is no third-party payment processor in the path. Invoicing is still described in
@@ -328,8 +336,10 @@ const description =
 
     <p>
       <span class="doc-term">How long session recordings are kept.</span> Microsoft Clarity
-      keeps an ordinary recording for 30 days. A recording we mark as a favourite is kept for
-      up to nine months.
+      keeps a recording for 30 days. Two kinds are kept for up to nine months: recordings we
+      mark as favourites, and a sample of recordings that Microsoft selects at random. Heat
+      maps, which show where visitors clicked and how far they scrolled, are also kept for up
+      to nine months.
     </p>
 
     <p>
