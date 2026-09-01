@@ -1360,10 +1360,43 @@ enhancement is the in-place state, not the submission. **The error state is buil
 skipped for being rare**: it keeps the form and its values on screen and names the email
 address, because an error state offering no alternative loses the person entirely.
 
-**The supplied design was used for layout only — same call as `/accounting`.** It shows a
-fourth field ("Practice Name"), a message label written for accounting firms specifically,
-different hero copy, and a primary-fill submit button. Each contradicts the brief and **none
-was built.**
+**Section 2 is ONE FUSED CARD** — the form on the white left, booking and the email address
+on the stage-green right, both halves inside one radius and one shadow. **It was built as two
+separate cards first and rebuilt on Fredrick's instruction**, and the reason is worth keeping:
+two cards was the site's own idiom rather than anything from the supplied design, and next to
+that design it read as a different page. The fused split IS the design's visual idea — the
+colour change down the middle is what says "two routes to the same place". `overflow: hidden`
+on the card is load-bearing: without it the green half's square corners run past the radius
+and the two halves stop reading as one object.
+
+**Taken from the design:** the fused card, the colour split, a display heading with a rule
+under it on each half, filled borderless inputs, the labelled contact block low in the green
+half, and the padding. **The headings are a treatment change, not a copy change** — the brief
+sets both panels as a paragraph opening with a bold run-in, and the design sets that run-in as
+a heading. Every word is the brief's.
+
+**NOT taken, and each is a brief rule rather than a preference:** the fourth field ("Practice
+Name" — three fields, and "do not add company" is explicit), the message label written for
+accounting firms, the hero copy, and the primary-fill submit button. **The design was used for
+layout. The brief is the copy.** Same call as `/accounting`.
+
+**The transparent 1px border on the inputs is not decoration.** It holds the box's size so the
+focus state can colour it without the field growing by 2px and nudging everything below it.
+Remove it and every field jumps on focus.
+
+**DOM order is aside first, form second, and the desktop grid puts them back the other way
+round.** Stacked on a phone the booking route then comes first — short, and the page's primary
+action — instead of sitting under a long form where nobody reaches it. Same trick the
+homepage's section 5 uses. **One consequence, accepted:** on desktop, keyboard focus reaches
+the booking button and the email address before the form fields, so tab order runs right then
+left. Both orders are meaningful and the primary action being reachable first is defensible,
+but it is a real trade and not an oversight.
+
+**The email address sits in the green half**, not beneath the submit button where v2.0 of the
+brief puts it. It is the same address doing the same job and there is exactly one instance in
+the section; the design gives it a labelled block there. **The form's error state still names
+it separately**, which covers the "fallback if the form fails" case the brief's placement was
+protecting.
 
 **`/contact` is in the nav bar now**, last, after About — added on Fredrick's instruction.
 Every other route into the site was a booking button, so a reader who wanted to write rather

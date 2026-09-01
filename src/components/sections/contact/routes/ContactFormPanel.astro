@@ -61,10 +61,9 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
 ---
 
 <div class="form-panel">
-  <p class="form-panel__lead">
-    <span class="form-panel__term">Write to us.</span> Read by the founder, and answered
-    the same way.
-  </p>
+  <h2 class="form-panel__heading">Write to us.</h2>
+
+  <p class="form-panel__body">Read by the founder, and answered the same way.</p>
 
   {/*
     `data-netlify` is what makes Netlify detect this form when it parses the built HTML at
@@ -155,18 +154,13 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
       What you send is used to answer you and nothing else. We don&rsquo;t add you to a
       mailing list. See our <a class="form-panel__link" href="/privacy">Privacy Policy</a>.
     </p>
-
-    <p class="form-panel__alt">
-      Or email <a class="form-panel__email" href={`mailto:${LEGAL_EMAIL}`}>{LEGAL_EMAIL}</a>
-      {" "}directly.
-    </p>
   </form>
 
   {/* The success state. Replaces the form in place rather than redirecting. */}
   <div class="form-panel__success" id="contact-success" role="status" hidden>
-    <p class="form-panel__lead">
-      <span class="form-panel__term">Thank you &mdash; that&rsquo;s arrived.</span> A person
-      will reply, usually within one business day.
+    <p class="form-panel__success-title">Thank you &mdash; that&rsquo;s arrived.</p>
+    <p class="form-panel__body">
+      A person will reply, usually within one business day.
     </p>
   </div>
 </div>
@@ -224,8 +218,29 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
     flex-direction: column;
   }
 
-  .form-panel__lead {
-    font-size: var(--ark-body-lg);
+  /* Display heading with a rule under it, matching the green half and the design. A
+   * treatment change only — the words are the brief's. */
+  .form-panel__heading {
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--ark-hairline);
+    font-family: var(--ark-font-display);
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    color: var(--ark-ink);
+  }
+
+  .form-panel__success-title {
+    font-family: var(--ark-font-display);
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    color: var(--ark-ink);
+  }
+
+  .form-panel__body {
+    margin-top: 18px;
+    font-size: var(--ark-body);
     line-height: var(--ark-lh-body);
     color: var(--ark-body-ink);
   }
@@ -236,7 +251,7 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
   }
 
   .form-panel__form {
-    margin-top: 26px;
+    margin-top: 24px;
   }
 
   /* Off-screen rather than display:none. A bot reading the markup still finds and fills
@@ -278,16 +293,24 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
     color: var(--ark-muted);
   }
 
+  /*
+   * Filled and borderless, per the design. The fill IS the affordance — a warm panel on a
+   * white card reads as somewhere to type without a drawn box around it.
+   *
+   * The transparent border is not decoration: it holds the box's size so that the focus
+   * state can colour it without the field growing by 2px and nudging everything below it.
+   * Removing it makes every field jump on focus.
+   */
   .form-panel__input {
     display: block;
     width: 100%;
-    padding: 13px 14px;
+    padding: 14px 15px;
     font-family: var(--ark-font-body);
     font-size: var(--ark-body);
     line-height: 1.5;
     color: var(--ark-ink);
-    background: var(--ark-surface);
-    border: 1px solid var(--ark-hairline);
+    background: var(--ark-stage-warm);
+    border: 1px solid transparent;
     border-radius: var(--ark-radius-sm);
   }
 
@@ -356,8 +379,7 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
     display: none;
   }
 
-  .form-panel__consent,
-  .form-panel__alt {
+  .form-panel__consent {
     margin-top: 16px;
     font-size: var(--ark-small);
     line-height: 1.55;
@@ -384,10 +406,6 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
   }
 
   @media (max-width: 900px) {
-    .form-panel__lead {
-      font-size: var(--ark-body);
-    }
-
     .form-panel__row {
       grid-template-columns: minmax(0, 1fr);
       gap: 18px;
