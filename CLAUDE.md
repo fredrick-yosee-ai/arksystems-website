@@ -1245,7 +1245,7 @@ the same change.
 | # | Section | Component |
 |---|---------|-----------|
 | 1 | Hero | `sections/contact/HeroSection.astro` — **no CTA** |
-| 2 | The two routes | `sections/contact/RoutesSection.astro` |
+| 2 | The two routes | `sections/contact/RoutesSection.astro` + `routes/ContactFormPanel.astro` |
 | 3 | What to expect | `sections/contact/WhatToExpectSection.astro` |
 | 4 | Where we are | `sections/contact/WhereWeAreSection.astro` |
 | 5 | Close | `sections/contact/CloseSection.astro` |
@@ -1321,6 +1321,74 @@ visible 2px olive focus ring on both new links via a real Tab press, and 390 / 7
 with `documentElement.scrollWidth` equal to the viewport at each — at 390 the widest element
 on the page is `<html>` itself. **Every footer link resolves**; the brief's flagged "What
 happens when you book" link does not exist in this build.
+
+### Revised the same day — v2.0 of the brief adds a contact form
+
+Panel two was a paragraph with the email address in it. It is now a form, and the panel's
+heading changed with it — "Email us" no longer described what the panel does. **The address
+is still on the page**, beneath the submit button, as an alternative route and as the
+fallback when sending fails.
+
+**THE FORM WAS ORIGINALLY DECIDED AGAINST AND THAT DECISION WAS REVERSED.** The Website
+document records "no contact form at launch" for three reasons: more build, more spam, and a
+new personal-information collection point the Privacy page would have to describe. The third
+reason did not go away — it was **answered**, by editing `/privacy` in the same release.
+**Never ship this panel without that edit.**
+
+**Netlify Forms, and the choice is load-bearing.** The site is already on Netlify, so this
+adds no third-party service, no new account and **no new row on the provider table** — which
+is why `/privacy` needed three small edits rather than a new section. Google Forms was
+rejected because an embed puts a Google iframe setting cookies on the page *before* consent,
+a second exception to "nothing loads before Accept" alongside Cal.com.
+
+**Honeypot only. NO reCAPTCHA**, even though Netlify offers it in one click: it loads a
+Google script, which would need a Privacy row and would have to sit behind the consent gate
+— **at which point the form breaks for anyone who has not accepted cookies.**
+
+**Three fields and no more.** Every extra field costs submissions. No company, phone, budget,
+dropdown or "how did you hear about us" — if it is worth knowing it is worth asking in the
+reply.
+
+**The submit button is SECONDARY** — transparent, 1px olive border — and the brief calls that
+a design-system rule rather than a preference. The booking button beside it is the page's one
+primary action; two primary-fill buttons side by side ask the reader to choose between them.
+
+**Submitted through `fetch` so the panel is replaced in place.** A thank-you page would need
+building, keeping out of the sitemap, and would put a second `page_view` against one enquiry.
+**Without JavaScript the markup is still a real form and Netlify still receives it** — the
+enhancement is the in-place state, not the submission. **The error state is built, not
+skipped for being rare**: it keeps the form and its values on screen and names the email
+address, because an error state offering no alternative loses the person entirely.
+
+**The supplied design was used for layout only — same call as `/accounting`.** It shows a
+fourth field ("Practice Name"), a message label written for accounting firms specifically,
+different hero copy, and a primary-fill submit button. Each contradicts the brief and **none
+was built.**
+
+**`/contact` is in the nav bar now**, last, after About — added on Fredrick's instruction.
+Every other route into the site was a booking button, so a reader who wanted to write rather
+than book had nowhere in the bar to go.
+
+**`/privacy` changed in three places and one of them is a weakened commitment.** Section 1
+gained the enquiry paragraph, section 5's Netlify row now names form submissions, and
+**section 7's retention line was rewritten**: it said enquiries were kept 24 months after last
+contact and "then they are deleted", and it now says they are kept as business records with
+no deletion schedule. **That is a published promise made weaker**, decided by Fredrick on Aug
+28 2026 after the contradiction was put to him — the brief set the new position while the
+page already published the old one. **What makes it defensible is the sentence beside it**:
+"You can ask us to delete yours at any time, and we will." If that is ever trimmed, the
+retention position stops being defensible and has to change back. The practitioner review is
+still outstanding and **this is the item most likely to come back from it.**
+
+**Verified locally:** three fields with real labels, the honeypot out of the tab order and
+not hittable, tab order name → email → message → send → Privacy Policy → address, the submit
+transparent against the booking button's fill, the error state showing on a forced 404 with
+values preserved and the button re-enabled, the success state replacing the form in place on
+the same URL with focus moved to it, no contrast failures, and 390 / 768 / 1440 with
+`documentElement.scrollWidth` equal to the viewport at each. **`astro preview` returns 200 to
+a POST, so a real submission cannot be tested locally** — it reports success against a server
+that received nothing. That check, the Clarity masking check on the three new fields, and the
+honeypot rejection all need the deployed site.
 
 ## Standing instruction, Aug 25 2026 — no location lines
 

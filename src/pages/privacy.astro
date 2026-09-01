@@ -45,6 +45,41 @@
  *
  *    RE-MEASURE BEFORE EVERY RELEASE. The rule has not changed, only what it measures.
  *
+ * 2b. THE CONTACT FORM, ADDED AUG 28 2026 WITH /contact. A form is a new
+ *    personal-information collection point, and shipping one without this page describing
+ *    it makes the page untrue — the same failure the analytics release existed to prevent.
+ *    THE FORM AND THIS EDIT SHIP IN THE SAME DEPLOY. Three places changed: section 1 gained
+ *    the enquiry paragraph, section 5's Netlify row now names form submissions, and section
+ *    7's retention line was rewritten (see below).
+ *
+ *    NO NEW PROVIDER. Netlify Forms was chosen partly for this: submissions are held by the
+ *    host already on the table, so the provider list did not grow. Google Forms would have
+ *    added a Google iframe setting cookies before consent, and reCAPTCHA would have added a
+ *    Google script that had to sit behind the consent gate — at which point the form breaks
+ *    for anyone who has not accepted. Neither was built.
+ *
+ * 2c. SECTION 7'S RETENTION POSITION WAS WEAKENED, DELIBERATELY, AND IT IS THE ONE THING ON
+ *    THIS PAGE MOST WORTH A SECOND LOOK. It said enquiries were kept for 24 months after
+ *    last contact and "then they are deleted". It now says they are kept as business records
+ *    with no deletion schedule, with deletion on request.
+ *
+ *    That was Fredrick's decision of Aug 28 2026, taken after the contradiction was put to
+ *    him: the build brief set the new position while this page already published the old
+ *    one, and the brief's own wording ("in the same way we keep email correspondence")
+ *    pointed at a 24-month rule when read against what the page actually said. The
+ *    reasoning for the change is that an enquiry is correspondence a person chose to send
+ *    rather than data captured passively, and that a deletion routine nobody performs would
+ *    make the page untrue — which is the failure this whole discipline exists to prevent.
+ *
+ *    WHAT MAKES IT DEFENSIBLE IS THE SENTENCE NEXT TO IT. "You can ask us to delete yours at
+ *    any time, and we will" is what keeps an open-ended retention position honest; the right
+ *    exists under PIPEDA whether or not the page says so, and stating it costs nothing
+ *    operationally because it is only ever exercised on request. IF THAT SENTENCE IS EVER
+ *    TRIMMED, the retention position stops being defensible and has to change back.
+ *
+ *    THIS IS A PUBLISHED COMMITMENT THAT WAS MADE WEAKER. The practitioner review is still
+ *    outstanding, and this is the item most likely to come back from it.
+ *
  * 3. CAL.COM IS NAMED IN SECTION 2, not only in section 1. BaseLayout's own comment
  *    requires it: embed.js loads from app.cal.com on every page view, before anyone
  *    clicks anything, so it is not merely a booking provider — it receives a request from
@@ -141,6 +176,15 @@ const description =
       you select, and anything you enter in the booking notes. This is collected through
       Cal.com, our booking provider, and is used to hold the appointment and prepare for the
       conversation.
+    </p>
+
+    <p>
+      <span class="doc-term">Contact form enquiries.</span> When you write to us through the
+      contact form on our <a href="/contact">Contact page</a>, we receive your name, email
+      address and your message. We use it to answer you and for nothing else. Submissions
+      are received and held by Netlify, which already hosts this website. We keep enquiries
+      as part of our business records, in the same way we keep email correspondence. You can
+      ask us to delete yours at any time.
     </p>
 
     <p>
@@ -288,7 +332,7 @@ const description =
         <tbody>
           <tr>
             <td>Netlify</td>
-            <td>Website hosting and delivery</td>
+            <td>Website hosting and delivery, and contact form submissions</td>
             <td>United States</td>
           </tr>
           <tr>
@@ -372,9 +416,10 @@ const description =
     <h2 id="how-long-we-keep-it">7. How long we keep it</h2>
 
     <p>
-      <span class="doc-term">Enquiries that don&rsquo;t become work.</span> Emails, booking
-      records and prospect notes are kept while there is a live conversation, and for 24
-      months after the last contact. Then they are deleted.
+      <span class="doc-term">Enquiries that don&rsquo;t become work.</span> Emails, contact
+      form submissions, booking records and prospect notes are kept as part of our business
+      records, in the same way we keep email correspondence. We don&rsquo;t run a deletion
+      schedule for them. You can ask us to delete yours at any time, and we will.
     </p>
 
     <p>
