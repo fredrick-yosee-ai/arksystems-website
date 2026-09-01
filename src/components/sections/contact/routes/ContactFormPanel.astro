@@ -50,7 +50,11 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
 ---
 
 <div class="form-panel">
-  <h2 class="form-panel__heading">Start the conversation</h2>
+  {/* Heading and form together, so a successful send replaces BOTH. Leaving "Start the
+      conversation" above a confirmation reads as an instruction to do the thing that has
+      just been done. */}
+  <div class="form-panel__intake" id="contact-intake">
+    <h2 class="form-panel__heading">Start the conversation</h2>
 
   <form
     class="form-panel__form"
@@ -144,10 +148,16 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
       mailing list. See our <a class="form-panel__link" href="/privacy">Privacy Policy</a>.
     </p>
   </form>
+  </div>
 
   <div class="form-panel__success" id="contact-success" role="status" hidden>
+    <span class="form-panel__success-mark" aria-hidden="true">
+      <Icon name="check" size={28} />
+    </span>
+
     <p class="form-panel__success-title">Thank you &mdash; that&rsquo;s arrived.</p>
-    <p class="form-panel__body">
+
+    <p class="form-panel__success-body">
       A person will reply, usually within one business day.
     </p>
   </div>
@@ -182,7 +192,7 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
 
       if (!response.ok) throw new Error(String(response.status));
 
-      form.setAttribute("hidden", "");
+      document.getElementById("contact-intake")?.setAttribute("hidden", "");
       success?.removeAttribute("hidden");
       /* Move focus to the confirmation. Without this a keyboard or screen-reader user is
        * left focused on a button that no longer exists, with nothing announced. */
@@ -209,19 +219,52 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
     color: var(--ark-ink);
   }
 
-  .form-panel__success-title {
-    font-family: var(--ark-font-display);
-    font-size: var(--ark-h3);
-    line-height: var(--ark-lh-h3);
-    letter-spacing: -0.01em;
-    color: var(--ark-ink);
+  /*
+   * The submitted state. It replaces the heading and the form together and centres in the
+   * panel, because a confirmation left-aligned at the top of a tall white column reads as
+   * a fragment of a page that failed to finish loading.
+   *
+   * `min-height` keeps the card from collapsing to the height of three lines of text when
+   * the form goes. Without it the whole section jumps upward the instant someone sends,
+   * which reads as something breaking rather than as something succeeding.
+   */
+  .form-panel__success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 380px;
+    padding: 20px 0;
+    text-align: center;
   }
 
-  .form-panel__body {
+  .form-panel__success-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 62px;
+    height: 62px;
+    margin-bottom: 26px;
+    border-radius: 50%;
+    background: var(--ark-green-soft);
+    color: var(--ark-olive);
+  }
+
+  .form-panel__success-title {
+    font-family: var(--ark-font-display);
+    font-size: 1.75rem;
+    line-height: 1.2;
+    letter-spacing: -0.018em;
+    color: var(--ark-ink);
+    max-width: 22ch;
+  }
+
+  .form-panel__success-body {
     margin-top: 14px;
     font-size: var(--ark-body);
     line-height: var(--ark-lh-body);
     color: var(--ark-body-ink);
+    max-width: 40ch;
   }
 
   .form-panel__term {
@@ -248,8 +291,16 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
     gap: 20px;
   }
 
-  .form-panel__field + .form-panel__field,
-  .form-panel__row + .form-panel__field {
+  /*
+   * THE `>` IS THE WHOLE FIX AND IT MUST STAY. Without it this rule also matched the two
+   * fields sitting side by side inside `.form-panel__row`, because they are adjacent
+   * siblings too — so Practice Name took a 20px top margin and sat 20px lower than Name,
+   * with its label out of line. Measured before the fix: a 20px offset on both the label
+   * and the input. Scoping to direct children of the form means the rule only spaces the
+   * stacked fields it was written for.
+   */
+  .form-panel__form > .form-panel__field + .form-panel__field,
+  .form-panel__form > .form-panel__row + .form-panel__field {
     margin-top: 20px;
   }
 
@@ -366,14 +417,34 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
     display: none;
   }
 
+  /*
+   * NO FOCUS RING ON THE CONFIRMATION. It is focused programmatically so that a keyboard
+   * or screen-reader user is not left on a button that no longer exists — but it is not an
+   * interactive control, and an outline drawn round it looks like a rendering fault rather
+   * than a focus indicator. It shipped that way once and read as a stray box across the
+   * heading above it. `role="status"` is what actually announces the change; the outline
+   * was never doing that job.
+   */
+  .form-panel__success:focus,
   .form-panel__success:focus-visible {
-    outline: 2px solid var(--ark-olive);
-    outline-offset: 4px;
+    outline: none;
+  }
+
+  .form-panel__intake[hidden] {
+    display: none;
   }
 
   @media (max-width: 900px) {
     .form-panel__heading {
       font-size: 1.75rem;
+    }
+
+    .form-panel__success {
+      min-height: 280px;
+    }
+
+    .form-panel__success-title {
+      font-size: 1.5rem;
     }
 
     .form-panel__row {

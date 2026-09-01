@@ -1397,6 +1397,25 @@ is the sentence beside it**: "You can ask us to delete yours at any time, and we
 that is trimmed, the position has to change back. **The practitioner review is still
 outstanding and this is the likeliest thing to come back from it.**
 
+**Two bugs were found on the built page and fixed, both worth knowing:**
+
+- **`.form-panel__field + .form-panel__field` matched INSIDE the paired row.** The two fields
+  sitting side by side are adjacent siblings too, so Practice Name took a 20px top margin and
+  sat 20px below Name with its label out of line. **The `>` in
+  `.form-panel__form > .form-panel__field + .form-panel__field` is the whole fix and must
+  stay** — it restricts the rule to the stacked fields it was written for. Measured after:
+  label offset 0, input offset 0, bottoms level.
+- **The submitted state drew a focus ring around itself.** It is focused programmatically so a
+  keyboard user is not stranded on a button that no longer exists, but it is not an
+  interactive control, and the outline read as a stray box cutting across the heading above
+  it. `role="status"` is what announces the change; the outline was never doing that job.
+
+**The submitted state replaces the heading AND the form**, not the form alone — leaving "Start
+the conversation" above a confirmation reads as an instruction to do the thing just done. It
+centres in the panel behind a check mark, and `min-height: 380px` stops the card collapsing to
+three lines of text the instant someone sends, which would read as something breaking rather
+than something succeeding.
+
 **Verified on the built page:** one `h1`, heading order h1 → "Start the conversation" →
 "Direct Lines", no contrast failures at either threshold, placeholders at 4.64, honeypot out
 of the tab order and not hittable, error state on a forced 404 with the form and values kept
