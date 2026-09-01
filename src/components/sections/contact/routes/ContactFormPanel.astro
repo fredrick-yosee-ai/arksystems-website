@@ -12,9 +12,17 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
  * knowing because each was a brief rule with a reason attached:
  *
  *   1. FOUR FIELDS, NOT THREE. The brief says three and "do not add company", on the
- *      grounds that every additional field costs submissions. "Practice Name" is that
- *      company field. IT IS THE ONE FIELD NOT MARKED REQUIRED, which is the cheapest way
- *      to keep the cost down: a visitor with no practice name can skip it and still send.
+ *      grounds that every additional field costs submissions. This is that company field.
+ *      IT IS THE ONE FIELD NOT MARKED REQUIRED, which is the cheapest way to keep the cost
+ *      down: a visitor who does not want to name their business can skip it and still send.
+ *
+ *      LABELLED "Business name", NOT the design's "Practice Name" — Fredrick's instruction
+ *      of Aug 28 2026. A practice is a law or accounting firm, and this is the general
+ *      contact page; the rest of the site says "your business" throughout, so the field now
+ *      matches how every other page speaks. The placeholder moved with it, from "Acme Law
+ *      Firm" to "Acme Inc.", because a firm-specific example under a general label is the
+ *      same mismatch one line further down. `autocomplete="organization"` is unchanged and
+ *      is correct for either wording.
  *   2. THE MESSAGE LABEL NAMES A FIRM. "…in your firm right now?" is written for a
  *      practice, and /contact is the general contact page — the site's stated audience is
  *      businesses at roughly $500k–$5M revenue, most of which are not firms. A reader who
@@ -91,14 +99,14 @@ import { LEGAL_EMAIL } from "../../../../lib/legal";
       </div>
 
       <div class="form-panel__field">
-        <label class="form-panel__label" for="contact-practice">Practice Name</label>
+        <label class="form-panel__label" for="contact-business">Business name</label>
         {/* Deliberately not required — see note 1 in the header. */}
         <input
           class="form-panel__input"
-          id="contact-practice"
-          name="practice"
+          id="contact-business"
+          name="business"
           type="text"
-          placeholder="Acme Law Firm"
+          placeholder="Acme Inc."
           autocomplete="organization"
         />
       </div>

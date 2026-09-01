@@ -1356,9 +1356,12 @@ the site's own buttons are called.
 
 **Three brief rules were overridden on instruction, and each had a reason attached:**
 
-1. **Four fields, not three.** The brief says three and "do not add company"; "Practice Name"
-   is that field. **It is the one field not marked required**, which is the cheapest way to
-   keep the submission cost down.
+1. **Four fields, not three.** The brief says three and "do not add company"; this is that
+   field. **It is the one field not marked required**, which is the cheapest way to keep the
+   submission cost down. **Labelled "Business name", not the design's "Practice Name"** — a
+   practice is a law or accounting firm and this is the general contact page, so the field
+   now matches the "your business" language the rest of the site uses. The placeholder moved
+   with it, "Acme Law Firm" → "Acme Inc.".
 2. **The message label names a firm** — "…in your firm right now?". `/contact` is the general
    contact page and the site's audience is businesses at roughly $500k–$5M, most of which are
    not firms. A reader who is not a firm has to translate the question before answering.
