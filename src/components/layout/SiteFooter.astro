@@ -1,7 +1,6 @@
 ---
 import {
   SITE,
-  BOOKING_URL,
   FOOTER_EXPLORE,
   FOOTER_LEGAL,
   INDUSTRY_LINKS,
@@ -85,11 +84,18 @@ const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
         <ul>
           <li>
             {/*
-              "Contact" points at the booking link. Every mailto: on the old site had to
-              go, and the page has exactly one action, so this is the coherent
-              destination rather than a second, weaker one.
+              REPOINTED Aug 28 2026, when /contact was built. This pointed at BOOKING_URL,
+              which meant two footer entries — this and the booking button — resolved to
+              the same destination, and a reader looking for a way to write to us was sent
+              to a calendar instead. That is the bug /contact exists to fix.
             */}
-            <a href={BOOKING_URL} class="footer__link">Contact</a>
+            <a
+              href="/contact"
+              class="footer__link"
+              aria-current={"/contact" === path ? "page" : undefined}
+            >
+              Contact
+            </a>
           </li>
           {/* LinkedIn is in the spec but no URL has been supplied. Add it here. */}
         </ul>

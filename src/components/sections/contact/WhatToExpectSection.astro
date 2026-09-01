@@ -1,0 +1,130 @@
+---
+/*
+ * Section 3 — what happens after you write. Copy verbatim from the approved build brief.
+ *
+ * THE THIRD BLOCK IS CASL WORK, NOT DECORATION, and the brief says so in as many words.
+ * It is the visible statement that emailing ArkSystems does not become implied consent to
+ * be marketed at. Canada's Anti-Spam Legislation treats an enquiry as the start of a
+ * business relationship, and this is the page that says plainly what we do NOT then do
+ * with the address. DO NOT CUT IT FOR LENGTH, and the Privacy link must resolve — it
+ * points at /privacy, which is live.
+ *
+ * "USUALLY WITHIN ONE BUSINESS DAY" IS THE RESOLVED WORDING, not a hedge left in by
+ * accident. The approved copy carried an open choice between a hard commitment and this;
+ * it was resolved on the hedged version because a hard one is a promise broken by a
+ * single bad week, and the standing rule is to make no claim that needs a disclaimer to
+ * be true. "Usually" is true every day of the year. Do not tighten it to "within one
+ * business day".
+ *
+ * NO CTA. The section removes a reason not to write; asking for a booking in the middle
+ * of it would undercut the paragraph directly above that promises no unrequested sales
+ * follow-up.
+ */
+---
+
+<section class="section section--surface expect">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">What happens after you write.</h2>
+    </div>
+
+    <ul class="expect__list">
+      <li class="expect__item">
+        <p class="expect__body">
+          <span class="expect__term">A person replies.</span> Usually within one business
+          day. Not an automated acknowledgement, and not a sequence.
+        </p>
+      </li>
+
+      <li class="expect__item">
+        <p class="expect__body">
+          <span class="expect__term">No sales follow-up you didn&rsquo;t ask for.</span> We
+          answer what you asked. If a call makes sense, we&rsquo;ll suggest one once. If you
+          don&rsquo;t want one, that&rsquo;s the end of it.
+        </p>
+      </li>
+
+      <li class="expect__item">
+        <p class="expect__body">
+          <span class="expect__term">Your details stay here.</span> What you send is used to
+          answer you and nothing else. We don&rsquo;t sell, rent or share contact details,
+          and we don&rsquo;t add you to a mailing list because you emailed us. See the{" "}
+          <a class="expect__link" href="/privacy">Privacy page</a>.
+        </p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .expect__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ark-grid-gutter);
+    margin-top: 52px;
+  }
+
+  /*
+   * Terracotta on the top edge, which is the site's card rule. These are rules of
+   * engagement rather than features, and they take the same treatment as the numbered
+   * blocks elsewhere: a drawn line and text, no icons.
+   *
+   * NO ICONS HERE, deliberately. Two of these three are promises about what we will NOT
+   * do, and an icon against "no sales follow-up" has to illustrate a negative — which
+   * reads either as a shrug or as the thing being denied. Same call as /about's section 5.
+   */
+  .expect__item {
+    padding-top: 24px;
+    border-top: 3px solid var(--ark-terracotta);
+  }
+
+  .expect__body {
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .expect__term {
+    display: block;
+    margin-bottom: 8px;
+    font-family: var(--ark-font-display);
+    font-size: var(--ark-h3);
+    line-height: var(--ark-lh-h3);
+    letter-spacing: -0.01em;
+    font-weight: 700;
+    color: var(--ark-ink);
+  }
+
+  .expect__link {
+    color: var(--ark-olive);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  .expect__link:focus-visible {
+    outline: 2px solid var(--ark-olive);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /*
+   * Rows on a phone, not cards, and the terracotta rule moves from the top edge to the
+   * left. Three stacked cards each with a full-width rule above it reads as three
+   * unrelated sections; one vertical line down the left of all three reads as one set.
+   * Same treatment as the homepage's section 3.
+   */
+  @media (max-width: 900px) {
+    .expect__list {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 22px;
+      margin-top: 34px;
+    }
+
+    .expect__item {
+      padding-top: 0;
+      padding-left: 18px;
+      border-top: 0;
+      border-left: 3px solid var(--ark-terracotta);
+    }
+  }
+</style>

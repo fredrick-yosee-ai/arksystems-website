@@ -1,0 +1,153 @@
+---
+/*
+ * Section 1 — the hero. Copy verbatim from the approved build brief.
+ *
+ * NO CTA HERE, and that is not the /about reasoning repeated. The brief puts the page's
+ * two buttons in sections 2 and 5, and section 2 begins immediately below this one. A
+ * button here would sit roughly 200px above an identical button, which reads as
+ * insistence rather than as an offer — and section 2's whole job is to present the two
+ * routes side by side, which only works if neither has been pre-empted.
+ *
+ * NO ILLUSTRATION. Same treatment as /about's hero: the head carries the band on its own,
+ * heading left and subhead right, both running to the container edges. A left-aligned
+ * head in a 1240px container leaves a third of the band empty, and empty space on a
+ * full-width band reads as something failing to load rather than as air.
+ *
+ * THE SUBHEAD IS ONE SENTENCE OF TWO CLAUSES and it is long. It is set as written — it
+ * is the page's whole argument in miniature (call is fastest, email if you would rather)
+ * and splitting it would turn a choice into two instructions.
+ */
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="hero__head">
+      <p class="eyebrow hero__eyebrow">Contact</p>
+
+      <h1 class="hero__title">Two ways to reach us.</h1>
+
+      <p class="hero__subhead">
+        If you want to discuss whether AI is worth using somewhere in your business, book
+        the call &mdash; twenty minutes, no cost, and it&rsquo;s the fastest route to a
+        useful answer. If you&rsquo;d rather write first, the email address below reaches
+        us directly.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* White. The ladder for this page runs white → cream → surface → warm → olive: five
+   * sections, no two neighbours sharing a colour. */
+  .hero {
+    background: var(--ark-white);
+    /* 96/108, matching /about rather than the three illustrated heroes' 60/76. This one
+     * is a headline and a paragraph with no artwork to give it height, and at the shared
+     * padding it would be the shortest section on the page. The space is the presence. */
+    padding-block: 96px 108px;
+  }
+
+  .hero__eyebrow {
+    display: block;
+    margin-bottom: 22px;
+  }
+
+  /* The measure sits on the element carrying the font-size, never on a wrapper — `ch`
+   * resolves against the element's own font-size, so on a wrapper it counts 16px
+   * characters and cramps a display heading to a third of its width.
+   *
+   * 18ch, not /about's 17: "Two ways to reach us." is four short words and wants to break
+   * once, after "ways", rather than three times. */
+  .hero__title {
+    font-size: var(--ark-h1);
+    line-height: var(--ark-lh-h1);
+    letter-spacing: -0.03em;
+    max-width: 18ch;
+  }
+
+  .hero__subhead {
+    margin-top: 24px;
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+    max-width: 62ch;
+  }
+
+  /*
+   * Two columns: heading left, subhead right, ending on the same line. The query is the
+   * exact complement of the centring rule in base.css — a portrait tablet centres its
+   * heading and must not also be holding two columns.
+   *
+   * The subhead sits in row 2 ONLY, beside the headline and never beside the eyebrow.
+   * Spanning both rows anchors it to the eyebrow instead, which starts the supporting
+   * text above the thing it supports. `align-self: end` lands its last line on the
+   * headline's last line; the space that remains is at the TOP of the right column,
+   * which reads as a deliberate stagger rather than as a column that ran out.
+   *
+   * The terracotta rule is not decoration — without it the right column starts in
+   * mid-air, and it lands flush with the eyebrow's baseline, which is what ties the two
+   * columns together. Full reasoning is in /about's hero, where it was worked out.
+   */
+  @media (min-width: 901px) and (orientation: landscape) {
+    .hero__head {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      column-gap: 64px;
+    }
+
+    .hero__eyebrow {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .hero__title {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .hero__subhead {
+      grid-column: 2;
+      grid-row: 2;
+      align-self: end;
+      margin-top: 0;
+      padding-top: 26px;
+      border-top: 3px solid var(--ark-terracotta);
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      padding-block: 52px 60px;
+    }
+
+    .hero__eyebrow {
+      margin-bottom: 16px;
+    }
+
+    .hero__subhead {
+      margin-top: 18px;
+      max-width: 44ch;
+    }
+  }
+
+  /* Phone and any portrait screen: the heading BLOCK centres, the text inside it does
+   * not. Centred prose is harder to read, which matters more than usual under the
+   * plain-language rule — but a left-flush block under a centred headline reads as a
+   * misalignment, so the box centres even though its text does not.
+   *
+   * The auto margin belongs in the SAME query that centres the headline, so the two can
+   * never disagree. In a `(max-width: 900px)` block a 1024-wide portrait tablet would
+   * centre the headline and leave the subhead flush left beneath it. */
+  @media (max-width: 900px), (orientation: portrait) {
+    .hero__title,
+    .hero__eyebrow {
+      text-align: center;
+      margin-inline: auto;
+    }
+
+    .hero__subhead {
+      margin-inline: auto;
+    }
+  }
+</style>

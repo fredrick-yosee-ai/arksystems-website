@@ -1,0 +1,133 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../consts";
+import { LEGAL_EMAIL } from "../lib/legal";
+
+import HeroSection from "../components/sections/contact/HeroSection.astro";
+import RoutesSection from "../components/sections/contact/RoutesSection.astro";
+import WhatToExpectSection from "../components/sections/contact/WhatToExpectSection.astro";
+import WhereWeAreSection from "../components/sections/contact/WhereWeAreSection.astro";
+import CloseSection from "../components/sections/contact/CloseSection.astro";
+
+/*
+ * /contact — built Aug 28 2026 against the approved build brief. The route did not exist;
+ * the footer's "Contact" link pointed at the booking URL, which meant two footer entries
+ * resolved to the same destination. That is the bug this page exists to fix, and the
+ * footer was repointed in the same change.
+ *
+ * FIVE SECTIONS, in this order:
+ *
+ *   1  Hero                 Two ways to reach us. No CTA — section 2 is immediately below
+ *   2  The two routes       Booking panel with a button, email panel with a link
+ *   3  What to expect       Three blocks. The third is CASL work, not decoration
+ *   4  Where we are         The page's location paragraph. A scoped exception — see below
+ *   5  Close                Argues for the email, carries the second button
+ *
+ * Bands run white → cream → surface → warm → olive: five sections, no two neighbours
+ * sharing a colour.
+ *
+ * BUILT ON THE SHARED LAYOUT, which the brief calls the thing most likely to go wrong. A
+ * standalone page would ship without the consent gate, without the cookie banner, without
+ * the footer Cookie settings link and without the analytics installed on Aug 27. Going
+ * through BaseLayout is what makes all of that automatic rather than remembered.
+ *
+ * TWO CTAs, `contact-hero` and `contact-closing`, both added to CtaLocation in consts.ts
+ * and both pointing at BOOKING_URL. They fire the same `cta_click` event every other
+ * button on the site fires, with the position as the parameter — no new event name, which
+ * the brief asks for explicitly. `contact-hero` is the button in section 2: the brief
+ * names this page's two CTA positions as hero and close, and it is the topmost one.
+ *
+ * THREE THINGS THE BRIEF FORBIDS AND THIS PAGE DOES NOT HAVE, listed so a later edit does
+ * not helpfully add one: no contact form, no phone number, no street or mailing address.
+ * The form is the important one — it would be more build, more spam, and a new
+ * personal-information collection point that /privacy would then have to describe. The
+ * absence of a form is also what currently keeps session recording cheap to justify, per
+ * the analytics brief's standing note.
+ *
+ * TWO STANDING RULES ARE BENT HERE, both on Fredrick's decision of Aug 28 2026, taken
+ * after the conflicts were put to him:
+ *
+ *   1. THE mailto:. No other page on the site has one — the three legal pages print the
+ *      same address as plain text. Scoped to section 2 and NOT reversed for those pages.
+ *   2. THE LOCATION PARAGRAPH in section 4, which restores a sentence deleted from
+ *      /about on Aug 25. Scoped to this page. The full reasoning and the list of places
+ *      that must NOT be restored alongside it is in that component's header.
+ *
+ * NO SITEMAP CHANGE WAS NEEDED. @astrojs/sitemap includes every page by default and the
+ * filter in astro.config.mjs only excludes the three legal drafts, so /contact was picked
+ * up automatically. Verified in the built sitemap rather than assumed.
+ */
+
+const contactSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  name: "Contact ArkSystems",
+  url: `${SITE.url}/contact`,
+  description:
+    "Reach ArkSystems by email, or book a free 20-minute call. Based in Metro Vancouver, working remotely with businesses across Canada.",
+};
+
+/*
+ * The Organization node, carrying the ContactPoint the brief asks for. Per-page
+ * Organization nodes describe one entity rather than competing with each other — the
+ * homepage and /about both emit one already.
+ *
+ * NO `address` AND NO LocalBusiness. Both need a real postal address, which the brief
+ * rules out publishing anywhere. Emitting a made-up one in markup would be a false claim
+ * in the least visible place on the page, which is the worst place for one.
+ *
+ * `sameAs` is still absent. The copy files specify LinkedIn; the URL is not in the repo,
+ * and a guessed profile URL is a claim about identity rather than a missing nicety.
+ */
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE.name,
+  url: SITE.url,
+  description:
+    "AI consulting firm. We establish where AI produces a return in a business, quantify it, and build it. Assessment first, business case second, build only if the case holds.",
+  areaServed: {
+    "@type": "AdministrativeArea",
+    name: "Canada",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "Customer enquiries",
+    email: LEGAL_EMAIL,
+    areaServed: "CA",
+    availableLanguage: "English",
+  },
+};
+---
+
+{/*
+  Title and meta description are the approved strings from the build brief, used as
+  written. Both name Metro Vancouver, which is the same call made for the other four
+  pages: a title tag and a meta description are search-targeting strings rather than
+  sentences on a page. On this page the visible copy names the location too, which is the
+  scoped exception recorded above — everywhere else on the site, only the metas do.
+*/}
+<BaseLayout
+  title="Contact ArkSystems"
+  titleOverride="Contact ArkSystems | Metro Vancouver"
+  description="Reach ArkSystems by email, or book a free 20-minute call. Based in Metro Vancouver, working remotely with businesses across Canada."
+>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(contactSchema)}
+    is:inline
+  />
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(organizationSchema)}
+    is:inline
+  />
+
+  <HeroSection />
+  <RoutesSection />
+  <WhatToExpectSection />
+  <WhereWeAreSection />
+  <CloseSection />
+</BaseLayout>

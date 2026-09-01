@@ -1,0 +1,161 @@
+---
+import BookingButton from "../../common/BookingButton.astro";
+import { LEGAL_EMAIL } from "../../../lib/legal";
+
+/*
+ * Section 2 — the two routes. Copy verbatim from the approved build brief.
+ *
+ * TWO PANELS, AND THEY ARE DELIBERATELY NOT EQUAL. The booking panel carries a button;
+ * the email panel carries a link. The brief is explicit that the address must not read as
+ * a second competing action — one primary call to action, repeated, is the standing rule
+ * for every page on this site. Two buttons here would make the page ask a question it
+ * does not want to ask, which is "which of these do you prefer" rather than "book, or
+ * write if you would rather".
+ *
+ * They are still the same width and the same card, because the page's h1 promises TWO
+ * ways. Demoting the email panel visually would contradict the headline.
+ *
+ * THE mailto: IS A DELIBERATE EXCEPTION TO A STANDING RULE, taken on Fredrick's decision
+ * of Aug 28 2026 when this page was planned. No mailto: exists anywhere else on the site
+ * — /privacy, /terms and /data-handling all render the same address as plain text, and
+ * that rule came from the old site, whose mailto: links were broken. It is NOT reversed
+ * for those three pages; they stay as they are. It is scoped to this page, where being
+ * reachable is the entire job.
+ *
+ * THE ADDRESS IS ITS OWN LINK TEXT, and that is what satisfies the brief's requirement to
+ * render it as visible text as well as a link. A mailto: fails silently for anyone on
+ * webmail or a phone with no mail app configured — they click, nothing happens, and they
+ * leave. Because the visible text IS the address, that visitor can read it, select it and
+ * copy it. Never replace it with "Email us" as the link text: that is the exact failure
+ * the brief is guarding against.
+ *
+ * The address comes from LEGAL_EMAIL so the site holds it once. It is the same address
+ * the three legal pages print, and two copies of it is how one of them silently goes
+ * stale. The constant lives in lib/legal.ts because that is where it was first needed,
+ * not because it is legal-only.
+ */
+---
+
+<section class="section section--cream routes">
+  <div class="container routes__grid">
+    <div class="routes__panel">
+      <p class="routes__lead">
+        <span class="routes__term">Book a free 20-minute call.</span> The quickest way to
+        establish whether there&rsquo;s anything here worth building. Bring the process
+        costing you the most. We&rsquo;ll tell you whether AI solves it, and if it
+        doesn&rsquo;t, we&rsquo;ll say that.
+      </p>
+
+      <div class="routes__cta">
+        {/* Labelled `contact-hero` because the brief names this page's two CTA positions
+            as hero and close. It is the first and topmost button on the page; section 1
+            carries none, for the reason recorded there. */}
+        <BookingButton location="contact-hero">
+          Book your free 20-minute call
+        </BookingButton>
+      </div>
+    </div>
+
+    <div class="routes__panel">
+      <p class="routes__lead">
+        <span class="routes__term">Email us.</span>{" "}
+        <a class="routes__email" href={`mailto:${LEGAL_EMAIL}`}>{LEGAL_EMAIL}</a> &mdash;
+        written to directly, read by the founder, and answered the same way.
+      </p>
+
+      <p class="routes__note">
+        Three lines is enough: what your business does, which process is costing you, and
+        what you&rsquo;ve already tried. That&rsquo;s the difference between a reply that
+        helps and a reply asking what you meant.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .routes__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ark-grid-gutter);
+    align-items: stretch;
+  }
+
+  .routes__panel {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    background: var(--ark-white);
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius);
+    box-shadow: var(--ark-raised);
+  }
+
+  .routes__lead {
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  /* The run-in bold that opens each panel. Display ink as well as weight — at 20px, bold
+   * alone does not separate enough from body ink to read as a heading. */
+  .routes__term {
+    color: var(--ark-ink);
+    font-weight: 700;
+  }
+
+  /*
+   * The address, set as a link. Olive, underlined, and NOT given the button's fill —
+   * see the note at the top of this file.
+   *
+   * `overflow-wrap: anywhere` because an email address is one unbroken token: at 390 it
+   * would otherwise push the card wider than the viewport, and a wide child widens
+   * documentElement.scrollWidth, which iOS Safari answers by widening the layout viewport
+   * and scrolling the whole page sideways into blank space.
+   */
+  .routes__email {
+    color: var(--ark-olive);
+    font-weight: 600;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+
+  .routes__note {
+    margin-top: 20px;
+    font-size: var(--ark-body);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  /* `margin-top: auto` pushes the button to the foot of its card so that the two panels'
+   * bottom edges agree whatever the copy does. Without it the button floats mid-card
+   * beside a taller neighbour. */
+  .routes__cta {
+    margin-top: auto;
+    padding-top: 32px;
+  }
+
+  .routes__panel :focus-visible {
+    outline: 2px solid var(--ark-olive);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  @media (max-width: 900px) {
+    .routes__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 20px;
+    }
+
+    .routes__panel {
+      padding: 28px 22px;
+    }
+
+    .routes__lead {
+      font-size: var(--ark-body);
+    }
+
+    .routes__cta {
+      padding-top: 26px;
+    }
+  }
+</style>

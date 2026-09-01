@@ -1232,6 +1232,96 @@ the one page that must not. Heat maps, also nine months, were added at the same 
 brief's own summary of Clarity retention was the source of the error** — worth remembering
 that a build brief is a summary, and the provider's documentation is the record.
 
+## Built Aug 28 2026 — /contact
+
+Built from the approved build brief. **On a branch, not pushed.** The route did not
+exist and the footer's "Contact" link pointed at `BOOKING_URL`, so two footer entries
+resolved to the same calendar — a reader looking for a way to *write* was sent to a
+booking page. That is the bug this page exists to fix, and the footer was repointed in
+the same change.
+
+**Five sections, in `src/pages/contact.astro`:**
+
+| # | Section | Component |
+|---|---------|-----------|
+| 1 | Hero | `sections/contact/HeroSection.astro` — **no CTA** |
+| 2 | The two routes | `sections/contact/RoutesSection.astro` |
+| 3 | What to expect | `sections/contact/WhatToExpectSection.astro` |
+| 4 | Where we are | `sections/contact/WhereWeAreSection.astro` |
+| 5 | Close | `sections/contact/CloseSection.astro` |
+
+Bands run white → cream → surface → warm → olive. The hero runs 96/108 like `/about`'s,
+not the illustrated heroes' 60/76 — it is a headline and a paragraph with no artwork, and
+at the shared padding it would be the shortest section on the page.
+
+**TWO STANDING RULES ARE BENT HERE, both on Fredrick's decision of Aug 28 2026, taken
+after the conflicts were put to him with the repo evidence. Both are SCOPED TO THIS PAGE
+and neither is a general reversal:**
+
+- **The `mailto:`.** No other page has one; `/privacy`, `/terms` and `/data-handling` all
+  print the same address as plain text, and that rule came from the old site whose
+  mailto: links were broken. **Those three pages are unchanged.** The address is its own
+  link text, which is what satisfies the brief's "visible text as well as a link" — a
+  mailto: fails silently on webmail or a phone with no mail app, and because the visible
+  text *is* the address, that visitor can still read and copy it. **Never replace the link
+  text with "Email us"** — that is the exact failure the brief guards against.
+- **The location paragraph in section 4.** It restores, almost word for word, the sentence
+  deleted from `/about`'s section 6 on Aug 25 ("…on site within the Lower Mainland where
+  the work benefits from it"). The reasoning: a contact page is the one page where "where
+  are you?" is the reader's actual question, and the on-site Lower Mainland offer had been
+  published nowhere since Aug 25. **The homepage close, the founder strip, `/accounting`'s
+  hero trust line and close, and `/about`'s sections 1, 3 and 6 all stay as they are — do
+  not restore any of them on the strength of this one.** `/about` no longer says where the
+  business is and this page does: a known asymmetry, not an oversight.
+
+**Still forbidden, and the brief makes all three page rules:** no contact form, no phone
+number, no street or mailing address. The form is the one most likely to be helpfully
+added — it would be more build, more spam, and a new personal-information collection point
+`/privacy` would then have to describe. Its absence is also what keeps session recording
+cheap to justify under the analytics brief's standing note. **No `LocalBusiness` schema
+either**, for the same reason as everywhere else: it needs a real postal address and real
+hours.
+
+**Two CTAs, `contact-hero` and `contact-closing`.** Both fire the same `cta_click` event
+with the position as a parameter — no new event name, which the brief asks for explicitly.
+**`contact-hero` is the button in SECTION 2, not section 1**: the hero carries none because
+section 2 begins immediately below it, and two identical buttons 200px apart read as
+insistence rather than as an offer. **The email address carries no CTA label at all** — it
+is a link rather than a button so it does not read as a second competing action, and
+counting it would undo that distinction in the reporting as well as on the page.
+
+**The two panels are the same width and the same card, and the difference is only the
+control.** The h1 promises *two* ways; demoting the email panel visually would contradict
+the headline. `margin-top: auto` on the button wrapper is what keeps the two bottom edges
+level whatever the copy does.
+
+**`overflow-wrap: anywhere` on the email address is load-bearing.** An address is one
+unbroken token; at 390 it would otherwise push its card wider than the viewport, and a wide
+child widens `documentElement.scrollWidth`, which iOS Safari answers by widening the layout
+viewport and scrolling the whole page sideways.
+
+**Section 3's third block is CASL work, not decoration** — the visible statement that
+emailing us does not become implied consent to be marketed at. **Do not cut it for length**,
+and its `/privacy` link must resolve. **"Usually within one business day" is the resolved
+wording**, not a hedge left in by accident: a hard commitment is a promise broken by one bad
+week, and the standing rule is to make no claim needing a disclaimer. Do not tighten it.
+
+**Section 3's blocks carry no icons.** Two of the three are promises about what we will
+*not* do, and an icon against "no sales follow-up" has to illustrate a negative — which
+reads as a shrug or as the thing being denied. Same call as `/about`'s section 5.
+
+**No sitemap change was needed.** `@astrojs/sitemap` includes every page by default and the
+filter only excludes the three legal drafts, so `/contact` appeared automatically. Verified
+in the built sitemap rather than assumed.
+
+**Verified on the built output:** one `h1`, correct heading order, hero `bottomDelta` 0 at
+1280, panels equal height, email renders as `mailto:hello@arksystems.ca` with the address as
+its own visible text, `/privacy` link resolves, no contrast failures at either threshold,
+visible 2px olive focus ring on both new links via a real Tab press, and 390 / 768 / 1440
+with `documentElement.scrollWidth` equal to the viewport at each — at 390 the widest element
+on the page is `<html>` itself. **Every footer link resolves**; the brief's flagged "What
+happens when you book" link does not exist in this build.
+
 ## Standing instruction, Aug 25 2026 — no location lines
 
 Fredrick's instruction: the line "Based in Metro Vancouver, working remotely across
