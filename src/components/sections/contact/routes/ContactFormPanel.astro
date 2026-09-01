@@ -1,0 +1,400 @@
+---
+import { LEGAL_EMAIL } from "../../../../lib/legal";
+
+/*
+ * The contact form. Panel two of section 2.
+ *
+ * THE FORM WAS ORIGINALLY DECIDED AGAINST AND THAT DECISION WAS REVERSED. The Website
+ * document, section 9, records "no contact form at launch" with reasons — more build,
+ * more spam, and a new personal-information collection point the Privacy page would have
+ * to describe. Fredrick reversed it on 1 Sept 2026. The third reason did not go away: it
+ * was answered, by editing /privacy in the same release. NEVER SHIP THIS PANEL WITHOUT
+ * THAT EDIT — a form the Privacy page does not describe makes that page untrue, which is
+ * the exact failure the analytics release existed to prevent.
+ *
+ * NETLIFY FORMS, and the choice is load-bearing rather than convenient. The site is
+ * already on Netlify, so this adds no third-party service, no new account, no new row on
+ * the Privacy provider table and no server. Google Forms was rejected for two reasons
+ * worth keeping: embedding it puts a Google iframe setting cookies on the page BEFORE
+ * consent — a second exception to the "nothing loads before Accept" promise, alongside
+ * Cal.com — and it cannot be styled to the design system on the one page that exists to
+ * establish credibility.
+ *
+ * HONEYPOT ONLY. NO reCAPTCHA, even though Netlify offers it in one click. reCAPTCHA
+ * loads a Google script on page load: a new third party, a new row on /privacy, and a
+ * script that would have to sit behind the consent gate — at which point THE FORM BREAKS
+ * for anyone who has not accepted cookies. The honeypot costs nothing and creates none of
+ * that.
+ *
+ * THREE FIELDS, AND NO MORE. Every additional field costs submissions. No company field,
+ * no phone, no budget, no dropdown, no "how did you hear about us" — if it is worth
+ * knowing it is worth asking in the reply. The supplied design shows a fourth field,
+ * "Practice Name", and a message label written for accounting firms specifically; neither
+ * is built. The design was used for layout, the brief is the copy.
+ *
+ * REAL <label> ELEMENTS, not placeholder-only fields. A placeholder vanishes the moment
+ * someone types, so it cannot carry the question, and it is unreliable for screen
+ * readers. Placeholders here are examples only and every one of them is expendable.
+ *
+ * THE SUBMIT BUTTON IS SECONDARY — transparent with a 1px olive border — and the brief
+ * calls that a design-system rule rather than a preference. The page's primary action is
+ * the booking button in the panel beside this one. Two primary-fill buttons side by side
+ * ask the reader to choose between them, which is the one thing a page with a single
+ * primary action must not do. The supplied design fills this button; do not follow it.
+ *
+ * SUBMITTED BY fetch SO THE PANEL CAN BE REPLACED IN PLACE. A redirect to a thank-you
+ * page would mean a page to build, a page to keep out of the sitemap, and a second
+ * page_view in the analytics for one enquiry. WITHOUT JAVASCRIPT the form still posts
+ * normally and Netlify still receives it — the markup is a real form with a real action,
+ * so the enhancement is the in-place state, not the submission itself.
+ *
+ * THE ERROR STATE IS BUILT, not skipped for being rare. It keeps the form on screen so a
+ * retry costs nothing, and it names the email address — an error state that offers no
+ * alternative loses the person entirely.
+ *
+ * SESSION RECORDING: these are the first real input fields on the site. Microsoft Clarity
+ * masks inputs in every masking mode and that cannot be switched off, so this should pass
+ * — but the standing rule from the analytics release is that masking is VERIFIED in a
+ * recording before a form ships, not assumed. That check is Fredrick's and it is on the
+ * release list.
+ */
+---
+
+<div class="form-panel">
+  <p class="form-panel__lead">
+    <span class="form-panel__term">Write to us.</span> Read by the founder, and answered
+    the same way.
+  </p>
+
+  {/*
+    `data-netlify` is what makes Netlify detect this form when it parses the built HTML at
+    deploy time. `form-name` as a hidden input is what makes the fetch submission below
+    resolve to the same form — Netlify reads it from the body, not from the element.
+    `data-netlify-honeypot` names the field a bot will fill and a person never sees.
+  */}
+  <form
+    class="form-panel__form"
+    id="contact-form"
+    name="contact"
+    method="POST"
+    data-netlify="true"
+    data-netlify-honeypot="bot-field"
+  >
+    <input type="hidden" name="form-name" value="contact" />
+
+    {/* The honeypot. Hidden from sight and from assistive technology, and never focusable
+        by keyboard — a person must not be able to reach it by accident, because filling
+        it silently discards their message. */}
+    <p class="form-panel__honeypot" aria-hidden="true">
+      <label>
+        Don&rsquo;t fill this in if you&rsquo;re human
+        <input type="text" name="bot-field" tabindex="-1" autocomplete="off" />
+      </label>
+    </p>
+
+    <div class="form-panel__row">
+      <div class="form-panel__field">
+        <label class="form-panel__label" for="contact-name">Your name</label>
+        <input
+          class="form-panel__input"
+          id="contact-name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          required
+        />
+      </div>
+
+      <div class="form-panel__field">
+        <label class="form-panel__label" for="contact-email">Email address</label>
+        <input
+          class="form-panel__input"
+          id="contact-email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="form-panel__field">
+      <label class="form-panel__label" for="contact-message">Your message</label>
+      {/* The approved "three lines is enough" copy, reused as helper text. It sits ABOVE
+          the field and is wired to it with aria-describedby, so a screen reader hears the
+          guidance as part of the field rather than as loose text after it. */}
+      <p class="form-panel__help" id="contact-message-help">
+        Three lines is enough: what your business does, which process is costing you, and
+        what you&rsquo;ve already tried. That&rsquo;s the difference between a reply that
+        helps and a reply asking what you meant.
+      </p>
+      <textarea
+        class="form-panel__input form-panel__textarea"
+        id="contact-message"
+        name="message"
+        rows="5"
+        aria-describedby="contact-message-help"
+        required></textarea>
+    </div>
+
+    {/* Hidden until a send fails. `role="alert"` so it is announced the moment it appears
+        — a visually placed message above a button is invisible to someone who has just
+        pressed that button and cannot see. */}
+    <p class="form-panel__error" id="contact-error" role="alert" hidden>
+      <span class="form-panel__term">That didn&rsquo;t send.</span> Email{" "}
+      <a class="form-panel__email" href={`mailto:${LEGAL_EMAIL}`}>{LEGAL_EMAIL}</a>{" "}
+      directly and it will reach us.
+    </p>
+
+    <button class="form-panel__submit" type="submit">Send your message</button>
+
+    {/* CASL work, at the point of collection. The longer version in section 3 stays —
+        this one exists because a promise three sections below the field it describes is a
+        promise the person submitting never read. */}
+    <p class="form-panel__consent">
+      What you send is used to answer you and nothing else. We don&rsquo;t add you to a
+      mailing list. See our <a class="form-panel__link" href="/privacy">Privacy Policy</a>.
+    </p>
+
+    <p class="form-panel__alt">
+      Or email <a class="form-panel__email" href={`mailto:${LEGAL_EMAIL}`}>{LEGAL_EMAIL}</a>
+      {" "}directly.
+    </p>
+  </form>
+
+  {/* The success state. Replaces the form in place rather than redirecting. */}
+  <div class="form-panel__success" id="contact-success" role="status" hidden>
+    <p class="form-panel__lead">
+      <span class="form-panel__term">Thank you &mdash; that&rsquo;s arrived.</span> A person
+      will reply, usually within one business day.
+    </p>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const success = document.getElementById("contact-success");
+  const error = document.getElementById("contact-error");
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    error?.setAttribute("hidden", "");
+
+    const submit = form.querySelector<HTMLButtonElement>(".form-panel__submit");
+    const original = submit?.textContent ?? "";
+    if (submit) {
+      submit.disabled = true;
+      submit.textContent = "Sending…";
+    }
+
+    try {
+      /*
+       * Netlify accepts the post at any path on the site as long as the body carries
+       * `form-name`. Posting to the page's own URL keeps it same-origin, so nothing here
+       * is a third-party request and none of it is gated by consent.
+       */
+      const response = await fetch(form.getAttribute("action") || window.location.pathname, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString(),
+      });
+
+      if (!response.ok) throw new Error(String(response.status));
+
+      form.setAttribute("hidden", "");
+      success?.removeAttribute("hidden");
+      /* Move focus to the confirmation. Without this a keyboard or screen-reader user is
+       * left focused on a button that no longer exists, with no announcement of what
+       * happened. */
+      success?.setAttribute("tabindex", "-1");
+      (success as HTMLElement | null)?.focus();
+    } catch {
+      error?.removeAttribute("hidden");
+      if (submit) {
+        submit.disabled = false;
+        submit.textContent = original;
+      }
+    }
+  });
+</script>
+
+<style>
+  .form-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-panel__lead {
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+  }
+
+  .form-panel__term {
+    color: var(--ark-ink);
+    font-weight: 700;
+  }
+
+  .form-panel__form {
+    margin-top: 26px;
+  }
+
+  /* Off-screen rather than display:none. A bot reading the markup still finds and fills
+   * it; a person never sees it and cannot tab into it. */
+  .form-panel__honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Name and email share a row above 900px, the message runs full width. Two short
+   * fields stacked waste the panel's width and push the button below the fold. */
+  .form-panel__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .form-panel__field + .form-panel__field,
+  .form-panel__row + .form-panel__field {
+    margin-top: 18px;
+  }
+
+  .form-panel__label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: var(--ark-small);
+    font-weight: 600;
+    color: var(--ark-ink);
+  }
+
+  .form-panel__help {
+    margin-bottom: 10px;
+    font-size: var(--ark-small);
+    line-height: 1.5;
+    color: var(--ark-muted);
+  }
+
+  .form-panel__input {
+    display: block;
+    width: 100%;
+    padding: 13px 14px;
+    font-family: var(--ark-font-body);
+    font-size: var(--ark-body);
+    line-height: 1.5;
+    color: var(--ark-ink);
+    background: var(--ark-surface);
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius-sm);
+  }
+
+  .form-panel__input::placeholder {
+    color: var(--ark-muted-2);
+  }
+
+  .form-panel__textarea {
+    resize: vertical;
+    min-height: 128px;
+  }
+
+  .form-panel__input:focus-visible,
+  .form-panel__submit:focus-visible,
+  .form-panel__link:focus-visible,
+  .form-panel__email:focus-visible {
+    outline: 2px solid var(--ark-olive);
+    outline-offset: 2px;
+  }
+
+  /*
+   * SECONDARY. Transparent fill, 1px olive border — see the note at the top of this file.
+   * The primary-fill button on this page is the booking CTA in the panel beside this one,
+   * and there is exactly one of those.
+   */
+  .form-panel__submit {
+    margin-top: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 26px;
+    font-family: var(--ark-font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ark-olive);
+    background: transparent;
+    border: 1px solid var(--ark-olive);
+    border-radius: var(--ark-radius-sm);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .form-panel__submit:hover:not(:disabled) {
+    background: var(--ark-olive);
+    color: var(--ark-on-dark);
+  }
+
+  .form-panel__submit:disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
+
+  .form-panel__error {
+    margin-top: 20px;
+    padding: 14px 16px;
+    font-size: var(--ark-small);
+    line-height: 1.55;
+    color: var(--ark-body-ink);
+    background: var(--ark-gold-bg);
+    border: 1px solid var(--ark-gold-border);
+    border-radius: var(--ark-radius-sm);
+  }
+
+  .form-panel__error[hidden] {
+    display: none;
+  }
+
+  .form-panel__consent,
+  .form-panel__alt {
+    margin-top: 16px;
+    font-size: var(--ark-small);
+    line-height: 1.55;
+    color: var(--ark-muted);
+  }
+
+  .form-panel__link,
+  .form-panel__email {
+    color: var(--ark-olive);
+    font-weight: 600;
+    text-underline-offset: 3px;
+    /* An email address is one unbroken token; without this it can push the card wider
+     * than the viewport at 390, and a wide child widens documentElement.scrollWidth. */
+    overflow-wrap: anywhere;
+  }
+
+  .form-panel__success[hidden] {
+    display: none;
+  }
+
+  .form-panel__success:focus-visible {
+    outline: 2px solid var(--ark-olive);
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 900px) {
+    .form-panel__lead {
+      font-size: var(--ark-body);
+    }
+
+    .form-panel__row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .form-panel__submit {
+      width: 100%;
+    }
+  }
+</style>

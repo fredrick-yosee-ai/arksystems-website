@@ -165,6 +165,12 @@ export const NAV_LINKS: readonly NavItem[] = [
    * reached them. */
   { label: "The workshop", href: "/workshop" },
   { label: "About", href: "/about" },
+  /* Added Aug 28 2026 with /contact. The brief asks for it and it closes the last gap in
+   * the bar: every other way of reaching us was a booking button, so a reader who wanted
+   * to write rather than book had nowhere in the nav to go. It sits last because it is a
+   * destination rather than part of the argument — the first three are the argument, in
+   * order, and Industries and the workshop are the offers. */
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 export const FOOTER_EXPLORE: readonly NavItem[] = [

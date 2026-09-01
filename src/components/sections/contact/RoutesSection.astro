@@ -1,38 +1,27 @@
 ---
 import BookingButton from "../../common/BookingButton.astro";
-import { LEGAL_EMAIL } from "../../../lib/legal";
+import ContactFormPanel from "./routes/ContactFormPanel.astro";
 
 /*
- * Section 2 — the two routes. Copy verbatim from the approved build brief.
+ * Section 2 — the two routes. Panel one books, panel two writes.
  *
- * TWO PANELS, AND THEY ARE DELIBERATELY NOT EQUAL. The booking panel carries a button;
- * the email panel carries a link. The brief is explicit that the address must not read as
- * a second competing action — one primary call to action, repeated, is the standing rule
- * for every page on this site. Two buttons here would make the page ask a question it
- * does not want to ask, which is "which of these do you prefer" rather than "book, or
- * write if you would rather".
+ * REVISED Aug 28 2026 against v2.0 of the build brief, which adds a contact form. Panel
+ * two was a paragraph with the email address in it; it is now the form, and the panel's
+ * heading changed with it — "Email us" no longer described what the panel does. The
+ * address is still on the page, beneath the submit button, as an alternative route and as
+ * the fallback if the form fails.
+ *
+ * TWO PANELS, AND ONLY ONE PRIMARY BUTTON. The booking button is the page's primary
+ * action in primary fill; the form's submit is secondary, transparent with a 1px olive
+ * border. That is a design-system rule rather than a preference, and it is what stops the
+ * page asking the reader to choose between two equal-looking actions. The supplied design
+ * fills the submit button; it was not followed. Everything about the form is in
+ * routes/ContactFormPanel.astro, including why it exists at all.
  *
  * They are still the same width and the same card, because the page's h1 promises TWO
- * ways. Demoting the email panel visually would contradict the headline.
- *
- * THE mailto: IS A DELIBERATE EXCEPTION TO A STANDING RULE, taken on Fredrick's decision
- * of Aug 28 2026 when this page was planned. No mailto: exists anywhere else on the site
- * — /privacy, /terms and /data-handling all render the same address as plain text, and
- * that rule came from the old site, whose mailto: links were broken. It is NOT reversed
- * for those three pages; they stay as they are. It is scoped to this page, where being
- * reachable is the entire job.
- *
- * THE ADDRESS IS ITS OWN LINK TEXT, and that is what satisfies the brief's requirement to
- * render it as visible text as well as a link. A mailto: fails silently for anyone on
- * webmail or a phone with no mail app configured — they click, nothing happens, and they
- * leave. Because the visible text IS the address, that visitor can read it, select it and
- * copy it. Never replace it with "Email us" as the link text: that is the exact failure
- * the brief is guarding against.
- *
- * The address comes from LEGAL_EMAIL so the site holds it once. It is the same address
- * the three legal pages print, and two copies of it is how one of them silently goes
- * stale. The constant lives in lib/legal.ts because that is where it was first needed,
- * not because it is legal-only.
+ * ways. Demoting the second panel visually would contradict the headline. The panels no
+ * longer share a height — the form is much taller than the booking paragraph, and
+ * stretching the booking panel to match would leave a large empty field below its button.
  */
 ---
 
@@ -57,18 +46,9 @@ import { LEGAL_EMAIL } from "../../../lib/legal";
     </div>
 
     <div class="routes__panel">
-      <p class="routes__lead">
-        <span class="routes__term">Email us.</span>{" "}
-        <a class="routes__email" href={`mailto:${LEGAL_EMAIL}`}>{LEGAL_EMAIL}</a> &mdash;
-        written to directly, read by the founder, and answered the same way.
-      </p>
-
-      <p class="routes__note">
-        Three lines is enough: what your business does, which process is costing you, and
-        what you&rsquo;ve already tried. That&rsquo;s the difference between a reply that
-        helps and a reply asking what you meant.
-      </p>
+      <ContactFormPanel />
     </div>
+
   </div>
 </section>
 
@@ -77,7 +57,7 @@ import { LEGAL_EMAIL } from "../../../lib/legal";
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--ark-grid-gutter);
-    align-items: stretch;
+    align-items: start;
   }
 
   .routes__panel {
@@ -101,29 +81,6 @@ import { LEGAL_EMAIL } from "../../../lib/legal";
   .routes__term {
     color: var(--ark-ink);
     font-weight: 700;
-  }
-
-  /*
-   * The address, set as a link. Olive, underlined, and NOT given the button's fill —
-   * see the note at the top of this file.
-   *
-   * `overflow-wrap: anywhere` because an email address is one unbroken token: at 390 it
-   * would otherwise push the card wider than the viewport, and a wide child widens
-   * documentElement.scrollWidth, which iOS Safari answers by widening the layout viewport
-   * and scrolling the whole page sideways into blank space.
-   */
-  .routes__email {
-    color: var(--ark-olive);
-    font-weight: 600;
-    text-underline-offset: 3px;
-    overflow-wrap: anywhere;
-  }
-
-  .routes__note {
-    margin-top: 20px;
-    font-size: var(--ark-body);
-    line-height: var(--ark-lh-body);
-    color: var(--ark-body-ink);
   }
 
   /* `margin-top: auto` pushes the button to the foot of its card so that the two panels'
