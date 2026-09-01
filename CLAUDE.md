@@ -1322,106 +1322,92 @@ with `documentElement.scrollWidth` equal to the viewport at each — at 390 the 
 on the page is `<html>` itself. **Every footer link resolves**; the brief's flagged "What
 happens when you book" link does not exist in this build.
 
-### Revised the same day — v2.0 of the brief adds a contact form
+### Rebuilt the same day to the supplied design — this is the version that stands
 
-Panel two was a paragraph with the email address in it. It is now a form, and the panel's
-heading changed with it — "Email us" no longer described what the panel does. **The address
-is still on the page**, beneath the submit button, as an alternative route and as the
-fallback when sending fails.
+**The page is now two sections: a hero, and one fused card.** Fredrick's instruction of Aug
+28 2026 was "design the page only with these contents", against a full design. The brief's
+five-section page became the design's two.
 
-**THE FORM WAS ORIGINALLY DECIDED AGAINST AND THAT DECISION WAS REVERSED.** The Website
-document records "no contact form at launch" for three reasons: more build, more spam, and a
-new personal-information collection point the Privacy page would have to describe. The third
-reason did not go away — it was **answered**, by editing `/privacy` in the same release.
-**Never ship this panel without that edit.**
+| # | Section | Component |
+|---|---------|-----------|
+| 1 | Hero | `sections/contact/HeroSection.astro` |
+| 2 | Form + Direct Lines | `sections/contact/ContactSection.astro` + `routes/ContactFormPanel.astro` |
 
-**Netlify Forms, and the choice is load-bearing.** The site is already on Netlify, so this
-adds no third-party service, no new account and **no new row on the provider table** — which
-is why `/privacy` needed three small edits rather than a new section. Google Forms was
-rejected because an embed puts a Google iframe setting cookies on the page *before* consent,
-a second exception to "nothing loads before Accept" alongside Cal.com.
+**Four components were deleted** and are recoverable from git history: `RoutesSection` (built
+twice — two cards, then a fused card with a booking pitch), `WhatToExpectSection`,
+`WhereWeAreSection` and `CloseSection`. **What went with them matters more than the count:**
 
-**Honeypot only. NO reCAPTCHA**, even though Netlify offers it in one click: it loads a
-Google script, which would need a Privacy row and would have to sit behind the consent gate
-— **at which point the form breaks for anyone who has not accepted cookies.**
+- **"What happens after you write" carried the CASL block.** The short version survives as
+  one line under the submit button — **which the design does not show and which was built
+  anyway.** It is now the page's only link to `/privacy` at the point of collection, and
+  dropping it would have been a compliance regression rather than a simplification.
+- **The close carried the second booking CTA and the tagline.** The tagline moved into the
+  Direct Lines panel, so it still appears twice on the page — panel and footer, its
+  established count.
+- **"Where we are" carried the location paragraph.** Direct Lines now carries it, so the
+  scoped exception to the no-location rule still stands.
 
-**Three fields and no more.** Every extra field costs submissions. No company, phone, budget,
-dropdown or "how did you hear about us" — if it is worth knowing it is worth asking in the
-reply.
+**THE PAGE HAS NO BOOKING BUTTON, and that is the largest consequence of the design.** The
+site's stated job is getting a visitor onto a 20-minute call; on every other page a button
+does that. Here the only route to the calendar is the header's "Book 20 minutes", which is on
+every page and stays visible on a phone. **`contact-hero` and `contact-closing` were deleted
+from `CtaLocation`** — nothing renders them, and that list is meant to be the record of what
+the site's own buttons are called.
 
-**The submit button is SECONDARY** — transparent, 1px olive border — and the brief calls that
-a design-system rule rather than a preference. The booking button beside it is the page's one
-primary action; two primary-fill buttons side by side ask the reader to choose between them.
+**Three brief rules were overridden on instruction, and each had a reason attached:**
 
-**Submitted through `fetch` so the panel is replaced in place.** A thank-you page would need
-building, keeping out of the sitemap, and would put a second `page_view` against one enquiry.
-**Without JavaScript the markup is still a real form and Netlify still receives it** — the
-enhancement is the in-place state, not the submission. **The error state is built, not
-skipped for being rare**: it keeps the form and its values on screen and names the email
-address, because an error state offering no alternative loses the person entirely.
+1. **Four fields, not three.** The brief says three and "do not add company"; "Practice Name"
+   is that field. **It is the one field not marked required**, which is the cheapest way to
+   keep the submission cost down.
+2. **The message label names a firm** — "…in your firm right now?". `/contact` is the general
+   contact page and the site's audience is businesses at roughly $500k–$5M, most of which are
+   not firms. A reader who is not a firm has to translate the question before answering.
+   Flagged, built as drawn.
+3. **The submit button is primary fill.** The brief made secondary "a design-system rule", but
+   that rule existed to stop it competing with the booking button beside it. **The booking
+   button is gone, so this is the page's only action and filling it is correct.** The rule was
+   not broken; the thing it protected stopped existing.
 
-**Section 2 is ONE FUSED CARD** — the form on the white left, booking and the email address
-on the stage-green right, both halves inside one radius and one shadow. **It was built as two
-separate cards first and rebuilt on Fredrick's instruction**, and the reason is worth keeping:
-two cards was the site's own idiom rather than anything from the supplied design, and next to
-that design it read as a different page. The fused split IS the design's visual idea — the
-colour change down the middle is what says "two routes to the same place". `overflow: hidden`
-on the card is load-bearing: without it the green half's square corners run past the radius
-and the two halves stop reading as one object.
+**The hero is the one single-column hero on the site**, with the right half left empty. Every
+other one fills the band because a left-aligned head in a 1240px container otherwise reads as
+content failing to load. It survives here **only because the full-width card immediately below
+catches the band.** If that card ever moves, this hero needs the two-column treatment back.
 
-**Taken from the design:** the fused card, the colour split, a display heading with a rule
-under it on each half, filled borderless inputs, the labelled contact block low in the green
-half, and the padding. **The headings are a treatment change, not a copy change** — the brief
-sets both panels as a paragraph opening with a bold run-in, and the design sets that run-in as
-a heading. Every word is the brief's.
+**`overflow: hidden` on the card is load-bearing** — without it the green half's square
+corners run past the radius and the two halves stop reading as one object, which is the whole
+point of the fused treatment. **The transparent 1px border on the inputs is too**: it holds
+the box size so the focus ring can colour it without every field growing 2px and shifting the
+column.
 
-**NOT taken, and each is a brief rule rather than a preference:** the fourth field ("Practice
-Name" — three fields, and "do not add company" is explicit), the message label written for
-accounting firms, the hero copy, and the primary-fill submit button. **The design was used for
-layout. The brief is the copy.** Same call as `/accounting`.
+**Placeholders take `--ark-muted`, not `--ark-muted-2`.** Placeholder text is small text and
+needs 4.5:1; measured 4.64 on the warm fill, where `--ark-muted-2` would have been about 3.67
+and failed. Found by measuring, not by eye.
 
-**The transparent 1px border on the inputs is not decoration.** It holds the box's size so the
-focus state can colour it without the field growing by 2px and nudging everything below it.
-Remove it and every field jumps on focus.
+**Netlify Forms, honeypot only, NO reCAPTCHA** — it would load a Google script needing a
+Privacy row and a place behind the consent gate, at which point **the form breaks for anyone
+who has not accepted cookies.** Submission goes through `fetch` so the panel is replaced in
+place; without JavaScript it is still a real form and Netlify still receives it.
 
-**DOM order is aside first, form second, and the desktop grid puts them back the other way
-round.** Stacked on a phone the booking route then comes first — short, and the page's primary
-action — instead of sitting under a long form where nobody reaches it. Same trick the
-homepage's section 5 uses. **One consequence, accepted:** on desktop, keyboard focus reaches
-the booking button and the email address before the form fields, so tab order runs right then
-left. Both orders are meaningful and the primary action being reachable first is defensible,
-but it is a real trade and not an oversight.
+**`/privacy` changed in three places and one is a weakened commitment.** Section 1 gained the
+enquiry paragraph, section 5's Netlify row names form submissions, and **section 7's retention
+line was rewritten** — it said enquiries were deleted 24 months after last contact and now
+says they are kept as business records with no deletion schedule. That is a published promise
+made weaker, decided after the contradiction was put to Fredrick. **What keeps it defensible
+is the sentence beside it**: "You can ask us to delete yours at any time, and we will." If
+that is trimmed, the position has to change back. **The practitioner review is still
+outstanding and this is the likeliest thing to come back from it.**
 
-**The email address sits in the green half**, not beneath the submit button where v2.0 of the
-brief puts it. It is the same address doing the same job and there is exactly one instance in
-the section; the design gives it a labelled block there. **The form's error state still names
-it separately**, which covers the "fallback if the form fails" case the brief's placement was
-protecting.
+**Verified on the built page:** one `h1`, heading order h1 → "Start the conversation" →
+"Direct Lines", no contrast failures at either threshold, placeholders at 4.64, honeypot out
+of the tab order and not hittable, error state on a forced 404 with the form and values kept
+and the button label restored, success state replacing the form in place on the same URL with
+focus moved to it, and 390 / 768 / 1440 with `documentElement.scrollWidth` equal to the
+viewport at each — at 390 the widest element is `<html>` itself.
 
-**`/contact` is in the nav bar now**, last, after About — added on Fredrick's instruction.
-Every other route into the site was a booking button, so a reader who wanted to write rather
-than book had nowhere in the bar to go.
-
-**`/privacy` changed in three places and one of them is a weakened commitment.** Section 1
-gained the enquiry paragraph, section 5's Netlify row now names form submissions, and
-**section 7's retention line was rewritten**: it said enquiries were kept 24 months after last
-contact and "then they are deleted", and it now says they are kept as business records with
-no deletion schedule. **That is a published promise made weaker**, decided by Fredrick on Aug
-28 2026 after the contradiction was put to him — the brief set the new position while the
-page already published the old one. **What makes it defensible is the sentence beside it**:
-"You can ask us to delete yours at any time, and we will." If that is ever trimmed, the
-retention position stops being defensible and has to change back. The practitioner review is
-still outstanding and **this is the item most likely to come back from it.**
-
-**Verified locally:** three fields with real labels, the honeypot out of the tab order and
-not hittable, tab order name → email → message → send → Privacy Policy → address, the submit
-transparent against the booking button's fill, the error state showing on a forced 404 with
-values preserved and the button re-enabled, the success state replacing the form in place on
-the same URL with focus moved to it, no contrast failures, and 390 / 768 / 1440 with
-`documentElement.scrollWidth` equal to the viewport at each. **`astro preview` returns 200 to
-a POST, so a real submission cannot be tested locally** — it reports success against a server
-that received nothing. That check, the Clarity masking check on the three new fields, and the
-honeypot rejection all need the deployed site.
+**`astro preview` returns 200 to a POST**, so it reports success against a server that
+received nothing: **a real submission cannot be tested locally.** That check, the Clarity
+masking check on the four fields, the honeypot rejection, and whether spam submissions count
+against the 100/month allowance all need the deployed site.
 
 ## Standing instruction, Aug 25 2026 — no location lines
 

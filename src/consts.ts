@@ -107,18 +107,15 @@ export type CtaLocation =
    * reader who opens About is verifying, not deciding, and a CTA at the top interrupts
    * the thing they came to do. If a second ever appears on that page, something has gone
    * wrong with it. */
-  | "about-closing"
-  /* /contact. Two, and the brief names their positions as hero and close. `contact-hero`
-   * is the button in SECTION 2 rather than section 1 — the hero deliberately carries none,
-   * because section 2 begins immediately below it and two identical buttons 200px apart
-   * read as insistence. It is still the first and topmost CTA on the page, which is what
-   * the label is for.
-   *
-   * The email address in section 2 is NOT a CTA and carries no label. It is a link rather
-   * than a button precisely so that it does not read as a second competing action, and
-   * counting it would undo that distinction in the reporting as well as on the page. */
-  | "contact-hero"
-  | "contact-closing";
+  | "about-closing";
+
+/* /contact HAS NO CTA LABELS, and that is not an omission. `contact-hero` and
+ * `contact-closing` existed while the page carried two booking buttons; the design of Aug
+ * 28 2026 removed both in favour of a single contact form, so nothing renders them. They
+ * were deleted rather than left in place because this list is the record of what the
+ * site's own buttons are called, and a label pointing at no button makes it a worse
+ * record. The form's submit is not a CTA in this sense — it posts to Netlify rather than
+ * opening the booker, and it is deliberately not counted. */
 
 export interface NavItem {
   label: string;
