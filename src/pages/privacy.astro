@@ -58,6 +58,28 @@
  *    Google script that had to sit behind the consent gate — at which point the form breaks
  *    for anyone who has not accepted. Neither was built.
  *
+ * 2d. THE FORM DESCRIPTION WAS COMPLETED ON SEP 2 2026, and what was wrong with it is worth
+ *    knowing: section 1 listed three fields — name, email, message — because it was written
+ *    on Aug 28 BEFORE the design build added a fourth. The page understated what the site
+ *    collects for five days. **A field list is not prose; it has to be re-read every time the
+ *    form changes**, and nothing in the build makes that happen automatically.
+ *
+ *    Section 2's masking sentence had the same shape of problem: it named only the Cal.com
+ *    booker, because when it was written that iframe held the only inputs on the site. It now
+ *    names the contact form's fields.
+ *
+ *    THE MASKING CLAIM IS VERIFIED, NOT ASSUMED. Measured on the live site on Sep 2 2026:
+ *    distinctive strings were typed into all four fields with real keystrokes, and every
+ *    Microsoft Clarity payload from that session was captured at `navigator.sendBeacon` and
+ *    gunzipped — 24,745 characters across the whole session, including the submit. The typed
+ *    strings appear NOWHERE in it, while `contact-form`, `contact-name` and `contact-message`
+ *    all do, and the payload carries runs of bullet characters where the typed text would be.
+ *    So Clarity captured the form and substituted the content. The same strings DO appear in
+ *    the POST body to arksystems.ca, which is the submission itself and is correct.
+ *
+ *    RE-RUN THAT TEST IF A FIELD IS EVER ADDED. The standing rule from the analytics release
+ *    is that masking is verified before a form ships, and it applies to a changed form too.
+ *
  * 2c. SECTION 7'S RETENTION POSITION WAS WEAKENED, DELIBERATELY, AND IT IS THE ONE THING ON
  *    THIS PAGE MOST WORTH A SECOND LOOK. It said enquiries were kept for 24 months after
  *    last contact and "then they are deleted". It now says they are kept as business records
@@ -180,11 +202,12 @@ const description =
 
     <p>
       <span class="doc-term">Contact form enquiries.</span> When you write to us through the
-      contact form on our <a href="/contact">Contact page</a>, we receive your name, email
-      address and your message. We use it to answer you and for nothing else. Submissions
-      are received and held by Netlify, which already hosts this website. We keep enquiries
-      as part of our business records, in the same way we keep email correspondence. You can
-      ask us to delete yours at any time.
+      contact form on our <a href="/contact">Contact page</a>, we receive your name, your
+      business name if you give it, your email address and your message. We use it to answer
+      you and for nothing else. We do not add you to a mailing list, and we do not sell, rent
+      or share it. Submissions are received and held by Netlify, which already hosts this
+      website. We keep enquiries as part of our business records, in the same way we keep
+      email correspondence. You can ask us to delete yours at any time.
     </p>
 
     <p>
@@ -244,8 +267,10 @@ const description =
     <p>
       <span class="doc-term">What session recording captures.</span> Microsoft Clarity records
       mouse movement, scrolling and clicks. Text typed into input boxes is masked and is never
-      recorded. The booking form is provided by Cal.com inside a separate frame, which session
-      recording cannot see into.
+      recorded. That includes every field on our contact form: your name, your business name,
+      your email address and your message are masked as you type them, and the text does not
+      reach Microsoft. The booking form is provided by Cal.com inside a separate frame, which
+      session recording cannot see into.
     </p>
 
     <p>
