@@ -1,0 +1,16 @@
+# arksystems.ca
+# Crawling is open. The three legal pages are kept out of search results by a
+# `noindex` meta tag on the pages themselves, NOT by a Disallow rule here — and that
+# distinction is load-bearing rather than stylistic.
+#
+# A Disallow would stop a crawler fetching the page, which means it never reads the
+# noindex. Google can then still list the URL, with no title and no description,
+# purely on the strength of links pointing at it. Blocking the crawl is how a page
+# you meant to hide ends up in results as a bare URL.
+#
+# So: let crawlers in, and let the tag on each page do the work it was written for.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://arksystems.ca/sitemap-index.xml

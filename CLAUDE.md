@@ -1431,6 +1431,72 @@ received nothing: **a real submission cannot be tested locally.** That check, th
 masking check on the four fields, the honeypot rejection, and whether spam submissions count
 against the 100/month allowance all need the deployed site.
 
+## Built Sep 2 2026 — search indexing, phase 1
+
+The analytics brief deferred "Search Console, robots.txt, sitemap, canonical URLs" to a
+later release. This is that release, and the audit changed what it is for.
+
+**GOOGLE ALREADY HAS THE PREVIOUS SITE INDEXED.** A `site:arksystems.ca` search returns the
+homepage titled *"Workflow Automation Consulting for Growing Businesses | ArkSystems"* and
+summarised with the pre-rebuild positioning. **So this is not an indexing problem, it is a
+STALE ENTRY problem**, and that reordered the work: Search Console and reindex requests
+matter more than robots.txt, and a custom 404 stopped being cosmetic — real people are
+arriving on old paths.
+
+**What the audit found already correct**, recorded so nobody re-does it: canonicals on all
+pages; `http→https`, `www→apex` and `/about → /about/` all 301; structured data parsing on
+every public page; titles 25–56 chars and descriptions 113–150, all inside display limits;
+one `h1` per page. The homepage is 126KB of HTML but **37KB over the wire** — inline SVG
+compresses well, and page weight is not a problem here.
+
+**Four things shipped:**
+
+- **`public/robots.txt`.** **It does NOT Disallow the legal pages, and that is deliberate** —
+  a Disallow stops the crawler fetching the page, so it never reads the `noindex`, and Google
+  can still list a bare URL on the strength of inbound links. Blocking the crawl is how a
+  page you meant to hide ends up in results with no title. The tag does the work; robots.txt
+  just points at the sitemap.
+- **`src/pages/404.astro`.** Netlify's grey default had no header, no footer and no route
+  back. **It must keep returning a real 404** — this page served with a 200 is a "soft 404",
+  which Google indexes as thin duplicate content, and that is worse than having no custom
+  page. Verified against the built output. Its chips are derived from `NAV_LINKS` and
+  deduplicated by href: the first build printed "Contact" twice because the nav gained that
+  entry when /contact shipped.
+- **`lastmod` in the sitemap, derived from git.** Per route, the last commit touching that
+  page's own file and its section components. **NOT the build date** — stamping every URL on
+  every deploy is the common shortcut and it is a lie, and Google ignores `lastmod` once it
+  finds the value untrustworthy. That would burn the one signal this release actually needs.
+  Shared files (BaseLayout, header, footer, tokens) are excluded on purpose: a consent-banner
+  change does not change what a page is about, and counting it would move every date on every
+  deploy — the build-timestamp problem wearing a different hat.
+- **`public/og-card.png`** and the `og:image` tags. There was no share image at all; every
+  link posted anywhere rendered as a bare text card.
+
+### How the OG card was made, because it is not reproducible by guessing
+
+1200×630, the full hero illustration on the right, "Think AI, Think Ark." on the left.
+
+**The hard part was fonts, and the obvious routes all fail.** sharp is installed and renders
+SVG, but the brand faces are not installed system-wide and `@fontsource` ships only
+`woff`/`woff2`, which fontconfig cannot use — so SVG text rasterises in a fallback serif.
+There is no `fontTools` and no `brotli` in the local Python to convert them.
+
+**What works: the browser already has the fonts.** The card is composed in the page as an
+SVG with all six faces embedded as base64 `@font-face` data URIs, drawn to a canvas, and
+POSTed to a throwaway local writer that saves the PNG. **The embedded-font trick was proven
+before the card was built** — rendering the same text with and without the `@font-face` and
+comparing canvas pixels — because SVG-as-image is an isolated document and external fonts
+never load in it. Data URIs are inline, not external, which is why it works.
+
+**Re-run that method if the card is ever regenerated.** The writer script was deleted; nothing
+from it is in the repo.
+
+**ONE THING TO KNOW ABOUT THE CARD'S CONTENT.** The hero artwork's closing line reads *"That
+is your evenings back."* — the positioning the Aug 25 rebuild moved away from. On the page it
+sits inside a large illustration among nine sections. On a share card it is one of the few
+readable sentences and it lands in the punchline position. It ships as drawn because the hero
+is approved artwork, but it is the card's most quotable line and it is off-message.
+
 ## Standing instruction, Aug 25 2026 — no location lines
 
 Fredrick's instruction: the line "Based in Metro Vancouver, working remotely across

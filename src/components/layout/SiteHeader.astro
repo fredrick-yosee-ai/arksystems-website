@@ -54,7 +54,17 @@ const hasCurrentChild = (item: (typeof NAV_LINKS)[number]) =>
         cropped roughly 3px off each side. The logo shipped chipped on both edges at
         every width. Given width alone, Astro derives the height from the source ratio.
       */}
-      <Image src={arkLogo} alt="" width={28} class="header__logo" densities={[1, 2]} />
+      {/* `loading="eager"` because this is the topmost image on every page and Astro
+          lazy-loads by default. A lazy-loaded above-the-fold image is fetched later than
+          it needs to be, which costs Largest Contentful Paint for nothing. */}
+      <Image
+        src={arkLogo}
+        alt=""
+        width={28}
+        class="header__logo"
+        densities={[1, 2]}
+        loading="eager"
+      />
       <span class="header__name">{SITE.name}</span>
     </a>
 

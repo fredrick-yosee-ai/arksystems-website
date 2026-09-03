@@ -1,0 +1,169 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BookingButton from "../components/common/BookingButton.astro";
+import { NAV_LINKS, INDUSTRY_LINKS } from "../consts";
+
+/*
+ * 404 — built Sep 2 2026 as part of the search-indexing release.
+ *
+ * WHY IT EXISTS. Until now a dead URL got Netlify's own grey "Page not found" screen:
+ * no header, no footer, no colour, and no route back into the site. That matters more
+ * here than on a site with no history, because Google still has the PREVIOUS
+ * arksystems.ca indexed — the homepage's stale entry proves it — so real people are
+ * arriving on old paths that no longer exist. /how-we-help and /accounting-firms are
+ * redirected; anything else lands here.
+ *
+ * IT IS A SIGNPOST, NOT AN APOLOGY. Someone who followed a stale link wants the thing
+ * they came for, so this offers the actual destinations rather than a joke about
+ * getting lost.
+ *
+ * NOINDEX, and the status code still has to be 404. Netlify serves this file for
+ * unmatched paths with a genuine 404 — Astro's 404.astro is wired to that automatically.
+ * A "soft 404" (this page served with a 200) is worse than no custom page at all,
+ * because Google indexes it as a real page and reports the site as having duplicate
+ * thin content. Verified against the deployed site rather than assumed.
+ *
+ * NOT IN THE SITEMAP: @astrojs/sitemap excludes 404 by default.
+ */
+/*
+ * Every destination the site has, deduplicated by href.
+ *
+ * NAV_LINKS already carries Contact — it was added there when /contact shipped — so
+ * appending it again here produced two identical chips side by side. Deduplicating on
+ * href rather than deleting one line keeps this correct if the nav gains or loses an
+ * entry later, which is the whole reason this list is derived rather than written out.
+ */
+const links = [...NAV_LINKS.filter((l) => l.href), ...INDUSTRY_LINKS].filter(
+  (link, i, all) => all.findIndex((other) => other.href === link.href) === i,
+);
+---
+
+<BaseLayout
+  title="Page not found"
+  description="That page doesn't exist on arksystems.ca. Here's where everything else lives."
+  noindex
+>
+  <section class="notfound">
+    <div class="container notfound__inner">
+      <p class="eyebrow notfound__eyebrow">404</p>
+
+      <h1 class="notfound__title">That page isn&rsquo;t here.</h1>
+
+      <p class="notfound__body">
+        The link may be from an older version of this site, or the address may have a typo
+        in it. Everything the site does is one of these:
+      </p>
+
+      <ul class="notfound__links">
+        {
+          links.map((link) => (
+            <li>
+              <a class="notfound__link" href={link.href}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="notfound__cta">
+        <BookingButton location="notfound">Book your free 20-minute call</BookingButton>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    background: var(--ark-surface);
+    padding-block: 96px 108px;
+  }
+
+  .notfound__eyebrow {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  /* The measure sits on the element carrying the font-size, never on a wrapper — `ch`
+   * resolves against the element's own size, so on a wrapper it counts 16px characters
+   * and cramps a display heading to a third of its width. */
+  .notfound__title {
+    font-size: var(--ark-h1);
+    line-height: var(--ark-lh-h1);
+    letter-spacing: -0.03em;
+    max-width: 18ch;
+  }
+
+  .notfound__body {
+    margin-top: 24px;
+    font-size: var(--ark-body-lg);
+    line-height: var(--ark-lh-body);
+    color: var(--ark-body-ink);
+    max-width: 54ch;
+  }
+
+  .notfound__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    margin-top: 32px;
+  }
+
+  .notfound__link {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 1px solid var(--ark-hairline);
+    border-radius: var(--ark-radius-pill);
+    background: var(--ark-white);
+    font-size: var(--ark-small);
+    font-weight: 600;
+    color: var(--ark-ink);
+    text-decoration: none;
+  }
+
+  .notfound__link:hover {
+    border-color: var(--ark-olive);
+    color: var(--ark-olive);
+  }
+
+  .notfound__link:focus-visible {
+    outline: 2px solid var(--ark-olive);
+    outline-offset: 2px;
+  }
+
+  .notfound__cta {
+    margin-top: 40px;
+  }
+
+  @media (max-width: 900px) {
+    .notfound {
+      padding-block: 56px 64px;
+    }
+
+    .notfound__body {
+      margin-top: 18px;
+      max-width: 44ch;
+    }
+  }
+
+  @media (max-width: 900px), (orientation: portrait) {
+    .notfound__inner {
+      text-align: center;
+    }
+
+    .notfound__title,
+    .notfound__eyebrow,
+    .notfound__body {
+      margin-inline: auto;
+    }
+
+    .notfound__links {
+      justify-content: center;
+    }
+
+    .notfound__cta {
+      display: flex;
+      justify-content: center;
+    }
+  }
+</style>

@@ -107,7 +107,11 @@ export type CtaLocation =
    * reader who opens About is verifying, not deciding, and a CTA at the top interrupts
    * the thing they came to do. If a second ever appears on that page, something has gone
    * wrong with it. */
-  | "about-closing";
+  | "about-closing"
+  /* The 404 page. One button, so someone who arrived on a dead link — most likely from
+   * the previous version of this site, which Google still has indexed — has the same
+   * route forward as any other page offers. */
+  | "notfound";
 
 /* /contact HAS NO CTA LABELS, and that is not an omission. `contact-hero` and
  * `contact-closing` existed while the page carried two booking buttons; the design of Aug

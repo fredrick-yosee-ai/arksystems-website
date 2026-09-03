@@ -20,6 +20,14 @@ interface Props {
   titleOverride?: string;
   /** Set on pages that should stay out of search results. */
   noindex?: boolean;
+  /**
+   * Share-card image, absolute or root-relative. Defaults to the site-wide card.
+   *
+   * One card covers every page today, deliberately: per-page cards are a maintenance
+   * surface, and a share of any page is a share of the same firm. Pass this only when a
+   * page genuinely needs its own.
+   */
+  ogImage?: string;
 }
 
 const {
@@ -27,11 +35,16 @@ const {
   titleOverride,
   description,
   noindex = false,
+  ogImage = "/og-card.png",
 } = Astro.props;
 
 const pageTitle =
   titleOverride ?? (title === SITE.name ? SITE.name : `${title} — ${SITE.name}`);
 const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url);
+/* Absolute, because every scraper that reads og:image requires it — a root-relative path
+ * is silently dropped by most of them, which is how a site ends up sharing as a bare text
+ * card while the tag looks correct in the markup. */
+const ogImageUrl = new URL(ogImage, Astro.site ?? SITE.url);
 ---
 
 <!doctype html>
@@ -60,7 +73,23 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url);
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical.href} />
+    {/*
+      The share card. Width and height are declared because Facebook and LinkedIn render
+      a placeholder on first scrape without them — they will not hold the layout open
+      while they fetch the image, so the first share of a new URL shows a collapsed card.
+
+      og:image:alt is the text alternative for the card, not for the page.
+    */}
+    <meta property="og:image" content={ogImageUrl.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="ArkSystems — Think AI, Think Ark. A diagram of work arriving from many tools into one assistant, and coming back done."
+    />
+
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImageUrl.href} />
 
     <meta name="generator" content={Astro.generator} />
 
