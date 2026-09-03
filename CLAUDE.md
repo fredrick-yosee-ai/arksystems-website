@@ -1491,11 +1491,19 @@ never load in it. Data URIs are inline, not external, which is why it works.
 **Re-run that method if the card is ever regenerated.** The writer script was deleted; nothing
 from it is in the repo.
 
-**ONE THING TO KNOW ABOUT THE CARD'S CONTENT.** The hero artwork's closing line reads *"That
+**THE CARD DROPS ONE LINE OF THE ARTWORK, ON PURPOSE.** The hero's closing line reads *"That
 is your evenings back."* — the positioning the Aug 25 rebuild moved away from. On the page it
-sits inside a large illustration among nine sections. On a share card it is one of the few
-readable sentences and it lands in the punchline position. It ships as drawn because the hero
-is approved artwork, but it is the card's most quotable line and it is off-message.
+sits inside a large illustration among nine sections and passes unnoticed. On a share card it
+was one of the few readable sentences and it landed in the punchline position, which made the
+superseded positioning the most quotable thing on every link shared. Removed on Fredrick's
+instruction of Sep 2 2026.
+
+**The generator matches on the text CONTENT, not on element order or index**, so it keeps
+working if the artwork is ever re-exported. **The viewBox is deliberately NOT cropped to close
+the gap the removal leaves** — the hero's background panel runs to the full 700 height, so
+tightening the viewBox would slice its rounded bottom edge off. The extra space reads as
+padding. **THE HERO SVG ITSELF IS UNCHANGED**: the line still ships on the homepage, where it
+is approved artwork. Only the card omits it.
 
 ## Standing instruction, Aug 25 2026 — no location lines
 

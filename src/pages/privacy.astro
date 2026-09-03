@@ -58,6 +58,30 @@
  *    Google script that had to sit behind the consent gate — at which point the form breaks
  *    for anyone who has not accepted. Neither was built.
  *
+ * 2e. THE EMAIL PROVIDER WAS WRONG UNTIL SEP 2 2026, and it is the most consequential
+ *    error this page has carried. The table named Google Workspace for "Email, documents,
+ *    forms, and our prospect records". Email is not on Google Workspace — the domain's MX
+ *    records point at mx1-hosting.jellyfish.systems, which is Namecheap's Private Email
+ *    infrastructure, and Fredrick confirmed it. So the page named the wrong processor for
+ *    every message ever sent to hello@arksystems.ca, and the actual one was disclosed
+ *    nowhere.
+ *
+ *    FOUND BY READING DNS, NOT THE PAGE. It surfaced while checking nameservers for the
+ *    Search Console work. Nothing in the copy looked wrong, which is exactly the failure
+ *    mode: a provider table is a claim about infrastructure, and infrastructure is not
+ *    visible from the text. **Re-check MX and the hosting setup whenever this table is
+ *    reviewed** — the same way section 2 is re-measured in the browser before a release.
+ *
+ *    THE REGION IS THE CONTRACTING ENTITY'S, not a residency guarantee — the same caveat
+ *    the Microsoft Clarity row carries. Namecheap is a US company and its Private Email
+ *    service is served from its Phoenix facility according to its published hosting
+ *    locations, but that is a hosting description rather than a commitment. The
+ *    cross-border paragraph under the table is what actually carries this.
+ *
+ *    GOOGLE WORKSPACE STAYS ON THE TABLE — documents, forms and prospect records are still
+ *    there, and the qualification form in section 1 is still a Google form. Only the word
+ *    "Email" moved.
+ *
  * 2d. THE FORM DESCRIPTION WAS COMPLETED ON SEP 2 2026, and what was wrong with it is worth
  *    knowing: section 1 listed three fields — name, email, message — because it was written
  *    on Aug 28 BEFORE the design build added a fourth. The page understated what the site
@@ -362,7 +386,12 @@ const description =
           </tr>
           <tr>
             <td>Google Workspace (Google LLC)</td>
-            <td>Email, documents, forms, and our prospect records</td>
+            <td>Documents, forms, and our prospect records</td>
+            <td>United States</td>
+          </tr>
+          <tr>
+            <td>Namecheap (Private Email)</td>
+            <td>Our email &mdash; every message sent to or from our address</td>
             <td>United States</td>
           </tr>
           <tr>
